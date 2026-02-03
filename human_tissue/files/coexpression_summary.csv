@@ -1,0 +1,13 @@
+Metric,Value
+Overall within-group mean correlation,0.16242549802610137
+Overall between-group mean correlation,0.09484747097553473
+Within-group pairs count,21658.0
+Between-group pairs count,48093.0
+DNA within-group mean correlation,0.3553533136479828
+DNA within-group pair count,171.0
+Other within-group mean correlation,0.14266803166295916
+Other within-group pair count,5253.0
+Protein within-group mean correlation,0.16100078339475948
+Protein within-group pair count,10878.0
+RNA within-group mean correlation,0.17853702903692684
+RNA within-group pair count,5356.0
