@@ -1,0 +1,56 @@
+======================================================================
+SAM MTase Substrate Expression Analysis - Summary Report
+======================================================================
+
+DATASET OVERVIEW
+----------------------------------------
+Total proteins analyzed: 374
+Substrate type distribution:
+  Protein: 148 (39.6%)
+  RNA: 104 (27.8%)
+  Other: 103 (27.5%)
+  DNA: 19 (5.1%)
+
+TISSUE SPECIFICITY (TAU) BY SUBSTRATE TYPE
+----------------------------------------
+(Tau: 0 = ubiquitous, 1 = tissue-specific)
+
+  DNA:
+    Mean Tau: 0.7397 (n=19)
+    Median Tau: 0.7397
+  Other:
+    Mean Tau: 0.7063 (n=103)
+    Median Tau: 0.6962
+  Protein:
+    Mean Tau: 0.6639 (n=148)
+    Median Tau: 0.6685
+  RNA:
+    Mean Tau: 0.5692 (n=104)
+    Median Tau: 0.5779
+
+CO-EXPRESSION ANALYSIS
+----------------------------------------
+Mean within-group correlation:  0.1624
+Mean between-group correlation: 0.0948
+Difference: 0.0676
+→ Proteins of the same substrate type tend to have more similar expression patterns
+
+STATISTICAL TESTS
+----------------------------------------
+Tissues with significant expression differences by substrate type:
+  32 / 51 tissues (Bonferroni-adjusted p < 0.05)
+  Top significant tissues: choroid plexus, basal ganglia, amygdala, hippocampal formation, hypothalamus
+
+Enrichment analysis (top 25% expressors per tissue):
+  Significant enrichments: 13
+  Significant depletions: 25
+  Notable enrichments (top 5 by odds ratio):
+    Protein in vagina: OR=3.00
+    Other in choroid plexus: OR=2.95
+    Other in liver: OR=2.90
+    Protein in retina: OR=2.75
+    Protein in epididymis: OR=2.67
+
+======================================================================
+Analysis complete. See individual CSV files for detailed results.
+======================================================================

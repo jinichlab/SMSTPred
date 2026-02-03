@@ -1,0 +1,375 @@
+Entry,Protein names,Predicted_Substrate,Prediction_Confidence,Tau,Max_Expression_Tissue,Max_Expression_Value
+A0A087WW35,tRNA N(3)-cytidine methyltransferase (EC 2.1.1.-),RNA,0.9992041,0.6257627118644068,skeletal muscle,5.9
+A0A087WYU2,Methyltransferase-like 26,Other,0.9974847,0.6394155381325731,amygdala,140.3
+A0A087X1A7,DOT1 like histone lysine methyltransferase,Other,0.99977595,0.8177642276422765,testis,49.2
+A0A0A0MRN1,Small RNA 2'-O-methyltransferase (EC 2.1.1.386) (HEN1 methyltransferase homolog 1),RNA,0.85066485,0.9131352154531946,testis,67.3
+A0A0B4J214,tRNA aspartic acid methyltransferase 1,DNA,0.5819075,0.7514814814814815,retina,5.4
+A0A0C4DG02,DNA (cytosine-5)-methyltransferase 3A (EC 2.1.1.37) (Cysteine methyltransferase DNMT3A),DNA,0.7412533,0.6164245810055866,skeletal muscle,17.9
+A0A0C4DG18,tRNA aspartic acid methyltransferase 1,Other,0.999405,0.7514814814814815,retina,5.4
+A0A0C4DGB1,rRNA adenine N(6)-methyltransferase (EC 2.1.1.-),RNA,0.9996693,0.5049382716049383,urinary bladder,24.3
+A0A0U1RQF0,Fatty acid synthase (EC 1.1.1.100) (EC 1.3.1.39) (EC 2.3.1.38) (EC 2.3.1.39) (EC 2.3.1.41) (EC 2.3.1.85) (EC 3.1.2.14) (EC 4.2.1.59),Protein,0.989374,0.9074718638484767,adipose tissue,364.3
+A0A0U1RR76,"Methyltransferase 15, mitochondrial 12S rRNA N4-cytidine",RNA,0.9991165,0.5223076923076924,tongue,10.4
+A0A140T9Y7,NOP2/Sun RNA methyltransferase 2,RNA,0.63690245,0.5084318766066839,skeletal muscle,38.9
+A0A1W2PR36,guanidinoacetate N-methyltransferase (EC 2.1.1.2),Other,0.9988186,0.9529013305685156,skeletal muscle,1157.4
+A0A2R8Y5M8,catechol O-methyltransferase (EC 2.1.1.6) (Catechol O-methyltransferase 2),Other,0.998594,0.9733333333333334,testis,0.3
+A0A2Z2CIT2,DNA (cytosine-5-)-methyltransferase (EC 2.1.1.37),DNA,0.9209219,0.8341379310344827,pancreas,5.8
+A0A3B3ITK4,Protein arginine N-methyltransferase 6 (EC 2.1.1.319) (Histone-arginine N-methyltransferase PRMT6),Protein,0.9998247,0.4638399999999999,choroid plexus,12.5
+A0A3B3ITW8,Mitochondrial rRNA methyltransferase 2,RNA,0.89179784,0.47392156862745094,skeletal muscle,20.4
+A0A3F2YNX8,Protein-L-isoaspartate O-methyltransferase (EC 2.1.1.77),Protein,0.999762,0.7258857696030977,skeletal muscle,206.6
+A0A494C0G7,rRNA adenine N(6)-methyltransferase (EC 2.1.1.-),RNA,0.9999305,0.5049382716049383,urinary bladder,24.3
+A0A494C1I5,EEF1A lysine methyltransferase 3,Protein,0.51013553,0.99,choroid plexus,0.2
+A0A6Q8PFP4,Protein arginine N-methyltransferase (EC 2.1.1.321),Protein,0.99869627,0.6685496183206107,choroid plexus,13.1
+A0A7I2V311,DNA (cytosine-5)-methyltransferase 1 (EC 2.1.1.37) (MCMT),DNA,0.89582217,0.739672131147541,lymph node,24.4
+A0A7I2V370,Catechol O-methyltransferase (EC 2.1.1.6),Other,0.98573685,0.6962238805970149,liver,268.0
+A0A7I2V3G7,catechol O-methyltransferase (EC 2.1.1.6),Other,0.73639333,0.6962238805970149,liver,268.0
+A0A7I2V490,DNA (cytosine-5)-methyltransferase (EC 2.1.1.37),DNA,0.7204667,0.739672131147541,lymph node,24.4
+A0A7I2V5D0,DNA (cytosine-5)-methyltransferase (EC 2.1.1.37),DNA,0.7219008,0.739672131147541,lymph node,24.4
+A0A7I2V5F1,DNA (cytosine-5)-methyltransferase (EC 2.1.1.37),DNA,0.7510757,0.739672131147541,lymph node,24.4
+A0A7I2YQA8,DNA (cytosine-5)-methyltransferase (EC 2.1.1.37),DNA,0.7535457,0.739672131147541,lymph node,24.4
+A0A7I2YQQ0,DNA (cytosine-5)-methyltransferase (EC 2.1.1.37),DNA,0.7524045,0.739672131147541,lymph node,24.4
+A0A7P0T8X7,rRNA adenine N(6)-methyltransferase (EC 2.1.1.-),Protein,0.9993166,0.5049382716049383,urinary bladder,24.3
+A0A7P0T967,rRNA adenine N(6)-methyltransferase (EC 2.1.1.-),Protein,0.99987066,0.5049382716049383,urinary bladder,24.3
+A0A7P0T9J1,rRNA adenine N(6)-methyltransferase (EC 2.1.1.-),RNA,0.99999535,0.5049382716049383,urinary bladder,24.3
+A0A7P0T9Y7,rRNA adenine N(6)-methyltransferase (EC 2.1.1.-),RNA,0.9998996,0.5049382716049383,urinary bladder,24.3
+A0A7P0Z4I0,rRNA adenine N(6)-methyltransferase (EC 2.1.1.-),RNA,0.9999938,0.5049382716049383,urinary bladder,24.3
+A0A8I5KPP4,Protein arginine N-methyltransferase 7,Protein,0.99983835,0.6685496183206107,choroid plexus,13.1
+A0A8I5KPS0,DNA methyltransferase 3 alpha,Other,0.99994993,0.6164245810055866,skeletal muscle,17.9
+A0A8I5KPT4,Protein arginine N-methyltransferase (EC 2.1.1.321),Protein,0.9986809,0.6685496183206107,choroid plexus,13.1
+A0A8I5KQA6,Protein arginine N-methyltransferase 7,Protein,0.9996879,0.6685496183206107,choroid plexus,13.1
+A0A8I5KRA7,Protein arginine N-methyltransferase 7,Protein,0.9996214,0.6685496183206107,choroid plexus,13.1
+A0A8I5KRV0,Protein arginine N-methyltransferase 7,Protein,0.9993849,0.6685496183206107,choroid plexus,13.1
+A0A8I5KRW2,Protein arginine N-methyltransferase (EC 2.1.1.321),Protein,0.998784,0.6685496183206107,choroid plexus,13.1
+A0A8I5KTF6,DNA (cytosine-5-)-methyltransferase (EC 2.1.1.37),Other,0.7670475,0.6164245810055866,skeletal muscle,17.9
+A0A8I5KUD4,DNA methyltransferase 3 alpha,Other,0.999995,0.6164245810055866,skeletal muscle,17.9
+A0A8I5KWG5,Protein arginine methyltransferase 7,Protein,0.99876714,0.6685496183206107,choroid plexus,13.1
+A0A8I5KXS9,Protein arginine N-methyltransferase (EC 2.1.1.321),Protein,0.99945503,0.6685496183206107,choroid plexus,13.1
+A0A8I5KYD6,Protein arginine N-methyltransferase (EC 2.1.1.321),Protein,0.9991208,0.6685496183206107,choroid plexus,13.1
+A0A8I5KZ05,Protein arginine methyltransferase 7,Protein,0.9977617,0.6685496183206107,choroid plexus,13.1
+A0A8I5KZ44,Family with sequence similarity 86 member B2,Protein,0.9993074,0.7839999999999998,choroid plexus,0.5
+A0A8I5KZ92,Protein arginine N-methyltransferase (EC 2.1.1.321),Protein,0.99980813,0.6685496183206107,choroid plexus,13.1
+A0A8I5QKQ0,Protein arginine methyltransferase 7,Protein,0.96839094,0.6685496183206107,choroid plexus,13.1
+A0A8I5QKW3,DNA (cytosine-5-)-methyltransferase (EC 2.1.1.37),DNA,0.8066098,0.6164245810055866,skeletal muscle,17.9
+A0A8I5QKZ3,type III protein arginine methyltransferase (EC 2.1.1.321) (Histone-arginine N-methyltransferase PRMT7) ([Myelin basic protein]-arginine N-methyltransferase PRMT7),Protein,0.99859387,0.6685496183206107,choroid plexus,13.1
+A0A8I5QL06,"Histone-lysine N-methyltransferase, H3 lysine-79 specific",Other,0.67766297,0.8177642276422765,testis,49.2
+A0A8Q3SIG2,DNA (cytosine-5)-methyltransferase 3B (EC 2.1.1.37),DNA,0.76841897,0.8341379310344827,pancreas,5.8
+A0A8Q3WKJ6,RNA methyltransferase (EC 2.1.1.-),RNA,0.8047241,0.6400261780104711,testis,76.4
+A0A994J4Q5,tRNA methyltransferase 2 homolog A,RNA,0.93770826,0.5953459119496854,liver,31.8
+A0AA34QVH5,Histone-arginine methyltransferase CARM1 (EC 2.1.1.319) (Coactivator-associated arginine methyltransferase 1) (Protein arginine N-methyltransferase 4),Protein,0.9998528,0.8036679536679536,skeletal muscle,103.6
+A0ABB0MVH8,5-cytosine rRNA methyltransferase NSUN4 (5-cytosine tRNA methyltransferase NSUN4) (NOL1/NOP2/Sun domain family member 4),RNA,0.99996436,0.9467,testis,80.0
+A6NHQ2,RNA 2'-O-methyltransferase FBLL1 (EC 2.1.1.-) (Fibrillarin like 1),Protein,0.93972874,0.9032850241545894,hypothalamus,41.4
+A6NJ78,12S rRNA N(4)-cytidine methyltransferase METTL15 (12S rRNA m4C methyltransferase) (EC 2.1.1.-) (Methyltransferase 5 domain-containing protein 1) (Methyltransferase-like protein 15),RNA,0.9999026,0.5223076923076924,tongue,10.4
+A8MT87,Phenylethanolamine N-methyltransferase,Protein,0.8148506,0.9413270777479893,adrenal gland,149.2
+A8MUP2,"Citrate synthase-lysine N-methyltransferase CSKMT, mitochondrial (CS-KMT) (EC 2.1.1.-) (Methyltransferase-like protein 12, mitochondrial)",Protein,0.9793595,0.671111111111111,skeletal muscle,0.9
+A8MXR3,type I protein arginine methyltransferase (EC 2.1.1.319),Protein,0.99999964,0.549035752979415,spinal cord,92.3
+B3KR61,"Arginine-hydroxylase NDUFAF5, mitochondrial (NADH dehydrogenase [ubiquinone] 1 alpha subcomplex assembly factor 5) (Putative methyltransferase NDUFAF5)",Protein,0.89373296,0.8102083333333332,skeletal muscle,19.2
+B3KW44,tRNA N(3)-cytidine methyltransferase (EC 2.1.1.-),RNA,0.99958295,0.6424691358024691,esophagus,8.1
+B4DDX3,"Methyltransferase 6, tRNA N3-cytidine (cDNA FLJ57901, highly similar to Methyltransferase-like protein 6)",RNA,0.9803858,0.4978616352201259,testis,15.9
+B4DP72,"2-methoxy-6-polyprenyl-1,4-benzoquinol methylase, mitochondrial (EC 2.1.1.201) (Ubiquinone biosynthesis methyltransferase COQ5)",Other,0.9998456,0.7565151515151516,skeletal muscle,92.4
+B4DRY2,rRNA adenine N(6)-methyltransferase (EC 2.1.1.-),RNA,0.99650586,0.5049382716049383,urinary bladder,24.3
+B4DWM3,"Methyltransferase like 27 (cDNA FLJ50265, moderately similar to Williams-Beuren syndrome chromosome region27 protein)",Other,0.9969284,0.8774869109947645,choroid plexus,19.1
+B4E0W7,Protein arginine methyltransferase NDUFAF7 (EC 2.1.1.320),Protein,0.9866149,0.796685082872928,testis,36.2
+B5MC16,Calmodulin-lysine N-methyltransferase,Other,0.8408337,0.5995804195804196,basal ganglia,14.3
+B5MC79,Calmodulin-lysine N-methyltransferase,Other,0.96862876,0.5995804195804196,basal ganglia,14.3
+B7Z4K4,"FtsJ RNA 2'-O-methyltransferase 1 (cDNA FLJ52916, highly similar to ribosomal RNA methyltransferase 1)",RNA,0.99976546,0.31619631901840495,pancreas,16.3
+B7Z8H2,"cDNA FLJ52038, highly similar to DNA (cytosine-5)-methyltransferase-like protein 2 (tRNA aspartic acid methyltransferase 1)",DNA,0.8299604,0.7514814814814815,retina,5.4
+B8ZZC8,Methyltransferase-like protein 5,RNA,0.99933594,0.5778645235361654,skeletal muscle,87.1
+B8ZZE3,Methyltransferase-like protein 5,RNA,0.9658907,0.5778645235361654,skeletal muscle,87.1
+B8ZZY8,"Methyltransferase 5, N6-adenosine",RNA,0.080321535,0.5778645235361654,skeletal muscle,87.1
+C9J0F2,Protein-L-isoaspartate(D-aspartate) O-methyltransferase (EC 2.1.1.77) (L-isoaspartyl protein carboxyl methyltransferase) (Protein L-isoaspartyl/D-aspartyl methyltransferase) (Protein-beta-aspartate methyltransferase),Protein,0.999995,0.7258857696030977,skeletal muscle,206.6
+C9J0T5,DNA methyltransferase 3 like,Protein,0.6608977,0.99,liver,1.8
+C9J236,Protein arginine methyltransferase NDUFAF7 (EC 2.1.1.320),Protein,0.9996024,0.796685082872928,testis,36.2
+C9JEL7,Protein arginine methyltransferase NDUFAF7 (EC 2.1.1.320),Protein,0.99999976,0.796685082872928,testis,36.2
+C9JES0,Protein N-lysine methyltransferase METTL21A (Methyltransferase-like protein 21A),Protein,0.99477804,0.5387012987012988,liver,23.1
+C9JH95,"Histone-lysine N-methyltransferase, H3 lysine-79 specific (EC 2.1.1.360) (Histone H3-K79 methyltransferase)",Protein,0.9980895,0.8177642276422765,testis,49.2
+C9JP36,Protein arginine methyltransferase NDUFAF7 (EC 2.1.1.320),Protein,0.9999995,0.796685082872928,testis,36.2
+C9JS27,Protein arginine methyltransferase NDUFAF7 (EC 2.1.1.320),Protein,0.99985445,0.796685082872928,testis,36.2
+C9JSX1,"Methyltransferase 21A, HSPA lysine",Other,0.9998908,0.5387012987012988,liver,23.1
+D6RCL3,rRNA adenine N(6)-methyltransferase (EC 2.1.1.-),Protein,0.9483032,0.5049382716049383,urinary bladder,24.3
+D6RIE0,ATP synthase c subunit lysine N-methyltransferase,Protein,0.997729,0.5751552795031057,parathyroid gland,16.1
+E5RGG7,Protein-L-isoaspartate O-methyltransferase domain-containing protein 1,Protein,0.9999577,0.6235595390524967,skeletal muscle,78.1
+E5RHH6,tRNA methyltransferase 12 homolog,Protein,0.86654,0.4119587628865979,choroid plexus,9.7
+E5RJL6,Methyltransferase like 25B,RNA,0.9996265,0.3293992932862191,skeletal muscle,28.3
+E7EMN2,Methyltransferase-like protein 5,RNA,0.35893744,0.5778645235361654,skeletal muscle,87.1
+E7EMS6,Catechol O-methyltransferase (EC 2.1.1.6),Other,0.75924575,0.6962238805970149,liver,268.0
+E7EUU8,Catechol O-methyltransferase (EC 2.1.1.6),Other,0.8570861,0.6962238805970149,liver,268.0
+E9PIX6,type I protein arginine methyltransferase (EC 2.1.1.319),Protein,0.99999225,0.6589969203695557,skeletal muscle,227.3
+E9PK20,tRNA methyltransferase 9B (putative),Protein,0.99985266,0.952214111922141,choroid plexus,82.2
+E9PKG1,type I protein arginine methyltransferase (EC 2.1.1.319),Protein,0.99916327,0.6589969203695557,skeletal muscle,227.3
+E9PM45,Family with sequence similarity 86 member B1 (Family with sequence similarity 86 member B2),Protein,0.9862514,0.7687671232876713,basal ganglia,7.3
+E9PMW9,Protein arginine methyltransferase 1,Protein,0.99999905,0.6589969203695557,skeletal muscle,227.3
+E9PMZ2,Protein arginine methyltransferase 1,Protein,0.99794346,0.6589969203695557,skeletal muscle,227.3
+E9PNR9,type I protein arginine methyltransferase (EC 2.1.1.319),Protein,0.9999976,0.6589969203695557,skeletal muscle,227.3
+E9PPP6,Ribosomal RNA-processing protein 8 (EC 2.1.1.-),Protein,0.75450975,0.5473831775700934,colon,21.4
+E9PQ98,type I protein arginine methyltransferase (EC 2.1.1.319),Protein,0.99999094,0.6589969203695557,skeletal muscle,227.3
+E9PQV7,Family with sequence similarity 86 member B2,Protein,0.9992711,0.7839999999999998,choroid plexus,0.5
+F2Z2W7,tRNA (uracil-5-)-methyltransferase homolog A (EC 2.1.1.35) (mRNA (uracil-5-)-methyltransferase TRMT2A),RNA,0.99998295,0.5953459119496854,liver,31.8
+F5GYR3,NOP2 nucleolar protein,DNA,0.71253973,0.540483870967742,skeletal muscle,37.2
+F5H4E8,"Methyltransferase 5, N6-adenosine",Other,0.89637077,0.5778645235361654,skeletal muscle,87.1
+F6S8N6,Protein-L-isoaspartate(D-aspartate) O-methyltransferase (EC 2.1.1.77) (L-isoaspartyl protein carboxyl methyltransferase) (Protein L-isoaspartyl/D-aspartyl methyltransferase) (Protein-beta-aspartate methyltransferase),Protein,0.9999937,0.7258857696030977,skeletal muscle,206.6
+F6WGP0,"Coenzyme Q3, methyltransferase",Other,0.9996407,0.8149685534591193,tongue,47.7
+F6XBY7,tRNA methyltransferase 9B (putative),Other,0.99259406,0.952214111922141,choroid plexus,82.2
+F8VP53,"Coenzyme Q5, methyltransferase",Protein,0.9998493,0.7565151515151516,skeletal muscle,92.4
+F8VQX6,Thiol methyltransferase 1A,Other,0.9834009,0.8632220536165909,liver,395.4
+F8VVD5,"Coenzyme Q5, methyltransferase",Other,1.0,0.7565151515151516,skeletal muscle,92.4
+F8VVW7,"Coenzyme Q5, methyltransferase",Other,0.99032253,0.7565151515151516,skeletal muscle,92.4
+F8VVX6,"Coenzyme Q5, methyltransferase",Other,0.99788207,0.7565151515151516,skeletal muscle,92.4
+F8VZA8,Methyltransferase like 25,RNA,0.9998561,0.43178571428571433,retina,5.6
+F8VZI8,EEF1A lysine methyltransferase 3,Other,0.9806451,0.7416425120772946,pancreas,20.7
+F8W226,EEF1A lysine methyltransferase 3,Other,0.9999999,0.7416425120772946,pancreas,20.7
+F8W9F3,Protein-L-isoaspartate (D-aspartate) O-methyltransferase domain containing 2,Protein,0.998594,0.8259052247873632,retina,164.6
+F8WAV5,Protein-L-isoaspartate(D-aspartate) O-methyltransferase (EC 2.1.1.77) (L-isoaspartyl protein carboxyl methyltransferase) (Protein L-isoaspartyl/D-aspartyl methyltransferase) (Protein-beta-aspartate methyltransferase),Protein,0.9999974,0.7258857696030977,skeletal muscle,206.6
+F8WAX2,Protein-L-isoaspartate(D-aspartate) O-methyltransferase (EC 2.1.1.77) (L-isoaspartyl protein carboxyl methyltransferase) (Protein L-isoaspartyl/D-aspartyl methyltransferase) (Protein-beta-aspartate methyltransferase),Protein,0.99999785,0.7258857696030977,skeletal muscle,206.6
+F8WBW9,catechol O-methyltransferase (EC 2.1.1.6),Protein,0.80334675,0.6962238805970149,liver,268.0
+F8WDR2,tRNA (adenine(58)-N(1))-methyltransferase (EC 2.1.1.220),Other,0.6712852,0.3739354838709678,tongue,15.5
+F8WDT3,Protein-L-isoaspartate(D-aspartate) O-methyltransferase (EC 2.1.1.77) (L-isoaspartyl protein carboxyl methyltransferase) (Protein L-isoaspartyl/D-aspartyl methyltransferase) (Protein-beta-aspartate methyltransferase),Protein,0.9999989,0.7258857696030977,skeletal muscle,206.6
+F8WE91,DNA (cytosine-5-)-methyltransferase (EC 2.1.1.37),Protein,0.94755673,0.6164245810055866,skeletal muscle,17.9
+G3V238,EEF1A lysine methyltransferase 2,Other,0.5982371,0.3746153846153847,ovary,5.2
+G3V2L6,Protein arginine methyltransferase 5,Other,0.9906499,0.5588181818181819,skeletal muscle,66.0
+G3V353,Methyltransferase like 17,Protein,0.9306519,0.5374117647058825,adrenal gland,34.0
+G3V5T6,Protein arginine methyltransferase 5,Protein,0.48642233,0.5588181818181819,skeletal muscle,66.0
+H0Y2Q1,tRNA (adenine(58)-N(1))-methyltransferase (EC 2.1.1.220),RNA,0.9774979,0.6189787234042554,colon,23.5
+H0Y2T8,tRNA aspartic acid methyltransferase 1,DNA,0.7160538,0.7514814814814815,retina,5.4
+H0Y4A2,tRNA aspartic acid methyltransferase 1,Other,0.9638563,0.7514814814814815,retina,5.4
+H0Y6Y0,S-adenosylmethionine sensor upstream of mTORC1,RNA,0.89857167,0.6112605042016807,heart muscle,11.9
+H0YBL9,Methyltransferase like 25B,RNA,0.99998736,0.3293992932862191,skeletal muscle,28.3
+H0YBU4,Protein-L-isoaspartate O-methyltransferase domain-containing protein 1,Protein,0.9988953,0.6235595390524967,skeletal muscle,78.1
+H0YD24,Family with sequence similarity 86 member B1,Protein,0.9999988,0.7687671232876713,basal ganglia,7.3
+H0YDE4,type I protein arginine methyltransferase (EC 2.1.1.319),Protein,0.9998814,0.6589969203695557,skeletal muscle,227.3
+H0YFV5,"Methyltransferase 5, N6-adenosine",Protein,0.6405892,0.5778645235361654,skeletal muscle,87.1
+H0YHU4,tRNA (guanine(46)-N(7))-methyltransferase (EC 2.1.1.33),RNA,0.9610048,0.6293772893772894,pancreas,27.3
+H0YI09,Thiol methyltransferase 1A,Other,0.99924195,0.8632220536165909,liver,395.4
+H0YIG0,EEF1A lysine methyltransferase 3,Other,0.9722135,0.99,choroid plexus,0.2
+H0YIH0,tRNA (guanine(46)-N(7))-methyltransferase (EC 2.1.1.33),RNA,0.9997234,0.6293772893772894,pancreas,27.3
+H0YIJ7,EEF1A lysine methyltransferase 3,Other,0.9986135,0.99,choroid plexus,0.2
+H0YIW7,Methyltransferase like 25,RNA,0.99943584,0.43178571428571433,retina,5.6
+H0YJ77,Protein arginine methyltransferase 5,Protein,0.9942345,0.5588181818181819,skeletal muscle,66.0
+H0YJD3,Protein arginine methyltransferase 5,Protein,0.868822,0.5588181818181819,skeletal muscle,66.0
+H0YJX6,Protein arginine methyltransferase 5,Protein,0.9578803,0.5588181818181819,skeletal muscle,66.0
+H0YJY6,Protein arginine methyltransferase 5,Other,0.953381,0.5588181818181819,skeletal muscle,66.0
+H3BM54,"Methyltransferase 9, His-X-His N1(pi)-histidine",Protein,0.8798362,0.6392125984251968,kidney,127.0
+H3BMF3,Methyltransferase-like 26,Other,0.98696417,0.6394155381325731,amygdala,140.3
+H3BN86,"Methyltransferase 9, His-X-His N1(pi)-histidine",RNA,0.3739498,0.6392125984251968,kidney,127.0
+H3BNB2,Methyltransferase-like 26,Other,0.83830565,0.6394155381325731,amygdala,140.3
+H3BNC0,Protein arginine N-methyltransferase 7,Protein,0.9997359,0.6685496183206107,choroid plexus,13.1
+H3BNT3,Methyltransferase-like 26,Other,0.9928878,0.6394155381325731,amygdala,140.3
+H3BPE8,Adenine nucleotide translocase lysine methyltransferase,Protein,0.98888505,0.6300471698113207,liver,42.4
+H3BPE9,"Methyltransferase 9, His-X-His N1(pi)-histidine",Protein,0.99969614,0.6392125984251968,kidney,127.0
+H3BPG7,Cytokine induced apoptosis inhibitor 1,Other,0.9903716,0.647527559055118,testis,63.5
+H3BPZ8,Protein arginine methyltransferase 7,Protein,0.99976844,0.6685496183206107,choroid plexus,13.1
+H3BQ23,Cytokine induced apoptosis inhibitor 1,Other,0.90688235,0.647527559055118,testis,63.5
+H3BQ55,Methyltransferase-like 26,Other,0.9339358,0.6394155381325731,amygdala,140.3
+H3BQD2,"Methyltransferase 9, His-X-His N1(pi)-histidine",Protein,0.7521478,0.6392125984251968,kidney,127.0
+H3BQW1,Adenine nucleotide translocase lysine methyltransferase,Other,0.7903204,0.6300471698113207,liver,42.4
+H3BRD3,Protein arginine N-methyltransferase (EC 2.1.1.321),Protein,0.9987569,0.6685496183206107,choroid plexus,13.1
+H3BRT2,Methyltransferase-like 26,Other,0.9972395,0.6394155381325731,amygdala,140.3
+H3BS73,Methyltransferase-like 26,Other,0.99993,0.6394155381325731,amygdala,140.3
+H3BSS9,Protein arginine methyltransferase 7,Protein,0.99984825,0.6685496183206107,choroid plexus,13.1
+H3BT65,Cytokine induced apoptosis inhibitor 1,Other,0.9318926,0.647527559055118,testis,63.5
+H3BTF5,Methyltransferase-like protein 22,Protein,0.9996201,0.7143718592964824,skeletal muscle,19.9
+H3BUG4,Cytokine induced apoptosis inhibitor 1,Other,0.7241241,0.647527559055118,testis,63.5
+H3BUP7,Leucine carboxyl methyltransferase 1,Other,0.99131155,0.5016535433070866,skeletal muscle,50.8
+H3BV90,Cytokine induced apoptosis inhibitor 1,RNA,0.9865813,0.647527559055118,testis,63.5
+H7BXH9,Protein N-lysine methyltransferase METTL21A (Methyltransferase-like protein 21A),Protein,0.999894,0.5387012987012988,liver,23.1
+H7BZ44,Protein arginine methyltransferase 5,Protein,0.9739842,0.5588181818181819,skeletal muscle,66.0
+H7BZ45,catechol O-methyltransferase (EC 2.1.1.6),Other,0.95882845,0.6962238805970149,liver,268.0
+H7BZZ4,tRNA methyltransferase 2 homolog A,Other,0.9759144,0.5953459119496854,liver,31.8
+H7C0M7,"Methyltransferase 5, N6-adenosine",RNA,0.998968,0.5778645235361654,skeletal muscle,87.1
+H7C0R6,THUMP domain 3 tRNA guanosine methyltransferase (THUMP domain containing 3),RNA,0.99973685,0.7194945848375452,testis,55.4
+H7C100,tRNA (uracil(54)-C(5))-methyltransferase (EC 2.1.1.35),RNA,0.99999964,0.5953459119496854,liver,31.8
+H7C1L4,"Methyltransferase 6, tRNA N3-cytidine",Other,0.8611572,0.4978616352201259,testis,15.9
+H7C258,"HemK methyltransferase 1, mitochondrial release factors N(5)-glutamine (HemK methyltransferase family member 1)",Other,0.93916684,0.5370909090909091,choroid plexus,27.5
+H7C2C8,"Methyltransferase 2B, tRNA N3-cytidine",Protein,0.90372676,0.4412987012987013,liver,7.7
+H7C2E8,tRNA (adenine(58)-N(1))-methyltransferase (EC 2.1.1.220),Protein,0.9598176,0.3739354838709678,tongue,15.5
+H7C2H9,type I protein arginine methyltransferase (EC 2.1.1.319),Protein,0.99999976,0.549035752979415,spinal cord,92.3
+H7C2N4,Calmodulin-lysine N-methyltransferase,Other,0.9840253,0.5995804195804196,basal ganglia,14.3
+H7C2P8,"Methyltransferase 8, tRNA N3-cytidine",RNA,0.97354275,0.6424691358024691,esophagus,8.1
+H7C2R7,Spermine synthase,Other,0.99980956,0.6300783699059561,prostate,127.6
+H7C2T0,Calmodulin-lysine N-methyltransferase,Other,0.98876536,0.5995804195804196,basal ganglia,14.3
+H7C3B0,Calmodulin-lysine N-methyltransferase,Other,0.99999166,0.5995804195804196,basal ganglia,14.3
+H7C3H9,"Methyltransferase 6, tRNA N3-cytidine",Other,0.9999703,0.4978616352201259,testis,15.9
+H7C3J3,THUMP domain 3 tRNA guanosine methyltransferase (THUMP domain containing 3),RNA,0.99991727,0.7194945848375452,testis,55.4
+H7C3N5,Protein arginine methyltransferase NDUFAF7 (EC 2.1.1.320),Protein,0.5628349,0.796685082872928,testis,36.2
+H7C552,"Methyltransferase 2B, tRNA N3-cytidine",RNA,0.9034136,0.4412987012987013,liver,7.7
+I3L2E3,Leucine carboxyl methyltransferase 1,Other,0.9999938,0.5016535433070866,skeletal muscle,50.8
+I3L2J5,"Methyltransferase 22, Kin17 lysine",Other,0.99775213,0.7143718592964824,skeletal muscle,19.9
+I3L2Q8,[phosphatase 2A protein]-leucine-carboxy methyltransferase (EC 2.1.1.233) ([Phosphatase 2A protein]-leucine-carboxy methyltransferase 1),Protein,0.9267296,0.5016535433070866,skeletal muscle,50.8
+I3L362,"Methyltransferase 16, RNA N6-adenosine",Protein,0.6805655,0.38659793814432974,ovary,9.7
+I3L3W2,"Methyltransferase 4, N6-adenosine",Other,0.9582809,0.492962962962963,lymph node,10.8
+I3L3W3,"Methyltransferase 16, RNA N6-adenosine",RNA,0.9318951,0.38659793814432974,ovary,9.7
+I3L483,"Methyltransferase 22, Kin17 lysine",RNA,0.84100765,0.7143718592964824,skeletal muscle,19.9
+I3L4A2,[phosphatase 2A protein]-leucine-carboxy methyltransferase (EC 2.1.1.233) ([Phosphatase 2A protein]-leucine-carboxy methyltransferase 1),Protein,0.7687943,0.5016535433070866,skeletal muscle,50.8
+I3L4V1,"Methyltransferase 16, RNA N6-adenosine",RNA,0.34664834,0.38659793814432974,ovary,9.7
+I3L537,Leucine carboxyl methyltransferase 1,Other,0.99901843,0.5016535433070866,skeletal muscle,50.8
+I7HFW6,Acetylserotonin O-methyltransferase (EC 2.1.1.4) (Hydroxyindole O-methyltransferase),Other,0.99805534,0.9455555555555556,choroid plexus,7.2
+J3KMW5,Adenine nucleotide translocase lysine methyltransferase,Protein,0.67072004,0.6300471698113207,liver,42.4
+J3KN90,ATP synthase c subunit lysine N-methyltransferase,Other,0.99999976,0.5751552795031057,parathyroid gland,16.1
+J3KNJ7,"Methyltransferase 4, N6-adenosine",RNA,0.9907137,0.492962962962963,lymph node,10.8
+J3KS36,FtsJ RNA 2'-O-methyltransferase 3,RNA,0.9938393,0.40227106227106224,skeletal muscle,27.3
+J3KS74,FtsJ RNA 2'-O-methyltransferase 3,Other,0.34389684,0.40227106227106224,skeletal muscle,27.3
+J3QRI3,Phenylethanolamine N-methyltransferase (EC 2.1.1.28) (Noradrenaline N-methyltransferase),Other,0.9999536,0.9413270777479893,adrenal gland,149.2
+J3QSE2,FtsJ RNA 2'-O-methyltransferase 3,RNA,0.968999,0.40227106227106224,skeletal muscle,27.3
+K7EJ00,"Methyltransferase 23, arginine",Protein,0.99267524,0.4416260162601627,testis,49.2
+K7EJX9,tRNA (guanine(26)-N(2))-dimethyltransferase (EC 2.1.1.216),RNA,0.99999964,0.42959459459459465,spleen,29.6
+K7EKM4,Spermidine synthase,Other,0.9999639,0.7288465723612625,pancreas,183.8
+K7EKQ8,"Methyltransferase 16, RNA N6-adenosine",Other,0.8662603,0.38659793814432974,ovary,9.7
+K7EL89,Spermidine synthase,Other,0.9999075,0.7288465723612625,pancreas,183.8
+K7EM34,Guanidinoacetate N-methyltransferase,Other,0.8665907,0.9529013305685156,skeletal muscle,1157.4
+K7EMR3,"Methyltransferase 23, arginine",Other,0.7637621,0.4416260162601627,testis,49.2
+K7EN84,Methyltransferase-like protein 23,Protein,0.98970664,0.9875,retina,0.8
+K7ENI9,tRNA methyltransferase 1,Other,0.99964905,0.42959459459459465,spleen,29.6
+K7ENU9,"Methyltransferase 23, arginine",Other,0.92500675,0.4416260162601627,testis,49.2
+K7ENW7,DNA (cytosine-5-)-methyltransferase (EC 2.1.1.37),DNA,0.85027987,0.739672131147541,lymph node,24.4
+K7EP06,mRNA (guanine-N(7))-methyltransferase (EC 2.1.1.56) (RG7MT1),RNA,0.99931085,0.6913725490196078,bone marrow,40.8
+K7EPR8,Histone-arginine methyltransferase METTL23 (EC 2.1.1.319) (Methyltransferase-like protein 23),Protein,0.98351234,0.4416260162601627,testis,49.2
+K7EPT5,Histone-arginine methyltransferase METTL23 (EC 2.1.1.319) (Methyltransferase-like protein 23),Protein,0.9942821,0.4416260162601627,testis,49.2
+K7EQ47,Spermidine synthase,Protein,0.99560875,0.7288465723612625,pancreas,183.8
+K7EQA8,Histone-arginine methyltransferase CARM1 (EC 2.1.1.319) (Coactivator-associated arginine methyltransferase 1) (Protein arginine N-methyltransferase 4),Protein,0.99984336,0.8036679536679536,skeletal muscle,103.6
+K7EQQ8,tRNA (guanine(26)-N(2))-dimethyltransferase (EC 2.1.1.216),RNA,0.99999917,0.42959459459459465,spleen,29.6
+K7EQU7,tRNA methyltransferase 1,Other,0.9995621,0.42959459459459465,spleen,29.6
+K7EQY6,tRNA methyltransferase 1,Other,0.9870064,0.42959459459459465,spleen,29.6
+K7ERS2,"Methyltransferase 23, arginine",Protein,0.9990484,0.4416260162601627,testis,49.2
+K7ES84,Eukaryotic elongation factor 2 lysine methyltransferase,Protein,0.99967945,0.5327619047619048,testis,10.5
+K7ESG7,"Methyltransferase 23, arginine",Protein,0.8002665,0.4416260162601627,testis,49.2
+K7ESL0,Spermidine synthase,Other,0.95807755,0.7288465723612625,pancreas,183.8
+M0QXL5,Fibrillarin,Protein,0.98341596,0.6292544570502432,ovary,246.8
+M0R0P1,Fibrillarin,Protein,0.99994934,0.6292544570502432,ovary,246.8
+M0R0W0,"Methyltransferase 6, tRNA N3-cytidine",Protein,0.88745934,0.4978616352201259,testis,15.9
+M0R1H0,Fibrillarin,Protein,0.99573874,0.6292544570502432,ovary,246.8
+M0R299,Fibrillarin,RNA,0.93341124,0.6292544570502432,ovary,246.8
+M0R2B0,Fibrillarin,Protein,0.82756805,0.6292544570502432,ovary,246.8
+M0R2Q4,Fibrillarin,Protein,0.9991658,0.6292544570502432,ovary,246.8
+M0R2U2,Fibrillarin,Protein,0.8300424,0.6292544570502432,ovary,246.8
+O14717,tRNA (cytosine(38)-C(5))-methyltransferase (EC 2.1.1.204) (DNA (cytosine-5)-methyltransferase-like protein 2) (Dnmt2) (DNA methyltransferase homolog HsaIIP) (DNA MTase homolog HsaIIP) (M.HsaIIP) (PuMet),RNA,0.97925276,0.7514814814814815,retina,5.4
+O14744,"Protein arginine N-methyltransferase 5 (PRMT5) (EC 2.1.1.320) (72 kDa ICln-binding protein) (Histone-arginine N-methyltransferase PRMT5) (Jak-binding protein 1) (Shk1 kinase-binding protein 1 homolog) (SKB1 homolog) (SKB1Hs) [Cleaved into: Protein arginine N-methyltransferase 5, N-terminally processed]",Protein,0.99907184,0.5588181818181819,skeletal muscle,66.0
+O43148,mRNA cap guanine-N(7) methyltransferase (EC 2.1.1.56) (RG7MT1) (mRNA (guanine-N(7))-methyltransferase) (mRNA cap methyltransferase) (hCMT1) (hMet) (hcm1p),RNA,0.9999571,0.6913725490196078,bone marrow,40.8
+O43159,Ribosomal RNA-processing protein 8 (EC 2.1.1.-) (Cerebral protein 1) (Nucleomethylin),RNA,0.9782979,0.5473831775700934,colon,21.4
+O43709,18S rRNA (guanine-N(7))-methyltransferase (EC 2.1.1.-) (Bud site selection protein 23 homolog) (Metastasis-related methyltransferase 1) (Williams-Beuren syndrome chromosomal region 22 protein) (rRNA methyltransferase and ribosome maturation factor),RNA,0.91213435,0.6008620689655172,testis,116.0
+O60294,tRNA wybutosine-synthesizing protein 4 (tRNA yW-synthesizing protein 4) (EC 2.1.1.290) (EC 2.3.1.231) (Leucine carboxyl methyltransferase 2) (tRNA(Phe) (7-(3-amino-3-(methoxycarbonyl)propyl)wyosine(37)-N)-methoxycarbonyltransferase) (tRNA(Phe) (7-(3-amino-3-carboxypropyl)wyosine(37)-O)-methyltransferase),Protein,0.8801965,0.4816279069767442,tonsil,8.6
+O60678,Protein arginine N-methyltransferase 3 (EC 2.1.1.319) (Heterogeneous nuclear ribonucleoprotein methyltransferase-like protein 3),Protein,0.99999845,0.6467027027027027,thyroid gland,18.5
+O95050,Indolethylamine N-methyltransferase (Indolamine N-methyltransferase) (EC 2.1.1.49) (EC 2.1.1.96) (Aromatic alkylamine N-methyltransferase) (Amine N-methyltransferase) (Arylamine N-methyltransferase) (Thioether S-methyltransferase) (TEMT),Other,0.99958295,0.9208923076923077,lung,195.0
+O95568,Histidine protein methyltransferase 1 homolog (EC 2.1.1.85) (Arsenic-transactivated protein 2) (AsTP2) (Methyltransferase-like protein 18),Protein,0.9743682,0.7183809523809522,parathyroid gland,21.0
+O95671,Probable bifunctional dTTP/UTP pyrophosphatase/methyltransferase protein [Includes: dTTP/UTP pyrophosphatase (dTTPase/UTPase) (EC 3.6.1.9) (Nucleoside triphosphate pyrophosphatase) (Nucleotide pyrophosphatase) (Nucleotide PPase); N-acetylserotonin O-methyltransferase-like protein (ASMTL) (EC 2.1.1.-)],Other,0.9998691,0.41869209809264313,choroid plexus,36.7
+P0C5J1,Putative protein N-methyltransferase FAM86B2 (EC 2.1.1.-),Protein,0.9991365,0.7839999999999998,choroid plexus,0.5
+P0DPD7,EEF1A lysine methyltransferase 4 (EC 2.1.1.-),Protein,0.98906344,0.7997368421052633,liver,22.8
+P0DPD8,EEF1AKMT4-ECE2 readthrough transcript protein (EC 3.4.24.71) [Includes: Methyltransferase-like region (EC 2.1.1.-); Endothelin-converting enzyme 2 region (EC 3.4.24.71)],Other,0.9429309,0.992,adrenal gland,0.5
+P11086,Phenylethanolamine N-methyltransferase (PNMTase) (EC 2.1.1.28) (Noradrenaline N-methyltransferase),Other,0.9956636,0.9413270777479893,adrenal gland,149.2
+P19623,Spermidine synthase (SPDSY) (EC 2.5.1.16) (Putrescine aminopropyltransferase),Other,0.99985063,0.7288465723612625,pancreas,183.8
+P21964,Catechol O-methyltransferase (EC 2.1.1.6),Other,0.96793616,0.6962238805970149,liver,268.0
+P22061,Protein-L-isoaspartate(D-aspartate) O-methyltransferase (PIMT) (EC 2.1.1.77) (L-isoaspartyl protein carboxyl methyltransferase) (Protein L-isoaspartyl/D-aspartyl methyltransferase) (Protein-beta-aspartate methyltransferase),Protein,0.99999976,0.7258857696030977,skeletal muscle,206.6
+P22087,rRNA 2'-O-methyltransferase fibrillarin (EC 2.1.1.-) (34 kDa nucleolar scleroderma antigen) (Histone-glutamine methyltransferase) (U6 snRNA 2'-O-methyltransferase fibrillarin),RNA,0.99143034,0.6292544570502432,ovary,246.8
+P26358,DNA (cytosine-5)-methyltransferase 1 (Dnmt1) (EC 2.1.1.37) (CXXC-type zinc finger protein 9) (DNA methyltransferase HsaI) (DNA MTase HsaI) (M.HsaI) (MCMT),DNA,0.7048842,0.739672131147541,lymph node,24.4
+P40261,Nicotinamide N-methyltransferase (EC 2.1.1.1),Other,0.9969144,0.958492090205318,liver,297.1
+P46087,28S rRNA (cytosine(4447)-C(5))-methyltransferase (EC 2.1.1.-) (Nucleolar protein 1) (Nucleolar protein 2 homolog) (Proliferating-cell nucleolar antigen p120) (Proliferation-associated nucleolar protein p120),RNA,0.9549434,0.540483870967742,skeletal muscle,37.2
+P46597,Acetylserotonin O-methyltransferase (EC 2.1.1.4) (Hydroxyindole O-methyltransferase) (HIOMT),Other,0.99982387,0.9455555555555556,choroid plexus,7.2
+P49327,Fatty acid synthase (EC 2.3.1.85) (Type I fatty acid synthase) [Includes: [Acyl-carrier-protein] S-acetyltransferase (EC 2.3.1.38); [Acyl-carrier-protein] S-malonyltransferase (EC 2.3.1.39); 3-oxoacyl-[acyl-carrier-protein] synthase (EC 2.3.1.41); 3-oxoacyl-[acyl-carrier-protein] reductase (EC 1.1.1.100); 3-hydroxyacyl-[acyl-carrier-protein] dehydratase (EC 4.2.1.59); Enoyl-[acyl-carrier-protein] reductase (EC 1.3.1.39); Acyl-[acyl-carrier-protein] hydrolase (EC 3.1.2.14)],Protein,0.99006385,0.9074718638484767,adipose tissue,364.3
+P50135,Histamine N-methyltransferase (HMT) (EC 2.1.1.8),Other,0.98937166,0.8621767522855898,liver,229.7
+P51580,Thiopurine S-methyltransferase (EC 2.1.1.67) (Thiopurine methyltransferase),Other,0.996994,0.8055277777777777,thyroid gland,72.0
+P52788,Spermine synthase (SPMSY) (EC 2.5.1.22) (Spermidine aminopropyltransferase),Other,0.99995697,0.6300783699059561,prostate,127.6
+P55345,Protein arginine N-methyltransferase 2 (EC 2.1.1.319) (Histone-arginine N-methyltransferase PRMT2),Protein,0.9999825,0.549035752979415,spinal cord,92.3
+Q08J23,"RNA cytosine C(5)-methyltransferase NSUN2 (EC 2.1.1.-) (Myc-induced SUN domain-containing protein) (Misu) (NOL1/NOP2/Sun domain family member 2) (Substrate of AIM1/Aurora kinase B) (mRNA cytosine C(5)-methyltransferase) (EC 2.1.1.-) (tRNA cytosine C(5)-methyltransferase) (EC 2.1.1.-, EC 2.1.1.203) (tRNA methyltransferase 4 homolog) (hTrm4)",RNA,0.9999933,0.5084318766066839,skeletal muscle,38.9
+Q14353,Guanidinoacetate N-methyltransferase (EC 2.1.1.2),Other,0.99990547,0.9529013305685156,skeletal muscle,1157.4
+Q14749,Glycine N-methyltransferase (EC 2.1.1.20),Other,0.98481697,0.9845812633073102,pancreas,563.6
+Q1RMZ1,S-adenosylmethionine sensor upstream of mTORC1 (Probable methyltransferase BMT2 homolog) (EC 2.1.1.-),RNA,0.96760464,0.6112605042016807,heart muscle,11.9
+Q32P41,tRNA (guanine(37)-N(1))-methyltransferase (EC 2.1.1.228) (M1G-methyltransferase) (tRNA [GM37] methyltransferase) (tRNA methyltransferase 5 homolog),RNA,0.9999994,0.660248447204969,testis,16.1
+Q53H54,tRNA wybutosine-synthesizing protein 2 homolog (tRNA-yW-synthesizing protein 2) (EC 2.5.1.114) (tRNA(Phe) (4-demethylwyosine(37)-C(7)) aminocarboxypropyltransferase),RNA,0.99998546,0.4119587628865979,choroid plexus,9.7
+Q5HYK3,"2-methoxy-6-polyprenyl-1,4-benzoquinol methylase, mitochondrial (EC 2.1.1.201) (Ubiquinone biosynthesis methyltransferase COQ5)",Other,0.9969145,0.7565151515151516,skeletal muscle,92.4
+Q5JPI9,EEF1A lysine methyltransferase 2 (EC 2.1.1.-) (Methyltransferase-like protein 10) (Protein-lysine N-methyltransferase METTL10),Protein,0.9947147,0.3746153846153847,ovary,5.2
+Q5T7F5,Cap-specific mRNA (nucleoside-2'-O-)-methyltransferase 1 (EC 2.1.1.57) (Cap1 2'O-ribose methyltransferase 1),RNA,0.994732,0.6555008210180623,testis,60.9
+Q5T8I9,Small RNA 2'-O-methyltransferase (EC 2.1.1.386) (HEN1 methyltransferase homolog 1),RNA,0.96931577,0.9131352154531946,testis,67.3
+Q5T8V1,carnosine N-methyltransferase (EC 2.1.1.22),Protein,0.9527785,0.573625,liver,16.0
+Q5TEU4,"Arginine-hydroxylase NDUFAF5, mitochondrial (EC 1.-.-.-) (NADH dehydrogenase [ubiquinone] 1 alpha subcomplex assembly factor 5) (Putative methyltransferase NDUFAF5) (EC 2.1.1.-)",Protein,0.8856675,0.8102083333333332,skeletal muscle,19.2
+Q5VVY1,N-terminal Xaa-Pro-Lys N-methyltransferase 2 (EC 2.1.1.299) (Alpha N-terminal protein methyltransferase 1B) (Methyltransferase-like protein 11B) (X-Pro-Lys N-terminal protein methyltransferase 1B) (NTM1B),Protein,0.9592168,0.985,heart muscle,1.6
+Q5VZV1,Protein-lysine methyltransferase METTL21C (EC 2.1.1.-) (Methyltransferase-like protein 21C),Protein,0.9374908,0.9919658119658119,epididymis,23.4
+Q6FI81,Anamorsin (Cytokine-induced apoptosis inhibitor 1) (Fe-S cluster assembly protein DRE2 homolog),RNA,0.9333498,0.647527559055118,testis,63.5
+Q6P1Q9,tRNA N(3)-cytidine methyltransferase METTL2B (EC 2.1.1.-) (Methyltransferase-like protein 2B),RNA,0.9996138,0.4412987012987013,liver,7.7
+Q6P2P2,Protein arginine N-methyltransferase 9 (Protein arginine N-methyltransferase 10) (EC 2.1.1.320),Protein,0.9738623,0.7122123893805312,ovary,11.3
+Q6P4H8,ATP synthase subunit C lysine N-methyltransferase (EC 2.1.1.-) (Protein N-lysine methyltransferase FAM173B) (hFAM173B),Protein,0.9832276,0.5751552795031057,parathyroid gland,16.1
+Q6UX53,Thiol S-methyltransferase TMT1B (EC 2.1.1.9) (Methyltransferase-like protein 7B) (Thiol S-methyltransferase METTL7B),Other,0.9932429,0.9555871353777112,liver,267.4
+Q7L2J0,7SK snRNA methylphosphate capping enzyme (MePCE) (EC 2.1.1.-) (Bicoid-interacting protein 3 homolog) (Bin3 homolog),RNA,0.9631539,0.6400261780104711,testis,76.4
+Q7L592,"Protein arginine methyltransferase NDUFAF7, mitochondrial (EC 2.1.1.320) (NADH dehydrogenase [ubiquinone] complex I, assembly factor 7) (Protein midA homolog)",Protein,0.9533495,0.796685082872928,testis,36.2
+Q7Z2T5,tRNA (guanine(27)-N(2))-dimethyltransferase (EC 2.1.1.-) (tRNA methyltransferase 1-like protein) (TRMT1-like protein),RNA,0.9999428,0.6886486486486486,testis,25.9
+Q7Z3E4,Uncharacterized protein DKFZp686N1286 (tRNA aspartic acid methyltransferase 1),Other,0.9772086,0.7514814814814815,retina,5.4
+Q7Z4G4,tRNA (guanine(10)-N(2))-methyltransferase TRMT11 (EC 2.1.1.214) (tRNA methyltransferase 11 homolog),RNA,0.9999956,0.5914728682170542,liver,25.8
+Q7Z5W3,RNA 5'-monophosphate methyltransferase (EC 2.1.1.-) (BCDIN3 domain-containing protein),RNA,0.9993926,0.8689215686274513,skeletal muscle,20.4
+Q7Z624,Calmodulin-lysine N-methyltransferase (CLNMT) (CaM KMT) (EC 2.1.1.60),Protein,0.99387085,0.5995804195804196,basal ganglia,14.3
+Q86U44,N(6)-adenosine-methyltransferase catalytic subunit METTL3 (EC 2.1.1.348) (Methyltransferase-like protein 3) (hMETTL3) (N(6)-adenosine-methyltransferase 70 kDa subunit) (MT-A70),RNA,0.958968,0.354070351758794,tonsil,19.9
+Q86VU5,Catechol O-methyltransferase domain-containing protein 1 (EC 2.1.1.-),Other,0.9998171,0.9105056759545923,pancreas,96.9
+Q86W50,RNA N(6)-adenosine-methyltransferase METTL16 (EC 2.1.1.348) (Methyltransferase 10 domain-containing protein) (Methyltransferase-like protein 16) (U6 small nuclear RNA (adenine-(43)-N(6))-methyltransferase) (EC 2.1.1.346),RNA,0.99985945,0.38659793814432974,ovary,9.7
+Q86X55,Histone-arginine methyltransferase CARM1 (EC 2.1.1.319) (Coactivator-associated arginine methyltransferase 1) (Protein arginine N-methyltransferase 4),Protein,0.99985635,0.8036679536679536,skeletal muscle,103.6
+Q86XA0,Histone-arginine methyltransferase METTL23 (EC 2.1.1.319) (Methyltransferase-like protein 23),Protein,0.9896652,0.4416260162601627,testis,49.2
+Q8IXQ9,Electron transfer flavoprotein beta subunit lysine methyltransferase (EC 2.1.1.-) (ETFB lysine methyltransferase) (ETFB-KMT) (Protein N-lysine methyltransferase METTL20),Other,0.69911265,0.6918681318681317,liver,9.1
+Q8IY81,pre-rRNA 2'-O-ribose RNA methyltransferase FTSJ3 (EC 2.1.1.-) (Protein ftsJ homolog 3) (Putative rRNA methyltransferase 3),RNA,0.9968029,0.40227106227106224,skeletal muscle,27.3
+Q8IYL2,Probable tRNA (uracil-O(2)-)-methyltransferase (EC 2.1.1.211) (Methyltransferase-like protein 19),RNA,0.999,0.5224175824175823,skin,9.1
+Q8IYT2,Cap-specific mRNA (nucleoside-2'-O-)-methyltransferase 2 (EC 2.1.1.296) (Cap methyltransferase 2) (Cap2 2'O-ribose methyltransferase 2) (HMTr2) (MTr2) (FtsJ methyltransferase domain-containing protein 1) (Protein adrift homolog),RNA,0.9936428,0.5003571428571428,tonsil,16.8
+Q8IZ69,tRNA (uracil-5-)-methyltransferase homolog A (EC 2.1.1.35) (mRNA (uracil-5-)-methyltransferase TRMT2A) (EC 2.1.1.-),RNA,0.99996614,0.5953459119496854,liver,31.8
+Q8N1G2,Cap-specific mRNA (nucleoside-2'-O-)-methyltransferase 1 (EC 2.1.1.57) (Cap methyltransferase 1) (Cap1 2'O-ribose methyltransferase 1) (MTr1) (hMTr1) (FtsJ methyltransferase domain-containing protein 2) (Interferon-stimulated gene 95 kDa protein) (ISG95),RNA,0.99696404,0.6555008210180623,testis,60.9
+Q8N3J2,N(6)-adenine-specific methyltransferase METTL4 (Methyltransferase-like protein 4) (N(6)-adenine-specific DNA methyltransferase METTL4) (EC 2.1.1.72) (snRNA (2'-O-methyladenosine-N(6)-)-methyltransferase METTL4) (EC 2.1.1.-),RNA,0.9948013,0.492962962962963,lymph node,10.8
+Q8N4J0,Carnosine N-methyltransferase (EC 2.1.1.22),Other,0.8837272,0.573625,liver,16.0
+Q8N6F8,Methyltransferase-like protein 27 (Williams-Beuren syndrome chromosomal region 27 protein),Other,0.99981946,0.8774869109947645,choroid plexus,19.1
+Q8N6Q8,Probable methyltransferase-like protein 25 (EC 2.1.1.-),RNA,0.9999999,0.43178571428571433,retina,5.6
+Q8N6R0,eEF1A lysine and N-terminal methyltransferase (eEF1A-KNMT) (Methyltransferase-like protein 13) [Includes: eEF1A lysine methyltransferase (EC 2.1.1.-); eEF1A N-terminal methyltransferase (EC 2.1.1.-)],Protein,0.70999414,0.4622857142857143,epididymis,17.5
+Q8N7N1,Putative protein N-methyltransferase FAM86B1 (EC 2.1.1.-),Protein,0.99913317,0.7687671232876713,basal ganglia,7.3
+Q8NE18,Putative methyltransferase NSUN7 (EC 2.1.1.-) (NOL1/NOP2/Sun domain family member 7),RNA,0.7509659,0.8687012987012989,testis,15.4
+Q8NEC7,Glutathione S-transferase C-terminal domain-containing protein,RNA,0.99638945,0.6910891089108909,testis,10.1
+Q8TCB7,tRNA N(3)-cytidine methyltransferase METTL6 (EC 2.1.1.-) (Methyltransferase-like protein 6) (hMETTL6),RNA,0.9600275,0.4978616352201259,testis,15.9
+Q8TEA1,tRNA (cytosine(72)-C(5))-methyltransferase NSUN6 (EC 2.1.1.-) (NOL1/NOP2/Sun and PUA domain-containing protein 1) (NOL1/NOP2/Sun domain family member 6),RNA,0.9999938,0.8389141856392294,liver,57.1
+Q8TEK3,"Histone-lysine N-methyltransferase, H3 lysine-79 specific (EC 2.1.1.360) (DOT1-like protein) (Disruptor of telomeric silencing 1-like histone lysine methyltransferase) (Histone H3-K79 methyltransferase) (H3-K79-HMTase) (Lysine N-methyltransferase 4)",Other,0.7289742,0.8177642276422765,testis,49.2
+Q8WVE0,EEF1A lysine methyltransferase 1 (EC 2.1.1.-) (N(6)-adenine-specific DNA methyltransferase 2) (Protein-lysine N-methyltransferase N6AMT2) (eEF1A-KMT),Protein,0.8340888,0.369037037037037,epididymis,13.5
+Q8WVM0,"Dimethyladenosine transferase 1, mitochondrial (EC 2.1.1.-) (Mitochondrial 12S rRNA dimethylase 1) (Mitochondrial transcription factor B1) (h-mtTFB) (h-mtTFB1) (hTFB1M) (mtTFB1) (S-adenosylmethionine-6-N', N'-adenosyl(rRNA) dimethyltransferase 1)",RNA,0.99999475,0.5506382978723404,cerebral cortex,9.4
+Q8WXB1,Protein N-lysine methyltransferase METTL21A (EC 2.1.1.-) (HSPA lysine methyltransferase) (HSPA-KMT) (Hepatocellular carcinoma-associated antigen 557b) (Methyltransferase-like protein 21A),Protein,0.9997092,0.5387012987012988,liver,23.1
+Q8WZ04,Transmembrane O-methyltransferase (EC 2.1.1.6) (Catechol O-methyltransferase 2) (Protein LRTOMT2),Other,0.9999701,0.9733333333333334,testis,0.3
+Q96AZ1,EEF1A lysine methyltransferase 3 (EC 2.1.1.-) (Hepatocellular carcinoma-associated antigen 557a) (Methyltransferase-like protein 21B) (Protein-lysine methyltransferase METTL21B) (eEF1A-KMT3),Protein,0.99973613,0.7416425120772946,pancreas,20.7
+Q96BT7,tRNA (carboxymethyluridine(34)-5-O)-methyltransferase ALKBH8 (EC 2.1.1.229) (Alkylated DNA repair protein alkB homolog 8) (Alpha-ketoglutarate-dependent dioxygenase ALKBH8) (S-adenosyl-L-methionine-dependent tRNA methyltransferase ALKBH8),RNA,0.99464166,0.43428571428571416,lymph node,5.6
+Q96CB9,5-cytosine rRNA methyltransferase NSUN4 (EC 2.1.1.-) (5-cytosine tRNA methyltransferase NSUN4) (EC 2.1.1.-) (NOL1/NOP2/Sun domain family member 4) (mRNA cytosine C(5)-methyltransferase NSUN4) (EC 2.1.1.-),RNA,0.999972,0.9467,testis,80.0
+Q96FB5,Methyltransferase-like protein 25B (Protein RRNAD1) (Ribosomal RNA adenine dimethylase domain-containing protein 1),RNA,0.9999932,0.3293992932862191,skeletal muscle,28.3
+Q96FX7,tRNA (adenine(58)-N(1))-methyltransferase catalytic subunit TRMT61A (EC 2.1.1.220) (mRNA methyladenosine-N(1)-methyltransferase catalytic subunit TRMT61A) (EC 2.1.1.-) (tRNA(m1A58)-methyltransferase subunit TRMT61A) (tRNA(m1A58)MTase subunit TRMT61A),RNA,0.99790573,0.6189787234042554,colon,23.5
+Q96G04,Protein-lysine N-methyltransferase EEF2KMT (EC 2.1.1.-) (eEF2-lysine methyltransferase) (eEF2-KMT),Protein,0.9998386,0.5327619047619048,testis,10.5
+Q96GJ1,tRNA (uracil-5-)-methyltransferase homolog B (EC 2.1.1.35) (TRM2 homolog B) (rRNA (uracil-5-)-methyltransferase TRMT2B) (EC 2.1.1.-),RNA,0.99991155,0.5530935251798561,skeletal muscle,13.9
+Q96IZ6,tRNA N(3)-cytidine methyltransferase METTL2A (EC 2.1.1.-) (Methyltransferase-like protein 2A),RNA,0.99955493,0.6257627118644068,skeletal muscle,5.9
+Q96LA8,Protein arginine N-methyltransferase 6 (EC 2.1.1.319) (Heterogeneous nuclear ribonucleoprotein methyltransferase-like protein 6) (Histone-arginine N-methyltransferase PRMT6),Protein,0.9988256,0.4638399999999999,choroid plexus,12.5
+Q96MG8,Protein-L-isoaspartate O-methyltransferase domain-containing protein 1,Protein,0.9999944,0.6235595390524967,skeletal muscle,78.1
+Q96P11,28S rRNA (cytosine-C(5))-methyltransferase (EC 2.1.1.-) (NOL1-related protein) (NOL1R) (NOL1/NOP2/Sun domain family member 5) (Williams-Beuren syndrome chromosomal region 20A protein),RNA,0.9892924,0.640122699386503,skeletal muscle,32.6
+Q96RS0,Trimethylguanosine synthase (EC 2.1.1.-) (CLL-associated antigen KW-2) (Cap-specific guanine-N(2) methyltransferase) (Hepatocellular carcinoma-associated antigen 137) (Nuclear receptor coactivator 6-interacting protein) (PRIP-interacting protein with methyltransferase motif) (PIMT) (PIPMT),RNA,0.9999771,0.5486363636363637,thymus,8.8
+Q96S19,Methyltransferase-like 26,Other,0.9986871,0.6394155381325731,amygdala,140.3
+Q99873,Protein arginine N-methyltransferase 1 (EC 2.1.1.319) (Histone-arginine N-methyltransferase PRMT1) (Interferon receptor 1-bound protein 4),Protein,0.9996803,0.6589969203695557,skeletal muscle,227.3
+Q9BQD7,Adenine nucleotide translocase lysine N-methyltransferase (ANT-KMT) (EC 2.1.1.-),Protein,0.99411654,0.6300471698113207,liver,42.4
+Q9BTF0,U6 snRNA (guanine-N(2))-methyltransferase THUMPD2 (EC 2.1.1.-) (THUMP domain-containing protein 2),RNA,0.9994777,0.6890476190476191,blood vessel,4.2
+Q9BUU2,Methyltransferase-like protein 22 (EC 2.1.1.-),Protein,0.99917847,0.7143718592964824,skeletal muscle,19.9
+Q9BV44,tRNA (guanine(6)-N(2))-methyltransferase THUMP3 (EC 2.1.1.256) (THUMP domain-containing protein 3) (tRNA(Trp) (guanine(7)-N(2))-methyltransferase THUMP3) (EC 2.1.1.-),RNA,0.99982315,0.7194945848375452,testis,55.4
+Q9BV86,"N-terminal Xaa-Pro-Lys N-methyltransferase 1 (EC 2.1.1.244) (Alpha N-terminal protein methyltransferase 1A) (Methyltransferase-like protein 11A) (N-terminal RCC1 methyltransferase) (X-Pro-Lys N-terminal protein methyltransferase 1A) (NTM1A) [Cleaved into: N-terminal Xaa-Pro-Lys N-methyltransferase 1, N-terminally processed]",Protein,0.9841037,0.7273206751054851,skeletal muscle,94.8
+Q9BVS5,"tRNA (adenine(58)-N(1))-methyltransferase, mitochondrial (EC 2.1.1.220) (mRNA methyladenosine-N(1)-methyltransferase) (EC 2.1.1.-)",RNA,0.9154546,0.3739354838709678,tongue,15.5
+Q9H1A3,Protein-L-histidine N-pros-methyltransferase (EC 2.1.1.-) (DORA reverse strand protein) (DREV) (DREV1) (Methyltransferase-like protein 9) (hMETTL9),Protein,0.9356919,0.6392125984251968,kidney,127.0
+Q9H5Q4,"Dimethyladenosine transferase 2, mitochondrial (EC 2.1.1.-) (Hepatitis C virus NS5A-transactivated protein 5) (HCV NS5A-transactivated protein 5) (Mitochondrial 12S rRNA dimethylase 2) (Mitochondrial transcription factor B2) (h-mtTFB) (h-mtTFB2) (hTFB2M) (mtTFB2) (S-adenosylmethionine-6-N', N'-adenosyl(rRNA) dimethyltransferase 2)",RNA,0.9957783,0.7262889518413597,liver,35.3
+Q9H649,"tRNA (cytosine(34)-C(5))-methyltransferase, mitochondrial (EC 2.1.1.-) (NOL1/NOP2/Sun domain family member 3)",RNA,0.9997447,0.3632432432432433,rectum,3.7
+Q9H7H0,"Ribosome assembly protein METTL17, mitochondrial (False p73 target gene protein) (Methyltransferase 11 domain-containing protein 1) (Methyltransferase-like protein 17) (Protein RSM22 homolog, mitochondrial)",RNA,0.9697702,0.5374117647058825,adrenal gland,34.0
+Q9H825,"tRNA N(3)-cytidine methyltransferase METTL8, mitochondrial (EC 2.1.1.-) (Methyltransferase-like protein 8) (mRNA N(3)-methylcytidine methyltransferase METTL8) (EC 2.1.1.-)",RNA,0.99414116,0.6424691358024691,esophagus,8.1
+Q9H867,Protein N-lysine methyltransferase METTL21D (EC 2.1.1.-) (Methyltransferase-like protein 21D) (VCP lysine methyltransferase) (VCP-KMT) (Valosin-containing protein lysine methyltransferase),Protein,0.9998574,0.5185714285714286,cerebellum,5.6
+Q9H8H3,Thiol S-methyltransferase TMT1A (EC 2.1.1.9) (Methyltransferase-like protein 7A) (N6-adenosine-methyltransferase TMT1A) (EC 2.1.1.348) (Protein AAM-B) (Thiol methyltransferase 1A),Other,0.9992587,0.8632220536165909,liver,395.4
+Q9HBK9,Arsenite methyltransferase (EC 2.1.1.137) (Methylarsonite methyltransferase) (S-adenosyl-L-methionine:arsenic(III) methyltransferase),Protein,0.9884122,0.9700383729854183,adrenal gland,260.6
+Q9HCE5,N(6)-adenosine-methyltransferase non-catalytic subunit METTL14 (Methyltransferase-like protein 14) (hMETTL14),RNA,0.095860735,0.5376086956521738,bone marrow,18.4
+Q9NR22,Protein arginine N-methyltransferase 8 (EC 2.1.1.319) (Heterogeneous nuclear ribonucleoprotein methyltransferase-like protein 4),Protein,0.99804723,0.9514166666666667,basal ganglia,24.0
+Q9NRN9,rRNA N(6)-adenosine-methyltransferase METTL5 (EC 2.1.1.-) (Methyltransferase-like protein 5),RNA,0.9932674,0.5778645235361654,skeletal muscle,87.1
+Q9NV79,Protein-L-isoaspartate O-methyltransferase domain-containing protein 2,Protein,0.9999845,0.8259052247873632,retina,164.6
+Q9NVM4,Protein arginine N-methyltransferase 7 (EC 2.1.1.321) (Histone-arginine N-methyltransferase PRMT7) ([Myelin basic protein]-arginine N-methyltransferase PRMT7),Protein,0.99936897,0.6685496183206107,choroid plexus,13.1
+Q9NXH9,"tRNA (guanine(26)-N(2))-dimethyltransferase (EC 2.1.1.216) (tRNA 2,2-dimethylguanosine-26 methyltransferase) (tRNA methyltransferase 1) (hTRM1) (tRNA(guanine-26,N(2)-N(2)) methyltransferase) (tRNA(m(2,2)G26)dimethyltransferase)",RNA,0.9999999,0.42959459459459465,spleen,29.6
+Q9NZJ6,"Ubiquinone biosynthesis O-methyltransferase, mitochondrial (3-demethylubiquinol 3-O-methyltransferase) (EC 2.1.1.64) (3-demethylubiquinone 3-O-methyltransferase) (EC 2.1.1.-) (Polyprenyldihydroxybenzoate methyltransferase) (EC 2.1.1.114)",Other,0.99932957,0.8149685534591193,tongue,47.7
+Q9P272,Probable tRNA methyltransferase 9B (Probable tRNA methyltransferase 9-like protein) (EC 2.1.1.-),Other,0.9797594,0.952214111922141,choroid plexus,82.2
+Q9UBC3,DNA (cytosine-5)-methyltransferase 3B (Dnmt3b) (EC 2.1.1.37) (DNA methyltransferase HsaIIIB) (DNA MTase HsaIIIB) (M.HsaIIIB),DNA,0.82276803,0.8341379310344827,pancreas,5.8
+Q9UBP6,tRNA (guanine-N(7)-)-methyltransferase (EC 2.1.1.33) (Methyltransferase-like protein 1) (mRNA (guanine-N(7)-)-methyltransferase) (EC 2.1.1.-) (miRNA (guanine-N(7)-)-methyltransferase) (EC 2.1.1.-) (tRNA (guanine(46)-N(7))-methyltransferase) (tRNA(m7G46)-methyltransferase),RNA,0.9997435,0.6293772893772894,pancreas,27.3
+Q9UET6,tRNA (cytidine(32)/guanosine(34)-2'-O)-methyltransferase (EC 2.1.1.205) (2'-O-ribose RNA methyltransferase TRM7 homolog) (Protein ftsJ homolog 1),RNA,0.9999664,0.31619631901840495,pancreas,16.3
+Q9UI43,"rRNA methyltransferase 2, mitochondrial (EC 2.1.1.-) (16S rRNA (uridine(1369)-2'-O)-methyltransferase) (16S rRNA [Um1369] 2'-O-methyltransferase) (Protein ftsJ homolog 2)",RNA,0.99999905,0.47392156862745094,skeletal muscle,20.4
+Q9UIC8,Leucine carboxyl methyltransferase 1 (EC 2.1.1.233) (Protein-leucine O-methyltransferase) ([Phosphatase 2A protein]-leucine-carboxy methyltransferase 1),Protein,0.8605877,0.5016535433070866,skeletal muscle,50.8
+Q9UJW3,DNA (cytosine-5)-methyltransferase 3-like,DNA,0.8279657,0.99,liver,1.8
+Q9UNQ2,"Dimethyladenosine transferase (EC 2.1.1.183) (18S rRNA (adenine(1779)-N(6)/adenine(1780)-N(6))-dimethyltransferase) (18S rRNA dimethylase) (DIM1 dimethyladenosine transferase 1 homolog) (DIM1 dimethyladenosine transferase 1-like) (S-adenosylmethionine-6-N',N'-adenosyl(rRNA) dimethyltransferase)",RNA,0.99990046,0.5049382716049383,urinary bladder,24.3
+Q9Y5N5,Methyltransferase HEMK2 (HemK methyltransferase family member 2) (M.HsaHemK2P) (Lysine N-methyltransferase 9) (EC 2.1.1.-) (Methylarsonite methyltransferase N6AMT1) (EC 2.1.1.-) (Methyltransferase N6AMT1) (Protein N(5)-glutamine methyltransferase) (EC 2.1.1.-),Protein,0.8180432,0.49948717948717936,ovary,7.8
+Q9Y5R4,MTRF1L release factor glutamine methyltransferase (EC 2.1.1.297) (HemK methyltransferase family member 1) (M.HsaHemKP),Protein,0.9989015,0.5370909090909091,choroid plexus,27.5
+Q9Y6K1,DNA (cytosine-5)-methyltransferase 3A (Dnmt3a) (EC 2.1.1.37) (Cysteine methyltransferase DNMT3A) (EC 2.1.1.-) (DNA methyltransferase HsaIIIA) (DNA MTase HsaIIIA) (M.HsaIIIA),DNA,0.8417715,0.6164245810055866,skeletal muscle,17.9
+R4GNF4,Catechol-O-methyltransferase domain containing 1,Other,0.9999708,0.9105056759545923,pancreas,96.9
+S4R338,N-terminal Xaa-Pro-Lys N-methyltransferase 1 (EC 2.1.1.244) (Alpha N-terminal protein methyltransferase 1A) (Methyltransferase-like protein 11A) (X-Pro-Lys N-terminal protein methyltransferase 1A),Protein,0.9667703,0.7273206751054851,skeletal muscle,94.8
+S4R344,N-terminal Xaa-Pro-Lys N-methyltransferase 1,Other,0.9999659,0.7273206751054851,skeletal muscle,94.8
+S4R3J7,N-terminal Xaa-Pro-Lys N-methyltransferase 1 (EC 2.1.1.244) (Alpha N-terminal protein methyltransferase 1A) (Methyltransferase-like protein 11A) (X-Pro-Lys N-terminal protein methyltransferase 1A),Other,0.9999999,0.7273206751054851,skeletal muscle,94.8
+V9GYL1,Protein-L-isoaspartate (D-aspartate) O-methyltransferase domain containing 2,Protein,0.99999845,0.8259052247873632,retina,164.6
+V9GYZ4,Protein-L-isoaspartate (D-aspartate) O-methyltransferase domain containing 2,Protein,0.9507281,0.8259052247873632,retina,164.6
+V9GYZ7,Protein-L-isoaspartate (D-aspartate) O-methyltransferase domain containing 2,Protein,0.99998844,0.8259052247873632,retina,164.6
+V9GZ41,Protein-L-isoaspartate (D-aspartate) O-methyltransferase domain containing 2,Protein,0.97061193,0.8259052247873632,retina,164.6
+X6RK96,tRNA methyltransferase 1 like (tRNA methyltransferase 1L),RNA,0.99999857,0.6886486486486486,testis,25.9
