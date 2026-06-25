@@ -1,0 +1,15 @@
+# Q54S83 (NDUFAF7, no-motif protein-MTase) IG on apo 5ZTZ.  Open: chimerax view.cxc
+open Q54S83_IG.pdb
+set bgColor white
+hide atoms
+cartoon
+color /A #cccccc
+color /A:384,281,209,382,374,383,385,279,375,191 #cb181d
+show /A:384,281,209,382,374,383,385,279,375,191 atoms
+style /A:384,281,209,382,374,383,385,279,375,191 stick
+color /A:384,281,209,382,374,383,385,279,375,191 byhetero
+label /A:384,281,209,382,374,383,385,279,375,191 text "{0.label_one_letter_code}{0.number}" height 1.5
+lighting soft
+graphics silhouettes true
+view
+# >>> rotate, then: save Q54S83_IG.png width 2400 height 1800 supersample 3

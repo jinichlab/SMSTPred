@@ -1,0 +1,9 @@
+motif,folder,structure,type,motif_residues,partner,cofactor,role
+1,protein_motif1_PrmA_SAMloop,2NXN,complex,/A:126-141,B,-,PrmA SAM Motif I loop (+L11 substrate)
+7,protein_motif7_PrmA,2NXN,complex,/A:98-114,B,-,PrmA region (+L11 substrate)
+4,protein_motif4_PRMT5,4GQB,complex,/A:429-445,B+C,0XU,PRMT5 region (+MEP50 partner)
+6,protein_motif6_PRMT5,4GQB,complex,/A:45-53,B+C,0XU,PRMT5 region (+MEP50 partner)
+2,protein_motif2_SET,AF-Q6C4Y5,AlphaFold,/A:336-350,-,-,SET lysine-MTase region (AlphaFold)
+3,protein_motif3,AF-A7GSD9,AlphaFold,/A:196-203,-,-,O-MTase region (AlphaFold)
+5,protein_motif5_HemK,AF-Q8DHV7,AlphaFold,/A:10-19,-,-,HemK/PrmC region (AlphaFold)
+8,protein_motif8_HemK_NPPY,AF-Q9A9T7,AlphaFold,/A:188-195,-,-,HemK catalytic NPPY (AlphaFold)

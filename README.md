@@ -1,71 +1,60 @@
-# SAM-Dependent Methyltransferase Substrate Type Classifier
+# Predicting methyltransferase substrate specificity across the tree of life with structure-aware protein language models
 
-Machine learning pipeline for predicting substrate specificity (RNA, DNA, Protein, Other) of S-adenosylmethionine (SAM)-dependent methyltransferases using ProtT5 protein language model embeddings.
+Analysis code and results for the manuscript. The project builds a classifier that
+predicts the **substrate type** of a SAM-dependent methyltransferase (MTase) —
+**DNA / RNA / Protein / Other (small-molecule)** — directly from a protein's sequence via
+a **structure-aware protein language model (ProstT5)**, validates it against
+homology and classical-ML baselines, deploys it across the tree of life, and interprets
+*what* the model reads to make each call.
 
-## Overview
+## The pipeline (stages)
 
-This project implements a multi-label MLP classifier trained on ProtT5-XL-U50 embeddings of SAM MTases from UniProtKB/Swiss-Prot. The classifier achieves AUPRC 0.998, AUROC 0.999, and MCC 0.976 on held-out validation data using cluster-based cross-validation to prevent homology leakage.
+| Stage | Folder | What it does |
+|---|---|---|
+| 1 | [`1_clustering/`](1_clustering) | Homology-aware **cluster-disjoint** partitioning of the training sets (greedy cosine clustering + threshold selection) so cross-validation never leaks homologues. |
+| 2 | [`2_training/`](2_training) | Loss/epoch tuning, the full **classifier bake-off** (embeddings vs homology baselines vs classical ML), the **SAM-vs-UP** training-set comparison, and the final **deployment model**. |
+| 3 | [`3_predictions/`](3_predictions) | Scores new proteins with the deployment model (per-label score, call, ensemble disagreement, applicability-domain flag). |
+| 4 | [`4_phylo_trends/`](4_phylo_trends) | Phylogenetic / taxonomic trends in the predicted substrate usage across the tree of life. |
+| 5 | [`5_umap/`](5_umap) | Global ProstT5 UMAP of all tree-of-life MTases + substrate-coloured maps and cluster-enrichment figures. |
+| 6 | [`6_motif_analysis/`](6_motif_analysis) | **Interpretability**: discriminative sequence motifs (STREME), per-residue attribution (Integrated Gradients), and structural mapping of both — *why* the classifier works. |
 
-Predictions are applied genome-wide across 386 reference proteomes (312 bacteria, 13 archaea, 61 eukaryotes), revealing universal substrate trade-offs, lineage-specific specializations, and evolutionary patterns in methyltransferase repertoires.
+Each folder has its own `README.md` with scripts, inputs, outputs, and parameters.
 
-## Repository Structure
+## Headline results
 
-```
-├── embeddings/          # ProtT5 embedding generation pipeline
-├── classifier/          # Model training & evaluation
-├── predictions/         # Genome-scale prediction scripts
-├── phylogenetics/       # Phylogenetic tree construction & visualization
-├── umap/                # UMAP dimensionality reduction & clustering
-├── expression_analysis/ # Human tissue expression analysis
-├── solubility/          # Protein solubility prediction wrapper
-├── data/                # Small reference/result data files
-├── figures/             # Publication figures
-├── article/             # Journal article
-└── environment.yml      # Conda environment specification
-```
+- **ProstT5 is the best embedding.** Under cluster-disjoint CV the ProstT5 MLP reaches
+  **MCC 0.955**, beating sequence-homology (MMseqs2 1-NN 0.917), structural-homology
+  (Foldseek 1-NN 0.876), classical ML, and other PLMs — i.e. the structure-aware embedding
+  carries substrate-type information *beyond* homology (Stage 2).
+- **The deployment model** is a 6-seed ProstT5 MLP (1024→512→256→4) with per-label
+  MCC-optimal thresholds calibrated on **cluster-disjoint out-of-fold** predictions and an
+  applicability-domain flag (Stage 2 → 3).
+- **Focused beats broad.** A SAM-trained model out-performs a model trained on the broad
+  201k-enzyme UP set on the SAM-MTase task (overall MCC 0.883 vs 0.824), driven mostly by
+  the rare DNA class (Stage 2).
+- **Tree-of-life sweep** of ~112k reference-proteome MTases (Stage 3) reveals
+  taxonomic/lifestyle substrate trends (Stage 4) and a structured embedding landscape with
+  recoverable, family-specific clusters (Stage 5).
+- **Interpretation** (Stage 6): discriminative motifs recover the canonical catalytic /
+  cofactor signatures, but the classifier's substrate signal localises to **buried fold-core
+  residues**, not the conserved catalytic site — across all four substrate classes.
 
-## Installation
+## Conventions used throughout
 
-```bash
-# Clone the repository
-git clone https://github.com/jinichlab/substrate_type_classifier.git
-cd substrate_type_classifier
+- **Embeddings.** ProstT5 (structure-aware, 1024-D) per-protein mean embeddings are the
+  classifier features; ProtT5 embeddings are used **only for clustering** (homology splits),
+  "to match the rest of the project". Embeddings are produced upstream by
+  `Code/prostt5/embed_prostt5.py` into `Code/files/prostt5_*.h5` (not shipped here).
+- **Labels.** Multi-label `[Other, Protein, RNA, DNA]`; single-substrate proteins are used
+  for the headline analyses.
+- **Validation.** Homology-aware **cluster-disjoint** cross-validation everywhere
+  (greedy cosine clustering; SAM @0.6, UP @0.5). Per-label decision thresholds are
+  **MCC-optimal, tuned on TRAIN/out-of-fold** predictions — never a fixed 0.5.
+- **Compute.** Jobs run via SLURM `run_*.sh` drivers (conda env `classifier_env`, GPU).
 
-# Create conda environment
-conda env create -f environment.yml
-conda activate prott5
-```
+## Reproduction note
 
-### Requirements
-
-- Python 3.12+
-- PyTorch (with CUDA 12 for GPU acceleration)
-- Transformers (for ProtT5-XL-U50)
-- scikit-learn, XGBoost
-- matplotlib, pandas, numpy, h5py
-
-## Pipeline
-
-1. **Generate embeddings**: Convert protein sequences to 1024-dimensional ProtT5 embeddings (`embeddings/`)
-2. **Train classifier**: Train MLP with cluster-based cross-validation (`classifier/`)
-3. **Predict**: Apply trained model to reference proteomes (`predictions/`)
-4. **Visualize**: Generate phylogenetic trees (`phylogenetics/`) and UMAP projections (`umap/`)
-5. **Analyze**: Tissue expression patterns (`expression_analysis/`) and solubility (`solubility/`)
-
-## Model Architecture
-
-- **Input**: 1024-dimensional ProtT5-XL-U50 per-protein embeddings
-- **Architecture**: MLP (1024 → 512 → 256 → 4) with ReLU activation and sigmoid output
-- **Training**: 500 epochs, Adam optimizer (lr=0.001), BCELoss
-- **Validation**: Cluster-based cross-validation (cosine similarity threshold 0.7)
-- **Output**: Multi-label probabilities for RNA, DNA, Protein, Other substrates
-
-## Citation
-
-If you use this code, please cite:
-
-> Roethler, N., et al. "Phylogenetic Analysis of SAM-Dependent Methyltransferase Substrate Preferences Across 386 Organisms." (2025).
-
-## License
-
-See repository license for details.
+Large regenerable inputs (per-protein/per-residue embedding `*.h5`, the raw corpus/UniProt
+FASTAs, mmseqs temp dirs) are **not** shipped — they are produced by the upstream embedding
+step and the stage scripts. Models, result tables, figures, and the Stage-6 structures are
+included.

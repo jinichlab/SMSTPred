@@ -1,0 +1,21 @@
+open /home/nroethler/Code/motif_analysis/structures/DNA/1MHT.pdb
+set bgColor white
+hide atoms
+cartoon
+color #1 #cccccc
+select nucleic
+color sel #9c7a5b
+~select
+show ligand
+style ligand stick
+color ligand byelement
+color /A:17-24 #2171b5
+show /A:17-24 atoms
+style /A:17-24 stick
+color /A:17-24 byhetero
+view /A:17-24
+zoom 0.55
+lighting soft
+graphics silhouettes true
+save /home/nroethler/Code/motif_analysis/structures/DNA/motif2_SAMloop/motif2_SAMloop.png width 2000 height 1500 supersample 3
+exit

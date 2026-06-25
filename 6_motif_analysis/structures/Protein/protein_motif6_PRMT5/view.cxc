@@ -1,0 +1,21 @@
+# Protein PRMT5 region (+MEP50 partner).  Open: chimerax view.cxc
+open protein_motif6_PRMT5.pdb
+set bgColor white
+hide atoms
+cartoon
+color /A #cccccc
+color /A:45-53 #ce1256
+show /A:45-53 atoms
+style /A:45-53 stick
+color /A:45-53 byhetero
+label /A:45-53 text "{0.label_one_letter_code}{0.number}" height 1.2
+color /B,/C #d9b38c
+show ligand
+style ligand stick
+color ligand byelement
+hbonds /A:45-53 restrict /B,/C | ligand reveal true color #303030 dashes 8 radius 0.05
+2dlabel text "Protein motif6: PRMT5 region (+MEP50 partner)" xpos .03 ypos .04 size 14
+lighting soft
+graphics silhouettes true
+view
+# >>> rotate, then: save protein_motif6_PRMT5.png width 2400 height 1800 supersample 3

@@ -1,72 +1,19 @@
-# ===== Large Data Files =====
-# HDF5 embeddings (often >1GB)
-*.h5
-
-# Compressed data files
+# --- large / regenerable intermediates (produced by the stage scripts) ---
+*.dat                 # disk-backed cosine-similarity matrices (~170 MB each)
+*.h5                  # ProstT5 / ProtT5 embeddings (regenerated upstream by embed_prostt5.py)
 *.gz
-*.tsv.gz
-
-# Large prediction CSVs
-predictions_G_df*.csv
-mlp_predictions_*.csv
-mtb_SAM_predictions.csv
-
-# FASTA sequence files
-*.fasta
-
-# Large substrate types CSV (14MB)
-SAM_swiss_substrate_types.csv
-
-# ===== Reference/External Data =====
-# Reference proteome directories
-reference_proteomes/
-reference_files/
-prediction_files/
-
-# ===== Edison AI Analysis =====
-# Iterative Edison analysis rounds
-edison_analysis/r*/
-edison_analysis/round*/
-
-# ===== Third-Party Source Code =====
-# GraPhlAn library source
-src/
-lib/
-examples/
-
-# ===== Intermediate/Temp Files =====
-blah.txt
-*.log
-*_ORIGINAL
-*.dat
-*.nwk
-*.xml
-*.tsv
-
-# Perl scripts (protein-sol dependencies)
-*.pl
-
-# ===== Build/System Files =====
 __pycache__/
 *.pyc
-*.pyo
-.ipynb_checkpoints/
-*.egg-info/
-MANIFEST.in
+*.log
 
-# ===== Output Directories =====
-sam_umap_output/
-output_tree/
-itol_output/
-itol_output_reference/
-cluster_figures/
-Classifiers/
-SVM_polynomial/
-
-# ===== OS Files =====
-.DS_Store
-Thumbs.db
-
-# ===== Keep These =====
-# Model weights (.pth) are small (~2.6MB) - DO NOT ignore
-# !*.pth
+# large upstream corpus / sequence files (regenerated; small result FASTAs are kept)
+corpus.csv
+corpus_all.fasta
+class_*.fasta
+control_*.fasta
+ctrl_*.fasta
+pos_*.fasta
+reps_*.fasta
+clust_*
+tmp_mmseqs/
+cosine_sim_matrix.dat

@@ -1,0 +1,20 @@
+# Q9V2G1 (no-motif RNA-MTase) IG on tRNA-bound 5WT1.  Open: chimerax view.cxc
+open Q9V2G1_IG.pdb
+set bgColor white
+hide atoms
+cartoon
+color /A #cccccc
+color /A:196,139,189,194,258,270,318,188,250,111 #cb181d
+show /A:196,139,189,194,258,270,318,188,250,111 atoms
+style /A:196,139,189,194,258,270,318,188,250,111 stick
+color /A:196,139,189,194,258,270,318,188,250,111 byhetero
+label /A:196,139,189,194,258,270,318,188,250,111 text "{0.label_one_letter_code}{0.number}" height 1.5
+color /C,F #d9b38c
+nucleotides /C,F fill
+show ligand
+style ligand stick
+color ligand byelement
+lighting soft
+graphics silhouettes true
+view
+# >>> rotate, then: save Q9V2G1_IG.png width 2400 height 1800 supersample 3
