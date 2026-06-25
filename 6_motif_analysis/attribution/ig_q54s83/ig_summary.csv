@@ -1,0 +1,2 @@
+Entry,label,score,called,F_baseline,sum_ig,Fz_minus_Fb,completeness_ratio,top_positive_residues
+Q54S83,Protein,0.7343,Protein,-7.1681,8.207,8.2077,1.0,V384:+0.234;L281:+0.229;Q209:+0.223;L382:+0.193;L374:+0.193;S383:+0.186

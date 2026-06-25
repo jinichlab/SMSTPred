@@ -1,0 +1,323 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<!-- Document definition -->
+<!-- http://zlab.bu.edu/~phaverty/SupplementalData/CisML/cisml.dtd -->
+<!DOCTYPE cis-element-search[
+<!ELEMENT cis-element-search (program-name, parameters, (pattern | multi-pattern-scan)*)>
+<!ELEMENT program-name (#PCDATA)>
+<!ELEMENT parameters (
+  pattern-file, 
+  sequence-file, 
+  background-seq-file?,
+  pattern-pvalue-cutoff?,
+  sequence-pvalue-cutoff?,
+  site-pvalue-cutoff?,
+  sequence-filtering,
+  ANY*
+ )>
+<!ELEMENT command-line (#PCDATA)>
+<!ELEMENT pattern-file (#PCDATA)>
+<!ELEMENT sequence-file (#PCDATA)>
+<!ELEMENT background-seq-file (#PCDATA)>
+<!ELEMENT pattern-pvalue-cutoff (#PCDATA)>
+<!ELEMENT sequence-pvalue-cutoff (#PCDATA)>
+<!ELEMENT site-pvalue-cutoff (#PCDATA)>
+<!ELEMENT sequence-filtering EMPTY>
+<!ELEMENT multi-pattern-scan (pattern+, ANY*)>
+<!ELEMENT pattern (scanned-sequence+, ANY*)>
+<!ELEMENT scanned-sequence (matched-element*, ANY*)>
+<!ELEMENT matched-element (sequence)>
+<!ELEMENT sequence (#PCDATA)>
+<!ATTLIST cis-element-search
+xmlns:xsi CDATA #IMPLIED
+xmlns:mem CDATA #IMPLIED
+xsi:schemaLocation CDATA #IMPLIED
+>
+<!ATTLIST sequence-filtering
+on-off CDATA #REQUIRED
+type CDATA #IMPLIED
+>
+<!ATTLIST multi-pattern-scan
+score CDATA #IMPLIED
+pvalue CDATA #IMPLIED
+>
+<!ATTLIST pattern
+accession CDATA #REQUIRED
+name CDATA #REQUIRED
+pvalue CDATA #IMPLIED
+score CDATA #IMPLIED
+db CDATA #IMPLIED
+lsid CDATA #IMPLIED
+>
+<!ATTLIST scanned-sequence
+accession CDATA #REQUIRED
+name CDATA #REQUIRED
+score CDATA #IMPLIED
+pvalue CDATA #IMPLIED
+length CDATA #IMPLIED
+db CDATA #IMPLIED
+lsid CDATA #IMPLIED
+>
+<!ATTLIST matched-element
+start CDATA #REQUIRED
+stop CDATA #REQUIRED
+score CDATA #IMPLIED
+pvalue CDATA #IMPLIED
+clusterid CDATA #IMPLIED
+>
+
+]>
+<cis-element-search
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://zlab.bu.edu/schema/cisml cisml.xsd"
+  xmlns="http://zlab.bu.edu/schema/cisml"
+  xmlns:mem="http://noble.gs.washington.edu/meme"
+>
+<program-name>fimo</program-name>
+<parameters>
+<command-line>fimo --oc fimo_hom --thresh 1e-4 --verbosity 1 ../../../streme_Other/streme.txt cands.fasta</command-line>
+<pattern-file>../../../streme_Other/streme.txt</pattern-file>
+<sequence-file>cands.fasta</sequence-file>
+<site-pvalue-cutoff>0.0001</site-pvalue-cutoff>
+<sequence-filtering on-off="off"/>
+</parameters>
+<pattern accession="1-RVLKPGGRLVL" name="STREME-1">
+<scanned-sequence accession="1KYZ" name="1KYZ">
+<matched-element start="285" stop="295" score="12.1458" pvalue="1.83e-05">
+<sequence>EALPDNGKVIV</sequence>
+<mem:qvalue>0.00705</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP1" name="1FP1">
+<matched-element start="294" stop="304" score="16.1042" pvalue="1.59e-06">
+<sequence>KALSPNGKVII</sequence>
+<mem:qvalue>0.00152</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP2" name="1FP2">
+<matched-element start="76" stop="86" score="11.25" pvalue="2.98e-05">
+<sequence>RYLAHNGFFEI</sequence>
+<mem:qvalue>0.00949</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1M6E" name="1M6E">
+<matched-element start="197" stop="207" score="14.4792" pvalue="4.58e-06">
+<sequence>QEVVPGGRMVL</sequence>
+<mem:qvalue>0.00292</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="3BWM" name="3BWM">
+<matched-element start="77" stop="87" score="16.9167" pvalue="9.03e-07">
+<sequence>RLLSPGARLIT</sequence>
+<mem:qvalue>0.00152</mem:qvalue>
+</matched-element>
+<matched-element start="157" stop="167" score="9.10417" pvalue="8.89e-05">
+<sequence>GLLRKGTVLLA</sequence>
+<mem:qvalue>0.0243</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="3REW" name="3REW">
+</scanned-sequence>
+<scanned-sequence accession="3C3Y" name="3C3Y">
+<matched-element start="169" stop="179" score="12.125" pvalue="1.85e-05">
+<sequence>KLVKVGGIVAY</sequence>
+<mem:qvalue>0.00705</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<mem:has-qvalues>yes</mem:has-qvalues>
+</pattern>
+<pattern accession="2-TGIDLSPEMJEVA" name="STREME-2">
+<scanned-sequence accession="1KYZ" name="1KYZ">
+</scanned-sequence>
+<scanned-sequence accession="1FP1" name="1FP1">
+</scanned-sequence>
+<scanned-sequence accession="1FP2" name="1FP2">
+</scanned-sequence>
+<scanned-sequence accession="1M6E" name="1M6E">
+</scanned-sequence>
+<scanned-sequence accession="3BWM" name="3BWM">
+</scanned-sequence>
+<scanned-sequence accession="3REW" name="3REW">
+</scanned-sequence>
+<scanned-sequence accession="3C3Y" name="3C3Y">
+<matched-element start="99" stop="111" score="8.10909" pvalue="2.84e-05">
+<sequence>TAIDFDREAYEIG</sequence>
+<mem:qvalue>0.0537</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<mem:has-qvalues>yes</mem:has-qvalues>
+</pattern>
+<pattern accession="3-LVDVGGGTGQLL" name="STREME-3">
+<scanned-sequence accession="1KYZ" name="1KYZ">
+<matched-element start="204" stop="215" score="29.9455" pvalue="4.8e-11">
+<sequence>LVDVGGGTGAVI</sequence>
+<mem:qvalue>3.06e-08</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP1" name="1FP1">
+<matched-element start="213" stop="224" score="30.2727" pvalue="3.34e-11">
+<sequence>LVDVGGGSGRNL</sequence>
+<mem:qvalue>3.06e-08</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP2" name="1FP2">
+<matched-element start="192" stop="203" score="30.4182" pvalue="2.85e-11">
+<sequence>IVDVGGGTGTTA</sequence>
+<mem:qvalue>3.06e-08</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1M6E" name="1M6E">
+<matched-element start="55" stop="66" score="15.0364" pvalue="1.15e-06">
+<sequence>IADLGCSSGPNA</sequence>
+<mem:qvalue>0.000548</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="3BWM" name="3BWM">
+</scanned-sequence>
+<scanned-sequence accession="3REW" name="3REW">
+</scanned-sequence>
+<scanned-sequence accession="3C3Y" name="3C3Y">
+</scanned-sequence>
+<mem:has-qvalues>yes</mem:has-qvalues>
+</pattern>
+<pattern accession="4-GDAEALPFPDGSFDLVVS" name="STREME-4">
+<scanned-sequence accession="1KYZ" name="1KYZ">
+</scanned-sequence>
+<scanned-sequence accession="1FP1" name="1FP1">
+</scanned-sequence>
+<scanned-sequence accession="1FP2" name="1FP2">
+</scanned-sequence>
+<scanned-sequence accession="1M6E" name="1M6E">
+<matched-element start="128" stop="145" score="21.3091" pvalue="3.15e-08">
+<sequence>GSFYGRLFPRNTLHFIHS</sequence>
+<mem:qvalue>5.84e-05</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="3BWM" name="3BWM">
+</scanned-sequence>
+<scanned-sequence accession="3REW" name="3REW">
+</scanned-sequence>
+<scanned-sequence accession="3C3Y" name="3C3Y">
+</scanned-sequence>
+<mem:has-qvalues>yes</mem:has-qvalues>
+</pattern>
+<pattern accession="5-GGKERTEEEWRAL" name="STREME-5">
+<scanned-sequence accession="1KYZ" name="1KYZ">
+<matched-element start="326" stop="338" score="31.8333" pvalue="1.01e-11">
+<sequence>GGKERTQKEFEDL</sequence>
+<mem:qvalue>6.42e-09</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP1" name="1FP1">
+<matched-element start="334" stop="346" score="32.1111" pvalue="7.52e-12">
+<sequence>GGRERTEKQYEKL</sequence>
+<mem:qvalue>6.42e-09</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP2" name="1FP2">
+<matched-element start="315" stop="327" score="33.8148" pvalue="1.07e-12">
+<sequence>NGKERNEEEWKKL</sequence>
+<mem:qvalue>2.04e-09</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1M6E" name="1M6E">
+</scanned-sequence>
+<scanned-sequence accession="3BWM" name="3BWM">
+</scanned-sequence>
+<scanned-sequence accession="3REW" name="3REW">
+</scanned-sequence>
+<scanned-sequence accession="3C3Y" name="3C3Y">
+</scanned-sequence>
+<mem:has-qvalues>yes</mem:has-qvalues>
+</pattern>
+<pattern accession="6-LHDWPDEDCVKIL" name="STREME-6">
+<scanned-sequence accession="1KYZ" name="1KYZ">
+<matched-element start="268" stop="280" score="35.6538" pvalue="1.14e-12">
+<sequence>CHDWSDEHCLKFL</sequence>
+<mem:qvalue>1.04e-09</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP1" name="1FP1">
+<matched-element start="277" stop="289" score="32.9423" pvalue="9.89e-12">
+<sequence>CHNWSDEKCIEFL</sequence>
+<mem:qvalue>6.01e-09</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP2" name="1FP2">
+<matched-element start="256" stop="268" score="36.6346" pvalue="4.88e-13">
+<sequence>LHNWTDKDCLRIL</sequence>
+<mem:qvalue>8.89e-10</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1M6E" name="1M6E">
+</scanned-sequence>
+<scanned-sequence accession="3BWM" name="3BWM">
+</scanned-sequence>
+<scanned-sequence accession="3REW" name="3REW">
+</scanned-sequence>
+<scanned-sequence accession="3C3Y" name="3C3Y">
+</scanned-sequence>
+<mem:has-qvalues>yes</mem:has-qvalues>
+</pattern>
+<pattern accession="7-HDFFTPQPVKGADVYL" name="STREME-7">
+<scanned-sequence accession="1KYZ" name="1KYZ">
+<matched-element start="250" stop="265" score="31.5902" pvalue="2.65e-11">
+<sequence>GDMFVSIPKADAVFMK</sequence>
+<mem:qvalue>2.48e-08</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP1" name="1FP1">
+<matched-element start="259" stop="274" score="28.0656" pvalue="2.83e-10">
+<sequence>GDMFASVPQGDAMILK</sequence>
+<mem:qvalue>1.77e-07</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP2" name="1FP2">
+<matched-element start="238" stop="253" score="31.7869" pvalue="2.3e-11">
+<sequence>GDMFTSIPNADAVLLK</sequence>
+<mem:qvalue>2.48e-08</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1M6E" name="1M6E">
+</scanned-sequence>
+<scanned-sequence accession="3BWM" name="3BWM">
+</scanned-sequence>
+<scanned-sequence accession="3REW" name="3REW">
+</scanned-sequence>
+<scanned-sequence accession="3C3Y" name="3C3Y">
+</scanned-sequence>
+<mem:has-qvalues>yes</mem:has-qvalues>
+</pattern>
+<pattern accession="8-GIVQDLPEVIA" name="STREME-8">
+<scanned-sequence accession="1KYZ" name="1KYZ">
+<matched-element start="227" stop="237" score="30.1034" pvalue="6.18e-12">
+<sequence>GINFDLPHVIE</sequence>
+<mem:qvalue>1.14e-08</mem:qvalue>
+</matched-element>
+<matched-element start="39" stop="49" score="8.62069" pvalue="4.23e-05">
+<sequence>ALELDLLEIIA</sequence>
+<mem:qvalue>0.0195</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP1" name="1FP1">
+<matched-element start="236" stop="246" score="27.7069" pvalue="1.39e-10">
+<sequence>GINFDLPQVIE</sequence>
+<mem:qvalue>8.5e-08</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1FP2" name="1FP2">
+<matched-element start="215" stop="225" score="28.7586" pvalue="3.95e-11">
+<sequence>CIVFDRPQVVE</sequence>
+<mem:qvalue>3.64e-08</mem:qvalue>
+</matched-element>
+</scanned-sequence>
+<scanned-sequence accession="1M6E" name="1M6E">
+</scanned-sequence>
+<scanned-sequence accession="3BWM" name="3BWM">
+</scanned-sequence>
+<scanned-sequence accession="3REW" name="3REW">
+</scanned-sequence>
+<scanned-sequence accession="3C3Y" name="3C3Y">
+</scanned-sequence>
+<mem:has-qvalues>yes</mem:has-qvalues>
+</pattern>
+</cis-element-search>

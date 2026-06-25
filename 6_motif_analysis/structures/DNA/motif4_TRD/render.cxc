@@ -1,0 +1,21 @@
+open /home/nroethler/Code/motif_analysis/structures/DNA/1MHT.pdb
+set bgColor white
+hide atoms
+cartoon
+color #1 #cccccc
+select nucleic
+color sel #9c7a5b
+~select
+show ligand
+style ligand stick
+color ligand byelement
+color /A:274-291 #6a51a3
+show /A:274-291 atoms
+style /A:274-291 stick
+color /A:274-291 byhetero
+view /A:274-291
+zoom 0.55
+lighting soft
+graphics silhouettes true
+save /home/nroethler/Code/motif_analysis/structures/DNA/motif4_TRD/motif4_TRD.png width 2000 height 1500 supersample 3
+exit

@@ -1,0 +1,19 @@
+open 1G38.pdb
+set bgColor white
+delete /D,E,F
+hide atoms
+cartoon
+color #1 #cccccc
+select nucleic
+color sel #9c7a5b
+~select
+show ligand
+style ligand stick
+color ligand byelement
+color /A:103-110 #cb181d
+color /A:19-27 #2171b5
+view
+lighting soft
+graphics silhouettes true
+save 1g38_motifs.png width 2000 height 1500 supersample 3
+exit

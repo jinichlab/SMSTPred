@@ -1,0 +1,5 @@
+motif,folder,structure,protein,rna,motif_residues_author,motif_residues_uniprot,role
+2,rna_motif2_METTL16,9U48,METTL16,snRNA,/A:135-142,148-155,METTL16 catalytic region (m6A snRNA)
+3,rna_motif3_SAMloop,2ZZM,aTrm5,tRNA,/A:198-212,198-212,Trm5 SAM-binding DxGxGxG loop
+6,rna_motif6,2ZZM,aTrm5,tRNA,/A:45-55,45-55,Trm5 N-terminal region
+7,rna_motif7_basic,2ZZM,aTrm5,tRNA,/A:233-240,233-240,Trm5 basic RNA-binding patch (KKNIKLNK)

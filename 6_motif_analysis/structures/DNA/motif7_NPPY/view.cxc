@@ -1,0 +1,20 @@
+# YTBPPYNT - catalytic NPPY (Asn105).  Open:  chimerax motif7_NPPY/view.cxc
+open motif7_NPPY.pdb
+set bgColor white
+hide atoms
+cartoon
+color /A #b0b0b0
+color /A:103-110 #cb181d
+show /A:103-110 atoms
+style /A:103-110 stick
+color /A:103-110 byhetero
+color nucleic #d9b38c
+show ligand
+style ligand stick
+color ligand byelement
+hbonds /A:103-110 restrict nucleic | ligand reveal true color #303030 dashes 8 radius 0.05
+2dlabel text "motif7 YTBPPYNT  (catalytic NPPY (Asn105))" xpos .03 ypos .04 size 16
+lighting soft
+graphics silhouettes true
+view
+# >>> rotate to taste, then:  save motif7.png width 2400 height 1800 supersample 3

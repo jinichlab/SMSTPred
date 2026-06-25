@@ -1,0 +1,9 @@
+motif,folder,structure,type,motif_residues,cofactor,substrate,role
+1,other_motif1,1KYZ,homology,/E:285-295,SAH,FER,caffeic-acid OMT homolog (SAH+ferulate)
+3,other_motif3_SAMloop,1KYZ,homology,/E:204-215,SAH,FER,caffeic-acid OMT homolog (SAH+ferulate) SAM Motif I loop
+5,other_motif5,1KYZ,homology,/E:326-338,SAH,FER,caffeic-acid OMT homolog (SAH+ferulate)
+6,other_motif6,1KYZ,homology,/E:268-280,SAH,FER,caffeic-acid OMT homolog (SAH+ferulate)
+7,other_motif7,1KYZ,homology,/E:250-265,SAH,FER,caffeic-acid OMT homolog (SAH+ferulate)
+8,other_motif8,1KYZ,homology,/E:227-237,SAH,FER,caffeic-acid OMT homolog (SAH+ferulate)
+4,other_motif4,1M6E,homology,/X:128-145,SAH,SAL,salicylate MTase homolog (SAH+salicylate)
+2,other_motif2,3C3Y,homology,/A:99-111,SAH,-,"PFOMT homolog (SAH, no substrate)"
