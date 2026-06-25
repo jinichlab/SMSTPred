@@ -1,0 +1,6 @@
+Entry,label,spearman_attn_absIG,n_motif_res,motif_attn_pctile,motif_IG_pctile,motifs
+Q67472,DNA,-0.162,0,,,
+P04392,DNA,-0.032,4,90.4,67.6,N-cat DPPY@171-174
+A2AA28,Protein,0.271,3,84.1,68.1,C5-cat PC@68-70
+Q9ZM61,RNA,0.136,5,80.0,58.4,SAM G-loop@54-58
+P9WEP8,Other,0.133,5,64.4,46.8,SAM G-loop@48-52

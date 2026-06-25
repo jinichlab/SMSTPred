@@ -1,0 +1,19 @@
+# P0DPA9 (PsiM, no-motif Other MTase) IG on 8PB3 (SAH+substrate).  Open: chimerax view.cxc
+open P0DPA9_IG.pdb
+set bgColor white
+hide atoms
+cartoon
+color /A #cccccc
+color /A:220,86,78,127,222,125,22,213,11,13 #cb181d
+show /A:220,86,78,127,222,125,22,213,11,13 atoms
+style /A:220,86,78,127,222,125,22,213,11,13 stick
+color /A:220,86,78,127,222,125,22,213,11,13 byhetero
+label /A:220,86,78,127,222,125,22,213,11,13 text "{0.label_one_letter_code}{0.number}" height 1.5
+show ligand
+style ligand stick
+color ligand byelement
+color :XP6 gold
+lighting soft
+graphics silhouettes true
+view
+# >>> rotate, then: save P0DPA9_IG.png width 2400 height 1800 supersample 3

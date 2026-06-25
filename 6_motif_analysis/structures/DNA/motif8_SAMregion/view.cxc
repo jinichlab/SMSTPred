@@ -1,0 +1,20 @@
+# GZFFTPREI - DNA-cofactor junction.  Open:  chimerax motif8_SAMregion/view.cxc
+open motif8_SAMregion.pdb
+set bgColor white
+hide atoms
+cartoon
+color /A #b0b0b0
+color /A:19-27 #2171b5
+show /A:19-27 atoms
+style /A:19-27 stick
+color /A:19-27 byhetero
+color nucleic #d9b38c
+show ligand
+style ligand stick
+color ligand byelement
+hbonds /A:19-27 restrict nucleic | ligand reveal true color #303030 dashes 8 radius 0.05
+2dlabel text "motif8 GZFFTPREI  (DNA-cofactor junction)" xpos .03 ypos .04 size 16
+lighting soft
+graphics silhouettes true
+view
+# >>> rotate to taste, then:  save motif8.png width 2400 height 1800 supersample 3

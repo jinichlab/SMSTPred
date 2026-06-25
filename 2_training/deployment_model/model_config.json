@@ -1,0 +1,28 @@
+{
+  "embedding": "ProstT5",
+  "embedding_h5": "prostt5_SAM_swiss.h5",
+  "input_dim": 1024,
+  "hidden": [
+    512,
+    256
+  ],
+  "labels": [
+    "Other",
+    "Protein",
+    "RNA",
+    "DNA"
+  ],
+  "loss_map": {
+    "Other": "sqrt_weighted_bce",
+    "Protein": "bce",
+    "RNA": "bce",
+    "DNA": "bce"
+  },
+  "epochs": 300,
+  "learning_rate": 0.001,
+  "n_ensemble": 6,
+  "trained_on": 7405,
+  "ad_reference_h5": "prostt5_SAM_swiss.h5",
+  "ad_cutoff": 0.9398860931396484,
+  "built": "2026-06-15"
+}

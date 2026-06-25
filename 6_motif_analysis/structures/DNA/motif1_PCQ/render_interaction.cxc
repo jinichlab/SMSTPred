@@ -1,0 +1,27 @@
+open /home/nroethler/Code/motif_analysis/structures/DNA/1MHT.pdb
+set bgColor white
+hide atoms
+hide cartoon
+show /A:68-96 cartoon
+color /A:68-96 #c8c8c8
+color /A:76-88 #cb181d
+show /A:76-88 atoms
+style /A:76-88 stick
+color /A:76-88 byhetero
+show ((/A:76-88) :< 7) & nucleic cartoon
+color ((/A:76-88) :< 7) & nucleic #9c7a5b
+show ((/A:76-88) :< 3.8) & nucleic atoms
+style ((/A:76-88) :< 3.8) & nucleic stick
+nucleotides ((/A:76-88) :< 3.8) & nucleic atoms
+color ((/A:76-88) :< 3.8) & nucleic #9c7a5b
+color ((/A:76-88) :< 3.8) & nucleic byhetero
+show ligand atoms
+style ligand stick
+color ligand byelement
+hbonds /A:76-88 restrict (((/A:76-88) :< 7) & nucleic) | (ligand) reveal true color #303030 radius 0.05 dashes 8
+view /A:76-88 | (((/A:76-88) :< 7) & nucleic) | (ligand)
+zoom 0.8
+lighting soft
+graphics silhouettes true
+save /home/nroethler/Code/motif_analysis/structures/DNA/motif1_PCQ/motif1_PCQ_interaction.png width 2000 height 1500 supersample 3
+exit
