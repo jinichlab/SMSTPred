@@ -17,3 +17,7 @@ reps_*.fasta
 clust_*
 tmp_mmseqs/
 cosine_sim_matrix.dat
+
+# stray editor/OS backups
+*.bak
+.DS_Store

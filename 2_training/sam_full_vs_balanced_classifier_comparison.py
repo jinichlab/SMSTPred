@@ -2,7 +2,7 @@
 """
 Unified SAM substrate-type classifier comparison: full vs balanced, every method.
 
-One script that, for each split mode (cluster-disjoint and random) over 3
+One script that, for each split mode (cluster-disjoint and random) over 16
 iterations, trains and tests EVERY classifier family on both the full SAM_swiss
 set and the class-balanced SAM_swiss subset, scoring all of them on a single
 shared held-out test set so full-vs-balanced is a fair, like-for-like contrast.
@@ -22,8 +22,15 @@ Classifiers
   XGBoost, Random Forest, Logistic Regression, SVM (linear / RBF / poly-3 /
   sigmoid), Profile HMM (MAFFT -> hmmbuild -> hmmsearch), MMseqs2 1-NN
   (sequence-homology baseline), Foldseek 1-NN (structural-homology baseline),
-  and a family of MLPs over different embeddings (ProtT5, ProstT5, ESM-IF, and
-  the ProtT5+ESM-IF / ProstT5+ESM-IF concatenations).
+  and a family of MLPs over different embeddings (ProtT5, ProstT5, SaProt,
+  ESM-IF, and the ProtT5+ESM-IF / ProstT5+ESM-IF concatenations).
+
+  The sklearn classifiers (XGBoost / RF / LR / SVMs) are trained on ProstT5
+  embeddings, matching the deployed representation, so every embedding-based
+  method reads the same features. Cluster-disjoint splits are still defined by
+  ProtT5 cosine similarity (see CLUSTER_SOURCE) -- the split is a property of
+  the data partition, not of any model, and holding it fixed keeps all 16
+  classifiers on identical train/test sequences.
 
   Each MLP carries an embedding-and-dataset-specific shared epoch count and a
   per-label mixed loss (gamma=2.0), taken from the embedding sweep (provisional;
@@ -89,13 +96,21 @@ BAL_CSV = FILES_DIR / "SAM_swiss_substrate_types_balanced.csv"
 
 # Embedding sources keyed by short name -> (h5 path, layout, dim). "flat" = the
 # H5 value is the vector itself; "mean_group" = vector lives at f[entry]["mean"].
-# ProtT5 is also the feature used for clustering and the sklearn classifiers.
 EMB_SOURCES = {
     "prott5":  (FILES_DIR / "SAM_swiss.h5",         "flat",       1024),
     "prostt5": (FILES_DIR / "prostt5_SAM_swiss.h5", "mean_group", 1024),
     "esmif":   (FILES_DIR / "esmif_SAM_swiss.h5",   "flat",        512),
     "saprot":  (FILES_DIR / "saprot_SAM_swiss.h5",  "flat",       1280),
 }
+
+# Feature source for the sklearn classifiers (XGBoost/RF/LR/SVMs): ProstT5, the
+# deployed representation. Separate from the clustering source below.
+SKLEARN_SOURCE = "prostt5"
+# Similarity space that defines the cluster-disjoint splits. Kept on ProtT5: the
+# 0.6 threshold is calibrated in this space (cosine_similarity_analysis.py) and
+# sam_vs_up_prostt5_comparison.py clusters the same way. Changing it would move
+# every classifier's train/test partition, not just the sklearn ones.
+CLUSTER_SOURCE = "prott5"
 
 OUT_DIR = Path(__file__).resolve().parent / "sam_classifier_comparison_output"
 
@@ -106,7 +121,7 @@ FOLDSEEK = os.environ.get("FOLDSEEK_BIN",
 
 LABELS = ["Other", "Protein", "RNA", "DNA"]
 SPLIT_MODES = ["cluster", "random"]
-N_ITERATIONS = 6
+N_ITERATIONS = 16
 THRESHOLD = 0.6          # clustering threshold (cluster split mode)
 TRAIN_RATIO = 0.9        # 90% train pool / 10% shared test set
 LEARNING_RATE = 0.001
@@ -821,17 +836,20 @@ def main():
     print(f"Full SAM: {len(full_df)} | Balanced SAM: {len(bal_df)} "
           f"(entries covered by all {len(EMB_SOURCES)} sources)")
 
-    full_X = full_mats["prott5"]              # ProtT5 = clustering + sklearn features
+    full_X = full_mats[SKLEARN_SOURCE]        # sklearn features
     full_y = full_df[LABELS].values.astype(np.float32)
     full_entries = full_df["Entry"].values
     full_seqs = full_df["Sequence"].values
 
-    bal_X = bal_mats["prott5"]
+    bal_X = bal_mats[SKLEARN_SOURCE]
     bal_y = bal_df[LABELS].values.astype(np.float32)
     bal_entries = bal_df["Entry"].values
     bal_seqs = bal_df["Sequence"].values
 
-    clusters = cluster_full_set(full_X, THRESHOLD, str(OUT_DIR / f"full_clusters_t{THRESHOLD}.pkl"))
+    print(f"sklearn features: {SKLEARN_SOURCE} (dim={full_X.shape[1]})  |  "
+          f"clustering space: {CLUSTER_SOURCE} @ cosine {THRESHOLD}")
+    clusters = cluster_full_set(full_mats[CLUSTER_SOURCE], THRESHOLD,
+                                str(OUT_DIR / f"full_clusters_t{THRESHOLD}.pkl"))
     print(f"Full-set clusters: {len(clusters)}")
 
     detailed, per_label_rows = [], []

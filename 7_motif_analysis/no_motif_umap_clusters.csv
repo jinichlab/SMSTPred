@@ -1,0 +1,13 @@
+umap_cluster,n_points,n_labeled,nomotif_frac,top_substrate
+382,216,167,0.928,Protein
+117,122,122,0.934,RNA
+580,76,38,0.921,Unassigned
+184,69,69,0.986,RNA
+29,64,22,0.909,Mixed
+246,63,62,0.935,Protein
+245,63,63,0.968,Protein
+561,60,60,0.967,RNA
+747,59,59,0.966,RNA
+241,57,57,0.93,RNA
+68,55,55,0.945,RNA
+811,52,37,0.919,Protein

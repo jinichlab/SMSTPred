@@ -1,5 +1,0 @@
-motif,folder,structure,type,motif_residues,role
-1,rna_motif1_m5Ccat,3M6U,apo PDB,/A:172-185,RsmF m5C catalytic PC (apo)
-4,rna_motif4,3M6U,apo PDB,/A:85-101,RsmF region (apo)
-5,rna_motif5,3M6U,apo PDB,/A:289-297,RsmF region (apo)
-8,rna_motif8_RlmE,AF-Q2GDL7,AlphaFold,/A:37-47,RlmE basic region (AlphaFold)

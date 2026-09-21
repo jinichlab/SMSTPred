@@ -1,0 +1,18 @@
+family_id,description,is_methylation
+25,Demethylmenaquinol methylation (vitamin K2 biosynthesis),True
+215,N-terminal protein methylation (Ala/Pro-Pro-Lys motif),True
+445,Arsenic triglutathione methylation (As detoxification),True
+746,Spermidine/spermine synthase (NOT methylation -- aminopropyl transfer),False
+1099,Benzylisoquinoline alkaloid O-methylation (reticuline-type),True
+1241,Small-molecule N-methylation (glycine betaine / creatine),True
+1324,Purine-alkaloid methylation (xanthine -> caffeine/theobromine),True
+1395,Histidine N-methylation (ergothioneine) / arsenic methylation,True
+1458,Serotonin/furocoumarin O- & N-methylation (melatonin pathway),True
+1465,NOT methylation -- dTDP-sugar glycosyltransferase (macrolide biosynthesis),False
+1488,Flavonoid/furocoumarin O-methylation,True
+1542,Aromatic/carboxylic-acid O-methylation (mixed scaffolds),True
+1548,Tricetin di-O-methylation (flavonoid),True
+1601,NOT methylation -- oxidoreductase/monooxygenase chemistry,False
+1610,Guanidino-ketone C-methylation (secondary metabolite),True
+1756,Co-precorrin methylation (cobalamin/vitamin B12 biosynthesis),True
+2008,NOT methylation -- NADPH-dependent oxidoreductase chemistry,False

@@ -1,0 +1,23 @@
+# Other-6 LHDWSDDYCVNIL - Class II O-methyltransferase gedA (E (7WH9; X-ray; SAH + EMO) - near substrate/SAM.  Open:  chimerax view.cxc
+open other_motif6_7WH9.pdb
+set bgColor white
+hide atoms
+cartoon
+color #1 #b0b0b0
+show ligand
+style ligand stick
+color ligand byelement
+color :0XU,NEA,QVR,SAH,SAM,SFG #b5651d
+color :0XU,NEA,QVR,SAH,SAM,SFG byhetero
+color :EMO gold
+color :EMO byhetero
+color /A:372-384 #e6550d
+show /A:372-384 atoms
+style /A:372-384 stick
+color /A:372-384 byhetero
+hbonds /A:372-384 restrict ligand reveal true color #303030 dashes 8 radius 0.05
+2dlabel text "Other-6 LHDWSDDYCVNIL - Class II O-methyltransferase gedA (E (7WH9; X-ray; SAH + EMO) - near substrate/SAM" xpos .03 ypos .04 size 14
+lighting soft
+graphics silhouettes true
+view
+# >>> rotate to taste, then:  save other_motif6_7WH9.png width 2400 height 1800 supersample 3

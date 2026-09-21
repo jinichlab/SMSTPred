@@ -1,0 +1,23 @@
+# DNA-7 LGNPPYGI - Type II methyltransferase M.TaqI (M. (1G38; X-ray; NEA + DNA) - near substrate/SAM.  Open:  chimerax view.cxc
+open dna_motif7_1G38.pdb
+set bgColor white
+hide atoms
+cartoon
+color #1 #b0b0b0
+color /B #9c7a5b
+show ligand
+style ligand stick
+color ligand byelement
+color :0XU,NEA,QVR,SAH,SAM,SFG #b5651d
+color :0XU,NEA,QVR,SAH,SAM,SFG byhetero
+hide /B atoms
+color /A:103-110 #6a51a3
+show /A:103-110 atoms
+style /A:103-110 stick
+color /A:103-110 byhetero
+hbonds /A:103-110 restrict ligand reveal true color #303030 dashes 8 radius 0.05
+2dlabel text "DNA-7 LGNPPYGI - Type II methyltransferase M.TaqI (M. (1G38; X-ray; NEA + DNA) - near substrate/SAM" xpos .03 ypos .04 size 14
+lighting soft
+graphics silhouettes true
+view
+# >>> rotate to taste, then:  save dna_motif7_1G38.png width 2400 height 1800 supersample 3

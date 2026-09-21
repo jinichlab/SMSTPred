@@ -16,7 +16,8 @@ homology and classical-ML baselines, deploys it across the tree of life, and int
 | 3 | [`3_predictions/`](3_predictions) | Scores new proteins with the deployment model (per-label score, call, ensemble disagreement, applicability-domain flag). |
 | 4 | [`4_phylo_trends/`](4_phylo_trends) | Phylogenetic / taxonomic trends in the predicted substrate usage across the tree of life. |
 | 5 | [`5_umap/`](5_umap) | Global ProstT5 UMAP of all tree-of-life MTases + substrate-coloured maps and cluster-enrichment figures. |
-| 6 | [`6_motif_analysis/`](6_motif_analysis) | **Interpretability**: discriminative sequence motifs (STREME), per-residue attribution (Integrated Gradients), and structural mapping of both — *why* the classifier works. |
+| 6 | [`6_dark_cluster_annotation/`](6_dark_cluster_annotation) | Cross-validates the 33 uncharacterized ("dark", zero-SwissProt-anchor) clusters surfaced in Stage 5 against two independent methods — **CLEAN** (EC-centroid nearest neighbor) and **Horizyn** (reaction-retrieval) — to flag genuine discovery leads vs clusters mis-swept in from other chemistry. |
+| 7 | [`7_motif_analysis/`](7_motif_analysis) | **Interpretability**: discriminative sequence motifs (STREME), per-residue attribution (Integrated Gradients), and structural mapping of both — *why* the classifier works. |
 
 Each folder has its own `README.md` with scripts, inputs, outputs, and parameters.
 
@@ -34,8 +35,10 @@ Each folder has its own `README.md` with scripts, inputs, outputs, and parameter
   the rare DNA class (Stage 2).
 - **Tree-of-life sweep** of ~112k reference-proteome MTases (Stage 3) reveals
   taxonomic/lifestyle substrate trends (Stage 4) and a structured embedding landscape with
-  recoverable, family-specific clusters (Stage 5).
-- **Interpretation** (Stage 6): discriminative motifs recover the canonical catalytic /
+  recoverable, family-specific clusters (Stage 5), including 33 uncharacterized clusters
+  with no reviewed anchor — two independent orthogonal methods flag several as genuine
+  novel-methylation discovery leads and others as likely mis-assigned non-MTases (Stage 6).
+- **Interpretation** (Stage 7): discriminative motifs recover the canonical catalytic /
   cofactor signatures, but the classifier's substrate signal localises to **buried fold-core
   residues**, not the conserved catalytic site — across all four substrate classes.
 

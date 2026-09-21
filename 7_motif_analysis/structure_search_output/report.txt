@@ -1,0 +1,259 @@
+Bound-structure search for apo/AF-only motifs
+============================================================
+
+RNA motif 1  [m5C catalytic PC  (now: apo RsmF 3M6U)]
+  members with a PDB: 24 | structures: 94 | BOUND: 60
+    * 1UWV  [ligand:SF4]  P55135  Crystal Structure of RumA, the iron-sulfur cluster containing E. coli 23S Ribosomal RNA 5-
+    * 2BH2  [nucleic-substrate; ligand:SF4]  P55135  Crystal Structure of E. coli 5-methyluridine methyltransferase RumA in complex with riboso
+    * 3BT7  [nucleic-substrate]  P23003  Structure of E. coli 5-Methyluridine Methyltransferase TrmA in complex with 19 nucleotide 
+    * 4N48  [nucleic-substrate; ligand:MGT]  Q8N1G2  Cap-specific mRNA (nucleoside-2'-O-)-methyltransferase 1 Protein in complex with capped RN
+    * 5CCB  [nucleic-substrate]  Q96FX7  Crystal structure of human m1A58 methyltransferase in a complex with tRNA3Lys and SAH
+    * 5CCX  [nucleic-substrate]  Q96FX7  Structure of the product complex of tRNA m1A58 methyltransferase with tRNA3Lys as substrat
+    * 5CD1  [nucleic-substrate]  Q96FX7  Structure of an asymmetric tetramer of human tRNA m1A58 methyltransferase in a complex wit
+    * 5WWR  [nucleic-substrate]  Q8TEA1  Crystal structure of human NSun6/tRNA/SFG
+    * 5WWS  [nucleic-substrate]  Q8TEA1  Crystal structure of human NSun6/tRNA/SAM
+    * 5WWT  [nucleic-substrate]  Q8TEA1  Crystal structure of human NSun6/tRNA
+    * 6DCB  [nucleic-substrate]  Q7L2J0  Structure of methylphosphate capping enzyme methyltransferase domain in complex with 5' en
+    * 6DCC  [nucleic-substrate]  Q7L2J0  Structure of methylphosphate capping enzyme methyltransferase domain in complex with 5' en
+    * 6ELZ  [nucleic-substrate]  P40991  State E (TAP-Flag-Ytm1 E80A) - Visualizing the assembly pathway of nucleolar pre-60S ribos
+    * 6EM5  [nucleic-substrate]  P40991  State D architectural model (Nsa1-TAP Flag-Ytm1) - Visualizing the assembly pathway of nuc
+    * 7NAC  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal biogenesis intermediate - Composite model
+    * 7NAF  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal biogenesis intermediate - Spb1-MTD local model
+    * 7O9K  [nucleic-substrate; ligand:GDP+GTP+PNS]  Q96CB9  Human mitochondrial ribosome large subunit assembly intermediate with MTERF4-NSUN4, MRM2, 
+    * 7O9M  [nucleic-substrate; ligand:PNS]  Q96CB9  Human mitochondrial ribosome large subunit assembly intermediate with MTERF4-NSUN4, MRM2, 
+    * 7ODR  [nucleic-substrate; ligand:FES+PM8]  Q96CB9  State A of the human mitoribosomal large subunit assembly intermediate
+    * 7ODS  [nucleic-substrate; ligand:FES+N+PM8]  Q96CB9  State B of the human mitoribosomal large subunit assembly intermediate
+    * 7ODT  [nucleic-substrate; ligand:FES+GDP+PM8]  Q96CB9  State C of the human mitoribosomal large subunit assembly intermediate
+    * 7OF0  [nucleic-substrate]  Q96CB9  Structure of a human mitochondrial ribosome large subunit assembly intermediate in complex
+    * 7OF3  [nucleic-substrate]  Q96CB9  Structure of a human mitochondrial ribosome large subunit assembly intermediate in complex
+    * 7OF5  [nucleic-substrate]  Q96CB9  Structure of a human mitochondrial ribosome large subunit assembly intermediate in complex
+    * 7OF7  [nucleic-substrate]  Q96CB9  Structure of a human mitochondrial ribosome large subunit assembly intermediate in complex
+    * 7OHR  [nucleic-substrate]  P40991  Nog1-TAP associated immature ribosomal particle population E from S. cerevisiae
+    * 7OIC  [nucleic-substrate]  Q96CB9  Cryo-EM structure of late human 39S mitoribosome assembly intermediates, state 4
+    * 7PD3  [nucleic-substrate]  Q96CB9  Structure of the human mitoribosomal large subunit in complex with NSUN4.MTERF4.GTPBP7 and
+    * 7PNV  [nucleic-substrate; ligand:ATP+FES]  Q9DCL4  Assembly intermediate of mouse mitochondrial ribosome small subunit without mS37 in comple
+    * 7PNX  [nucleic-substrate; ligand:ATP+FES+NAD]  A6NJ78  Assembly intermediate of human mitochondrial ribosome small subunit without mS37 in comple
+    * 7PNY  [nucleic-substrate; ligand:ATP+FES+NAD]  A6NJ78  Assembly intermediate of human mitochondrial ribosome small subunit without mS37 in comple
+    * 7PNZ  [nucleic-substrate; ligand:ATP+FES+NAD]  A6NJ78  Assembly intermediate of human mitochondrial ribosome small subunit without mS37 in comple
+    * 7R6K  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal intermediate - Model for Noc2/Noc3 region
+    * 7R7A  [nucleic-substrate]  P40991  State E1 nucleolar 60S ribosome biogenesis intermediate - Composite model
+    * 7R7C  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal biogenesis intermediate - L1 stalk local model
+    * 7SLP  [nucleic-substrate]  Q7L2J0  Cryo-EM structure of 7SK core RNP with linear RNA
+    * 7SLQ  [nucleic-substrate]  Q7L2J0  Cryo-EM structure of 7SK core RNP with circular RNA
+    * 8FKT  [nucleic-substrate; ligand:ADP+GDP+SF4]  P46087  Human nucleolar pre-60S ribosomal subunit (State C1)
+    * 8FKU  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State C2)
+    * 8FKV  [nucleic-substrate; ligand:ADP+GDP+SF4]  P46087  Human nucleolar pre-60S ribosomal subunit (State D1)
+    * 8FKW  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State D2)
+    * 8FKX  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State E)
+    * 8FKY  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State F)
+    * 8IPM  [nucleic-substrate]  A6NJ78  The structure of human mitochondrial methyltransferase METTL15 with h44_RNA, RBFA and SAM
+    * 8P4E  [nucleic-substrate]  Q8N1G2  Structural insights into human co-transcriptional capping - structure 5
+    * 8P4F  [nucleic-substrate; ligand:MGT]  Q8N1G2  Structural insights into human co-transcriptional capping - structure 6
+    * 8PK0  [nucleic-substrate; ligand:GNP+PM8]  Q96CB9  human mitoribosomal large subunit assembly intermediate 1 with GTPBP10-GTPBP7
+    * 8QRL  [nucleic-substrate; ligand:ATP+FES+NAD]  A6NJ78  mt-SSU assembly intermediate in GTPBP8 knock-out cells, state 2
+    * 8QSJ  [nucleic-substrate; ligand:FES+GNP+PM8]  Q96CB9  Human mitoribosomal large subunit assembly intermediate 2 with GTPBP7
+    * 8V83  [nucleic-substrate]  P40991  60S ribosome biogenesis intermediate (Dbp10 pre-catalytic structure - Overall map)
+    * 8V84  [nucleic-substrate; ligand:GDP]  P40991  60S ribosome biogenesis intermediate (Dbp10 catalytic structure - Overall map)
+    * 8V87  [nucleic-substrate; ligand:GDP]  P40991  60S ribosome biogenesis intermediate (Dbp10 post-catalytic structure - Overall map)
+    * 8W8F  [nucleic-substrate; ligand:GTP]  Q8N1G2  human co-transcriptional RNA capping enzyme RNGTT-CMTR1
+    * 9E9C  [nucleic-substrate; ligand:FES]  Q9CZ57  Mouse mitoribosome large subunit assembly intermediate bound to NSUN4, METRF4, GTPBP7, GTP
+    * 9G5C  [nucleic-substrate; ligand:FES]  A6NJ78  Assembly intermediate of human mitochondrial ribosome small subunit (State B)
+    * 9G5D  [nucleic-substrate; ligand:FES]  A6NJ78  Assembly intermediate of human mitochondrial ribosome small subunit (State C)
+    * 9HCF  [nucleic-substrate; ligand:FES]  Q9CZ57  Mouse mitoribosome large subunit assembly intermediate bound to NSUN4, METRF4, GTPBP7, GTP
+    * 9HCG  [nucleic-substrate; ligand:FES]  Q9CZ57  Mouse mitoribosome large subunit assembly intermediate bound to NSUN4, METRF4, MRM2, GTPBP
+    * 9HCH  [nucleic-substrate; ligand:FES]  Q9CZ57  Mouse mitoribosome large subunit assembly intermediate bound to NSUN4, METRF4, GTPBP7 and 
+    * 9IMB  [nucleic-substrate]  Q8TEA1  The crystal structure of human m5C methyltransferase NSUN6 bound to its S-adenosyl-L-methi
+
+RNA motif 4  [novel             (now: apo RsmF 3M6U)]
+  members with a PDB: 14 | structures: 75 | BOUND: 42
+    * 4N48  [nucleic-substrate; ligand:MGT]  Q8N1G2  Cap-specific mRNA (nucleoside-2'-O-)-methyltransferase 1 Protein in complex with capped RN
+    * 5WWR  [nucleic-substrate]  Q8TEA1  Crystal structure of human NSun6/tRNA/SFG
+    * 5WWS  [nucleic-substrate]  Q8TEA1  Crystal structure of human NSun6/tRNA/SAM
+    * 5WWT  [nucleic-substrate]  Q8TEA1  Crystal structure of human NSun6/tRNA
+    * 6ELZ  [nucleic-substrate]  P40991  State E (TAP-Flag-Ytm1 E80A) - Visualizing the assembly pathway of nucleolar pre-60S ribos
+    * 6EM5  [nucleic-substrate]  P40991  State D architectural model (Nsa1-TAP Flag-Ytm1) - Visualizing the assembly pathway of nuc
+    * 7NAC  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal biogenesis intermediate - Composite model
+    * 7NAF  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal biogenesis intermediate - Spb1-MTD local model
+    * 7O9K  [nucleic-substrate; ligand:GDP+GTP+PNS]  Q96CB9  Human mitochondrial ribosome large subunit assembly intermediate with MTERF4-NSUN4, MRM2, 
+    * 7O9M  [nucleic-substrate; ligand:PNS]  Q96CB9  Human mitochondrial ribosome large subunit assembly intermediate with MTERF4-NSUN4, MRM2, 
+    * 7ODR  [nucleic-substrate; ligand:FES+PM8]  Q96CB9  State A of the human mitoribosomal large subunit assembly intermediate
+    * 7ODS  [nucleic-substrate; ligand:FES+N+PM8]  Q96CB9  State B of the human mitoribosomal large subunit assembly intermediate
+    * 7ODT  [nucleic-substrate; ligand:FES+GDP+PM8]  Q96CB9  State C of the human mitoribosomal large subunit assembly intermediate
+    * 7OF0  [nucleic-substrate]  Q96CB9  Structure of a human mitochondrial ribosome large subunit assembly intermediate in complex
+    * 7OF3  [nucleic-substrate]  Q96CB9  Structure of a human mitochondrial ribosome large subunit assembly intermediate in complex
+    * 7OF5  [nucleic-substrate]  Q96CB9  Structure of a human mitochondrial ribosome large subunit assembly intermediate in complex
+    * 7OF7  [nucleic-substrate]  Q96CB9  Structure of a human mitochondrial ribosome large subunit assembly intermediate in complex
+    * 7OHR  [nucleic-substrate]  P40991  Nog1-TAP associated immature ribosomal particle population E from S. cerevisiae
+    * 7OIC  [nucleic-substrate]  Q96CB9  Cryo-EM structure of late human 39S mitoribosome assembly intermediates, state 4
+    * 7PD3  [nucleic-substrate]  Q96CB9  Structure of the human mitoribosomal large subunit in complex with NSUN4.MTERF4.GTPBP7 and
+    * 7R6K  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal intermediate - Model for Noc2/Noc3 region
+    * 7R7A  [nucleic-substrate]  P40991  State E1 nucleolar 60S ribosome biogenesis intermediate - Composite model
+    * 7R7C  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal biogenesis intermediate - L1 stalk local model
+    * 8FKT  [nucleic-substrate; ligand:ADP+GDP+SF4]  P46087  Human nucleolar pre-60S ribosomal subunit (State C1)
+    * 8FKU  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State C2)
+    * 8FKV  [nucleic-substrate; ligand:ADP+GDP+SF4]  P46087  Human nucleolar pre-60S ribosomal subunit (State D1)
+    * 8FKW  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State D2)
+    * 8FKX  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State E)
+    * 8FKY  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State F)
+    * 8P4E  [nucleic-substrate]  Q8N1G2  Structural insights into human co-transcriptional capping - structure 5
+    * 8P4F  [nucleic-substrate; ligand:MGT]  Q8N1G2  Structural insights into human co-transcriptional capping - structure 6
+    * 8PK0  [nucleic-substrate; ligand:GNP+PM8]  Q96CB9  human mitoribosomal large subunit assembly intermediate 1 with GTPBP10-GTPBP7
+    * 8QSJ  [nucleic-substrate; ligand:FES+GNP+PM8]  Q96CB9  Human mitoribosomal large subunit assembly intermediate 2 with GTPBP7
+    * 8V83  [nucleic-substrate]  P40991  60S ribosome biogenesis intermediate (Dbp10 pre-catalytic structure - Overall map)
+    * 8V84  [nucleic-substrate; ligand:GDP]  P40991  60S ribosome biogenesis intermediate (Dbp10 catalytic structure - Overall map)
+    * 8V87  [nucleic-substrate; ligand:GDP]  P40991  60S ribosome biogenesis intermediate (Dbp10 post-catalytic structure - Overall map)
+    * 8W8F  [nucleic-substrate; ligand:GTP]  Q8N1G2  human co-transcriptional RNA capping enzyme RNGTT-CMTR1
+    * 9E9C  [nucleic-substrate; ligand:FES]  Q9CZ57  Mouse mitoribosome large subunit assembly intermediate bound to NSUN4, METRF4, GTPBP7, GTP
+    * 9HCF  [nucleic-substrate; ligand:FES]  Q9CZ57  Mouse mitoribosome large subunit assembly intermediate bound to NSUN4, METRF4, GTPBP7, GTP
+    * 9HCG  [nucleic-substrate; ligand:FES]  Q9CZ57  Mouse mitoribosome large subunit assembly intermediate bound to NSUN4, METRF4, MRM2, GTPBP
+    * 9HCH  [nucleic-substrate; ligand:FES]  Q9CZ57  Mouse mitoribosome large subunit assembly intermediate bound to NSUN4, METRF4, GTPBP7 and 
+    * 9IMB  [nucleic-substrate]  Q8TEA1  The crystal structure of human m5C methyltransferase NSUN6 bound to its S-adenosyl-L-methi
+
+RNA motif 5  [novel             (now: apo RsmF 3M6U)]
+  members with a PDB: 19 | structures: 79 | BOUND: 48
+    * 1EJ0  [ligand:HG]  P0C0R7  FTSJ RNA METHYLTRANSFERASE COMPLEXED WITH S-ADENOSYLMETHIONINE, MERCURY DERIVATIVE
+    * 4N48  [nucleic-substrate; ligand:MGT]  Q8N1G2  Cap-specific mRNA (nucleoside-2'-O-)-methyltransferase 1 Protein in complex with capped RN
+    * 5WWR  [nucleic-substrate]  Q8TEA1  Crystal structure of human NSun6/tRNA/SFG
+    * 5WWS  [nucleic-substrate]  Q8TEA1  Crystal structure of human NSun6/tRNA/SAM
+    * 5WWT  [nucleic-substrate]  Q8TEA1  Crystal structure of human NSun6/tRNA
+    * 6ELZ  [nucleic-substrate]  P40991  State E (TAP-Flag-Ytm1 E80A) - Visualizing the assembly pathway of nucleolar pre-60S ribos
+    * 6ELZ  [nucleic-substrate]  P25582  State E (TAP-Flag-Ytm1 E80A) - Visualizing the assembly pathway of nucleolar pre-60S ribos
+    * 6EM5  [nucleic-substrate]  P40991  State D architectural model (Nsa1-TAP Flag-Ytm1) - Visualizing the assembly pathway of nuc
+    * 6EM5  [nucleic-substrate]  P25582  State D architectural model (Nsa1-TAP Flag-Ytm1) - Visualizing the assembly pathway of nuc
+    * 6YLX  [nucleic-substrate]  P25582  pre-60S State NE1 (TAP-Flag-Nop53)
+    * 7NAC  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal biogenesis intermediate - Composite model
+    * 7NAC  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosomal biogenesis intermediate - Composite model
+    * 7NAD  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosomal biogenesis intermediate - Spb4 local refinement model
+    * 7NAF  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal biogenesis intermediate - Spb1-MTD local model
+    * 7NAF  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosomal biogenesis intermediate - Spb1-MTD local model
+    * 7OHR  [nucleic-substrate]  P40991  Nog1-TAP associated immature ribosomal particle population E from S. cerevisiae
+    * 7OHR  [nucleic-substrate]  P25582  Nog1-TAP associated immature ribosomal particle population E from S. cerevisiae
+    * 7OHV  [nucleic-substrate]  P25582  Nog1-TAP associated immature ribosomal particles from S. cerevisiae after rpL2 expression 
+    * 7R6K  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal intermediate - Model for Noc2/Noc3 region
+    * 7R6K  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosomal intermediate - Model for Noc2/Noc3 region
+    * 7R6Q  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosome biogenesis intermediate - Foot region model
+    * 7R72  [nucleic-substrate]  P25582  State E1 nucleolar 60S ribosome biogenesis intermediate - Spb4 local model
+    * 7R7A  [nucleic-substrate]  P40991  State E1 nucleolar 60S ribosome biogenesis intermediate - Composite model
+    * 7R7A  [nucleic-substrate]  P25582  State E1 nucleolar 60S ribosome biogenesis intermediate - Composite model
+    * 7R7C  [nucleic-substrate]  P40991  State E2 nucleolar 60S ribosomal biogenesis intermediate - L1 stalk local model
+    * 7R7C  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosomal biogenesis intermediate - L1 stalk local model
+    * 7U0H  [nucleic-substrate]  P25582  State NE1 nucleolar 60S ribosome biogenesis intermediate - Overall model
+    * 8CSP  [nucleic-substrate; ligand:ATP+FES+SF4]  Q9H7H0  Human mitochondrial small subunit assembly intermediate (State A)
+    * 8CSQ  [nucleic-substrate; ligand:ATP+FES+SF4]  Q9H7H0  Human mitochondrial small subunit assembly intermediate (State B)
+    * 8CSR  [nucleic-substrate; ligand:ATP+FES+NAD+SF4]  Q9H7H0  Human mitochondrial small subunit assembly intermediate (State C)
+    * 8CSS  [nucleic-substrate; ligand:ATP+FES+NAD+SF4]  Q9H7H0  Human mitochondrial small subunit assembly intermediate (State D)
+    * 8CST  [nucleic-substrate; ligand:ATP+FES+NAD+SF4]  Q9H7H0  Human mitochondrial small subunit assembly intermediate (State E)
+    * 8CSU  [nucleic-substrate; ligand:ATP+FES+NAD+SF4]  Q9H7H0  Human mitochondrial small subunit assembly intermediate (State C*)
+    * 8ESQ  [nucleic-substrate]  O42832  Ytm1 associated nascent 60S ribosome State 2
+    * 8ESR  [nucleic-substrate]  O42832  Ytm1 associated nascent 60S ribosome (-fkbp39) State 2
+    * 8ETC  [nucleic-substrate]  O42832  Fkbp39 associated nascent 60S ribosome State 4
+    * 8ETJ  [nucleic-substrate]  O42832  Fkbp39 associated 60S nascent ribosome State 2
+    * 8FKP  [nucleic-substrate; ligand:SF4]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State A1)
+    * 8FKQ  [nucleic-substrate]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State A2)
+    * 8FKR  [nucleic-substrate; ligand:GDP+SF4]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State B1)
+    * 8FKS  [nucleic-substrate; ligand:GDP]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State B2)
+    * 8FKT  [nucleic-substrate; ligand:ADP+GDP+SF4]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State C1)
+    * 8FKT  [nucleic-substrate; ligand:ADP+GDP+SF4]  P46087  Human nucleolar pre-60S ribosomal subunit (State C1)
+    * 8FKU  [nucleic-substrate; ligand:ADP+GDP]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State C2)
+    * 8FKU  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State C2)
+    * 8FKV  [nucleic-substrate; ligand:ADP+GDP+SF4]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State D1)
+    * 8FKV  [nucleic-substrate; ligand:ADP+GDP+SF4]  P46087  Human nucleolar pre-60S ribosomal subunit (State D1)
+    * 8FKW  [nucleic-substrate; ligand:ADP+GDP]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State D2)
+    * 8FKW  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State D2)
+    * 8FKX  [nucleic-substrate; ligand:ADP+GDP]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State E)
+    * 8FKX  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State E)
+    * 8FKY  [nucleic-substrate; ligand:ADP+GDP]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State F)
+    * 8FKY  [nucleic-substrate; ligand:ADP+GDP]  P46087  Human nucleolar pre-60S ribosomal subunit (State F)
+    * 8IR1  [nucleic-substrate; ligand:GTP]  Q8IY81  human nuclear pre-60S ribosomal particle - State A
+    * 8P4E  [nucleic-substrate]  Q8N1G2  Structural insights into human co-transcriptional capping - structure 5
+    * 8P4F  [nucleic-substrate; ligand:MGT]  Q8N1G2  Structural insights into human co-transcriptional capping - structure 6
+    * 8V83  [nucleic-substrate]  P40991  60S ribosome biogenesis intermediate (Dbp10 pre-catalytic structure - Overall map)
+    * 8V84  [nucleic-substrate; ligand:GDP]  P40991  60S ribosome biogenesis intermediate (Dbp10 catalytic structure - Overall map)
+    * 8V87  [nucleic-substrate; ligand:GDP]  P40991  60S ribosome biogenesis intermediate (Dbp10 post-catalytic structure - Overall map)
+    * 8V87  [nucleic-substrate; ligand:GDP]  P25582  60S ribosome biogenesis intermediate (Dbp10 post-catalytic structure - Overall map)
+    * 8W8F  [nucleic-substrate; ligand:GTP]  Q8N1G2  human co-transcriptional RNA capping enzyme RNGTT-CMTR1
+    * 8Y2O  [nucleic-substrate]  Q9UET6  The Cryo-EM structure of human tRNA methyltransferase FTSJ1-THADA with substrate tRNA and 
+    * 9IMB  [nucleic-substrate]  Q8TEA1  The crystal structure of human m5C methyltransferase NSUN6 bound to its S-adenosyl-L-methi
+
+RNA motif 8  [novel             (now: AlphaFold RlmE)]
+  members with a PDB: 17 | structures: 78 | BOUND: 55
+    * 1EJ0  [ligand:HG]  P0C0R7  FTSJ RNA METHYLTRANSFERASE COMPLEXED WITH S-ADENOSYLMETHIONINE, MERCURY DERIVATIVE
+    * 4N48  [nucleic-substrate; ligand:MGT]  Q8N1G2  Cap-specific mRNA (nucleoside-2'-O-)-methyltransferase 1 Protein in complex with capped RN
+    * 6ELZ  [nucleic-substrate]  P25582  State E (TAP-Flag-Ytm1 E80A) - Visualizing the assembly pathway of nucleolar pre-60S ribos
+    * 6EM5  [nucleic-substrate]  P25582  State D architectural model (Nsa1-TAP Flag-Ytm1) - Visualizing the assembly pathway of nuc
+    * 6YLX  [nucleic-substrate]  P25582  pre-60S State NE1 (TAP-Flag-Nop53)
+    * 7NAC  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosomal biogenesis intermediate - Composite model
+    * 7NAD  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosomal biogenesis intermediate - Spb4 local refinement model
+    * 7NAF  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosomal biogenesis intermediate - Spb1-MTD local model
+    * 7O9K  [nucleic-substrate; ligand:GDP+GTP+PNS]  Q9UI43  Human mitochondrial ribosome large subunit assembly intermediate with MTERF4-NSUN4, MRM2, 
+    * 7O9M  [nucleic-substrate; ligand:PNS]  Q9UI43  Human mitochondrial ribosome large subunit assembly intermediate with MTERF4-NSUN4, MRM2, 
+    * 7ODS  [nucleic-substrate; ligand:FES+N+PM8]  Q9UI43  State B of the human mitoribosomal large subunit assembly intermediate
+    * 7OHR  [nucleic-substrate]  P25582  Nog1-TAP associated immature ribosomal particle population E from S. cerevisiae
+    * 7OHV  [nucleic-substrate]  P25582  Nog1-TAP associated immature ribosomal particles from S. cerevisiae after rpL2 expression 
+    * 7PNV  [nucleic-substrate; ligand:ATP+FES]  Q9DCL4  Assembly intermediate of mouse mitochondrial ribosome small subunit without mS37 in comple
+    * 7PNX  [nucleic-substrate; ligand:ATP+FES+NAD]  A6NJ78  Assembly intermediate of human mitochondrial ribosome small subunit without mS37 in comple
+    * 7PNY  [nucleic-substrate; ligand:ATP+FES+NAD]  A6NJ78  Assembly intermediate of human mitochondrial ribosome small subunit without mS37 in comple
+    * 7PNZ  [nucleic-substrate; ligand:ATP+FES+NAD]  A6NJ78  Assembly intermediate of human mitochondrial ribosome small subunit without mS37 in comple
+    * 7R6K  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosomal intermediate - Model for Noc2/Noc3 region
+    * 7R6Q  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosome biogenesis intermediate - Foot region model
+    * 7R72  [nucleic-substrate]  P25582  State E1 nucleolar 60S ribosome biogenesis intermediate - Spb4 local model
+    * 7R7A  [nucleic-substrate]  P25582  State E1 nucleolar 60S ribosome biogenesis intermediate - Composite model
+    * 7R7C  [nucleic-substrate]  P25582  State E2 nucleolar 60S ribosomal biogenesis intermediate - L1 stalk local model
+    * 7S0S  [nucleic-substrate]  P9WJ63  M. tuberculosis ribosomal RNA methyltransferase TlyA bound to M. smegmatis 50S ribosomal s
+    * 7U0H  [nucleic-substrate]  P25582  State NE1 nucleolar 60S ribosome biogenesis intermediate - Overall model
+    * 7V2L  [nucleic-substrate]  P37468  T.thermophilus 30S ribosome with KsgA, class K1k2
+    * 7V2M  [nucleic-substrate]  P37468  T.thermophilus 30S ribosome with KsgA, class K1k4
+    * 7V2N  [nucleic-substrate]  P37468  T.thermophilus 30S ribosome with KsgA, class K2
+    * 7V2O  [nucleic-substrate]  P37468  T.thermophilus 30S ribosome with KsgA, class K4
+    * 7V2P  [nucleic-substrate]  P37468  T.thermophilus 30S ribosome with KsgA, class K5
+    * 7V2Q  [nucleic-substrate]  P37468  T.thermophilus 30S ribosome with KsgA, class K6
+    * 8ESQ  [nucleic-substrate]  O42832  Ytm1 associated nascent 60S ribosome State 2
+    * 8ESR  [nucleic-substrate]  O42832  Ytm1 associated nascent 60S ribosome (-fkbp39) State 2
+    * 8ETC  [nucleic-substrate]  O42832  Fkbp39 associated nascent 60S ribosome State 4
+    * 8ETJ  [nucleic-substrate]  O42832  Fkbp39 associated 60S nascent ribosome State 2
+    * 8FKP  [nucleic-substrate; ligand:SF4]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State A1)
+    * 8FKQ  [nucleic-substrate]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State A2)
+    * 8FKR  [nucleic-substrate; ligand:GDP+SF4]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State B1)
+    * 8FKS  [nucleic-substrate; ligand:GDP]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State B2)
+    * 8FKT  [nucleic-substrate; ligand:ADP+GDP+SF4]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State C1)
+    * 8FKU  [nucleic-substrate; ligand:ADP+GDP]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State C2)
+    * 8FKV  [nucleic-substrate; ligand:ADP+GDP+SF4]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State D1)
+    * 8FKW  [nucleic-substrate; ligand:ADP+GDP]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State D2)
+    * 8FKX  [nucleic-substrate; ligand:ADP+GDP]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State E)
+    * 8FKY  [nucleic-substrate; ligand:ADP+GDP]  Q8IY81  Human nucleolar pre-60S ribosomal subunit (State F)
+    * 8IPM  [nucleic-substrate]  A6NJ78  The structure of human mitochondrial methyltransferase METTL15 with h44_RNA, RBFA and SAM
+    * 8IR1  [nucleic-substrate; ligand:GTP]  Q8IY81  human nuclear pre-60S ribosomal particle - State A
+    * 8P4E  [nucleic-substrate]  Q8N1G2  Structural insights into human co-transcriptional capping - structure 5
+    * 8P4F  [nucleic-substrate; ligand:MGT]  Q8N1G2  Structural insights into human co-transcriptional capping - structure 6
+    * 8QRL  [nucleic-substrate; ligand:ATP+FES+NAD]  A6NJ78  mt-SSU assembly intermediate in GTPBP8 knock-out cells, state 2
+    * 8V87  [nucleic-substrate; ligand:GDP]  P25582  60S ribosome biogenesis intermediate (Dbp10 post-catalytic structure - Overall map)
+    * 8W8F  [nucleic-substrate; ligand:GTP]  Q8N1G2  human co-transcriptional RNA capping enzyme RNGTT-CMTR1
+    * 8Y2O  [nucleic-substrate]  Q9UET6  The Cryo-EM structure of human tRNA methyltransferase FTSJ1-THADA with substrate tRNA and 
+    * 9G5C  [nucleic-substrate; ligand:FES]  A6NJ78  Assembly intermediate of human mitochondrial ribosome small subunit (State B)
+    * 9G5D  [nucleic-substrate; ligand:FES]  A6NJ78  Assembly intermediate of human mitochondrial ribosome small subunit (State C)
+    * 9HCG  [nucleic-substrate; ligand:FES]  Q9CPY0  Mouse mitoribosome large subunit assembly intermediate bound to NSUN4, METRF4, MRM2, GTPBP
+
+Protein motif 2  [Motif I/post-I (now: AlphaFold)]
+  members with a PDB: 8 | structures: 11 | BOUND: 1
+    * 7OAT  [ligand:ATP]  Q9H867  Structural basis for targeted p97 remodelling by ASPL as prerequisite for p97 trimethylati
+
+Protein motif 3  [Motif II       (now: AlphaFold)]
+  members with a PDB: 6 | structures: 6 | BOUND: 0
+
+Protein motif 5  [THW loop       (now: AlphaFold)]
+  members with a PDB: 16 | structures: 143 | BOUND: 12
+    * 2V7E  [ligand:HG]  Q9WVG6  Crystal structure of coactivator-associated arginine methyltransferase 1 (CARM1), unligand
+    * 5LGP  [ligand:8ZB]  Q9WVG6  Crystal structure of mouse CARM1 in complex with ligand P1C3s
+    * 5LGQ  [ligand:8ZB]  Q9WVG6  Crystal structure of mouse CARM1 in complex with ligand P2C3s
+    * 5LGR  [ligand:LPD+QVR]  Q9WVG6  Crystal structure of mouse CARM1 in complex with ligand P1C3u
+    * 5LGS  [ligand:QVR]  Q9WVG6  Crystal structure of mouse CARM1 in complex with ligand P2C3u
+    * 6P7I  [ligand:O3S]  Q96LA8  Crystal structure of Human PRMT6 in complex with S-Adenosyl-L-Homocysteine and YS17-117 Co
+    * 7OKP  [ligand:QVR]  Q9WVG6  Crystal structure of mouse CARM1 in complex with histone H3_13-22 K18 acetylated
+    * 7OS4  [ligand:QVR]  Q9WVG6  Crystal structure of mouse CARM1 in complex with histone H3_13-31 K18
+    * 7QPH  [ligand:QVR]  Q9WVG6  Crystal structure of mouse CARM1 in complex with histone H3_22-31 K27 acetylated
+    * 7QRD  [ligand:QVR]  Q9WVG6  Crystal structure of mouse CARM1 in complex with histone H3_10-25
+    * 8BVA  [ligand:QVR]  Q3UKX1  Crystal Structure of Mus musculus Protein Arginine Methyltransferase 2 in complex with RSF
+    * 8C1J  [ligand:QVR]  Q3UKX1  Crystal Structure of Mus musculus Protein Arginine Methyltransferase 2 in complex with RSF
+
+Protein motif 8  [NPPY catalytic (now: AlphaFold)]
+  members with a PDB: 1 | structures: 2 | BOUND: 0

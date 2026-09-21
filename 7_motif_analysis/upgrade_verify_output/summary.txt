@@ -1,0 +1,16 @@
+Upgrade-structure motif verification
+==================================================
+
+NSUN6  (Q8TEA1, PDB 5WWS, RNA)   want motif(s): ['1', '4', '5']
+   ✓ motif 1  UniProt 318-331   [1-DRVLLDPPCSGLGT]
+   ✓ motif 4  UniProt 218-234   [4-LQDASSMLPALALDPQP]
+   ✓ motif 5  UniProt 455-463   [5-TGGFFVAKL]
+   (also matches motifs: 2, 3, 6, 7)
+
+FtsJ/RlmE  (P0C0R7, PDB 1EJ0, RNA)   want motif(s): ['8']
+   ✓ motif 8  UniProt 32-42   [8-RSRAAFKLJZL]
+   (also matches motifs: 3, 5, 6)
+
+CARM1  (Q9WVG6, PDB 7OKP, Protein)   want motif(s): ['5']
+   ✓ motif 5  UniProt 414-423   [5-THWKQTVFYL]
+   (also matches motifs: 1, 4)

@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>html,body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>SAM Methyltransferase Tree of Life</title>
+<style>
+  :root{
+    --bg:#ffffff; --panel:#f6f7f9; --line:#e3e6ea; --line2:#eceff3;
+    --ink:#15181c; --ink2:#4d5661; --ink3:#7b8592;
+    --accent:#2171b5; --actino:#b15928;
+    --font: ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:13px;-webkit-font-smoothing:antialiased}
+  #app{display:flex;height:100vh;width:100%;overflow:hidden}
+
+  /* ---------- sidebar ---------- */
+  #side{width:296px;flex:0 0 296px;background:var(--panel);border-right:1px solid var(--line);
+        display:flex;flex-direction:column;overflow:hidden}
+  #sideScroll{overflow-y:auto;padding:14px 14px 24px;flex:1}
+  .brand{padding:14px 14px 10px;border-bottom:1px solid var(--line)}
+  .brand h1{margin:0;font-size:14px;font-weight:650;letter-spacing:-0.01em}
+  .brand p{margin:4px 0 0;font-size:11.5px;color:var(--ink3);line-height:1.45}
+  h2.sec{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+         color:var(--ink3);margin:18px 0 8px}
+  h2.sec:first-child{margin-top:2px}
+
+  .row{display:flex;align-items:center;gap:8px}
+  label.tog{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;cursor:pointer;user-select:none}
+  label.tog:hover{background:#eceff3}
+  label.tog input{margin:0;accent-color:var(--accent);flex:0 0 auto}
+  .swatch{width:12px;height:12px;border-radius:3px;flex:0 0 auto;border:1px solid rgba(0,0,0,.12)}
+  .tname{font-size:12px;line-height:1.2}
+  .ring-n{margin-left:auto;font-size:10px;color:var(--ink3);font-variant-numeric:tabular-nums}
+
+  input[type=search],input[type=text]{width:100%;padding:7px 9px;border:1px solid var(--line);
+    border-radius:7px;background:#fff;font:inherit;font-size:12.5px;color:var(--ink)}
+  input[type=search]:focus{outline:2px solid #bcd6ee;outline-offset:-1px;border-color:var(--accent)}
+  button.btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink2);
+    border-radius:7px;padding:6px 9px;font:inherit;font-size:11.5px;cursor:pointer}
+  button.btn:hover{background:#f0f2f5;color:var(--ink)}
+  button.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+  button.btn.pri:hover{background:#1b5e99}
+  .btnrow{display:flex;gap:6px;flex-wrap:wrap}
+
+  .legend{margin:10px 0 2px}
+  .legend .ltitle{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ink2);margin-bottom:4px}
+  .ramp{height:9px;border-radius:3px;border:1px solid rgba(0,0,0,.10)}
+  .lscale{display:flex;justify-content:space-between;font-size:10px;color:var(--ink3);
+          margin-top:3px;font-variant-numeric:tabular-nums}
+
+  #results{margin-top:6px;max-height:190px;overflow-y:auto;border:1px solid var(--line);
+           border-radius:7px;background:#fff;display:none}
+  #results div{padding:5px 8px;font-size:11.5px;cursor:pointer;border-bottom:1px solid var(--line2);line-height:1.3}
+  #results div:last-child{border-bottom:none}
+  #results div:hover{background:#eef4fa}
+  .hint{font-size:11px;color:var(--ink3);line-height:1.5;margin:6px 0 0}
+
+  .statbox{background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 10px;margin-top:8px}
+  .statbox .sname{font-size:12px;font-weight:650;line-height:1.3;margin-bottom:2px;word-break:break-word}
+  .statbox .smeta{font-size:10.5px;color:var(--ink3);margin-bottom:7px}
+  .statrow{display:flex;align-items:center;gap:6px;margin:3px 0;font-size:11px}
+  .statrow .sl{color:var(--ink2);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .statrow .sv{font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:10.5px;color:var(--ink)}
+  .bar{height:4px;border-radius:2px;background:#e8ebef;width:52px;flex:0 0 52px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:2px}
+
+  /* ---------- canvas stage ---------- */
+  #stage{flex:1;position:relative;overflow:hidden;background:var(--bg);min-width:0}
+  #cv{display:block;width:100%;height:100%;cursor:grab}
+  #cv.drag{cursor:grabbing}
+  #tip{position:absolute;pointer-events:none;z-index:20;background:rgba(255,255,255,.98);
+       border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 22px rgba(20,25,35,.14);
+       padding:9px 11px;max-width:330px;display:none;font-size:11.5px;line-height:1.45}
+  #tip .tt{font-weight:650;font-size:12px;margin-bottom:5px;line-height:1.3}
+  #tip .tsub{color:var(--ink3);font-size:10.5px;margin:-3px 0 6px}
+  #tip table{border-collapse:collapse;width:100%}
+  #tip td{padding:1.5px 0;font-size:11px}
+  #tip td.k{color:var(--ink2);padding-right:10px;white-space:nowrap}
+  #tip td.v{text-align:right;font-family:var(--mono);font-size:10.5px;font-variant-numeric:tabular-nums}
+  #tip .dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:-1px;border:1px solid rgba(0,0,0,.12)}
+
+  #hud{position:absolute;left:14px;top:12px;display:flex;gap:6px;align-items:center;z-index:10}
+  #hud .pill{background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:999px;
+             padding:4px 10px;font-size:11px;color:var(--ink2);backdrop-filter:blur(4px)}
+  #zoomctl{position:absolute;right:14px;bottom:14px;display:flex;flex-direction:column;gap:5px;z-index:10}
+  #zoomctl button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:rgba(255,255,255,.95);
+                  font-size:15px;line-height:1;color:var(--ink2);cursor:pointer}
+  #zoomctl button:hover{background:#f0f2f5;color:var(--ink)}
+  #credit{position:absolute;right:14px;top:12px;font-size:10.5px;color:var(--ink3);z-index:10;text-align:right;line-height:1.5}
+
+  /* ---------- table view ---------- */
+  #tableView{position:absolute;inset:0;background:#fff;z-index:30;display:none;flex-direction:column}
+  #tableView header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}
+  #tableView header h3{margin:0;font-size:13px;font-weight:650}
+  #tableWrap{flex:1;overflow:auto}
+  table.data{border-collapse:collapse;width:100%;font-size:11.5px}
+  table.data th{position:sticky;top:0;background:#f6f7f9;text-align:left;padding:7px 10px;
+                border-bottom:1px solid var(--line);font-weight:650;font-size:11px;cursor:pointer;white-space:nowrap}
+  table.data th:hover{background:#eceff3}
+  table.data td{padding:5px 10px;border-bottom:1px solid var(--line2);font-variant-numeric:tabular-nums}
+  table.data td.name{font-variant-numeric:normal;max-width:420px}
+  table.data td.num{text-align:right;font-family:var(--mono);font-size:10.5px}
+  table.data tr.act td.name{color:var(--actino);font-weight:600}
+
+  @media (max-width:860px){
+    #app{flex-direction:column}
+    #side{width:100%;flex:0 0 auto;max-height:44vh;border-right:none;border-bottom:1px solid var(--line)}
+    #stage{flex:1 1 auto}
+  }
+</style>
+
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <div class="brand">
+      <h1>SAM methyltransferases across the tree of life</h1>
+      <p>1,259 genomes &middot; 3,127 nodes. Rebuilt from the iTOL annotation of <em>reference_tree.nwk</em>.</p>
+    </div>
+    <div id="sideScroll">
+
+      <h2 class="sec">Find a taxon</h2>
+      <input type="search" id="q" placeholder="e.g. Mycobacterium tuberculosis" autocomplete="off" spellcheck="false">
+      <div id="results"></div>
+
+      <h2 class="sec">Annotation rings <span style="font-weight:500;text-transform:none;letter-spacing:0">(inner &rarr; outer)</span></h2>
+      <div id="dsToggles"></div>
+
+      <h2 class="sec">Highlight</h2>
+      <label class="tog"><input type="checkbox" id="tgActino" checked>
+        <span class="swatch" style="background:#b15928"></span><span class="tname">Actinomycetota</span>
+        <span class="ring-n">117 tips</span></label>
+      <label class="tog"><input type="checkbox" id="tgLabels">
+        <span class="tname" style="margin-left:20px">Tip labels (when zoomed in)</span></label>
+      <label class="tog"><input type="checkbox" id="tgClades" checked>
+        <span class="tname" style="margin-left:20px">Major clade names</span></label>
+
+      <h2 class="sec">View</h2>
+      <div class="btnrow">
+        <button class="btn" id="btnReset">Reset view</button>
+        <button class="btn" id="btnActino">Zoom to Actinomycetota</button>
+        <button class="btn" id="btnMtb">Find M. tuberculosis</button>
+      </div>
+      <div class="row" style="margin-top:9px;gap:8px">
+        <span style="font-size:11px;color:var(--ink3);width:48px">Rotate</span>
+        <input type="range" id="rot" min="0" max="359" value="307" style="flex:1;accent-color:var(--accent)">
+      </div>
+
+      <h2 class="sec">Selection</h2>
+      <div id="stat"></div>
+
+      <h2 class="sec">Export</h2>
+      <div class="btnrow">
+        <button class="btn" id="btnTable">Data table</button>
+        <button class="btn" id="btnCsv">Download CSV</button>
+        <button class="btn pri" id="btnPng">Save PNG</button>
+      </div>
+      <p class="hint">Scroll to zoom, drag to pan. Hover a ring segment for a tip&rsquo;s values; hover inside the tree for clade averages. Percentages are the exported fractions &times;&nbsp;100.</p>
+
+      <h2 class="sec">Legends</h2>
+      <div id="legends"></div>
+    </div>
+  </aside>
+
+  <main id="stage">
+    <canvas id="cv"></canvas>
+    <div id="hud"><span class="pill" id="pillZoom">100%</span><span class="pill" id="pillCount">1,259 tips</span></div>
+    <div id="credit">Tree &amp; annotations exported from iTOL<br>Letunic &amp; Bork (2024) <i>NAR</i></div>
+    <div id="zoomctl"><button id="zIn" title="Zoom in">+</button><button id="zOut" title="Zoom out">&minus;</button></div>
+    <div id="tip"></div>
+
+    <div id="tableView">
+      <header>
+        <h3>All 1,259 tips</h3>
+        <input type="search" id="tq" placeholder="Filter&hellip;" style="max-width:260px" autocomplete="off">
+        <span style="flex:1"></span>
+        <span id="tcount" style="font-size:11px;color:var(--ink3)"></span>
+        <button class="btn" id="btnCloseTable">Close</button>
+      </header>
+      <div id="tableWrap"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+var NWK = `(((((((((((((((((((((((((((((((Homo sapiens Human)Homo)Homininae)Hominidae)Hominoidea)Catarrhini)Simiiformes)Haplorrhini)Primates,((((((((Mus musculus Mouse,Mus caroli Ryukyu mouse Ricefield mouse)Mus)Mus)Murinae)Muridae,(((Mesocricetus auratus Golden hamster)Mesocricetus,(Cricetulus griseus Chinese hamster Cricetulus barabensis griseus)Cricetulus)Cricetinae)Cricetidae)Muroidea)Myomorpha)Rodentia)Glires)Euarchontoglires,((((Equus przewalskii Przewalskis horse Equus caballus przewalskii)Equus)Equidae,(((Ceratotherium simum simum Southern white rhinoceros)Ceratotherium simum)Ceratotherium)Rhinocerotidae)Perissodactyla,(((((Panthera pardus Leopard Felis pardus)Panthera)Pantherinae,((Acinonyx jubatus Cheetah)Acinonyx)Felinae)Felidae)Feliformia,((((((Enhydra lutris kenyoni northern sea otter)Enhydra lutris)Enhydra)Lutrinae,(((Mustela putorius furo European domestic ferret Mustela furo)Mustela putorius)Mustela)Mustelinae)Mustelidae)Musteloidea,((Ursus maritimus Polar bear Thalarctos maritimus)Ursus)Ursidae,(((Zalophus californianus California sealion)Zalophus)Otariidae)Pinnipedia)Caniformia)Carnivora,((((((Bos indicus Zebu)Bos)Bovinae)Bovidae)Pecora)Ruminantia,(((Vicugna pacos Alpaca Lama pacos)Vicugna)Camelidae)Tylopoda,(((((Delphinapterus leucas Beluga whale)Delphinapterus)Monodontidae)Odontoceti,(((Balaenoptera musculus Blue whale)Balaenoptera)Balaenopteridae)Mysticeti)Cetacea)Whippomorpha)Artiodactyla)Laurasiatheria)Boreoeutheria)Eutheria)Theria)Mammalia,(((((((((((((((Aythya fuligula Tufted duck Anas fuligula)Aythya)Aythyinae)Anatidae)Anseriformes)Galloanserae)Neognathae)Aves)Coelurosauria)Theropoda)Saurischia)Dinosauria)Archosauria)Archelosauria)Sauria)Sauropsida)Amniota)Tetrapoda)Dipnotetrapodomorpha)Sarcopterygii,(((((((((((((((((Parambassis ranga Indian glassy fish)Parambassis)Ambassidae,((Stegastes partitus bicolor damselfish)Stegastes)Pomacentridae)Ovalentaria incertae sedis)Ovalentaria,((((((Betta splendens Siamese fighting fish)Betta)Macropodinae)Osphronemidae)Anabantoidei)Anabantiformes)Anabantaria)Percomorphaceae)Euacanthomorphacea)Acanthomorphata)Ctenosquamata)Eurypterygia)Neoteleostei,(((((Salmo salar Atlantic salmon)Salmo)Salmoninae)Salmonidae)Salmoniformes)Protacanthopterygii)Euteleosteomorpha,(((((((((Carassius auratus Goldfish)Carassius)Cyprininae)Cyprinidae,(((Culter alburnus Topmouth culter)Culter)Xenocypridinae)Xenocyprididae,(((Danio rerio Zebrafish Brachydanio rerio)Danio)Danioninae)Danionidae)Cyprinoidei)Cypriniformes)Cypriniphysae,(((((Ictalurus punctatus Channel catfish Silurus punctatus)Ictalurus)Ictaluridae)Siluroidei)Siluriformes)Characiphysae)Otophysi)Ostariophysi)Otomorpha)Clupeocephala)Osteoglossocephalai)Teleostei)Neopterygii)Actinopteri)Actinopterygii)Euteleostomi)Teleostomi)Gnathostomata)Vertebrata)Craniata)Chordata,((((((((((Strongylocentrotus purpuratus Purple sea urchin)Strongylocentrotus)Strongylocentrotidae)Echinidea)Camarodonta)Echinacea)Euechinoidea)Echinoidea)Echinozoa)Eleutherozoa)Echinodermata)Deuterostomia,((((((((((Brugia malayi Filarial nematode worm)Brugia,(Onchocerca volvulus)Onchocerca,(Cercopithifilaria johnstoni)Cercopithifilaria,(Litomosoides sigmodontis Filarial nematode worm)Litomosoides,(Elaeophora elaphi)Elaeophora)Onchocercidae)Filarioidea)Spiruromorpha,((((Parascaris univalens Nematode worm)Parascaris)Ascarididae)Ascaridoidea)Ascaridomorpha)Spirurina,((((((Necator americanus Human hookworm)Necator)Bunostominae,((Ancylostoma ceylanicum)Ancylostoma)Ancylostomatinae)Ancylostomatidae,((Haemonchus contortus Barber pole worm)Haemonchus)Trichostrongylidae,((Cylicocyclus nassatus Nematode worm)Cylicocyclus)Strongylidae)Strongyloidea,((((Caenorhabditis elegans,Caenorhabditis briggsae)Caenorhabditis)Peloderinae)Rhabditidae)Rhabditoidea)Rhabditomorpha)Rhabditina)Rhabditida)Chromadorea)Nematoda,(((((((((((((((((((((((((Drosophila melanogaster Fruit fly,Drosophila mauritiana Fruit fly,Drosophila yakuba Fruit fly)melanogaster subgroup,(Drosophila kikkawai Fruit fly)montium subgroup,(Drosophila suzukii Spotted-wing drosophila fruit fly)suzukii subgroup,((Drosophila ananassae Fruit fly)ananassae species complex)ananassae subgroup)melanogaster group,(((Drosophila pseudoobscura pseudoobscura Fruit fly)Drosophila pseudoobscura)pseudoobscura subgroup)obscura group)Sophophora,(((Drosophila albomicans Fruit fly)nasuta subgroup)immigrans group,((Drosophila hydei Fruit fly)hydei subgroup,((Drosophila mojavensis Fruit fly)mojavensis species complex)mulleri subgroup)repleta group)Drosophila)Drosophila)Drosophilini,(((Drosophila lebanonensis Fruit fly Scaptodrosophila lebanonensis)victoria group)Scaptodrosophila)Colocasiomyini)Drosophilinae)Drosophilidae)Ephydroidea,(((((((Bactrocera dorsalis Oriental fruit fly Dacus dorsalis)Bactrocera dorsalis complex)Bactrocera)Bactrocera)Dacini)Dacinae)Tephritidae)Tephritoidea)Acalyptratae)Schizophora)Cyclorrhapha)Eremoneura)Muscomorpha)Brachycera,((((((((Aedes aegypti Yellowfever mosquito Culex aegypti)Stegomyia)Aedes)Aedini)Culicinae)Culicidae)Culicoidea)Culicomorpha)Nematocera)Diptera,(((((((((((Spodoptera litura Asian cotton leafworm,Spodoptera frugiperda Fall armyworm)Spodoptera)Amphipyrinae)Noctuidae)Noctuoidea,((((Galleria mellonella Greater wax moth)Galleria)Galleriinae)Pyralidae)Pyraloidea,(((((Vanessa tameamea Kamehameha butterfly)Vanessa)Nymphalini)Nymphalinae)Nymphalidae)Papilionoidea)Obtectomera)Ditrysia)Heteroneura)Neolepidoptera)Glossata)Lepidoptera)Amphiesmenoptera,((((((((((Xylocopa violacea Violet carpenter bee Apis violacea)Xylocopa)Xylocopa)Xylocopini)Xylocopinae,((((Bombus vosnesenskii)Pyrobombus)Bombus)Bombini)Apinae)Apidae)Anthophila)Apoidea)Aculeata)Apocrita)Hymenoptera,(((((((Nicrophorus vespilloides Boreal carrion beetle)Nicrophorus)Nicrophorinae)Silphidae)Staphylinoidea)Staphyliniformia)Polyphaga)Coleoptera)Endopterygota,(((((((((((Cimex lectularius Bed bug Acanthia lectularia)Cimex)Cimicidae)Cimicoidea)Cimicomorpha)Panheteroptera)Neoheteroptera)Euheteroptera)Heteroptera)Prosorrhyncha)Hemiptera,((((((Frankliniella occidentalis Western flower thrips Euthrips occidentalis)Frankliniella)Thripinae)Thripidae)Thripoidea)Terebrantia)Thysanoptera)Paraneoptera)Neoptera)Pterygota)Dicondylia)Insecta)Hexapoda)Pancrustacea)Mandibulata)Arthropoda)Panarthropoda)Ecdysozoa)Protostomia)Bilateria)Eumetazoa)Metazoa,((((((Hamiltosporidium tvaerminnensis)Hamiltosporidium)Dubosqiidae)Pansporoblastina)Microsporidia,((((((((Mucor circinelloides f circinelloides strain 1006PhL Mucormycosis agent Calyptromyces circinelloides)Mucor circinelloides)Mucor)Mucoraceae)Mucorineae,((Lichtheimia ornata)Lichtheimia)Lichtheimiaceae,((Absidia repens)Absidia)Cunninghamellaceae)Mucorales)Mucoromycetes)Mucoromycotina,((((((Linnemannia elongata AG-77)Linnemannia elongata)Linnemannia)Mortierellaceae)Mortierellales)Mortierellomycetes)Mortierellomycotina)Mucoromycota)Fungi incertae sedis,((((((((Torulaspora delbrueckii Yeast Candida colliculosa)Torulaspora,(Lachancea lanzarotensis)Lachancea,((Zygosaccharomyces rouxii strain ATCC 2623 CBS 732 NBRC 1130 NCYC 568 NRRL Y-229)Zygosaccharomyces rouxii)Zygosaccharomyces,(Saccharomyces uvarum Yeast Saccharomyces bayanus var uvarum)Saccharomyces,((Eremothecium gossypii strain ATCC 10895 CBS 10951 FGSC 9923 NRRL Y-1056 Yeast Ashbya gossypii)Eremothecium gossypii)Eremothecium,(Zygotorulaspora mrakii Zygosaccharomyces mrakii)Zygotorulaspora,((Tetrapisispora phaffii strain ATCC 24235 CBS 4417 NBRC 1672 NRRL Y-8282 UCD 70-5 Yeast Fabospora phaffii)Tetrapisispora phaffii)Tetrapisispora,((Naumovozyma dairenensis strain ATCC 10597 BCRC 20456 CBS 421 NBRC 0211 NRRL Y-12639 Saccharomyces dairenensis)Naumovozyma dairenensis)Naumovozyma,((Kazachstania africana strain ATCC 22294 BCRC 22015 CBS 2517 CECT 1963 NBRC 1671 NRRL Y-8276 Yeast Kluyveromyces africanus)Kazachstania africana)Kazachstania,((Huiozyma naganishii strain ATCC MYA-139 BCRC 22969 CBS 8797 KCTC 17520 NBRC 10181 NCYC 3082 Yp74L-3 Yeast Kazachstania naganishii)Huiozyma naganishii)Huiozyma,(Maudiozyma barnettii)Maudiozyma,((Kluyveromyces dobzhanskii CBS 2104)Kluyveromyces dobzhanskii)Kluyveromyces,((Henningerozyma blattae strain ATCC 34711 CBS 6284 DSM 70876 NBRC 10599 NRRL Y-10934 UCD 77-7 Yeast Tetrapisispora blattae)Henningerozyma blattae)Henningerozyma)Saccharomycetaceae)Saccharomycetales)Saccharomycetes,((((((Candida parapsilosis strain CDC 317 ATCC MYA-4646 Yeast Monilia parapsilosis)Candida parapsilosis)Candida)CandidaLodderomyces clade,((Suhomyces tanzawaensis NRRL Y-17324)Suhomyces tanzawaensis)Suhomyces,((Scheffersomyces stipitis strain ATCC 58785 CBS 6054 NBRC 10063 NRRL Y-11545 Yeast Pichia stipitis)Scheffersomyces stipitis)Scheffersomyces)Debaryomycetaceae,((Sungouiella intermedia)Sungouiella,(((Metschnikowia bicuspidata var bicuspidata NRRL YB-4993)Metschnikowia bicuspidata var bicuspidata)Metschnikowia bicuspidata)Metschnikowia)Metschnikowiaceae)Serinales,((((Komagataella phaffii strain GS115 ATCC 20864 Yeast Pichia pastoris)Komagataella phaffii)Komagataella)Pichiaceae)Pichiales)Pichiomycetes)Saccharomycotina,((((((((((Fusarium proliferatum strain ET1 Orchid endophyte fungus)Gibberella intermedia,(Gibberella fujikuroi strain CBS 19534 IMI 58289 NRRL A-6831 Bakanae and foot rot disease fungus Fusarium fujikuroi)Fusarium fujikuroi)Fusarium fujikuroi species complex)Fusarium,(Neonectria punicea)Neonectria,(Thelonectria olida)Thelonectria,(Dactylonectria macrodidyma)Dactylonectria)Nectriaceae,((Metarhizium brunneum)Metarhizium,((Torrubiella hemipterigena)Torrubiella clade)Clavicipitaceae incertae sedis,(Conoideocrella luteorostrata)Conoideocrella)Clavicipitaceae,((Trichoderma guizhouense,(Hypocrea virens strain Gv29-8 FGSC 10586 Gliocladium virens Trichoderma virens)Hypocrea virens)Trichoderma)Hypocreaceae,((Purpureocillium takamizusanense)Purpureocillium)Ophiocordycipitaceae,(((Beauveria bassiana strain ARSEF 2860 White muscardine disease fungus Tritirachium shiotae)Beauveria bassiana)Beauveria,((Akanthomyces lecanii RCEF 1005)Cordyceps confragosa)Akanthomyces)Cordycipitaceae,(((Stachybotrys chartarum strain CBS 109288 IBT 7711 Toxic black mold Stilbospora chartarum)Stachybotrys chartarum)Stachybotrys)Stachybotryaceae)Hypocreales,((((Colletotrichum destructivum)Colletotrichum destructivum species complex)Colletotrichum)Glomerellaceae)Glomerellales)Hypocreomycetidae,((((Madurella fahalii)Madurella)Sordariales incertae sedis,(((Neurospora crassa strain ATCC 24698 74-OR23-1A CBS 70871 DSM 1257 FGSC 987)Neurospora crassa)Neurospora,(Sordaria brevicollis)Sordaria,(Pseudoneurospora amorphoporcata)Pseudoneurospora)Sordariaceae,((Podospora comata)Podospora,(Triangularia verruculosa)Triangularia)Podosporaceae,((Lasiosphaeria hispida)Lasiosphaeria,(Apodospora peruviana)Apodospora,(Cercophora scortea)Cercophora,(Lasiosphaeris hirsuta)Lasiosphaeris,(Immersiella caudata)Immersiella)Lasiosphaeriaceae,((Canariomyces notabilis)Canariomyces,(Chaetomium strumarium)Chaetomium,(Parathielavia hyrcaniae)Parathielavia)Chaetomiaceae)Sordariales,(((Pyricularia grisea Crabgrass-specific blast fungus Magnaporthe grisea)Pyricularia)Pyriculariaceae)Magnaporthales,(((Diaporthe helianthi,Phomopsis amygdali Fusicoccum amygdali)Diaporthe)Diaporthaceae)Diaporthales,(((Pleurostoma richardsiae)Pleurostoma)Pleurostomataceae)Calosphaeriales,(((Coniochaeta hoffmannii)Coniochaeta)Coniochaetaceae)Coniochaetales)Sordariomycetidae,((((Apiospora arundinis)Apiospora,(Neoarthrinium moseri)Neoarthrinium)Apiosporaceae,(((Pestalotiopsis fici strain W106-1 CGMCC315140)Pestalotiopsis fici)Pestalotiopsis,(Seiridium unicorne)Seiridium,(Truncatella angustata)Truncatella)Sporocadaceae,((Pseudomassariella vexata)Pseudomassariella)Pseudomassariaceae)Amphisphaeriales,(((Anthostomella pinea)Anthostomella)Xylariaceae)Xylariales)Xylariomycetidae)Sordariomycetes,((((Pseudogymnoascus verrucosus)Pseudogymnoascus)Thelebolaceae)Thelebolales,(((Botrytis deweyae)Botrytis,(Botryotinia convoluta)Botryotinia)Sclerotiniaceae,(((Phialocephala subalpina)Phialocephala fortinii species complex)Phialocephala,(Mollisia scopiformis Conifer needle endophyte fungus Phialocephala scopiformis)Mollisia)Mollisiaceae,((Rhynchosporium graminicola)Rhynchosporium,(Oculimacula yallundae)Oculimacula,(Cadophora malorum)Cadophora)Ploettnerulaceae,((((Hyaloscypha variabilis strain UAMH 11265 GT02V1 F Meliniomyces variabilis)Hyaloscypha variabilis)Hyaloscypha hepaticicolaRhizoscyphus ericae species complex)Hyaloscypha)Hyaloscyphaceae,((((Marssonina brunnea f sp multigermtubi strain MB m1 Marssonina leaf spot fungus)Drepanopeziza brunnea f sp multigermtubi)Drepanopeziza brunnea)Drepanopeziza)Drepanopezizaceae)Helotiales)Leotiomycetes)sordariomyceta,(((((Penicillium hordei)Penicillium,((Aspergillus viridinutans,(Neosartorya fischeri strain ATCC 1020 DSM 3700 CBS 54465 FGSC A1164 JCM 1740 NRRL 181 WB 181 Aspergillus fischerianus)Aspergillus fischeri)Aspergillus subgen Fumigati)Aspergillus)Aspergillaceae,((((Talaromyces marneffei strain ATCC 18224 CBS 33459 QM 7333 Penicillium marneffei)Talaromyces marneffei)Talaromyces sect Talaromyces)Talaromyces)Trichocomaceae)Eurotiales,(((Blastomyces parvus,(Ajellomyces dermatitidis strain ER-3 ATCC MYA-2586 Blastomyces dermatitidis)Ajellomyces dermatitidis)Blastomyces,((Helicocarpus griseus UAMH5409)Helicocarpus griseus)Helicocarpus,(Emmonsia crescens)Emmonsia,((Emergomyces pasteurianus Ep9510)Emergomyces pasteurianus)Emergomyces)Ajellomycetaceae,(((Polytolypa hystricis strain UAMH7299)Polytolypa hystricis)Polytolypa)Onygenales incertae sedis,(((Coccidioides immitis strain RS Valley fever fungus)Coccidioides immitis)Coccidioides)Onygenaceae,(((Arthroderma gypseum strain ATCC MYA-4604 CBS 118893 Microsporum gypseum)Arthroderma gypseum)Nannizzia)Arthrodermataceae)Onygenales)Eurotiomycetidae,(((((Fonsecaea multimorphosa CBS 102226)Fonsecaea multimorphosa)Fonsecaea,(Exophiala xenobiotica)Exophiala,((Cladophialophora bantiana strain ATCC 10958 CBS 17352 CDC B-1940 NIH 8579 Xylohypha bantiana)Xylohypha bantiana)Cladophialophora,(Phialophora macrospora)Phialophora,((Capronia epimyces CBS 60696)Capronia epimyces)Capronia)Herpotrichiellaceae)Chaetothyriales)Chaetothyriomycetidae)Eurotiomycetes,((((((Cercospora beticola Sugarbeet leaf spot fungus)Cercospora,(Septoria linicola)Septoria,(Passalora fulva Tomato leaf mold Cladosporium fulvum)Fulvia,((Zasmidium cellare ATCC 36951)Zasmidium cellare)Zasmidium,(Ramularia collo-cygni)Ramularia,(Zymoseptoria brevis)Zymoseptoria)Mycosphaerellaceae)Mycosphaerellales,((((Aureobasidium pullulans EXF-150)Aureobasidium pullulans)Aureobasidium)Saccotheciaceae)Dothideales,(((Cladosporium halotolerans)Cladosporium,(Cryoendolithus antarcticus)Cryoendolithus)Cladosporiaceae)Cladosporiales)Dothideomycetidae,((((((Cochliobolus carbonum strain 26-R-13 Maize leaf spot fungus Bipolaris zeicola)Cochliobolus carbonum,(Bipolaris oryzae ATCC 44560)Cochliobolus miyabeanus)Bipolaris,(((Alternaria tenuissima)Alternaria alternata complex)Alternaria sect Alternaria)Alternaria,(Pyrenophora tritici-repentis)Pyrenophora)Pleosporaceae,(((Phaeosphaeria nodorum strain SN15 ATCC MYA-4574 FGSC 10173 Glume blotch fungus Parastagonospora nodorum)Phaeosphaeria nodorum)Parastagonospora,(Paraphoma chrysanthemicola)Paraphoma)Phaeosphaeriaceae)Pleosporineae)Pleosporales,((((Lepidopterella palustris CBS 45981)Lepidopterella palustris)Lepidopterella)Argynnaceae,((Lophium mytilinum)Lophium)Mytilinidiaceae)Mytilinidiales)Pleosporomycetidae,((((Diplodia corticola)Diplodia,(Macrophomina phaseolina)Macrophomina,(Lasiodiplodia hormozganensis)Lasiodiplodia)Botryosphaeriaceae)Botryosphaeriales,(((Zopfia rhizophila CBS 20726)Zopfia rhizophila)Zopfia)Zopfiaceae)Dothideomycetes incertae sedis)Dothideomycetes)dothideomyceta,(((((Xylona heveae strain CBS 132557 TC161)Xylona heveae)Xylona)Xylonaceae)Xylonales)Xylonomycetes)leotiomyceta,((((Orbilia brochopaga)Orbilia,(Arthrobotrys musiformis)Arthrobotrys)Orbiliaceae)Orbiliales)Orbiliomycetes)Pezizomycotina)saccharomyceta)Ascomycota,((((((((Trametes coccinea strain BRFM310 Pycnoporus coccineus)Trametes coccinea)Trametes,((Lentinus tigrinus ALCF2SS1-6)Lentinus tigrinus)Lentinus,(Dichomitus squalens)Dichomitus,((Polyporus arcularius HHB13444)Polyporus arcularius)Polyporus)Polyporaceae,((Obba rivulosa)Obba)Gelatoporiaceae,(((Laetiporus sulphureus 93-53)Laetiporus sulphureus)Laetiporus)Laetiporaceae,((Phanerochaete sordida)Phanerochaete)Phanerochaetaceae,(((Daedalea quercina L-15889)Fomitopsis quercina)Fomitopsis,(Rhodofomes roseus)Rhodofomes)Fomitopsidaceae,((Somion occarium)Somion)Cerrenaceae)Polyporales,((((Neolentinus lepideus HHB14362 ss-1)Neolentinus lepideus)Neolentinus,(Heliocybe sulcata)Heliocybe)Gloeophyllaceae)Gloeophyllales,(((Rickenella mellea)Rickenella)Rickenellaceae,((Schizopora paradoxa)Schizopora)Schizoporaceae)Hymenochaetales,(((Thelephora terrestris)Thelephora)Thelephoraceae)Thelephorales,((((Botryobasidium botryosum strain FD-172 SS1)Botryobasidium botryosum)Botryobasidium)Botryobasidiaceae)Cantharellales,(((Russula ochroleuca)Russula)Russulaceae)Russulales)Agaricomycetes incertae sedis,(((((Jaapia argillacea MUCL 33604)Jaapia argillacea)Jaapia)Jaapiaceae)Jaapiales,((((Armillaria solidipes)Armillaria,((Guyanagaster necrorhizus MCA 3950)Guyanagaster necrorhizus)Guyanagaster)Physalacriaceae,((Lentinula aff detonsa)Lentinula)Omphalotaceae,((Mycena albidolilacea)Mycena)Mycenaceae)Marasmiineae,((((Galerina marginata strain CBS 33988)Galerina marginata)Galerina,(Pholiota conissans)Pholiota,((Hypholoma sublateritium strain FD-334 SS-4)Hypholoma sublateritium)Hypholoma)Strophariaceae,((Crepidotus variabilis)Crepidotus)Crepidotaceae,((Crucibulum laeve)Crucibulum)Nidulariaceae,((Hebeloma cylindrosporum)Hebeloma)Hymenogastraceae,(((Laccaria amethystina LaAM-08-1)Laccaria amethystina)Laccaria)Hydnangiaceae,((Coprinopsis marcescibilis Agaric fungus Psathyrella marcescibilis)Coprinopsis)Psathyrellaceae)Agaricineae,(((Hypsizygus marmoreus White beech mushroom Agaricus marmoreus)Hypsizygus)Lyophyllaceae,((Collybia nuda)Collybia)Clitocybaceae)Tricholomatineae,(((Dendrothele bispora strain CBS 96296)Dendrothele bispora)Dendrothele)Agaricales incertae sedis,(((Pleurotus eryngii Boletus of the steppes)Pleurotus)Pleurotaceae)Pleurotineae)Agaricales,(((((Rhizopogon vinicolor AM-OR11-026)Rhizopogon vinicolor)Rhizopogon)Rhizopogonaceae,(((Suillus luteus UH-Slu-Lm8-n1)Suillus luteus)Suillus)Suillaceae)Suillineae,((((Paxillus rubicundulus Ve082h10)Paxillus rubicundulus)Paxillus)Paxillaceae)Paxilineae)Boletales)Agaricomycetidae)Agaricomycetes,((((((Cryptococcus deneoformans strain JEC21 ATCC MYA-565 Cryptococcus neoformans var neoformans serotype D)Cryptococcus deneoformans)Cryptococcus neoformans species complex)Cryptococcus,((Kwoniella mangroviensis CBS 10435)Kwoniella mangrovensis)Kwoniella)Cryptococcaceae)Tremellales)Tremellomycetes,(((((Calocera viscosa strain TUFC12733)Calocera viscosa)Calocera)Dacrymycetaceae)Dacrymycetales)Dacrymycetes)Agaricomycotina,((((((Rhodotorula toruloides strain NP11 Yeast Rhodosporidium toruloides)Rhodotorula toruloides)Rhodotorula)Sporidiobolaceae)Sporidiobolales,(((Microbotryum intermedium)Microbotryum)Microbotryaceae)Microbotryales)Microbotryomycetes)Pucciniomycotina,(((((Pseudozyma flocculosa)Pseudozyma,(Melanopsichium pennsylvanicum)Melanopsichium)Ustilaginaceae)Ustilaginales)Ustilaginomycetes)Ustilaginomycotina)Basidiomycota)Dikarya)Fungi,(((Capsaspora owczarzaki strain ATCC 30864)Capsaspora owczarzaki)Capsaspora)Filasterea)Opisthokonta,((((((((Leptomonas pyrrhocoris Firebug parasite)Leptomonas,(((Leishmania panamensis)Leishmania guyanensis species complex)Viannia,(Leishmania martiniquensis,(Leishmania major)Leishmania major species complex,(Leishmania infantum,Leishmania donovani)Leishmania donovani species complex)Leishmania)Leishmania,(Porcisia hertigi)Porcisia)Leishmaniinae,((Trypanosoma theileri)Trypanosoma with unspecified subgenus)Trypanosoma,(Novymonas esmeraldas)Novymonas)Trypanosomatidae)Trypanosomatida)Metakinetoplastina)Kinetoplastea)Euglenozoa)Discoba,((((((((((Toxoplasma gondii strain ATCC 50611 Me49)Toxoplasma gondii)Toxoplasma,(Besnoitia besnoiti)Besnoitia,((Neospora caninum strain Liverpool)Neospora caninum)Neospora)Sarcocystidae,(((Cryptosporidium muris strain RN66)Cryptosporidium muris)Cryptosporidium)Cryptosporidiidae,((Cyclospora cayetanensis)Cyclospora,(Eimeria tenella Coccidian parasite)Eimeria)Eimeriidae)Eimeriorina)Eucoccidiorida)Coccidia)Conoidasida,((((((Plasmodium chabaudi chabaudi)Plasmodium chabaudi)Plasmodium)Plasmodium)Plasmodiidae)Haemosporida,(((Babesia bigemina)Babesia)Babesiidae,((Theileria parva East coast fever infection agent)Theileria)Theileriidae)Piroplasmida)Aconoidasida)Apicomplexa,((((Vitrella brassicaformis strain CCMP3155)Vitrella brassicaformis)Vitrella)Vitrellaceae)Colpodellida,((((((((Tetrahymena thermophila strain SB210)Tetrahymena thermophila)Tetrahymena)Tetrahymenidae)Tetrahymenina)Hymenostomatida,(((Paramecium tetraurelia)Paramecium)Parameciidae)Peniculida,((((Pseudocohnilembus persalinus Ciliate)Pseudocohnilembus)Pseudocohnilembidae)Philasterida)Scuticociliatia)Oligohymenophorea,((((((Stylonychia lemnae Ciliate)Stylonychia)Stylonychinae)Oxytrichidae)Sporadotrichida)Stichotrichia,((((Euplotes crassus)Moneuplotes)Euplotidae)Euplotida)Hypotrichia)Spirotrichea)Intramacronucleata,(((((Blepharisma stoltei)Blepharisma)Blepharismidae,((Stentor coeruleus)Stentor)Stentoridae)Heterotrichida)Heterotrichea)Postciliodesmatophora)Ciliophora,((((((Perkinsus marinus strain ATCC 50983 TXsc)Perkinsus marinus)Perkinsus)Perkinsidae)Perkinsida)Perkinsea)Perkinsozoa)Alveolata,(((((Phytophthora cactorum,Phytophthora fragariae,(Phytophthora infestans strain T30-4 Potato late blight agent)Phytophthora infestans,Phytophthora rubi)Phytophthora,(Plasmopara halstedii Downy mildew of sunflower)Plasmopara)Peronosporaceae)Peronosporales,(((Pythium oligandrum Mycoparasitic fungus)Pythium)Pythiaceae)Pythiales,(((Aphanomyces euteiches)Aphanomyces,(Achlya hypogyna Oomycete Protoachlya hypogyna)Achlya,(Thraustotheca clavata)Thraustotheca,((Saprolegnia diclina strain VS20)Saprolegnia diclina)Saprolegnia)Saprolegniaceae)Saprolegniales,(((Lagenidium giganteum)Lagenidium)Lagenidiaceae)Lagenidiales)Oomycota,(((((((Seminavis robusta)Seminavis,(Fistulifera solaris Oleaginous diatom)Fistulifera)Naviculaceae,(((Phaeodactylum tricornutum strain CCAP 10551)Phaeodactylum tricornutum)Phaeodactylum)Phaeodactylaceae)Naviculales,(((Cylindrotheca closterium)Cylindrotheca,((Fragilariopsis cylindrus CCMP1102)Fragilariopsis cylindrus)Fragilariopsis)Bacillariaceae)Bacillariales)Bacillariophycidae)Bacillariophyceae,(((((Thalassiosira pseudonana Marine diatom Cyclotella nana)Thalassiosira)Thalassiosiraceae)Thalassiosirales,(((Cyclotella cryptica)Cyclotella,(Discostella pseudostelligera)Discostella,(Cyclostephanos tholiformis)Cyclostephanos)Stephanodiscaceae)Stephanodiscales)Thalassiosirophycidae,((((Chaetoceros tenuissimus)Chaetoceros)Chaetocerotaceae)Chaetocerotales)Chaetocerotophycidae)Coscinodiscophyceae)Bacillariophyta,(((((Ectocarpus siliculosus Brown alga Conferva siliculosa)Ectocarpus)Ectocarpaceae)Ectocarpales)Phaeophyceae,((((Tribonema minus)Tribonema)Tribonemataceae)Tribonematales)Xanthophyceae)PX clade,((((Triparma verrucosa)Triparma)Triparmaceae)Parmales)Bolidophyceae,(((((Nannochloropsis salina CCMP1776)Microchloropsis salina)Microchloropsis)Monodopsidaceae)Eustigmatales)Eustigmatophyceae)Ochrophyta,((((((Blastocystis sp subtype 1 strain ATCC 50177 NandII)Blastocystis hominis)Blastocystis)Blastocystidae)Opalinata)Opalozoa,((((Hondaea fermentalgiana)Hondaea)Thraustochytriidae)Thraustochytrida)Labyrinthulomycetes)Bigyra)Stramenopiles)Sar,((((((((((((((((((Arabidopsis thaliana Mouse-ear cress)Arabidopsis,(Camelina sativa False flax Myagrum sativum)Camelina)Camelineae,((Raphanus sativus Radish Raphanus raphanistrum var sativus)Raphanus)Brassiceae,((Eutrema salsugineum Saltwater cress Sisymbrium salsugineum)Eutrema)Eutremeae)Brassicaceae)Brassicales,((((Gossypium tomentosum Hawaiian cotton Gossypium sandvicense)Gossypium,(Hibiscus trionum Flower of an hour)Hibiscus)Malvoideae,((Theobroma cacao Cacao Cocoa)Theobroma)Byttnerioideae,((Durio zibethinus Durian)Durio)Helicteroideae)Malvaceae)Malvales,(((((Eucalyptus globulus Tasmanian blue gum)Eucalyptus)Eucalypteae,(((Rhodamnia argentea)Rhodamnia)Australasian group)Myrteae)Myrtoideae)Myrtaceae,((Punica granatum Pomegranate)Punica)Lythraceae)Myrtales)malvids,((((((Manihot esculenta Cassava Jatropha manihot)Manihot)Manihoteae)Crotonoideae)Euphorbiaceae,(((Populus trichocarpa Western balsam poplar Populus balsamifera subsp trichocarpa)Populus)Saliceae)Salicaceae)Malpighiales,((((Ziziphus jujuba Chinese jujube Ziziphus sativa)Ziziphus)Paliureae)Rhamnaceae,((((Prunus persica Peach Amygdalus persica)Prunus)Amygdaleae)Amygdaloideae)Rosaceae)Rosales,(((Juglans regia English walnut)Juglans)Juglandaceae,((Quercus rubra Northern red oak Quercus borealis)Quercus)Fagaceae)Fagales,(((((((((Glycine max Soybean Glycine hispida)Glycine subgen Soja)Glycine,((Vigna radiata var radiata Mung bean Phaseolus aureus)Vigna radiata)Vigna,(Phaseolus vulgaris Kidney bean French bean)Phaseolus)Phaseoleae,((Abrus precatorius Indian licorice Glycine abrus)Abrus)Abreae)indigoferoidmillettioid clade,((((Cicer arietinum Chickpea Garbanzo)Cicer)Cicereae,((Medicago truncatula Barrel medic Medicago tribuloides)Medicago)Trifolieae)IRL clade)Hologalegina)NPAAA clade,((((Arachis duranensis Wild peanut)Arachis)Pterocarpus clade)Dalbergieae)dalbergioids sensu lato)50 kb inversion clade)Papilionoideae)Fabaceae)Fabales,((((Cucumis melo Muskmelon)Cucumis)Benincaseae,((Cucurbita maxima Pumpkin Winter squash)Cucurbita)Cucurbiteae)Cucurbitaceae)Cucurbitales)fabids)rosids,(((((((((Coffea arabica Arabian coffee)Coffea)Coffeeae)Bertiereae - Coffeeae clade)Gardenieae complex)Ixoroideae)Rubiaceae)Gentianales,((((((Solanum pennellii Tomato Lycopersicon pennellii)Solanum subgen Lycopersicon)Solanum)Solaneae)Solanoideae)Solanaceae)Solanales,(((Sesamum indicum Oriental sesame Sesamum orientale)Sesamum)Pedaliaceae)Lamiales)lamiids,((((((((((Daucus carota subsp sativus Carrot)Daucus carota)Daucus sect Daucus)Daucus)Daucinae)Scandiceae)Apioideae)Apiaceae)Apiineae)Apiales,((((((Helianthus annuus Common sunflower)Helianthus)Heliantheae)Heliantheae alliance)Asteroideae)Asteraceae)Asterales)campanulids)asterids,(((((Spinacia oleracea Spinach)Spinacia)Anserineae)Chenopodioideae)Chenopodiaceae)Caryophyllales)Pentapetalae)Gunneridae)eudicotyledons,(((((((((((Triticum aestivum Wheat)Triticum)Triticinae)Triticeae)Triticodae,(((Brachypodium distachyon Purple false brome Trachynia distachya)Brachypodium)Brachypodieae)Stipodae)Pooideae)BOP clade,(((((((Panicum virgatum Blackwell switchgrass)Panicum sect Hiantes)Panicum)Panicinae,((Setaria viridis Green bristlegrass Setaria italica subsp viridis)Setaria)Cenchrinae)Paniceae)Panicodae,((((Sorghum bicolor Sorghum Sorghum vulgare)Sorghum)Sorghinae,((Miscanthus lutarioriparius)Miscanthus)Saccharinae)Andropogoneae,(((Paspalum vaginatum)Paspalum)Paspalinae)Paspaleae)Andropogonodae)Panicoideae)PACMAD clade)Poaceae)Poales,((((((Elaeis guineensis var tenera Oil palm)Elaeis)Elaeidinae)Cocoseae)Arecoideae)Arecaceae)Arecales)commelinids)Petrosaviidae)Liliopsida,(((Nelumbo nucifera Sacred lotus)Nelumbo)Nelumbonaceae,((Protea cynaroides)Protea)Proteaceae)Proteales,((((Aquilegia coerulea Rocky mountain columbine)Aquilegia)Thalictroideae)Ranunculaceae)Ranunculales)Mesangiospermae)Magnoliopsida)Spermatophyta)Euphyllophyta)Tracheophyta)Embryophyta)Streptophytina,((((Klebsormidium nitens Green alga Ulothrix nitens)Klebsormidium)Klebsormidiaceae)Klebsormidiales)Klebsormidiophyceae)Streptophyta,(((((((Chlorella vulgaris Green alga)Chlorella,(Micractinium conductrix)Micractinium)Chlorella clade,(Apatococcus lobatus)Apatococcus,(Auxenochlorella protothecoides Green microalga Chlorella protothecoides)Auxenochlorella)Chlorellaceae)Chlorellales,(((Coccomyxa viridis)Coccomyxa)Coccomyxaceae,((Elliptochloris bilobata)Elliptochloris)Elliptochloris clade)Trebouxiophyceae incertae sedis,(((Myrmecia bisecta)Myrmecia,(Symbiochloris irregularis)Symbiochloris)Trebouxiaceae)Trebouxiales)Trebouxiophyceae,(((((Chlamydomonas reinhardtii Chlamydomonas smithii)Chlamydomonas)Chlamydomonadaceae,((Edaphochlamys debaryana)Edaphochlamys)Chlamydomonadales incertae sedis,(((Volvox carteri f nagariensis)Volvox carteri)Volvox,(Pleodorina starrii)Pleodorina,(Gonium pectorale Green alga)Gonium)Volvocaceae)Chlamydomonadales,(((Raphidocelis subcapitata)Raphidocelis)Selenastraceae,((Tetradesmus obliquus Green alga Acutodesmus obliquus)Tetradesmus)Scenedesmaceae)Sphaeropleales)CS clade)Chlorophyceae)core chlorophytes,((((Ostreococcus tauri Marine green alga)Ostreococcus,(Bathycoccus prasinos)Bathycoccus)Bathycoccaceae,((Micromonas commoda strain RCC299 NOUM17 CCMP2709 Picoplanktonic green alga)Micromonas)Mamiellaceae)Mamiellales)Mamiellophyceae,((((Chloropicon primus)Chloropicon)Chloropicaceae)Chloropicales)Chloropicophyceae)Chlorophyta)Viridiplantae,((((((Planoprotostelium fungivorum)Planoprotostelium)Cavosteliaceae)Cavosteliida)Variosea,(((((Polysphondylium violaceum)Polysphondylium,(Dictyostelium discoideum Social amoeba)Dictyostelium)Dictyosteliaceae,((Tieghemostelium lacteum Slime mold Dictyostelium lacteum)Tieghemostelium)Raperosteliaceae)Dictyosteliales,(((Cavenderia fasciculata Slime mold Dictyostelium fasciculatum)Cavenderia)Cavenderiaceae)Acytosteliales)Dictyostelia)Eumycetozoa)Evosea)Amoebozoa)Eukaryota,(((((((((Mycobacterium tuberculosis strain ATCC 25618 H37Rv)Mycobacterium tuberculosis)Mycobacterium tuberculosis complex,((Mycobacterium marinum strain ATCC BAA-535 M)Mycobacterium marinum)Mycobacterium ulcerans group)Mycobacterium,(Mycolicibacterium iranicum Mycobacterium iranicum,Mycolicibacterium sphagni,Mycolicibacterium confluentis,Mycolicibacterium septicum,Mycolicibacterium pallens,Mycolicibacterium rutilum Mycobacterium rutilum,Mycolicibacterium nivoides)Mycolicibacterium)Mycobacteriaceae,((Nocardia amikacinitolerans,Nocardia sputorum,Nocardia rhizosphaerihabitans)Nocardia,(Rhodococcus gannanensis,Rhodococcus daqingensis,Rhodococcus spelaei)Rhodococcus)Nocardiaceae,(((Gordonia alkanivorans CGMCC 6845)Gordonia alkanivorans)Gordonia)Gordoniaceae,((Corynebacterium pollutisoli)Corynebacterium)Corynebacteriaceae)Mycobacteriales,(((((Clavibacter michiganensis subsp michiganensis strain NCPPB 382)Clavibacter michiganensis subsp michiganensis)Clavibacter michiganensis,Clavibacter nebraskensis)Clavibacter,(Plantibacter cousiniae nom nud)Plantibacter,(Microbacterium marinilacus,Microbacterium thalli,Microbacterium sufflavum,Microbacterium aurugineum,Microbacterium gallinarum,Microbacterium paraoxydans,Microbacterium schleiferi,Microbacterium deminutum)Microbacterium,(Leifsonia aquatica Corynebacterium aquaticum,Leifsonia virtsii)Leifsonia,(Curtobacterium aurantiacum)Curtobacterium,(Mycetocola zhujimingii)Mycetocola,(Gryllotalpicola koreensis)Gryllotalpicola,(Agreia pratensis)Agreia,(Compostimonas suwonensis)Compostimonas)Microbacteriaceae,((Oerskovia merdavium)Oerskovia)Cellulomonadaceae,((Arthrobacter ulcerisalmonis,Arthrobacter ginsengisoli,Arthrobacter sedimenti,Arthrobacter bambusae,Arthrobacter woluwensis)Arthrobacter,(Glutamicibacter mishrai)Glutamicibacter,(Pseudarthrobacter scleromae,Pseudarthrobacter quantipunctorum)Pseudarthrobacter,((Paeniglutamicibacter gangotriensis Lz1y)Paeniglutamicibacter gangotriensis)Paeniglutamicibacter,(Sinomonas cellulolyticus)Sinomonas)Micrococcaceae)Micrococcales,(((Saccharopolyspora endophytica,Saccharopolyspora rosea,Saccharopolyspora spinosa,Saccharopolyspora terrae,Saccharopolyspora thermophila,Saccharopolyspora phatthalungensis,Saccharopolyspora ipomoeae,Saccharopolyspora cebuensis,Saccharopolyspora antimicrobica)Saccharopolyspora,((Prauserella endophytica)Prauserella coralliicola group,Prauserella cavernicola,Prauserella isguenensis,Prauserella oleivorans)Prauserella,(Actinokineospora bangkokensis)Actinokineospora,(Amycolatopsis acidicola,Amycolatopsis roodepoortensis,Amycolatopsis regifaucium,Amycolatopsis plumensis,(Amycolatopsis azurea DSM 43854)Amycolatopsis azurea,Amycolatopsis albidoflavus,Amycolatopsis silviterrae,Amycolatopsis speibonae,Amycolatopsis sulphurea,Amycolatopsis tucumanensis,Amycolatopsis pigmentata,Amycolatopsis acididurans,Amycolatopsis cynarae,Amycolatopsis dendrobii,Amycolatopsis eburnea,Amycolatopsis echigonensis,Amycolatopsis heterodermiae,Amycolatopsis iheyensis,Amycolatopsis tolypomycina)Amycolatopsis,(Crossiella equi)Crossiella,(Pseudonocardia thermophila,Pseudonocardia parietis,Pseudonocardia oroxyli,Pseudonocardia ammonioxydans,Pseudonocardia eucalypti,Pseudonocardia hydrocarbonoxydans,Pseudonocardia alni Amycolata alni,Pseudonocardia hierapolitana,Pseudonocardia hispaniensis)Pseudonocardia,((Actinosynnema mirum strain ATCC 29888 DSM 43827 JCM 3225 NBRC 14064 NCIMB 13271 NRRL B-12336 IMRU 3971 101)Actinosynnema mirum)Actinosynnema,(Kibdelosporangium banguiense,Kibdelosporangium persicum,Kibdelosporangium philippinense,Kibdelosporangium aridum)Kibdelosporangium,(Actinomycetospora straminea,Actinomycetospora cinnamomea)Actinomycetospora,(Lentzea alba)Lentzea,(Saccharothrix tamanrassetensis,Saccharothrix algeriensis,Saccharothrix ecbatanensis,Saccharothrix saharensis,Saccharothrix yanglingensis)Saccharothrix,((Saccharomonospora viridis strain ATCC 15386 DSM 43017 JCM 3036 CCUG 5913 NBRC 12207 NCIMB 9602 P101 Thermoactinomyces viridis)Saccharomonospora viridis)Saccharomonospora,(Gandjariella thermophila)Gandjariella,(Allokutzneria multivorans,Allokutzneria oryzae)Allokutzneria,((Kutzneria albida DSM 43870)Kutzneria albida,Kutzneria chonburiensis)Kutzneria)Pseudonocardiaceae)Pseudonocardiales,(((Haloactinopolyspora alba)Haloactinopolyspora,(Jiangella aurantiaca)Jiangella)Jiangellaceae)Jiangellales,(((Nocardioides kongjuensis,Nocardioides aromaticivorans)Nocardioides)Nocardioidaceae)Propionibacteriales,(((Streptomyces flavochromogenes,(Streptomyces chartreusis NRRL 3882)Streptomyces chartreusis,Streptomyces violaceochromogenes,(Streptomyces qaidamensis)Streptomyces aurantiacus group)Streptomyces)Streptomycetaceae)Kitasatosporales)Actinomycetes,((((Enorma massiliensis)Enorma)Coriobacteriaceae)Coriobacteriales)Coriobacteriia)Actinomycetota,((((((Bacillus altitudinis)Bacillus altitudinis complex,Bacillus australimaris,Bacillus xiamenensis,Bacillus mesophilum,Bacillus nakamurai,Bacillus weihaiensis,(Bacillus tequilensis,(Bacillus siamensis)Bacillus amyloliquefaciens group)Bacillus subtilis group,Bacillus songklensis,Bacillus salitolerans,Bacillus yapensis,Bacillus seohaeanensis,Bacillus zhangzhouensis,Bacillus rhizoplanae)Bacillus,((Cytobacillus firmus DS1)Cytobacillus firmus,Cytobacillus solani,Cytobacillus stercorigallinarum,Cytobacillus citreus,Cytobacillus spartinae,Cytobacillus purgationiresistens,Cytobacillus praedii)Cytobacillus,((Neobacillus bataviensis LMG 21833)Neobacillus bataviensis,Neobacillus cucumis,Neobacillus driksii,Neobacillus ginsengisoli,Neobacillus novalis,Neobacillus sedimentimangrovi)Neobacillus,(Virgibacillus massiliensis,Virgibacillus dokdonensis,Virgibacillus halodenitrificans Bacillus halodenitrificans,Virgibacillus kekensis,Virgibacillus litoralis,Virgibacillus salarius,Virgibacillus sediminis,Virgibacillus tibetensis)Virgibacillus,(Halobacillus naozhouensis,Halobacillus trueperi,Halobacillus seohaensis)Halobacillus,(Mesobacillus zeae,Mesobacillus jeotgali)Mesobacillus,(Shouchella miscanthi,Shouchella rhizosphaerae,Shouchella hunanensis,Shouchella xiaoxiensis)Shouchella,(Lederbergia graminis)Lederbergia,(Alkalihalobacillus trypoxylicola)Alkalihalobacillus,(Lysinibacillus macroides,Lysinibacillus pinottii)Lysinibacillus,(Oceanobacillus picturae)Oceanobacillus,(Heyndrickxia camelliae)Heyndrickxia,(Lentibacillus cibarius)Lentibacillus,(Psychrobacillus soli,Psychrobacillus faecigallinarum,Psychrobacillus vulpis)Psychrobacillus,(Niallia alba,Niallia taxi)Niallia,((Alkalihalophilus pseudofirmus strain ATCC BAA-2126 JCM 17055 OF4 Bacillus pseudofirmus)Alkalihalophilus pseudofirmus,Alkalihalophilus lindianensis)Alkalihalophilus,(Pontibacillus chungwhensis,Pontibacillus salicampi)Pontibacillus,(Salimicrobium flavidum)Salimicrobium,(Robertmurraya kyonggiensis,Robertmurraya beringensis)Robertmurraya,(Aquibacillus koreensis,Aquibacillus albus)Aquibacillus,(Falsibacillus albus)Falsibacillus,(Peribacillus huizhouensis,Peribacillus psychrosaccharolyticus Bacillus psychrosaccharolyticus)Peribacillus,(Rossellomorea oryzaecorticis,Rossellomorea marisflavi)Rossellomorea,(Metabacillus elymi,Metabacillus litoralis,Metabacillus sediminilitoris)Metabacillus)Bacillaceae,((Paenibacillus urinalis,Paenibacillus glucanolyticus)Paenibacillus,(Brevibacillus thermoruber)Brevibacillus)Paenibacillaceae,((Planococcus notacanthi,Planococcus dechangensis,Planococcus halotolerans,Planococcus maritimus,Planococcus wigleyi)Planococcus,(Ureibacillus galli)Ureibacillus,(Planomicrobium okeanokoites Planococcus okeanokoites Flavobacterium okeanokoites)Planomicrobium,((Viridibacillus arenosi FSL R5-213)Viridibacillus arenosi)Viridibacillus,(Jeotgalibacillus proteolyticus,Jeotgalibacillus terrae,Jeotgalibacillus salarius)Jeotgalibacillus,(Paenisporosarcina antarctica)Paenisporosarcina)Caryophanaceae,((Staphylococcus pasteuri A,Staphylococcus schweitzeri,Staphylococcus pseudoxylosus)Staphylococcus,(Mammaliicoccus sciuri Staphylococcus sciuri)Mammaliicoccus)Staphylococcaceae,((Fictibacillus fluitans,Fictibacillus terranigra)Fictibacillus)Fictibacillaceae,((Anoxybacteroides amylolyticum)Anoxybacteroides)Anoxybacillaceae)Bacillales,((((Enterococcus sulfureus ATCC 49903)Enterococcus sulfureus,Enterococcus ureilyticus,Enterococcus thailandicus)Enterococcus,(Vagococcus entomophilus)Vagococcus,(Tetragenococcus koreensis)Tetragenococcus)Enterococcaceae,((Lactiplantibacillus argentoratensis,Lactiplantibacillus brownii,Lactiplantibacillus daoliensis,Lactiplantibacillus songbeiensis,Lactiplantibacillus plajomi,Lactiplantibacillus nangangensis,Lactiplantibacillus modestisalitolerans,Lactiplantibacillus dongliensis,Lactiplantibacillus daowaiensis,Lactiplantibacillus mudanjiangensis)Lactiplantibacillus,(Lacticaseibacillus casei Lactobacillus casei,Lacticaseibacillus styriensis)Lacticaseibacillus,(Lentilactobacillus parabuchneri,Lentilactobacillus fungorum)Lentilactobacillus,(((Loigolactobacillus coryniformis subsp torquens DSM 20004 KCTC 3535)Loigolactobacillus coryniformis subsp torquens)Loigolactobacillus coryniformis)Loigolactobacillus,(Limosilactobacillus albertensis,Limosilactobacillus allomucosae)Limosilactobacillus,(Pediococcus pentosaceus)Pediococcus)Lactobacillaceae,(((Streptococcus toyakuensis,Streptococcus chosunensis)Streptococcus mitis group,Streptococcus periodonticum,(Streptococcus pneumoniae strain ATCC BAA-255 R6)Streptococcus pneumoniae,(Streptococcus anginosus)Streptococcus anginosus group,Streptococcus downii,(Streptococcus oralis subsp oralis)Streptococcus oralis,(Streptococcus equinus ATCC 700338)Streptococcus equinus,Streptococcus halitosis,Streptococcus ruminicola,Streptococcus vaginalis,Streptococcus loxodontisalivarius,Streptococcus hominis,(Streptococcus iners subsp hyiners)Streptococcus iners,Streptococcus jiangnanensis)Streptococcus)Streptococcaceae)Lactobacillales)Bacilli,((((Paeniclostridium hominis)Paeniclostridium,(Paraclostridium sordellii Clostridium sordellii,Paraclostridium ghonii)Paraclostridium,(Intestinibacter bartlettii)Intestinibacter,(Romboutsia faecis,Romboutsia sedimentorum,(Romboutsia lituseburensis DSM 797)Romboutsia lituseburensis)Romboutsia,((Asaccharospora irregularis DSM 2635)Asaccharospora irregularis)Asaccharospora)Peptostreptococcaceae,((Geosporobacter ferrireducens,(Geosporobacter subterraneus DSM 17957)Geosporobacter subterraneus)Geosporobacter,(Anaerosolibacter carboniphilus)Anaerosolibacter)Thermotaleaceae,(((Alkaliphilus metalliredigens strain QYMF)Alkaliphilus metalliredigens)Alkaliphilus,(Anaerovirgula multivorans)Anaerovirgula)Natronincolaceae,(((Paramaledivibacter caminithermalis strain DSM 15212 CIP 107654 DViRD3 Clostridium caminithermale)Paramaledivibacter caminithermalis)Paramaledivibacter,(Maledivibacter halophilus)Maledivibacter)Caminicellaceae,(((Peptoclostridium litorale DSM 5388)Peptoclostridium litorale)Peptoclostridium)Peptoclostridiaceae,(((Acetoanaerobium sticklandii strain ATCC 12662 DSM 519 JCM 1433 CCUG 9281 NCIMB 10654 HF Clostridium sticklandii)Acetoanaerobium sticklandii)Acetoanaerobium)Filifactoraceae)Peptostreptococcales,(((Oxobacter pfennigii)Oxobacter,(Clostridium septicum,Clostridium sporogenes,Clostridium uliginosum,Clostridium thermobutyricum,Clostridium sardiniense Clostridium absonum,((Clostridium saccharoperbutylacetonicum N1-4HMT)Clostridium saccharoperbutylacetonicum N1-4)Clostridium saccharoperbutylacetonicum,(Clostridium ragsdalei P11)Clostridium ragsdalei,Clostridium oryzae,(Clostridium kluyveri strain ATCC 8527 DSM 555 NBRC 12016 NCIMB 10680 K1)Clostridium kluyveri,Clostridium gelidum,Clostridium fungisolvens,Clostridium drakei,Clostridium beijerinckii Clostridium MP,Clostridium neonatale,(Clostridium baratii str Sullivan)Clostridium baratii,((Clostridium botulinum strain Hall ATCC 3502 NCTC 13319 Type A)Clostridium botulinum A)Clostridium botulinum,(Clostridium chauvoei JF4335)Clostridium chauvoei,Clostridium fessum,Clostridium frigidicarnis,(Clostridium grantii DSM 8605)Clostridium grantii,(Clostridium ljungdahlii strain ATCC 55383 DSM 13528 PETC)Clostridium ljungdahlii,(Clostridium perfringens strain ATCC 13124 DSM 756 JCM 1290 NCIMB 6125 NCTC 8237 Type A)Clostridium perfringens,Clostridium cibarium,Clostridium coskatii)Clostridium,(Hathewaya limosa Clostridium limosum,(Hathewaya proteolytica DSM 3090)Hathewaya proteolytica)Hathewaya,(Caloramator quimbayensis)Caloramator,((Lactonifactor longoviformis DSM 17459)Lactonifactor longoviformis)Lactonifactor)Clostridiaceae,((Drancourtella massiliensis)Drancourtella,(Ruminococcus hominis,Ruminococcus turbiniformis)Ruminococcus)Oscillospiraceae,((Eubacterium ventriosum,Eubacterium segne)Eubacterium)Eubacteriaceae,(((Desulforamulus aeronauticus DSM 10349)Desulforamulus aeronauticus)Desulforamulus)Peptococcaceae,(((Desulfitobacterium chlororespirans DSM 11544)Desulfitobacterium chlororespirans)Desulfitobacterium)Desulfitobacteriaceae)Eubacteriales,(((Robinsoniella peoriensis)Robinsoniella,(Oliverpabstia intestinalis)Oliverpabstia,(Roseburia inulinivorans,Roseburia zhanii,Roseburia porci,Roseburia amylophila,Roseburia faecis,(Roseburia hominis strain DSM 16839 JCM 17582 NCIMB 14029 A2-183)Roseburia hominis)Roseburia,(Dorea acetigenes,Dorea formicigenerans,Dorea longicatena,Dorea amylophila)Dorea,(Bariatricus massiliensis)Bariatricus,(Blautia wexlerae,Blautia stercoris,Blautia parvula,Blautia intestinalis,Blautia celeris,Blautia faecicola,Blautia faecis,Blautia hominis,Blautia aquisgranensis)Blautia,(Coprococcus comes)Coprococcus,(Agathobacter rectalis)Agathobacter,(Lacrimispora xylanolytica,Lacrimispora xylanisolvens,Lacrimispora algidixylanolytica)Lacrimispora,(Lachnospira intestinalis,Lachnospira hominis ex Liu et al 2021)Lachnospira,((Lachnobacterium bovis DSM 14045)Lachnobacterium bovis)Lachnobacterium,(Lachnoanaerobaculum gingivalis,Lachnoanaerobaculum umeaense)Lachnoanaerobaculum,(Waltera acetigignens)Waltera,(Hominisplanchenecus faecis)Hominisplanchenecus,(Mediterraneibacter catenae,Mediterraneibacter hominis,(Mediterraneibacter gnavus strain CC55 001C)Mediterraneibacter gnavus)Mediterraneibacter,(Alitiscatomonas aceti)Alitiscatomonas,(Faecalicatena acetigenes,Faecalicatena contorta)Faecalicatena,(Extibacter muris)Extibacter,((Hespellia stercorisuis DSM 15480)Hespellia stercorisuis)Hespellia,(Jutongia huaianensis)Jutongia,(Anaeromicropila herbilytica)Anaeromicropila,((Butyrivibrio fibrisolvens DSM 3071)Butyrivibrio fibrisolvens)Butyrivibrio,(Jingyaoa shaoxingensis)Jingyaoa,(Muricomes intestini)Muricomes,((Parasporobacterium paucivorans DSM 15970)Parasporobacterium paucivorans)Parasporobacterium,(Mobilisporobacter senegalensis)Mobilisporobacter,(Schaedlerella arabinosiphila)Schaedlerella,(Anaerostipes hominis ex Liu et al 2021,Anaerostipes butyraticus)Anaerostipes,(Velocimicrobium porci)Velocimicrobium,(Zhenhengia yiwuensis)Zhenhengia)Lachnospiraceae,((Defluviitalea raffinosedens)Defluviitalea)Defluviitaleaceae,((Vallitalea pronyensis,Vallitalea guaymasensis)Vallitalea)Vallitaleaceae)Lachnospirales,((((Thermoanaerobacter italicus strain DSM 9252 Ab9)Thermoanaerobacter italicus,(Thermoanaerobacter uzonensis DSM 18761)Thermoanaerobacter uzonensis,(Thermoanaerobacter thermohydrosulfuricus WC1)Thermoanaerobacter thermohydrosulfuricus)Thermoanaerobacter)Thermoanaerobacteraceae)Thermoanaerobacterales)Clostridia,((((Anaerococcus kampingiae)Anaerococcus,((Peptoniphilus lacrimalis 315-B)Peptoniphilus lacrimalis)Peptoniphilus)Peptoniphilaceae)Tissierellales)Tissierellia,(((((Caldicellulosiruptor acetigenus strain ATCC 700853 DSM 12137 I77R1B Caldicellulosiruptor kristjanssonii)Caldicellulosiruptor acetigenus,(Caldicellulosiruptor kronotskyensis strain DSM 18902 VKM B-2412 2002)Caldicellulosiruptor kronotskyensis,(Caldicellulosiruptor hydrothermalis strain DSM 18901 VKM B-2411 108)Caldicellulosiruptor hydrothermalis)Caldicellulosiruptor)Caldicellulosiruptoraceae)Caldicellulosiruptorales)Bacillota incertae sedis)Bacillota,(((((Herpetosiphon gulosus)Herpetosiphon)Herpetosiphonaceae)Herpetosiphonales,(((((Roseiflexus castenholzii strain DSM 13941 HLO8)Roseiflexus castenholzii)Roseiflexus)Roseiflexaceae)Roseiflexineae)Chloroflexales)Chloroflexia)Chloroflexota,(((((Mariniplasma anaerobium)Mariniplasma,(Paracholeplasma manati)Paracholeplasma)Acholeplasmataceae)Acholeplasmatales)Mollicutes)Mycoplasmatota,(((((((Trichocoleus desertorum GB2-A4)Trichocoleus desertorum)Trichocoleus)Trichocoleusaceae)Leptolyngbyales)Cyanophyceae)Cyanobacteriota)CyanobacteriotaMelainabacteria group)Bacillati,((((((Ruegeria halocynthiae,Ruegeria sediminis,Ruegeria haliotis,Ruegeria denitrificans)Ruegeria,(Litoreibacter halocynthiae)Litoreibacter,(Lutimaribacter marinistellae)Lutimaribacter,(Marinovum algicola)Marinovum,(Phaeobacter porticola)Phaeobacter,(Pseudosulfitobacter pseudonitzschiae)Pseudosulfitobacter,(Shimia isoporae)Shimia,(Sulfitobacter delicatus,Sulfitobacter marinus)Sulfitobacter,(Pseudoponticoccus marisrubri)Pseudoponticoccus,(Falsiruegeria litorea)Falsiruegeria,(Pelagimonas varians)Pelagimonas,(Leisingera caerulea Phaeobacter caeruleus,Leisingera daeponensis)Leisingera,(Donghicola mangrovi)Donghicola,(Thetidibacter halocola)Thetidibacter)Roseobacteraceae,((Cribrihabitans marinus)Cribrihabitans,(Fuscovulum ytuae)Fuscovulum)Paracoccaceae)Rhodobacterales,((((((Rickettsia felis strain ATCC VR-1525 URRWXCal2 Rickettsia azadi)Rickettsia felis)spotted fever group)Rickettsia)Rickettsieae)Rickettsiaceae)Rickettsiales,(((Microvirga lotononidis,Microvirga thermotolerans)Microvirga,(Methylorubrum rhodinum)Methylorubrum,(Methylobacterium oxalidis)Methylobacterium)Methylobacteriaceae,((Nitratireductor aquimarinus,Nitratireductor kimnyeongensis,Nitratireductor rhodophyticola)Nitratireductor,(Neomesorhizobium albiziae)Neomesorhizobium,(Mesorhizobium dulcispinae,Mesorhizobium atlanticum)Mesorhizobium,(Pseudaminobacter soli ex Li et al 2025,Pseudaminobacter salicylatoxidans)Pseudaminobacter,(Borborobacter arsenicus)Borborobacter,(Neoaquamicrobium sediminum)Neoaquamicrobium,(Aquamicrobium soli)Aquamicrobium,(Oryzicola mucosus)Oryzicola)Phyllobacteriaceae,((((Rhizobium meliloti strain 1021 Ensifer meliloti Sinorhizobium meliloti)Rhizobium meliloti,Sinorhizobium garamanticum,Sinorhizobium terangae,Sinorhizobium alkalisoli,Sinorhizobium chiapasense,Sinorhizobium saheli)Sinorhizobium,(Ensifer adhaerens Sinorhizobium morelense)Ensifer)SinorhizobiumEnsifer group,(Ciceribacter ferrooxidans)Ciceribacter,(Pseudohoeflea suaedae)Pseudohoeflea,(Shinella curvata)Shinella,(Ferirhizobium litorale)Ferirhizobium)Rhizobiaceae,(((Brucella tritici,Brucella pecoris,Brucella inopinata)Brucella,(Ochrobactrum soli)Ochrobactrum)BrucellaOchrobactrum group)Brucellaceae,((Bradyrhizobium xenonodulans,Bradyrhizobium commune,Bradyrhizobium barranii)Bradyrhizobium,((Afipia broomeae ATCC 49717)Afipia broomeae,(Afipia clevelandensis ATCC 49720)Afipia clevelandensis)Afipia,(Rhodopseudomonas thermotolerans,Rhodopseudomonas pentothenatexigens,Rhodopseudomonas telluris)Rhodopseudomonas)Nitrobacteraceae,((Roseibium suaedae)Roseibium)Stappiaceae,((Bosea lupini,Bosea spartocytisi,Bosea psychrotolerans)Bosea)Boseaceae,((Kaistia defluvii)Kaistia)Kaistiaceae,((Ancylobacter aquaticus,Ancylobacter rudongensis,Ancylobacter polymorphus,(Ancylobacter novellus strain ATCC 8093 DSM 506 JCM 20403 CCM 1077 IAM 12100 NBRC 12443 NCIMB 10456 Starkeya novella)Ancylobacter novellus)Ancylobacter)Xanthobacteraceae)Hyphomicrobiales,(((Acetobacter persici)Acetobacter)Acetobacteraceae,(((Falsiroseomonas stagni DSM 19981)Falsiroseomonas stagni)Falsiroseomonas)Roseomonadaceae)Acetobacterales,(((Sphingomonas aurantiaca)Sphingomonas,(Sphingobium limneticum,Sphingobium terrigena,Sphingobium xenophagum,Sphingobium algorifonticola)Sphingobium)Sphingomonadaceae)Sphingomonadales,(((Oceanibacterium hippocampi)Oceanibacterium,(Sneathiella sedimenti,Sneathiella chungangensis,Sneathiella litorea)Sneathiella)Sneathiellaceae)Sneathiellales,(((Azospirillum brasilense,Azospirillum lipoferum)Azospirillum)Azospirillaceae,((Terasakiella brassicae)Terasakiella)Terasakiellaceae)Rhodospirillales,(((Futiania mangrovi)Futiania)Futianiaceae)Futianiales)Alphaproteobacteria,((((Dickeya chrysanthemi Pectobacterium chrysanthemi Erwinia chrysanthemi,(Dickeya dadantii strain 3937 Erwinia chrysanthemi strain 3937)Dickeya dadantii,Dickeya zeae,Dickeya oryzae,Dickeya fangzhongdai,Dickeya poaceiphila,Dickeya solani,Dickeya undicola)Dickeya,((Musicola paradisiaca strain Ech703 Dickeya paradisiaca Dickeya dadantii)Musicola paradisiaca)Musicola,(Brenneria rubrifaciens,Brenneria corticis,Brenneria izbisi,(Brenneria nigrifluens DSM 30175 ATCC 13028)Brenneria nigrifluens,(Brenneria roseae subsp americana)Brenneria roseae,Brenneria tiliae)Brenneria,(Pectobacterium zantedeschiae,Pectobacterium aroidearum,(Pectobacterium atrosepticum strain SCRI 1043 ATCC BAA-672 Erwinia carotovora subsp atroseptica)Pectobacterium atrosepticum,Pectobacterium aquaticum,Pectobacterium brasiliense,Pectobacterium parmentieri,Pectobacterium polaris,Pectobacterium polonicum,Pectobacterium quasiaquaticum)Pectobacterium,(Serratia sp strain ATCC 39006 Prodigiosinella confusarubida)Prodigiosinella)Pectobacteriaceae,((((Salmonella bongori serovar 66z41- str SA19983605)Salmonella bongori serovar 66z41-)Salmonella bongori,((Salmonella typhi,(Salmonella typhimurium strain LT2 SGSC1412 ATCC 700720)Salmonella typhimurium)Salmonella enterica I)Salmonella enterica)Salmonella,(Citrobacter amalonaticus,(Citrobacter braakii,Citrobacter cronae,Citrobacter freundii,Citrobacter murliniae)Citrobacter freundii complex,(Citrobacter rodentium strain ICC168 Citrobacter freundii biotype 4280)Citrobacter rodentium,Citrobacter telavivensis,Citrobacter tructae,Citrobacter arsenatis)Citrobacter,(Enterobacter bugandensis,Enterobacter wuhouensis,(Enterobacter sp strain 638)unclassified Enterobacter,Enterobacter quasimori,(Enterobacter sichuanensis,Enterobacter chuandaensis,(Enterobacter genomosp S)Enterobacter cloacae complex clade S,Enterobacter cancerogenus,Enterobacter ludwigii)Enterobacter cloacae complex)Enterobacter,(Kosakonia oryzae)Kosakonia,(((Klebsiella aerogenes strain ATCC 13048 DSM 30053 CCUG 1429 JCM 1235 KCTC 2190 NBRC 13534 NCIMB 10102 NCTC 10006 CDC 819-56 Enterobacter aerogenes)Klebsiella aerogenes,Klebsiella pasteurii,Klebsiella oxytoca,Klebsiella huaxiensis,Klebsiella electrica)Klebsiella,(Raoultella lignicola)Raoultella)KlebsiellaRaoultella group,(Siccibacter colletis)Siccibacter,(Escherichia marmotae,Escherichia whittamii)Escherichia,(Mangrovibacter plantisponsor)Mangrovibacter,(Leclercia adecarboxylata,Leclercia pneumoniae)Leclercia,(Lelliottia nimipressuralis,Lelliottia aquatilis,Lelliottia amnigena Enterobacter amnigenus)Lelliottia,((Shigella sonnei strain Ss046)Shigella sonnei)Shigella,(Phytobacter ursingii)Phytobacter,(Atlantibacter subterraneus)Atlantibacter,(Scandinavium hiltneri,Scandinavium lactucae)Scandinavium,(Jejubacter calystegiae)Jejubacter,(Franconibacter daqui)Franconibacter,(Silvania confinis,Silvania hatchlandensis)Silvania,(Intestinirhabdus alba)Intestinirhabdus,(Kluyvera genomosp 3)Kluyvera)Enterobacteriaceae,((Mixta hanseatica,Mixta tenebrionis)Mixta,(Pantoea alhagi,Pantoea vagans,Pantoea osteomyelitidis,Pantoea eucalypti,Pantoea brenneri,Pantoea allii,Pantoea endophytica,Pantoea piersonii,Pantoea coffeiphila)Pantoea,((Erwinia piriflorinigrans CFBP 5888)Erwinia piriflorinigrans,Erwinia aphidicola,Erwinia psidii,Erwinia persicina,Erwinia pyri,Erwinia sorbitola,Erwinia pyrifoliae)Erwinia,(Tatumella punctata,Tatumella terrea)Tatumella,(Izhakiella australiensis)Izhakiella)Erwiniaceae,((Proteus vulgaris,Proteus faecis,Proteus cibi,Proteus genomosp 6,Proteus appendicitidis,(Proteus mirabilis strain HI4320)Proteus mirabilis,Proteus penneri,(Proteus terrae subsp cibarius)Proteus terrae)Proteus,(Providencia huaxiensis,Providencia manganoxydans,Providencia hangzhouensis,Providencia vermicola)Providencia,(Photorhabdus cinerea,Photorhabdus stackebrandtii)Photorhabdus,(Xenorhabdus anantnagensis,Xenorhabdus santafensis,Xenorhabdus khoisanae)Xenorhabdus)Morganellaceae,((Rahnella woolbedingensis,Rahnella victoriana,Rahnella inusitata,Rahnella contaminans,Rahnella laticis,Rahnella perminowiae)Rahnella,(Serratia entomophila,Serratia rubidaea Serratia marinorubra,Serratia nevei,Serratia rhizosphaerae,Serratia proteamaculans,Serratia sarumanii,Serratia liquefaciens,Serratia plymuthica,Serratia surfactantfaciens,Serratia silvae,Serratia inhibens,Serratia ureilytica)Serratia,((Yersinia pseudotuberculosis)Yersinia pseudotuberculosis complex,Yersinia canariae)Yersinia,(Nissabacter archeti)Nissabacter,(Rouxiella silvae,Rouxiella aceris)Rouxiella)Yersiniaceae,(((Hafnia alvei FB1)Hafnia alvei,Hafnia paralvei)Hafnia)Hafniaceae,((Sodalis praecaptivus)Sodalis)Bruguierivoracaceae,((Limnobaculum xujianqingii)Limnobaculum)Budviciaceae,((Gallaecimonas pentaromativorans)Gallaecimonas)Gallaecimonadaceae)Enterobacterales,(((Pseudoalteromonas distincta,Pseudoalteromonas shioyasakiensis,Pseudoalteromonas lipolytica,Pseudoalteromonas arctica,Pseudoalteromonas aurantia,Pseudoalteromonas citrea,Pseudoalteromonas marina,Pseudoalteromonas spongiae,Pseudoalteromonas issachenkonii,Pseudoalteromonas fuliginea)Pseudoalteromonas)Pseudoalteromonadaceae,((Shewanella algidipiscicola,Shewanella nanhaiensis)Shewanella)Shewanellaceae)Alteromonadales,((((Pseudomonas ogarae strain DSM 112162 CECT 30235 F113,Pseudomonas neuropathica,Pseudomonas koreensis,Pseudomonas granadensis,Pseudomonas migulae,Pseudomonas libanensis,(Pseudomonas tolaasii NCPPB 2192)Pseudomonas tolaasii)Pseudomonas fluorescens group,Pseudomonas alkylphenolica,Pseudomonas quebecensis,Pseudomonas paracarnis,Pseudomonas donghuensis,Pseudomonas kribbensis,Pseudomonas kielensis,Pseudomonas khorasanensis,Pseudomonas lurida,Pseudomonas canadensis,Pseudomonas aphyarum,Pseudomonas monsensis,Pseudomonas monachiensis,Pseudomonas tensinigenes,Pseudomonas tehranensis,Pseudomonas shahriarae,Pseudomonas serboccidentalis,Pseudomonas salmasensis,Pseudomonas tritici,Pseudomonas vlassakiae,Pseudomonas yamanorum,Pseudomonas khavaziana,Pseudomonas canavaninivorans,Pseudomonas azerbaijanorientalis,Pseudomonas alliivorans,Pseudomonas fragariae ex Marin et al 2024,Pseudomonas fildesensis,Pseudomonas hamedanensis,Pseudomonas haemolytica,Pseudomonas gregormendelii,Pseudomonas germanica,Pseudomonas fitomaticsae,Pseudomonas cucumis,Pseudomonas qingdaonensis,Pseudomonas auratipiscis,((Pseudomonas cannabina pv alisalensis)Pseudomonas cannabina,Pseudomonas viridiflava Phytomonas viridiflava)Pseudomonas syringae group,Pseudomonas carnis,(Pseudomonas fragi)Pseudomonas chlororaphis group)Pseudomonas)Pseudomonadaceae)Pseudomonadales,((((Vibrio rotiferianus,Vibrio harveyi Beneckea harveyi)Vibrio harveyi group,(Vibrio europaeus)Vibrio oreintalis group,Vibrio splendidus,Vibrio pomeroyi)Vibrio)Vibrionaceae)Vibrionales,(((Aeromonas allosaccharophila,Aeromonas taiwanensis,Aeromonas sanarellii,Aeromonas enteropelogenes Aeromonas trota,((Aeromonas hydrophila subsp hydrophila strain ATCC 7966 DSM 30187 BCRC 13018 CCUG 14551 JCM 1027 KCTC 2358 NCIMB 9240 NCTC 8049)Aeromonas hydrophila subsp hydrophila)Aeromonas hydrophila,Aeromonas veronii,Aeromonas sobria,Aeromonas popoffii,Aeromonas piscicola,Aeromonas bestiarum)Aeromonas,(Oceanimonas doudoroffii,Oceanimonas smirnovii)Oceanimonas,(Oceanisphaera sediminis)Oceanisphaera,(Pseudaeromonas paramecii,Pseudaeromonas sharmana)Pseudaeromonas,((Tolumonas auensis strain DSM 9187 NBRC 110442 TA 4)Tolumonas auensis)Tolumonas,(Zobellella iuensis,Zobellella taiwanensis)Zobellella)Aeromonadaceae)Aeromonadales,(((((Francisella tularensis subsp novicida strain U112)Francisella novicida)Francisella tularensis,Francisella opportunistica,Francisella uliginis)Francisella,(Pseudofrancisella aestuarii)Pseudofrancisella)Francisellaceae,((Thiomicrorhabdus lithotrophica)Thiomicrorhabdus)Piscirickettsiaceae)Thiotrichales,(((Xanthomonas indica)Xanthomonas,(Pseudoxanthomonas japonensis)Pseudoxanthomonas,(Stenotrophomonas nematodicola)Stenotrophomonas)Lysobacteraceae)Lysobacterales,(((Marinomonas fungiae,Marinomonas arctica,Marinomonas arenicola,Marinomonas alcarazii,Marinomonas foliarum,Marinomonas aquimarina,Marinomonas transparens,Marinomonas rhizomae)Marinomonas,(Neptunomonas phycophila)Neptunomonas)Oceanospirillaceae,((Halomonas johnsoniae,Halomonas alkaliantarctica,Halomonas qinghailakensis,Halomonas salifodinae)Halomonas,(Vreelandella aquamarina)Vreelandella,(Modicisalibacter tunisiensis,(Modicisalibacter ilicicola DSM 19980)Modicisalibacter ilicicola)Modicisalibacter)Halomonadaceae)Oceanospirillales,((((Legionella longbeachae serogroup 1 strain NSW150)Legionella longbeachae,Legionella massiliensis)Legionella)Legionellaceae)Legionellales,(((((Pasteurella multocida strain Pm70)Pasteurella multocida subsp multocida)Pasteurella multocida)Pasteurella)Pasteurellaceae)Pasteurellales,((Alkalimonas collagenimarina)Alkalimonas,((Celerinatantimonas yamalensis)Celerinatantimonas)Celerinatantimonadaceae)Gammaproteobacteria incertae sedis,(((Ectothiorhodospira marina)Ectothiorhodospira)Ectothiorhodospiraceae)Chromatiales,(((Zhongshania arctica)Zhongshania)Spongiibacteraceae)Cellvibrionales)Gammaproteobacteria,((((Neisseria mucosa)Neisseria,(Uruburuella suis)Uruburuella)Neisseriaceae,((Chromobacterium haemolyticum)Chromobacterium,(Aquitalea magnusonii,Aquitalea palustris)Aquitalea)Chromobacteriaceae)Neisseriales,(((Caballeronia concitans,Caballeronia arationis)Caballeronia,((Burkholderia anthina,Burkholderia stagnalis,Burkholderia ubonensis,Burkholderia puraquae,Burkholderia seminalis,Burkholderia cepacia Pseudomonas cepacia,Burkholderia contaminans,Burkholderia metallica,(Burkholderia multivorans strain ATCC 17616 249)Burkholderia multivorans)Burkholderia cepacia complex,((Burkholderia thailandensis strain ATCC 700388 DSM 13276 CCUG 48851 CIP 106301 E264)Burkholderia thailandensis,Burkholderia savannae,(Burkholderia pseudomallei strain K96243)Burkholderia pseudomallei)pseudomallei group,Burkholderia theae)Burkholderia,(Paraburkholderia megapolitana,Paraburkholderia franconis,Paraburkholderia fynbosensis,Paraburkholderia diazotrophica,Paraburkholderia atlantica,Paraburkholderia lacunae,Paraburkholderia azotifigens,Paraburkholderia monticola,Paraburkholderia sabiae,Paraburkholderia sejongensis,Paraburkholderia sediminicola,Paraburkholderia polaris,Paraburkholderia strydomiana,Paraburkholderia translucens,Paraburkholderia tropica,Paraburkholderia youngii,Paraburkholderia phenoliruptrix,Paraburkholderia agricolaris,Paraburkholderia acidicola,Paraburkholderia aromaticivorans,Paraburkholderia caballeronis,Paraburkholderia dipogonis,Paraburkholderia haematera,Paraburkholderia metrosideri,Paraburkholderia madseniana)Paraburkholderia,(Cupriavidus respiraculi,Cupriavidus nantongensis,Cupriavidus alkaliphilus)Cupriavidus,(Pandoraea pulmonicola)Pandoraea,((Ralstonia syzygii)Ralstonia solanacearum species complex,Ralstonia chuxiongensis,Ralstonia mojiangensis)Ralstonia,(Trinickia caryophylli Paraburkholderia caryophylli)Trinickia)Burkholderiaceae,(((Bordetella avium strain 197N)Bordetella avium,Bordetella pseudohinzii)Bordetella)Alcaligenaceae,(((Paracidovorax avenae strain ATCC 19860 DSM 7227 CCUG 15838 JCM 20985 LMG 2117 NCPPB 1011 Acidovorax avenae)Paracidovorax avenae)Paracidovorax,(Acidovorax cavernicola,Acidovorax kalamii)Acidovorax,(Variovorax beijingensis)Variovorax,(Pseudorhodoferax soli)Pseudorhodoferax,(Ramlibacter monticola)Ramlibacter)Comamonadaceae,((Xylophilus ampelinus)Xylophilus)Burkholderiales genera incertae sedis,((Noviherbaspirillum sedimenti,Noviherbaspirillum galbum)Noviherbaspirillum,(Herbaspirillum lusitanum)Herbaspirillum)Oxalobacteraceae)Burkholderiales,((((Methylotenera mobilis strain JLW8 ATCC BAA-1282 DSM 17540)Methylotenera mobilis)Methylotenera)Methylophilaceae)Nitrosomonadales)Betaproteobacteria)Pseudomonadota,(((((((Robertkochia marina)Robertkochia,(Arenibacter palladensis,Arenibacter troitsensis,Arenibacter echinorum)Arenibacter,(Aquimarina mytili,Aquimarina intermedia)Aquimarina,(Corallibacter vietnamensis)Corallibacter,(Formosa undariae)Formosa,(Flavobacterium endophyticum,Flavobacterium yafengii,Flavobacterium macacae,Flavobacterium ardleyense,Flavobacterium sediminilitoris,Flavobacterium granuli,Flavobacterium fluvii,Flavobacterium jejuense,Flavobacterium lacus,Flavobacterium kingsejongi,Flavobacterium kayseriense,Flavobacterium glaciei,Flavobacterium gillisiae)Flavobacterium,(Flavivirga aquimarina,Flavivirga amylovorans)Flavivirga,(Polaribacter atrinae)Polaribacter,(Dokdonia sinensis)Dokdonia,(Nonlabens ulvanivorans Persicivirga ulvanivorans)Nonlabens,(Maribacter polysiphoniae,Maribacter litoralis)Maribacter,(Zobellia galactanivorans strain DSM 12802 CCUG 47099 CIP 106680 NCIMB 13871 Dsij)Zobellia,(Salegentibacter holothuriorum,Salegentibacter maritimus,Salegentibacter salarius)Salegentibacter,(Ulvibacter litoralis)Ulvibacter,(Seonamhaeicola algicola)Seonamhaeicola,(Pseudalgibacter alginicilyticus)Pseudalgibacter,(Olleya aquimaris)Olleya,(Algibacter miyuki)Algibacter,((Gillisia limnaea strain DSM 15749 LMG 21470 R-8282)Gillisia limnaea,Gillisia lutea)Gillisia,(Psychroserpens luteus)Psychroserpens,(Aequorivita antarctica)Aequorivita,(Aestuariibaculum lutulentum,Aestuariibaculum suncheonense)Aestuariibaculum,(Hanstruepera neustonica)Hanstruepera,(Gelatiniphilus marinus)Gelatiniphilus,(Aquaticitalea lipolytica)Aquaticitalea,(Gelidibacter salicanalis)Gelidibacter,((Galbibacter orientalis DSM 19592)Galbibacter orientalis)Galbibacter,(Marixanthomonas spongiae)Marixanthomonas,(Christiangramia aestuarii,Christiangramia sediminis,Gramella jeungdoensis)Christiangramia,(Mesoflavibacter profundi,(Mesoflavibacter zeaxanthinifaciens subsp sabulilitoris)Mesoflavibacter zeaxanthinifaciens)Mesoflavibacter,(Mariniflexile aquimaris)Mariniflexile)Flavobacteriaceae,(((Chryseobacterium takakiae,Chryseobacterium jejuense,Chryseobacterium potabilaquae,Chryseobacterium polytrichastri,Chryseobacterium taichungense,Chryseobacterium cheonjiense,Chryseobacterium limigenitum,Chryseobacterium oryctis,Chryseobacterium glaciei)Chryseobacterium,(Kaistella chaponensis,Kaistella treverensis)Kaistella)Chryseobacterium group)Weeksellaceae)Flavobacteriales)Flavobacteriia,((((Bacteroides ovatus,Bacteroides stercorirosoris,(Bacteroides salyersiae CL02T12C01)Bacteroides salyersiae,Bacteroides muris ex Fokt et al 2023,Bacteroides caecicola,(Bacteroides cellulosilyticus CL02T12C19)Bacteroides cellulosilyticus,Bacteroides difficilis,Bacteroides finegoldii,Bacteroides faecichinchillae,Bacteroides eggerthii,(Bacteroides oleiciplenus YIT 12058)Bacteroides oleiciplenus,Bacteroides parvus,Bacteroides vicugnae,(Bacteroides nordii CL02T12C05)Bacteroides nordii,Bacteroides koreensis,Bacteroides humanifaecis,Bacteroides heparinolyticus,(Bacteroides helcogenes strain ATCC 35417 DSM 20613 JCM 6297 CCUG 15421 P 36-108)Bacteroides helcogenes,Bacteroides faecium)Bacteroides,((Phocaeicola vulgatus CL09T03C04)Phocaeicola vulgatus)Phocaeicola,(Caecibacteroides pullorum)Caecibacteroides,(Jilunia laotingensis)Jilunia)Bacteroidaceae,((Prevotella melaninogenica,(Prevotella bivia DSM 20514)Prevotella bivia,Prevotella brunnea)Prevotella,((Hoylesella loescheii DSM 19665 JCM 12249 ATCC 15930)Hoylesella loescheii)Hoylesella,(Leyella lascolaii)Leyella,(Xylanibacter caecicola)Xylanibacter)Prevotellaceae,((Parabacteroides segnis,Parabacteroides merdae,(Parabacteroides gordonii MS-1 DSM 23371)Parabacteroides gordonii,(Parabacteroides goldsteinii dnLKV18)Parabacteroides goldsteinii,Parabacteroides acidifaciens,Parabacteroides hominis)Parabacteroides)Tannerellaceae)Bacteroidales)Bacteroidia,((((Pontibacter oryzae,Pontibacter aquaedesilientis,Pontibacter anaerobius,Pontibacter toksunensis)Pontibacter,(Adhaeribacter rhizoryzae)Adhaeribacter,(Hymenobacter metallicola,(Hymenobacter chitinivorans DSM 11115)Hymenobacter chitinivorans,Hymenobacter busanensis)Hymenobacter)Hymenobacteraceae,((Algoriphagus chordae,Algoriphagus faecimaris,Algoriphagus hitonicola,Algoriphagus sediminis,Algoriphagus oliviformis,Algoriphagus iocasae,Algoriphagus aestuariicola,Algoriphagus winogradskyi,Algoriphagus yeomjeoni)Algoriphagus,(Belliella marina)Belliella)Cyclobacteriaceae,((Spirosoma liriopis)Spirosoma)Cytophagaceae,((Fibrivirga algicola)Fibrivirga)Spirosomataceae)Cytophagales)Cytophagia,((((Sphingobacterium athyrii)Sphingobacterium)Sphingobacteriaceae)Sphingobacteriales)Sphingobacteriia)Bacteroidota)BacteroidotaChlorobiota group)FCB group,(((((((Campylobacter jejuni subsp jejuni serotype O2 strain ATCC 700819 NCTC 11168)Campylobacter jejuni subsp jejuni)Campylobacter jejuni)Campylobacter)Campylobacteraceae,(((Helicobacter cetorum strain ATCC BAA-429 MIT 00-7128)Helicobacter cetorum)Helicobacter)Helicobacteraceae)Campylobacterales)Epsilonproteobacteria)Campylobacterota,(((((Leptospira tipperaryensis,(Leptospira inadai serovar Lyme)Leptospira inadai,((Leptospira interrogans serogroup Icterohaemorrhagiae serovar Lai strain 56601)Leptospira interrogans serovar Lai)Leptospira interrogans,Leptospira ilyithenensis,Leptospira fletcheri,Leptospira yasudae)Leptospira)Leptospiraceae)Leptospirales)Spirochaetia)Spirochaetota,(((((Pseudodesulfovibrio mercurii)Pseudodesulfovibrio,(Desulfovibrio gilichinskyi)Desulfovibrio)Desulfovibrionaceae)Desulfovibrionales)Desulfovibrionia,((((Geomesophilobacter sediminis)Geomesophilobacter)Geobacteraceae)Geobacterales)Desulfuromonadia)Thermodesulfobacteriota)Pseudomonadati,((((((Fusobacterium canifelinum,Fusobacterium vincentii Fusobacterium nucleatum subsp vincentii)Fusobacterium)Fusobacteriaceae,((Leptotrichia trevisanii)Leptotrichia)Leptotrichiaceae)Fusobacteriales)Fusobacteriia)Fusobacteriota)Fusobacteriati)Bacteria,(((((((Nitrosopumilus cobalaminigenes)Nitrosopumilus)Nitrosopumilaceae)Nitrosopumilales)Nitrososphaeria)Nitrososphaerota)Thermoproteati,(((((((Haloarcula limicola,Haloarcula taiwanensis)Haloarcula,(Halorientalis regularis)Halorientalis)Haloarculaceae)Halobacteriales)Halobacteria)Stenosarchaea group,(((((Ferroglobus placidus strain DSM 10642 AEDII12DO)Ferroglobus placidus)Ferroglobus)Archaeoglobaceae)Archaeoglobales)Archaeoglobi,(((((Methanobacterium veterum)Methanobacterium)Methanobacteriaceae)Methanobacteriales)Methanobacteria)Methanomada group)Methanobacteriota)Methanobacteriati)Archaea)cellular organisms)OROOT;`;
+var DATA = `0.0049,0.2111,0.3034,379,0.095,0.3931;0.0056,0.2143,0.2929,280,0.0679,0.3964;0.0063,0.1421,0.335,197,0.0558,0.4619;0.0065,0.1397,0.3712,229,0.0611,0.4454;0.0073,0.1345,0.3908,238,0.0756,0.4286;0.0064,0.1582,0.3232,297,0.0774,0.4545;0.0069,0.1829,0.3543,175,0.0629,0.4;0.008,0.115,0.3589,287,0.0697,0.453;0.0076,0.1051,0.3593,295,0.078,0.461;0.0084,0.1724,0.3448,232,0.0862,0.4095;0.0074,0.1345,0.3564,275,0.0473,0.4291;0.0076,0.1478,0.387,230,0.0696,0.4;0.0071,0.136,0.3529,272,0.0662,0.4449;0.007,0.1351,0.3359,259,0.1004,0.417;0.0066,0.1565,0.3739,230,0.0522,0.4174;0.0077,0.1753,0.3028,251,0.0478,0.49;0.0076,0.1483,0.327,263,0.0798,0.4411;0.007,0.1908,0.313,131,0.0458,0.4046;0.0067,0.2063,0.2963,189,0.1058,0.3915;0.0069,0.2289,0.2952,166,0.0723,0.3916;0.0064,0.2153,0.311,209,0.0813,0.3828;0.0047,0.2107,0.3779,299,0.0702,0.3512;0.0047,0.2039,0.3495,309,0.0615,0.3819;0.0061,0.3057,0.3121,157,0.0318,0.3567;0.003,0.2165,0.3247,194,0.0722,0.3711;0.0067,0.1667,0.3289,228,0.1053,0.3772;0.0079,0.4459,0.1667,222,0.0495,0.2973;0.008,0.2364,0.3,110,0.0182,0.4182;0.0068,0.1948,0.2987,77,0.026,0.4416;0.0076,0.1875,0.35,80,0.0125,0.425;0.0083,0.1974,0.3158,76,0.0526,0.4211;0.0076,0.2027,0.2973,74,0.027,0.4189;0.0064,0.2391,0.2283,184,0.0489,0.4239;0.0049,0.2105,0.3368,190,0.0421,0.3053;0.0048,0.2098,0.2689,305,0.0361,0.2984;0.0058,0.2174,0.3478,115,0.0174,0.3043;0.0066,0.25,0.3071,140,0.0357,0.2643;0.0053,0.2462,0.2077,130,0.0077,0.3692;0.006,0.236,0.2298,161,0.0248,0.3789;0.0055,0.14,0.31,100,0.03,0.48;0.0054,0.1209,0.3407,91,0.022,0.4835;0.0057,0.1327,0.2755,98,0.0306,0.5204;0.0059,0.1287,0.3069,101,0.0297,0.4752;0.0048,0.1196,0.2935,92,0.0326,0.5;0.0058,0.1183,0.3011,93,0.0323,0.5054;0.0058,0.1143,0.2762,105,0.0286,0.5333;0.0052,0.1333,0.3,90,0.0333,0.5111;0.0061,0.0978,0.3043,92,0.0326,0.5435;0.006,0.1319,0.2967,91,0.033,0.5385;0.0065,0.125,0.2917,96,0.0312,0.5312;0.005,0.1648,0.2308,91,0.033,0.5275;0.0062,0.1442,0.3173,104,0.0481,0.4615;0.0057,0.1919,0.2626,99,0.0303,0.4949;0.0047,0.1398,0.2903,93,0.0538,0.5161;0.0064,0.0943,0.3208,106,0.0377,0.5283;0.0065,0.1183,0.3011,93,0.043,0.5269;0.0082,0.1185,0.3185,135,0.0593,0.4667;0.0072,0.1193,0.3761,109,0.0183,0.4679;0.0071,0.1905,0.3143,105,0.0286,0.4476;0.0074,0.1339,0.3071,127,0.0472,0.4331;0.0064,0.1102,0.3071,127,0.1732,0.4016;0.0048,0,0,27,0,0.8519;0.0124,0.2979,0.1915,141,0.0496,0.3262;0.0124,0.2733,0.2067,150,0.06,0.3067;0.0106,0.2973,0.2297,148,0.0338,0.3108;0.0095,0.2846,0.2538,130,0.0462,0.3077;0.0118,0.2407,0.2037,54,0.0185,0.5185;0.0115,0.2222,0.2407,54,0.0185,0.5185;0.0116,0.2453,0.2264,53,0.0189,0.5283;0.0102,0.2157,0.2549,51,0.0196,0.4902;0.0123,0.2037,0.2407,54,0.0185,0.537;0.0115,0.2453,0.2075,53,0.0189,0.5094;0.0107,0.2353,0.2157,51,0.0196,0.549;0.0102,0.1765,0.2353,51,0,0.549;0.0107,0.2075,0.2075,53,0,0.5472;0.0111,0.2407,0.2222,54,0.0185,0.5185;0.0107,0.2157,0.2353,51,0,0.5098;0.0114,0.2692,0.2308,52,0.0192,0.4615;0.0106,0.2157,0.2353,51,0,0.5294;0.0115,0.3115,0.1639,61,0.0164,0.4426;0.0111,0.2295,0.1803,61,0.0164,0.4754;0.0112,0.2667,0.2,60,0.0167,0.4667;0.011,0.2333,0.2167,60,0.0167,0.4667;0.0106,0.2069,0.2069,58,0,0.4828;0.0123,0.2241,0.2414,58,0.0172,0.4483;0.0134,0.3892,0.3941,203,0.0099,0.1379;0.0141,0.4381,0.3454,194,0.0103,0.1392;0.015,0.4402,0.337,184,0.0163,0.1467;0.0138,0.3738,0.4393,214,0.014,0.1121;0.0118,0.4,0.4255,235,0.0128,0.0979;0.0157,0.5843,0.1807,166,0.0181,0.1747;0.0136,0.5586,0.1724,145,0.0345,0.2069;0.0151,0.6,0.1389,180,0.0167,0.15;0.0128,0.4737,0.2556,133,0.0301,0.188;0.0129,0.557,0.1879,149,0.0201,0.1812;0.0165,0.5275,0.2143,182,0.0165,0.1813;0.0138,0.5076,0.1818,132,0.0303,0.197;0.0143,0.5479,0.1781,146,0.0274,0.1849;0.0126,0.5,0.209,134,0.0373,0.2164;0.015,0.45,0.3364,220,0.0182,0.1364;0.0154,0.4534,0.2857,161,0.0124,0.1677;0.0129,0.3333,0.3333,120,0.0167,0.2417;0.013,0.4154,0.2846,130,0.0231,0.1923;0.0146,0.4155,0.3099,142,0.0211,0.1761;0.013,0.4355,0.2903,124,0.0161,0.2339;0.0116,0.4603,0.2619,126,0.0079,0.2063;0.0126,0.4393,0.341,173,0.0173,0.1561;0.0125,0.5355,0.2581,155,0.0194,0.1484;0.0123,0.4286,0.2932,133,0.0226,0.188;0.0125,0.4277,0.3313,166,0.0181,0.1687;0.0142,0.5258,0.2784,194,0.0103,0.1392;0.0114,0.5086,0.2328,116,0.0172,0.2069;0.0127,0.437,0.2605,119,0.0252,0.2269;0.0102,0.4112,0.2804,107,0.0187,0.243;0.0131,0.4595,0.2432,148,0.0405,0.2027;0.0123,0.5497,0.1788,151,0.0199,0.1854;0.0148,0.6041,0.1421,197,0.0305,0.1574;0.0161,0.3862,0.4021,189,0.0106,0.1429;0.0135,0.4077,0.3077,130,0.0154,0.2;0.0135,0.543,0.2312,186,0.0108,0.1398;0.0144,0.5526,0.2211,190,0.0211,0.1421;0.0133,0.6021,0.1623,191,0.0262,0.1571;0.0129,0.5417,0.2083,168,0.0238,0.1488;0.0113,0.465,0.2229,157,0.0255,0.1975;0.0138,0.4356,0.2331,163,0.0429,0.1656;0.0118,0.5488,0.1585,164,0.0305,0.1829;0.0133,0.458,0.2748,131,0.0076,0.2137;0.0126,0.5685,0.1918,146,0.0137,0.1712;0.0131,0.5695,0.1523,151,0.0397,0.1854;0.0115,0.5046,0.2963,216,0.0231,0.1343;0.0117,0.5556,0.2512,207,0.0145,0.1401;0.0107,0.4098,0.2623,122,0.0328,0.2295;0.0093,0.4126,0.2797,143,0.014,0.2098;0.0109,0.4702,0.2738,168,0.0179,0.1488;0.0118,0.4518,0.3421,228,0.0219,0.1272;0.0097,0.3034,0.2809,89,0.0562,0.2472;0.0127,0.6027,0.1712,146,0.0137,0.1781;0.0141,0.542,0.1832,131,0.0153,0.1985;0.0135,0.5538,0.1769,130,0.0077,0.1846;0.0129,0.4597,0.25,124,0.0081,0.1855;0.0134,0.34,0.33,100,0.01,0.24;0.0097,0.3298,0.3085,94,0.0213,0.2553;0.0142,0.4328,0.2836,134,0.0075,0.1866;0.0125,0.3039,0.3333,102,0.0098,0.2549;0.012,0.3434,0.2929,99,0.0202,0.2626;0.0128,0.3983,0.2627,118,0.0085,0.2203;0.0116,0.3429,0.2952,105,0.0286,0.2476;0.0144,0.5126,0.2437,119,0.0336,0.2101;0.0116,0.5075,0.2313,134,0.0224,0.1791;0.0135,0.4969,0.2484,161,0.0248,0.1739;0.0125,0.5069,0.2431,144,0.0208,0.1597;0.0133,0.4859,0.2254,142,0.0141,0.1901;0.0111,0.4074,0.2778,108,0.0278,0.2407;0.0116,0.5385,0.2098,143,0.014,0.1818;0.0109,0.5111,0.2222,135,0.0222,0.1926;0.0101,0.5071,0.1929,140,0.0143,0.1857;0.0149,0.6652,0.1498,227,0.0132,0.1189;0.0123,0.4887,0.2105,133,0.0301,0.203;0.0119,0.4655,0.1897,116,0.0259,0.2328;0.0085,0.3684,0.2211,95,0.0316,0.2526;0.0121,0.4404,0.2294,109,0.0275,0.2477;0.0112,0.4158,0.2105,190,0.0368,0.2474;0.01,0.438,0.2149,121,0.0083,0.2314;0.0102,0.4522,0.2261,115,0.0087,0.2348;0.0104,0.4148,0.2148,135,0.0074,0.2444;0.0094,0.4397,0.2155,116,0.0172,0.2414;0.0084,0.4539,0.227,141,0.0213,0.1915;0.009,0.4683,0.2381,126,0.0079,0.1825;0.0112,0.4863,0.2671,146,0.0205,0.1781;0.0098,0.4965,0.2411,141,0.0142,0.1986;0.0124,0.3415,0.3089,123,0.0244,0.2114;0.0116,0.4877,0.2469,162,0.0247,0.1605;0.0127,0.4238,0.3113,151,0.0199,0.1656;0.0087,0.5419,0.1955,179,0.0335,0.162;0.0129,0.3711,0.2577,97,0.0309,0.2577;0.0117,0.3514,0.2523,111,0.027,0.2523;0.0094,0.3727,0.2909,110,0.0364,0.2636;0.01,0.4538,0.2185,119,0.0168,0.2689;0.0083,0.4472,0.252,123,0.0163,0.2195;0.0083,0.4463,0.1983,121,0.0331,0.2645;0.0072,0.4298,0.2314,121,0.0248,0.2645;0.0098,0.4715,0.2195,123,0.0407,0.2358;0.0085,0.4144,0.2613,111,0.027,0.2613;0.0084,0.4926,0.2206,136,0.0147,0.2353;0.0108,0.4839,0.2177,124,0.0242,0.2581;0.0106,0.4766,0.2109,128,0.0234,0.2734;0.009,0.3492,0.2751,189,0.0212,0.3069;0.0109,0.4779,0.2059,136,0.0294,0.2206;0.0105,0.488,0.192,125,0.032,0.24;0.0079,0.4219,0.3125,128,0.0156,0.1875;0.0098,0.6289,0.1509,159,0.0126,0.1761;0.0066,0.3415,0.3171,82,0.0366,0.2683;0.0078,0.4262,0.2459,122,0.041,0.2459;0.0082,0.3846,0.2418,91,0.033,0.2747;0.0076,0.4068,0.2542,118,0.0339,0.2627;0.0073,0.483,0.2245,147,0.0204,0.2245;0.009,0.4715,0.2195,123,0.0325,0.2195;0.0112,0.448,0.224,125,0.024,0.248;0.0054,0.6719,0.1354,192,0.026,0.1562;0.0057,0.431,0.25,116,0.0345,0.25;0.0065,0.4118,0.2745,102,0.0196,0.2647;0.0065,0.4182,0.2364,110,0.0182,0.2636;0.0075,0.3301,0.2816,103,0.0291,0.2718;0.0091,0.5,0.2295,122,0.0164,0.2213;0.0065,0.2979,0.2979,94,0.0319,0.2979;0.0061,0.4309,0.2358,123,0.0244,0.252;0.007,0.3438,0.2604,96,0.0208,0.2812;0.0068,0.3962,0.2264,106,0.0189,0.283;0.0094,0.5152,0.2045,132,0.0152,0.2348;0.0048,0.4539,0.1842,152,0.0329,0.2697;0.0068,0.4175,0.2621,103,0.0194,0.2427;0.0079,0.4404,0.2477,109,0.0367,0.2477;0.0056,0.3737,0.2828,99,0.0404,0.2828;0.0044,0.3617,0.234,94,0.0319,0.2979;0.0117,0.2676,0.3239,71,0.0282,0.338;0.0109,0.3452,0.2738,84,0.0357,0.2857;0.0113,0.5076,0.1667,132,0.0227,0.25;0.0112,0.2561,0.2561,82,0.0122,0.378;0.0108,0.2632,0.2632,76,0.0132,0.4079;0.0122,0.3125,0.2,80,0.0375,0.3375;0.0124,0.2676,0.2817,71,0.0282,0.3803;0.0119,0.1837,0.2347,98,0.0204,0.4082;0.012,0.2021,0.1915,94,0.0213,0.4574;0.0122,0.1609,0.1954,87,0.023,0.4253;0.0129,0.1882,0.1529,85,0.0235,0.4824;0.0124,0.1786,0.1786,84,0.0238,0.4762;0.0125,0.1882,0.1647,85,0.0118,0.4706;0.0124,0.1839,0.1954,87,0.0115,0.4598;0.0134,0.1494,0.1724,87,0.023,0.4598;0.0096,0.1717,0.202,99,0.0101,0.4444;0.0112,0.1625,0.1875,80,0.025,0.4625;0.0102,0.0312,0.1875,64,0.0312,0.5625;0.0113,0.0597,0.1791,67,0.0299,0.5672;0.0129,0.0455,0.1818,66,0.0303,0.5303;0.0115,0.0513,0.2821,39,0.0256,0.5128;0.0127,0.0645,0.1935,62,0.0806,0.5968;0.0074,0.0702,0.193,57,0.0175,0.5965;0.0125,0.0377,0.1509,53,0.0377,0.7547;0.0107,0.0476,0.1905,42,0.0238,0.6905;0.0102,0.1154,0.1154,26,0,0.7308;0.0127,0.2738,0.1863,263,0.1065,0.3194;0.0042,0.2021,0.1596,94,0.0319,0.4681;0.0035,0.1473,0.155,129,0.0853,0.5426;0.0073,0.1548,0.1905,84,0.0357,0.5595;0.007,0.2619,0.2302,126,0.0397,0.381;0.0036,0.28,0.25,100,0.01,0.41;0.0069,0.4327,0.2339,171,0.0234,0.2573;0.0051,0.3581,0.2635,148,0.0135,0.2568;0.0079,0.3051,0.1582,177,0.1073,0.3672;0.0071,0.2194,0.3871,155,0.0258,0.2968;0.0049,0.1914,0.3457,162,0.0247,0.3272;0.0107,0.2443,0.3182,176,0.0852,0.3295;0.0047,0.2215,0.3608,158,0.0253,0.2848;0.0083,0.175,0.375,120,0.0417,0.3333;0.0105,0.2662,0.3237,139,0.0144,0.3022;0.01,0.2849,0.3065,186,0.0269,0.2849;0.0125,0.216,0.3272,162,0.037,0.2901;0.0126,0.1769,0.3061,147,0.068,0.2857;0.0101,0.2024,0.2976,168,0.0238,0.3155;0.0089,0.2059,0.3137,102,0.0196,0.3529;0.0137,0.3511,0.1622,450,0.1311,0.1844;0.0182,0.2456,0.2281,342,0.0497,0.3333;0.0216,0.2749,0.2559,211,0.0853,0.2749;0.012,0.2491,0.2416,269,0.1004,0.2565;0.0158,0.3063,0.1808,271,0.1587,0.2288;0.0196,0.3221,0.1827,208,0.0817,0.25;0.0214,0.2509,0.2022,267,0.1311,0.2734;0.0221,0.2312,0.1859,199,0.1508,0.2211;0.0195,0.2961,0.165,206,0.1165,0.2282;0.0172,0.2276,0.2172,290,0.1,0.2586;0.0137,0.2929,0.2677,198,0.0707,0.2626;0.0152,0.312,0.208,250,0.168,0.18;0.021,0.3225,0.2754,276,0.0942,0.2065;0.0189,0.2484,0.2418,153,0.0392,0.2941;0.0114,0.1061,0.1818,66,0.0303,0.5606;0.0135,0.2536,0.2464,138,0.058,0.2754;0.0106,0.3864,0.1641,396,0.0404,0.3333;0.0099,0.3648,0.1625,880,0.0466,0.3477;0.0089,0.409,0.152,467,0.0278,0.3469;0.0105,0.4196,0.1399,286,0.0524,0.3147;0.0097,0.3609,0.1878,884,0.0588,0.319;0.0096,0.4695,0.1284,475,0.0589,0.2884;0.0105,0.3831,0.1468,402,0.0498,0.3209;0.0095,0.3737,0.1447,463,0.0346,0.3456;0.0119,0.5457,0.1119,438,0.0297,0.2466;0.0142,0.3812,0.1459,425,0.0612,0.3129;0.0118,0.4435,0.1488,336,0.0208,0.3214;0.0049,0.4535,0.1473,258,0.0388,0.3178;0.0063,0.3982,0.151,457,0.0569,0.3392;0.0135,0.4849,0.1392,431,0.0325,0.2575;0.0111,0.3945,0.1638,403,0.062,0.3176;0.0114,0.4112,0.1557,411,0.0414,0.3333;0.0128,0.4918,0.1449,490,0.0469,0.2571;0.0097,0.3846,0.1437,689,0.0522,0.3425;0.0119,0.3923,0.1744,390,0.0564,0.3256;0.0103,0.4073,0.1358,302,0.0596,0.3377;0.0119,0.3566,0.155,387,0.0413,0.3747;0.0116,0.3413,0.2096,334,0.0599,0.3234;0.0075,0.4116,0.1283,413,0.0969,0.3027;0.0103,0.424,0.144,375,0.0533,0.32;0.012,0.3406,0.1656,320,0.0312,0.3719;0.0102,0.3233,0.1692,331,0.0574,0.3625;0.0128,0.4225,0.1305,774,0.0413,0.3062;0.0113,0.3684,0.1287,342,0.0526,0.3772;0.013,0.3836,0.1425,365,0.0438,0.3151;0.0088,0.3854,0.1395,301,0.0797,0.3355;0.0063,0.4815,0.1093,540,0.0537,0.3074;0.0094,0.3388,0.1645,304,0.0724,0.3553;0.0098,0.4596,0.1252,1214,0.0733,0.2858;0.0087,0.3065,0.1909,372,0.0376,0.4032;0.0079,0.4084,0.1389,857,0.0338,0.3431;0.0083,0.3962,0.2049,371,0.0296,0.3288;0.0091,0.4457,0.1198,359,0.039,0.3175;0.0089,0.4221,0.1366,571,0.0648,0.3012;0.0072,0.68,0.08,25,0.04,0.04;0.0109,0.3298,0.1957,373,0.0295,0.3566;0.0128,0.3103,0.1698,377,0.0477,0.3846;0.0102,0.418,0.1455,323,0.0526,0.2972;0.0128,0.3987,0.1069,449,0.0869,0.3163;0.0154,0.3018,0.1577,222,0.1532,0.2297;0.0149,0.3767,0.2055,146,0.0479,0.2877;0.0192,0.4248,0.2222,153,0.0392,0.2026;0.0179,0.3641,0.1949,195,0.0615,0.2769;0.0153,0.3039,0.1471,102,0.0294,0.2941;0.0151,0.3416,0.2298,161,0.1118,0.2236;0.0181,0.4103,0.1795,156,0.0705,0.2372;0.0147,0.3681,0.2033,182,0.0604,0.2473;0.0147,0.3563,0.2,160,0.1313,0.2687;0.0143,0.3798,0.1538,208,0.0433,0.2548;0.0141,0.3604,0.1622,222,0.0856,0.2297;0.0134,0.3415,0.1829,164,0.0549,0.3171;0.0159,0.301,0.1939,196,0.0663,0.2908;0.0126,0.377,0.1749,183,0.0601,0.2732;0.0163,0.4041,0.171,193,0.0155,0.2487;0.0165,0.3802,0.1612,242,0.1033,0.2397;0.0235,0.2882,0.1824,170,0.1118,0.3471;0.0222,0.2075,0.1572,159,0.0943,0.2893;0.0223,0.3092,0.2077,207,0.0966,0.2705;0.0154,0.2764,0.2276,123,0.0325,0.3171;0.0093,0.2029,0.2464,138,0.0652,0.3623;0.0129,0.3884,0.1901,121,0.0165,0.3223;0.0112,0.3952,0.1774,124,0.0242,0.3468;0.0129,0.3246,0.2193,114,0.0175,0.3509;0.0102,0.3551,0.2056,107,0.028,0.3271;0.0238,0.7634,0.0108,93,0.0215,0.1613;0.0228,0.8167,0.0083,120,0.025,0.1167;0.0144,0.7727,0.0227,88,0.0568,0.1364;0.0157,0.7789,0.0316,95,0.0211,0.1263;0.0125,0.7794,0.0147,68,0.0147,0.1618;0.0164,0.7963,0.0093,108,0.0463,0.1019;0.0134,0.7632,0.0395,76,0.0263,0.1447;0.0153,0.7791,0.0233,86,0.0349,0.1279;0.0145,0.7573,0.0194,103,0.068,0.1165;0.0121,0.6623,0.026,77,0.0909,0.1948;0.0136,0.7333,0.0222,90,0.0444,0.1556;0.0116,0.6667,0.0247,81,0.0617,0.2099;0.0082,0.5349,0.0465,43,0.0233,0.3256;0.0112,0.5965,0.0351,57,0,0.2807;0.0121,0.6275,0.0392,51,0.0392,0.2353;0.0105,0.5652,0.0217,46,0.0652,0.2609;0.0125,0.4,0.0667,30,0.1333,0.3667;0.0102,0.4194,0.0645,31,0.0645,0.3871;0.0115,0.4062,0.0312,32,0.1562,0.3438;0.0085,0.3871,0.0323,31,0.0968,0.4194;0.0085,0.3871,0.0323,31,0.1613,0.4194;0.0092,0.2963,0.037,27,0.1111,0.5185;0.0084,0.4286,0.0357,28,0.0357,0.5;0.0095,0.5,0.0312,32,0.0312,0.4062;0.0106,0.5,0.0312,32,0.0625,0.4062;0.0089,0.3571,0.0357,28,0.0714,0.4643;0.011,0.2903,0.0323,31,0.2258,0.4839;0.0088,0.5152,0.0303,33,0.0909,0.3939;0.0089,0.4595,0.0811,37,0.0541,0.3784;0.0099,0.4,0.1,40,0.15,0.35;0.0088,0.3667,0.0667,30,0.0667,0.4;0.01,0.3793,0.1034,29,0.0345,0.4483;0.0094,0.4167,0.0556,36,0.1389,0.3611;0.0095,0.4062,0.0938,32,0.125,0.375;0.0081,0.2593,0.0741,27,0.1481,0.4444;0.0109,0.5122,0.0732,41,0.0732,0.3171;0.0114,0.4054,0.0541,37,0.0811,0.3784;0.0092,0.475,0.05,40,0.1,0.35;0.0099,0.5,0.0526,38,0.0526,0.3684;0.0089,0.5385,0.0513,39,0.0769,0.3333;0.0103,0.3824,0.0588,34,0.0882,0.4118;0.0108,0.3235,0.0294,34,0.1471,0.4118;0.0102,0.4615,0.0513,39,0.0513,0.359;0.0106,0.525,0.05,40,0.05,0.325;0.0118,0.383,0.0638,47,0.1702,0.3191;0.0115,0.4,0.05,40,0.15,0.375;0.0192,0.7581,0.0484,124,0.0484,0.121;0.0211,0.76,0.032,125,0.04,0.12;0.017,0.6721,0.082,122,0.082,0.1311;0.0174,0.7573,0.0583,103,0.0097,0.1456;0.0176,0.6782,0.0575,87,0.023,0.1954;0.0196,0.669,0.131,145,0.0759,0.0966;0.0177,0.7788,0.0481,104,0.0288,0.1442;0.0193,0.7345,0.0531,113,0.0531,0.1327;0.0165,0.7295,0.0328,122,0.0492,0.1475;0.0144,0.6542,0.028,107,0.1215,0.1589;0.0142,0.7292,0.0625,96,0.0417,0.1458;0.0174,0.7468,0.038,79,0.0127,0.1772;0.0167,0.6374,0.0769,91,0.0989,0.1758;0.0161,0.6701,0.0309,97,0.0722,0.1753;0.0131,0.7478,0.0435,115,0.0522,0.1478;0.0149,0.7188,0.0703,128,0.0312,0.1484;0.0144,0.7143,0.0476,105,0.0476,0.1619;0.015,0.771,0.0229,131,0.0305,0.1374;0.0159,0.771,0.0534,131,0.0153,0.1298;0.0155,0.75,0.0486,144,0.0764,0.1181;0.0158,0.7832,0.021,143,0.035,0.1259;0.0163,0.7447,0.0496,141,0.0567,0.1348;0.0144,0.7024,0.0238,84,0.0714,0.1786;0.0138,0.7213,0.0492,122,0.041,0.1475;0.0178,0.766,0.0426,141,0.0496,0.0993;0.0137,0.6577,0.0721,111,0.1081,0.1351;0.0123,0.7209,0.0581,86,0.0349,0.1512;0.0149,0.7154,0.0385,130,0.0615,0.1462;0.0147,0.7594,0.0226,133,0.0526,0.1203;0.0166,0.7305,0.0567,141,0.0993,0.1206;0.0156,0.7566,0.0526,152,0.0592,0.1118;0.0163,0.7871,0.0387,155,0.0452,0.1097;0.0143,0.7519,0.0388,129,0.062,0.1318;0.0171,0.7273,0.042,143,0.049,0.1189;0.0155,0.6111,0.0333,90,0.0667,0.2111;0.0159,0.7355,0.0496,121,0.0331,0.124;0.0111,0.625,0.0469,64,0.0469,0.1406;0.0153,0.717,0.0566,106,0.0189,0.1321;0.0132,0.75,0.0446,112,0.0357,0.1161;0.0144,0.76,0.0267,75,0.0133,0.16;0.0163,0.6989,0.043,93,0.0215,0.129;0.0179,0.777,0.0541,148,0.0338,0.0811;0.0179,0.575,0.0375,80,0.1375,0.1375;0.0135,0.7033,0.044,91,0.0659,0.1538;0.0156,0.7175,0.0395,177,0.0791,0.1017;0.0171,0.7103,0.0828,145,0.0414,0.131;0.0163,0.6982,0.0414,169,0.1006,0.1006;0.0164,0.7584,0.0281,178,0.0506,0.1124;0.0172,0.7308,0.0481,104,0.0096,0.125;0.0185,0.7019,0.0481,104,0.0288,0.1442;0.0144,0.7308,0.0462,130,0.0538,0.1308;0.0155,0.7568,0.036,111,0.036,0.1351;0.0169,0.7255,0.0392,102,0.049,0.1275;0.0165,0.7305,0.0496,141,0.0567,0.1064;0.0152,0.7845,0.0345,116,0.0259,0.1379;0.0169,0.7807,0.0263,114,0.0439,0.114;0.0164,0.629,0.0968,62,0,0.2258;0.0186,0.6762,0.0952,105,0.0667,0.1143;0.0177,0.7,0.0538,130,0.0385,0.1462;0.0169,0.7398,0.0488,123,0.0163,0.1626;0.0163,0.7714,0.0429,140,0.0357,0.1286;0.0168,0.7792,0.039,154,0.0325,0.1104;0.0142,0.7361,0.0417,72,0.0278,0.1667;0.0119,0.6765,0.0588,68,0.0588,0.1765;0.0134,0.5,0.0278,72,0.1389,0.2222;0.0135,0.5231,0.0769,65,0.1692,0.1846;0.0117,0.7191,0.0562,89,0.0562,0.1685;0.0144,0.7679,0.0268,112,0.0179,0.1696;0.0165,0.7323,0.0236,127,0.0394,0.1417;0.0144,0.7407,0.0556,108,0.0185,0.1574;0.0132,0.28,0.04,25,0.16,0.52;0.0087,0.2778,0.0833,36,0.1111,0.4722;0.0107,0.3158,0.0789,38,0.0789,0.4211;0.0107,0.3243,0.0811,37,0.0811,0.4324;0.009,0.3077,0.1026,39,0.0256,0.4359;0.0092,0.2941,0.0882,34,0.0588,0.4706;0.0126,0.2041,0.1224,49,0.1429,0.3265;0.01,0.2821,0.1026,39,0.0769,0.4359;0.0091,0.2,0.0857,35,0.0857,0.5143;0.008,0.2895,0.1316,38,0.0263,0.4211;0.0125,0.2951,0.082,61,0.1803,0.2623;0.0123,0.3333,0.0556,54,0.1852,0.3148;0.01,0.3659,0.0732,41,0.0732,0.439;0.0103,0.2973,0.0811,37,0.0811,0.4324;0.0128,0.3818,0.1273,55,0.0909,0.3091;0.01,0.3265,0.102,49,0.102,0.3469;0.0111,0.4259,0.1296,54,0.0926,0.2963;0.0116,0.44,0.08,50,0.04,0.38;0.0096,0.2609,0.1087,46,0.087,0.4348;0.0111,0.3509,0.0702,57,0.1579,0.2632;0.0112,0.3538,0.0462,65,0.1538,0.3077;0.0114,0.3898,0.1186,59,0.1186,0.3051;0.0081,0.2143,0.1429,42,0.0952,0.4048;0.0074,0.3077,0.1795,39,0.0513,0.3846;0.0083,0.2766,0.1702,47,0.0851,0.4255;0.0093,0.34,0.14,50,0.1,0.34;0.0076,0.275,0.125,40,0.075,0.425;0.0104,0.2188,0.0938,32,0.0312,0.5312;0.0099,0.3256,0.0698,43,0.1395,0.4651;0.0131,0.3958,0.1042,48,0.1042,0.3542;0.0087,0.2727,0.1212,33,0.1212,0.4242;0.0117,0.4048,0.0714,42,0.1429,0.3095;0.0091,0.3143,0.1143,35,0.1143,0.3714;0.0105,0.3902,0.0732,41,0.0732,0.3902;0.0085,0.2667,0.1,30,0.0667,0.4667;0.0107,0.3333,0.0889,45,0.1778,0.3556;0.0094,0.4615,0.0769,39,0.0513,0.359;0.01,0.4,0.1,40,0.1,0.325;0.0096,0.3421,0.1053,38,0.1053,0.3947;0.0099,0.2927,0.122,41,0.0976,0.3659;0.0106,0.3913,0.087,46,0.087,0.3478;0.0109,0.3696,0.0435,46,0.0435,0.413;0.0112,0.4348,0.0652,46,0.0652,0.3696;0.0125,0.34,0.04,50,0.12,0.38;0.0122,0.4286,0.1071,56,0.0714,0.3214;0.0115,0.4444,0.1111,45,0.0667,0.3333;0.0103,0.275,0.1,40,0.175,0.425;0.0133,0.2857,0.0714,56,0.25,0.3214;0.0106,0.3261,0.087,46,0.087,0.3696;0.0108,0.4359,0.1282,39,0.0513,0.359;0.0139,0.3182,0.0606,66,0.2879,0.2727;0.0101,0.2258,0.0968,31,0.2258,0.4194;0.0105,0.3171,0.122,41,0.0732,0.4634;0.0105,0.3415,0.1463,41,0.0488,0.4146;0.0113,0.3333,0.0952,42,0.1429,0.4048;0.011,0.24,0.08,50,0.18,0.38;0.0078,0.4048,0.0952,42,0.0476,0.381;0.0089,0.3158,0.1053,38,0.1053,0.4211;0.01,0.3469,0.0816,49,0.0816,0.4694;0.0103,0.4524,0.0714,42,0.0476,0.381;0.0111,0.4667,0.0667,45,0.0889,0.2889;0.0105,0.2,0.1667,30,0.1,0.4333;0.0112,0.3725,0.0784,51,0.1765,0.3333;0.0089,0.1707,0.0732,41,0.1951,0.3902;0.0105,0.3256,0.0698,43,0.093,0.3953;0.0081,0.2941,0.1471,34,0.0882,0.4118;0.0114,0.3061,0.1224,49,0.0408,0.3265;0.0085,0.3,0.1,40,0.075,0.45;0.0114,0.38,0.1,50,0.02,0.32;0.0112,0.413,0.087,46,0.087,0.3696;0.0136,0.4821,0.0536,56,0.0536,0.3393;0.0089,0.3111,0.1778,45,0.0444,0.3778;0.0112,0.3469,0.1224,49,0.0612,0.3469;0.0095,0.3617,0.2128,47,0.0426,0.3404;0.0115,0.3333,0.1,60,0.1667,0.3667;0.0143,0.4186,0.0698,86,0.1512,0.3023;0.0105,0.3913,0.1304,46,0.0435,0.3478;0.0113,0.375,0.1,40,0.075,0.425;0.0113,0.3243,0.1081,37,0.0811,0.4595;0.0131,0.4565,0.0652,46,0.0652,0.3696;0.012,0.3947,0.0789,38,0.0263,0.5;0.011,0.375,0.1,40,0.05,0.45;0.0104,0.2632,0.0789,38,0.1053,0.5263;0.0142,0.3696,0.0652,46,0.1304,0.3696;0.0122,0.4038,0.0962,52,0.0577,0.3462;0.0105,0.3571,0.0714,42,0.0952,0.4048;0.0131,0.3673,0.0612,49,0.102,0.3673;0.0117,0.3333,0.1026,39,0.0513,0.4615;0.0116,0.3415,0.0976,41,0.122,0.4146;0.0085,0.2222,0.0741,27,0.1111,0.5556;0.0105,0.1852,0.0741,27,0.1852,0.5556;0.0091,0.2692,0.0769,26,0.1154,0.5;0.0119,0.1818,0.0606,33,0.2121,0.4848;0.0095,0.3478,0.1087,46,0.0652,0.3696;0.0087,0.3333,0.1429,42,0.0476,0.381;0.0127,0.15,0.1,40,0.15,0.425;0.0121,0.1538,0.1154,26,0.1154,0.5769;0.01,0.1935,0.0968,31,0.1613,0.4839;0.0128,0.1,0.1,30,0.1667,0.5333;0.0112,0.12,0.08,25,0.12,0.64;0.0121,0.2333,0.1,30,0.1667,0.5;0.0098,0.25,0.0714,28,0.0714,0.5714;0.0109,0.25,0.0625,32,0.125,0.4688;0.0116,0.1724,0.069,29,0.1034,0.5172;0.0091,0.16,0.08,25,0.08,0.6;0.0114,0.1724,0.069,29,0.1724,0.5172;0.0089,0.12,0.08,25,0.08,0.6;0.01,0.16,0.08,25,0.08,0.68;0.0091,0.1538,0.0769,26,0.1154,0.6538;0.0087,0.2,0.08,25,0.04,0.64;0.0075,0.2308,0.0769,26,0.0769,0.5769;0.0106,0.2069,0.1034,29,0.1379,0.4828;0.01,0.2143,0.1071,28,0.1071,0.5;0.0123,0.125,0.0625,32,0.3125,0.4688;0.0094,0.2,0.08,25,0.08,0.64;0.0122,0.1515,0.0606,33,0.303,0.4242;0.0147,0.129,0.0968,31,0.3226,0.4516;0.0124,0.16,0.08,25,0.2,0.52;0.0129,0.12,0.08,25,0.16,0.6;0.0177,0.1471,0.0882,34,0.1765,0.5294;0.0173,0.1724,0.1034,29,0.069,0.5862;0.0165,0.0714,0.1071,28,0.1786,0.6071;0.016,0.1562,0.0938,32,0.1562,0.5625;0.0174,0.0455,0.0682,44,0.3864,0.4773;0.0165,0.1333,0.1,30,0.1667,0.5333;0.0152,0.1379,0.1034,29,0.1034,0.5862;0.0126,0.0769,0.1154,26,0.1154,0.6538;0.0177,0.129,0.0968,31,0.129,0.5484;0.0149,0.1154,0.0769,26,0.1154,0.6154;0.0185,0.0286,0.0857,35,0.3714,0.4857;0.0141,0.1724,0.1034,29,0.1724,0.5517;0.0186,0.0645,0.0968,31,0.2258,0.5806;0.0192,0.1351,0.0811,37,0.2703,0.5405;0.0187,0.1562,0.0938,32,0.125,0.5312;0.0133,0.2368,0.1053,38,0.0789,0.4737;0.0115,0.2564,0.1282,39,0.0769,0.4359;0.0118,0.2051,0.1282,39,0.0769,0.4103;0.0124,0.2,0.0857,35,0.1429,0.4857;0.0093,0.2333,0.0667,30,0.1333,0.5;0.0111,0.2571,0.0857,35,0.0571,0.4286;0.011,0.2821,0.0513,39,0.0513,0.4103;0.0151,0.1579,0.1053,38,0.2632,0.3947;0.0107,0.3091,0.0909,55,0.1818,0.2909;0.0091,0.2059,0.1176,34,0.1471,0.5;0.0106,0.3333,0.0926,54,0.1111,0.3333;0.0102,0.4,0.1111,45,0.1778,0.3111;0.0097,0.38,0.1,50,0.14,0.26;0.0112,0.2143,0.0952,42,0.1905,0.4048;0.0097,0.3333,0.0588,51,0.1373,0.3137;0.0141,0.2439,0.1707,41,0.0976,0.4146;0.0169,0.2326,0.0698,43,0.2326,0.3953;0.0137,0.3793,0.0862,58,0.1379,0.2759;0.0116,0.1471,0.0882,34,0.1765,0.4706;0.0115,0.3171,0.0976,41,0.0976,0.3415;0.0127,0.3182,0.1591,44,0.0227,0.3864;0.0104,0.1471,0.1471,34,0.0588,0.5294;0.0115,0.1463,0.0732,41,0.1707,0.3902;0.0124,0.3099,0.0986,71,0.1127,0.2676;0.0132,0.451,0.0784,51,0.1176,0.2745;0.0153,0.3824,0.0735,68,0.1618,0.25;0.0159,0.2667,0.05,60,0.2667,0.2833;0.0124,0.3582,0.0896,67,0.0896,0.2537;0.0119,0.4259,0.0556,54,0.1111,0.3333;0.0117,0.2857,0.0714,56,0.1071,0.3214;0.0114,0.3393,0.0893,56,0.125,0.3036;0.0123,0.25,0.125,48,0.0833,0.3542;0.0099,0.129,0.0968,31,0.0968,0.5161;0.0115,0.2439,0.0732,41,0.1463,0.3415;0.0122,0.1935,0.129,31,0.0645,0.5161;0.0147,0.122,0.0488,41,0.2683,0.5366;0.0129,0.34,0.12,50,0.14,0.3;0.009,0.1351,0.1351,37,0.1892,0.4324;0.0121,0.4,0.06,50,0.2,0.3;0.0131,0.1892,0.1081,37,0.1892,0.4324;0.0115,0.1628,0.1628,43,0.1395,0.3953;0.0101,0.4048,0.0714,42,0.1429,0.3333;0.0134,0.1389,0.0833,36,0.25,0.4167;0.0186,0.2857,0.102,49,0.2245,0.3265;0.0132,0.0769,0.0769,39,0.3077,0.4359;0.0127,0.3091,0.0909,55,0.1818,0.4182;0.0131,0.2308,0.0513,39,0.1282,0.4872;0.0119,0.1429,0.0857,35,0.1143,0.5714;0.0135,0.1702,0.0638,47,0.234,0.4043;0.0122,0.0769,0.0769,26,0.1538,0.6154;0.0117,0.0667,0.0667,30,0.2667,0.5;0.0119,0.3333,0.1333,45,0.0889,0.2444;0.0122,0.4531,0.0938,64,0.1094,0.2656;0.0073,0.275,0.05,40,0.05,0.525;0.0143,0.25,0.075,40,0.15,0.5;0.0118,0.075,0.075,40,0.175,0.575;0.0148,0.0889,0.0667,45,0.2667,0.5111;0.012,0.1875,0.0938,32,0.125,0.5625;0.0137,0.0278,0.0833,36,0.1389,0.5833;0.0138,0.186,0.0698,43,0.1628,0.4419;0.0136,0.1333,0.0667,45,0.2222,0.4667;0.0135,0.0667,0.0444,45,0.4222,0.4222;0.0132,0.075,0.075,40,0.35,0.55;0.0122,0.2727,0.0606,33,0.0606,0.5758;0.0114,0.1667,0.0667,30,0.1667,0.5667;0.0131,0.3137,0.0588,51,0.1765,0.3725;0.0157,0.2745,0.0392,51,0.1569,0.451;0.0139,0.2381,0.0476,42,0.1429,0.5238;0.0103,0.2857,0.0476,63,0.2063,0.4127;0.0126,0.2051,0.0513,39,0.1026,0.5385;0.0095,0.3725,0.0588,51,0.0588,0.4118;0.0146,0.2222,0.0667,45,0.1556,0.4667;0.0144,0.1754,0.0351,57,0.3158,0.4386;0.0089,0.3148,0.0741,54,0.1111,0.4074;0.0131,0.2143,0.0476,42,0.1429,0.5238;0.0121,0.0857,0.0571,35,0.1429,0.6286;0.0156,0.1364,0.0455,44,0.3182,0.4545;0.0133,0.3585,0.0755,53,0.0755,0.3962;0.0128,0.3433,0.0448,67,0.1791,0.2985;0.0129,0.3846,0.0577,52,0.1154,0.3846;0.0148,0.186,0.0698,43,0.2093,0.4884;0.0169,0.1818,0.0909,44,0.2727,0.4091;0.0145,0.2059,0.0882,34,0.0882,0.5882;0.0135,0.2,0.0571,35,0.2,0.4571;0.0132,0.129,0.0968,31,0.2581,0.5161;0.0138,0.1458,0.0833,48,0.25,0.4375;0.015,0.1429,0.0476,42,0.2619,0.5;0.0108,0.2258,0.0645,31,0.0645,0.5484;0.0116,0.0789,0.0789,38,0.2895,0.4474;0.0114,0.2727,0.0606,33,0.0909,0.5152;0.0125,0.1282,0.0513,39,0.2564,0.4872;0.0113,0.0645,0.0645,31,0.2258,0.5161;0.0089,0.1842,0.0789,38,0.1579,0.4474;0.0093,0.1562,0.0625,32,0.1875,0.4688;0.0131,0.1346,0.0385,52,0.4423,0.3654;0.0125,0.1515,0.0909,33,0.1818,0.5758;0.0152,0.4219,0.0625,64,0.1094,0.3438;0.0136,0.3148,0.0556,54,0.1296,0.4259;0.0141,0.2826,0.0435,46,0.1304,0.4565;0.0104,0.1111,0.0556,36,0.2222,0.4722;0.015,0.2857,0.1429,35,0.0571,0.4;0.0127,0.2889,0.0889,45,0.1333,0.4222;0.0105,0.2069,0.0517,58,0.1724,0.3621;0.012,0.2051,0.0769,39,0.1538,0.4359;0.0101,0.125,0.0625,32,0.1875,0.5625;0.0128,0.1714,0.1143,35,0.1714,0.5143;0.0111,0.186,0.0465,43,0.3256,0.3721;0.0141,0.1795,0.1026,39,0.1026,0.4872;0.012,0.459,0.0492,61,0.0492,0.3443;0.013,0.4,0.05,60,0.0667,0.3167;0.0113,0.08,0.12,25,0.16,0.52;0.011,0.1154,0.1154,26,0.0769,0.5385;0.0127,0.1562,0.125,32,0.1875,0.4375;0.0129,0.24,0.04,25,0.12,0.52;0.0205,0.0625,0.0625,32,0.375,0.4688;0.014,0.0882,0.1176,34,0.2059,0.4118;0.0129,0.0645,0.1613,31,0.1613,0.4516;0.0125,0.129,0.0968,31,0.129,0.4194;0.0178,0.4516,0.043,93,0.1828,0.2366;0.0258,0.3578,0.055,109,0.2661,0.1927;0.0167,0.1724,0.0345,29,0.1379,0.5172;0.0154,0.1154,0.0385,26,0.1154,0.5769;0.0153,0.4353,0.1412,85,0.1294,0.1765;0.013,0.3889,0.1111,54,0.0556,0.3333;0.0148,0.3898,0.0678,59,0.1017,0.2712;0.0112,0.3725,0.1569,51,0.0588,0.3137;0.0151,0.4853,0.1029,68,0.1176,0.2353;0.0135,0.3333,0.1042,48,0.0625,0.375;0.0138,0.3492,0.0794,63,0.127,0.3016;0.0099,0.32,0.1,50,0.1,0.36;0.0147,0.3509,0.1228,57,0.1053,0.3158;0.0117,0.386,0.1053,57,0.0877,0.2982;0.0141,0.3509,0.1404,57,0.1228,0.2982;0.013,0.3,0.14,50,0.14,0.36;0.0138,0.2128,0.1489,47,0.0638,0.3617;0.0128,0.4259,0.0926,54,0.0926,0.3148;0.0129,0.3621,0.1034,58,0.069,0.3448;0.0111,0.3269,0.1154,52,0.1538,0.3077;0.0143,0.3833,0.15,60,0.0833,0.3;0.0108,0.3469,0.102,49,0.102,0.3469;0.0118,0.1818,0.2273,44,0.0909,0.3864;0.015,0.3692,0.0923,65,0.1692,0.2923;0.0146,0.4138,0.069,58,0.0517,0.2931;0.014,0.2778,0.1296,54,0.0741,0.3333;0.0185,0.3077,0.0385,26,0.1923,0.3462;0.0105,0.5,0.1528,72,0.0833,0.2083;0.0139,0.375,0.125,48,0.0417,0.3125;0.0161,0.4375,0.1,80,0.05,0.225;0.012,0.4267,0.1067,75,0.08,0.24;0.0124,0.3462,0.1346,52,0.0962,0.3269;0.0122,0.3478,0.1522,46,0.087,0.3913;0.013,0.3774,0.1321,53,0.0943,0.3585;0.0112,0.4559,0.1324,68,0.0294,0.2794;0.013,0.5366,0.1098,82,0.061,0.2439;0.0127,0.5128,0.0897,78,0.0897,0.2179;0.0104,0.4333,0.1167,60,0.1,0.2833;0.0121,0.3929,0.125,56,0.1429,0.2857;0.0108,0.1923,0.1154,52,0.2692,0.3269;0.0113,0.4035,0.1228,57,0.0877,0.2982;0.0112,0.2407,0.0926,54,0.2407,0.3148;0.0118,0.3962,0.1321,53,0.0566,0.3208;0.0113,0.4203,0.1304,69,0.058,0.2609;0.0128,0.5065,0.1299,77,0.0649,0.2078;0.0137,0.4691,0.1235,81,0.0494,0.1852;0.012,0.3968,0.1587,63,0.0476,0.3016;0.0144,0.5287,0.1034,87,0.0575,0.1954;0.0119,0.4032,0.1129,62,0.0806,0.2903;0.0127,0.5595,0.0833,84,0.0476,0.1905;0.0125,0.35,0.15,60,0.1167,0.2833;0.0143,0.3265,0.1429,49,0.102,0.3265;0.01,0.4107,0.1786,56,0.0893,0.2857;0.0118,0.4464,0.1429,56,0.0536,0.2679;0.0103,0.32,0.14,50,0.12,0.34;0.0113,0.4182,0.1273,55,0.0545,0.3091;0.0124,0.1892,0.1622,37,0.1081,0.4324;0.0108,0.3333,0.1111,54,0.1296,0.3519;0.0122,0.5,0.1413,92,0.0435,0.1739;0.0125,0.4767,0.1628,86,0.093,0.1744;0.0094,0.5114,0.1591,88,0.0227,0.1932;0.0144,0.4648,0.1408,71,0.0563,0.2113;0.0152,0.4444,0.127,63,0.0952,0.2381;0.018,0.4302,0.1279,86,0.0814,0.2209;0.018,0.4302,0.1279,86,0.0814,0.2209;0.0141,0.4286,0.1714,70,0.0714,0.2143;0.0125,0.3393,0.125,56,0.0893,0.3214;0.014,0.5,0.0976,82,0.0732,0.1951;0.0132,0.4795,0.137,73,0.0685,0.2192;0.0151,0.5114,0.125,88,0.0455,0.1818;0.011,0.3922,0.1373,51,0.0784,0.3137;0.013,0.4464,0.1429,56,0.0536,0.25;0.0131,0.3585,0.1887,53,0.0755,0.2642;0.0139,0.3934,0.1475,61,0.1148,0.2295;0.0133,0.3621,0.1207,58,0.0862,0.2414;0.0133,0.3077,0.1026,39,0.1538,0.3846;0.0168,0.398,0.0918,98,0.0918,0.1939;0.0126,0.3265,0.1429,49,0.102,0.3265;0.0113,0.3962,0.1132,53,0.1321,0.2642;0.0111,0.4314,0.0784,51,0.1176,0.2745;0.0138,0.4262,0.0656,61,0.1311,0.2131;0.0153,0.3585,0.1132,53,0.1698,0.2642;0.0139,0.5,0.0806,62,0.1452,0.2581;0.0158,0.3962,0.1132,53,0.0377,0.283;0.0177,0.4375,0.0938,64,0.1094,0.2188;0.0166,0.4138,0.1034,58,0.1034,0.2759;0.0156,0.4592,0.1224,98,0.0612,0.2245;0.0153,0.4423,0.1635,104,0.0673,0.1923;0.0202,0.3284,0.1343,67,0.1493,0.2836;0.0165,0.3846,0.0962,52,0.0769,0.25;0.0114,0.2444,0.1556,45,0.0444,0.4444;0.0105,0.3191,0.1489,47,0.0426,0.4468;0.0132,0.3208,0.1509,53,0.1321,0.3962;0.0138,0.2727,0.1455,55,0.1636,0.3818;0.0119,0.28,0.16,50,0.08,0.42;0.0136,0.1837,0.1224,49,0.1633,0.4286;0.0123,0.2642,0.1321,53,0.1321,0.4151;0.0125,0.28,0.16,50,0.12,0.44;0.0131,0.2941,0.1373,51,0.1373,0.3922;0.0144,0.2553,0.1277,47,0.1702,0.4468;0.0106,0.3061,0.1224,49,0.102,0.4286;0.0137,0.2174,0.1304,46,0.1522,0.5;0.0119,0.2353,0.1373,51,0.1569,0.451;0.0119,0.234,0.1489,47,0.0851,0.4681;0.01,0.2609,0.1304,46,0.087,0.4565;0.011,0.2917,0.125,48,0.0833,0.4583;0.0128,0.25,0.1071,56,0.2143,0.3929;0.0111,0.3061,0.1224,49,0.1224,0.4286;0.0123,0.2292,0.125,48,0.1042,0.4583;0.0136,0.2712,0.1017,59,0.2373,0.4068;0.0116,0.2593,0.1111,54,0.1667,0.4259;0.0115,0.3265,0.1224,49,0.0816,0.449;0.0116,0.2549,0.1176,51,0.1373,0.4118;0.012,0.2667,0.1333,45,0.0889,0.4889;0.0137,0.3276,0.1207,58,0.1034,0.3621;0.012,0.25,0.125,48,0.1042,0.4792;0.012,0.2549,0.1176,51,0.1569,0.4314;0.0107,0.2083,0.125,48,0.1458,0.4583;0.0114,0.25,0.1154,52,0.1538,0.4615;0.0118,0.322,0.1017,59,0.1695,0.3729;0.0118,0.2586,0.1207,58,0.1897,0.3966;0.0127,0.2429,0.0857,70,0.2857,0.3429;0.0131,0.3333,0.1,60,0.1333,0.3833;0.0118,0.25,0.1071,56,0.2143,0.4107;0.0114,0.2308,0.1077,65,0.2615,0.3846;0.0114,0.2941,0.1176,51,0.1373,0.451;0.0118,0.3276,0.1034,58,0.1379,0.4138;0.0116,0.283,0.1321,53,0.0943,0.4151;0.0112,0.2857,0.1224,49,0.0816,0.4694;0.012,0.3,0.12,50,0.06,0.48;0.0107,0.2553,0.1277,47,0.0851,0.4894;0.0106,0.2826,0.1304,46,0.0652,0.4783;0.0119,0.2456,0.1228,57,0.1579,0.4035;0.0119,0.24,0.12,50,0.1,0.46;0.0103,0.2667,0.1333,45,0.0889,0.4889;0.011,0.2931,0.1207,58,0.1207,0.4138;0.0108,0.3585,0.1321,53,0.0566,0.434;0.0093,0.2667,0.1333,45,0.0667,0.5111;0.0093,0.2963,0.0926,54,0.1667,0.4259;0.0104,0.2353,0.0735,68,0.2647,0.3676;0.01,0.2903,0.0806,62,0.1935,0.4032;0.0107,0.2593,0.0926,54,0.1667,0.4444;0.0103,0.3333,0.098,51,0.098,0.4706;0.0115,0.1628,0.1395,43,0.1163,0.5116;0.0112,0.1852,0.1296,54,0.1852,0.463;0.011,0.2,0.1333,45,0.1111,0.5333;0.0112,0.3333,0.1111,54,0.1111,0.4259;0.0106,0.2632,0.1053,57,0.2281,0.4386;0.0121,0.25,0.125,48,0.1042,0.4792;0.013,0.3273,0.1273,55,0.1273,0.4182;0.0123,0.3148,0.1111,54,0.1111,0.4444;0.0113,0.3125,0.125,48,0.0833,0.4583;0.0114,0.2174,0.1522,46,0.1087,0.5;0.0121,0.3279,0.1148,61,0.1311,0.377;0.0108,0.1667,0.125,48,0.125,0.4792;0.0109,0.25,0.125,48,0.1458,0.5;0.0118,0.2692,0.1346,52,0.1346,0.4615;0.0108,0.28,0.12,50,0.14,0.46;0.0116,0.2,0.12,50,0.14,0.48;0.011,0.2653,0.1224,49,0.102,0.4694;0.012,0.3269,0.1154,52,0.0769,0.4615;0.0136,0.2241,0.1379,58,0.2586,0.3966;0.0114,0.3333,0.1176,51,0.0784,0.451;0.0116,0.1957,0.1304,46,0.0652,0.5217;0.0144,0.2203,0.1186,59,0.2373,0.4237;0.0123,0.234,0.1489,47,0.1064,0.5106;0.0101,0.2766,0.1277,47,0.0851,0.4894;0.0116,0.2889,0.1333,45,0.1111,0.5333;0.0115,0.1837,0.1224,49,0.1633,0.4694;0.0108,0.2292,0.125,48,0.125,0.5;0.0082,0.2432,0.1351,37,0.1351,0.4324;0.011,0.26,0.12,50,0.14,0.44;0.011,0.2553,0.1489,47,0.0851,0.4681;0.0103,0.2963,0.0926,54,0.1667,0.4259;0.0123,0.2174,0.1522,46,0.1304,0.5;0.0122,0.2807,0.1228,57,0.1754,0.4211;0.0154,0.2333,0.1333,60,0.2333,0.3833;0.0107,0.3,0.12,50,0.12,0.44;0.0112,0.2708,0.125,48,0.1042,0.5208;0.0119,0.25,0.1458,48,0.1458,0.4583;0.0152,0.2453,0.1698,53,0.1698,0.434;0.013,0.2143,0.1429,42,0.0714,0.5238;0.013,0.2093,0.1395,43,0.1163,0.5349;0.0127,0.2759,0.1034,58,0.1724,0.4138;0.0138,0.2679,0.1071,56,0.2143,0.4286;0.013,0.2857,0.1429,42,0.0714,0.4762;0.0128,0.2791,0.1395,43,0.0698,0.4884;0.0122,0.3182,0.1364,44,0.0909,0.4318;0.0136,0.2917,0.125,48,0.1667,0.3958;0.013,0.2766,0.1277,47,0.1277,0.4255;0.0142,0.3261,0.1304,46,0.1087,0.4348;0.0126,0.3191,0.1277,47,0.0851,0.4681;0.0106,0.2444,0.1333,45,0.1111,0.4889;0.012,0.3333,0.1333,45,0.0667,0.4444;0.0121,0.2857,0.1224,49,0.1633,0.3878;0.0117,0.2558,0.1628,43,0.093,0.4419;0.0133,0.25,0.1429,56,0.1786,0.375;0.0134,0.3019,0.1698,53,0.0943,0.3585;0.016,0.2712,0.1525,59,0.1864,0.339;0.0147,0.3276,0.1034,58,0.1379,0.3621;0.0138,0.3654,0.1346,52,0.0962,0.3654;0.0103,0.28,0.12,50,0.1,0.48;0.0102,0.3061,0.1224,49,0.102,0.4898;0.011,0.2553,0.1277,47,0.1277,0.4894;0.0116,0.3396,0.1132,53,0.1132,0.434;0.0105,0.3396,0.1132,53,0.0755,0.4528;0.0059,0.2333,0.1333,30,0.0333,0.5667;0.0107,0.2917,0.125,48,0.0625,0.4792;0.0111,0.3137,0.1373,51,0.0588,0.451;0.0113,0.2623,0.1148,61,0.1803,0.377;0.0106,0.2553,0.1277,47,0.0638,0.5106;0.0103,0.3077,0.1154,52,0.1538,0.4231;0.0113,0.3148,0.1111,54,0.0926,0.4444;0.0107,0.2692,0.1346,52,0.1154,0.4615;0.0106,0.3725,0.1176,51,0.0392,0.4314;0.0111,0.3269,0.1154,52,0.0577,0.4615;0.012,0.3208,0.1132,53,0.1132,0.434;0.0106,0.3333,0.1176,51,0.0588,0.451;0.0112,0.3036,0.1071,56,0.125,0.4286;0.0118,0.2308,0.1154,52,0.1923,0.4231;0.0145,0.2542,0.1356,59,0.1695,0.4237;0.0096,0.2381,0.1429,42,0.0476,0.5476;0.0095,0.2222,0.1111,45,0.1333,0.4444;0.0109,0.34,0.12,50,0.1,0.42;0.0112,0.2667,0.1333,45,0.0889,0.5111;0.0114,0.26,0.12,50,0.14,0.48;0.0116,0.3265,0.1224,49,0.0612,0.449;0.0123,0.3261,0.1087,46,0.1087,0.4565;0.0142,0.3148,0.1481,54,0.037,0.463;0.0149,0.2632,0.1404,57,0.1053,0.4561;0.0136,0.2909,0.1455,55,0.0545,0.4909;0.015,0.2542,0.1525,59,0.1356,0.4746;0.0144,0.2321,0.1607,56,0.0714,0.5;0.0159,0.2857,0.1111,63,0.0794,0.4286;0.0142,0.2903,0.129,62,0.0645,0.4355;0.0142,0.2373,0.1356,59,0.1186,0.4407;0.0138,0.3036,0.125,56,0.0357,0.4643;0.0131,0.2264,0.1509,53,0.0755,0.4906;0.0143,0.2321,0.1429,56,0.0893,0.4821;0.0162,0.2241,0.1034,58,0.069,0.5;0.0139,0.2969,0.1406,64,0.0312,0.4375;0.012,0.2857,0.1571,70,0.0429,0.4143;0.0134,0.4054,0.1081,74,0.0135,0.3919;0.0101,0.3966,0.0862,58,0.0517,0.3621;0.0141,0.3288,0.1233,73,0.0411,0.411;0.0116,0.3788,0.1061,66,0.0152,0.4242;0.0136,0.3194,0.1389,72,0.0417,0.4028;0.0115,0.2836,0.1045,67,0.1045,0.4328;0.0114,0.3226,0.1129,62,0.0484,0.4355;0.0137,0.25,0.1029,68,0.1176,0.4265;0.0123,0.2836,0.1194,67,0.1045,0.4179;0.0121,0.3443,0.1148,61,0,0.459;0.014,0.3766,0.1169,77,0.0519,0.3766;0.0131,0.3239,0.1268,71,0.0704,0.4225;0.0142,0.3571,0.1,70,0.0286,0.4;0.013,0.2763,0.0921,76,0.1447,0.3947;0.0117,0.3582,0.1194,67,0.0448,0.4179;0.0155,0.4186,0.1047,86,0.0349,0.3605;0.0134,0.3611,0.125,72,0.0278,0.4028;0.0137,0.36,0.1467,75,0.0533,0.3733;0.0134,0.3816,0.1053,76,0.0263,0.3947;0.0135,0.338,0.1268,71,0.0563,0.3944;0.0113,0.3065,0.1129,62,0.0484,0.4516;0.0147,0.4156,0.0909,77,0.026,0.3766;0.0121,0.3175,0.1429,63,0.0159,0.4444;0.0116,0.3281,0.125,64,0.0156,0.4531;0.0115,0.2632,0.1228,57,0.0175,0.4737;0.011,0.3731,0.1045,67,0.0448,0.403;0.0132,0.338,0.0986,71,0.0563,0.3944;0.0052,0.3571,0.1071,28,0.0357,0.3929;0.0114,0.3788,0.1212,66,0.0455,0.4091;0.0121,0.2459,0.1148,61,0.0164,0.4754;0.0127,0.25,0.1094,64,0.0781,0.4375;0.012,0.303,0.1212,66,0.0455,0.4394;0.0141,0.3472,0.125,72,0.0278,0.4167;0.0132,0.274,0.1507,73,0.0822,0.3973;0.012,0.2951,0.1475,61,0,0.4754;0.0133,0.3947,0.1184,76,0.0132,0.3816;0.0132,0.3919,0.1216,74,0.027,0.3919;0.0129,0.3714,0.1286,70,0,0.4143;0.0115,0.25,0.1333,60,0.0667,0.4333;0.0121,0.2742,0.1452,62,0.0484,0.4839;0.0112,0.2203,0.1186,59,0.1186,0.4576;0.012,0.2381,0.1111,63,0.0476,0.4444;0.0115,0.2879,0.1212,66,0.0758,0.4242;0.0128,0.25,0.1094,64,0.0781,0.4375;0.0124,0.2632,0.1228,57,0.1053,0.4386;0.0105,0.2857,0.1071,56,0.0893,0.4464;0.0112,0.2982,0.1404,57,0.0877,0.4035;0.0107,0.2593,0.1111,54,0.0741,0.463;0.0117,0.2131,0.1148,61,0.1803,0.4262;0.0147,0.2542,0.1356,59,0.1525,0.4407;0.0142,0.2203,0.1186,59,0.2203,0.4237;0.0133,0.26,0.14,50,0.06,0.52;0.0144,0.2321,0.125,56,0.0714,0.4821;0.0136,0.2727,0.1091,55,0.0545,0.4909;0.013,0.2,0.1273,55,0.1636,0.4545;0.0135,0.2182,0.1273,55,0.1091,0.4545;0.0136,0.2143,0.1607,56,0.125,0.4821;0.0117,0.2264,0.1321,53,0.0943,0.5094;0.0123,0.1818,0.1455,55,0.1091,0.5091;0.012,0.1905,0.1429,42,0.0714,0.5238;0.0145,0.1429,0.1429,42,0.0952,0.5;0.0143,0.2041,0.1224,49,0.0612,0.4694;0.0139,0.2,0.1556,45,0.1111,0.5333;0.0144,0.1739,0.1522,46,0.087,0.5435;0.0156,0.2917,0.1042,48,0.1458,0.4583;0.0116,0.2955,0.1591,44,0.0227,0.4773;0.013,0.1429,0.1429,42,0.0952,0.5238;0.0183,0.1613,0.2581,31,0.0968,0.4194;0.0204,0.1212,0.2424,33,0.2121,0.3939;0.0187,0.2778,0.2222,36,0.1111,0.3056;0.0162,0.25,0.2857,28,0.0357,0.3571;0.0222,0.32,0.2,50,0.1,0.32;0.013,0.3529,0.1569,51,0.0196,0.3333;0.0128,0.3478,0.1739,46,0.0435,0.3478;0.0131,0.3846,0.2115,52,0.0577,0.3269;0.0134,0.1961,0.1765,51,0.1765,0.3922;0.0118,0.1915,0.1702,47,0.1064,0.4468;0.0137,0.28,0.14,50,0.06,0.44;0.0124,0.2045,0.1591,44,0.0455,0.5227;0.0128,0.2222,0.1333,45,0.0667,0.4667;0.0154,0.2353,0.1765,51,0.0588,0.3922;0.0115,0.2826,0.1522,46,0.0652,0.4565;0.0115,0.2174,0.1522,46,0.0435,0.4783;0.0128,0.2273,0.1591,44,0.1136,0.5227;0.013,0.2444,0.1333,45,0.0889,0.4667;0.0142,0.3585,0.1132,53,0.0189,0.3962;0.0155,0.3137,0.1373,51,0.0784,0.4314;0.0139,0.3455,0.1455,55,0.0727,0.4182;0.0127,0.2857,0.1224,49,0.1429,0.4286;0.0155,0.2653,0.1224,49,0.1429,0.4082;0.0125,0.3333,0.1333,45,0.0222,0.4444;0.0174,0.4068,0.1356,59,0.0847,0.2881;0.0164,0.3833,0.1667,60,0.0333,0.2833;0.0182,0.2222,0.1389,36,0.0833,0.5278;0.0155,0.1923,0.1538,52,0.0962,0.4423;0.0154,0.3333,0.1296,54,0.0926,0.4074;0.0223,0.4308,0.2154,65,0.0923,0.2;0.0183,0.3548,0.1935,62,0.0323,0.3226;0.016,0.2105,0.1579,38,0.1053,0.4474;0.0179,0.2439,0.1951,41,0.0976,0.4146;0.0123,0.3036,0.1964,56,0.0893,0.3214;0.0124,0.22,0.22,50,0.1,0.38;0.0127,0.22,0.2,50,0.08,0.38;0.0092,0.3137,0.1569,51,0.0196,0.3725;0.0089,0.4179,0.1343,67,0.0746,0.2836;0.01,0.3881,0.1045,67,0.1343,0.2687;0.01,0.3714,0.1,70,0.1,0.2857;0.0099,0.4143,0.1,70,0.1143,0.2714;0.0092,0.4462,0.1077,65,0.0615,0.2769;0.0113,0.6053,0.0526,38,0.0789,0.1842;0.0094,0.4429,0.1,70,0.1,0.2714;0.0107,0.4824,0.0824,85,0.1412,0.2118;0.0103,0.4648,0.1268,71,0.0563,0.2676;0.0099,0.3898,0.1356,59,0.1017,0.3051;0.0152,0.4337,0.1205,83,0.1205,0.2169;0.0134,0.5063,0.0886,79,0.1139,0.2278;0.0137,0.4675,0.0909,77,0.0779,0.2597;0.0105,0.5128,0.0897,78,0.0641,0.2436;0.0114,0.4267,0.12,75,0.1067,0.2533;0.0074,0.4062,0.125,64,0.1094,0.2812;0.0088,0.3788,0.197,66,0.1061,0.2879;0.0077,0.4333,0.1167,60,0.0667,0.3167;0.0089,0.338,0.1408,71,0.1268,0.2676;0.0084,0.4167,0.1333,60,0.0833,0.3;0.0084,0.4286,0.1143,70,0.0857,0.2857;0.009,0.377,0.1475,61,0.0492,0.3279;0.008,0.4412,0.1176,68,0.0588,0.3088;0.0086,0.3158,0.1754,57,0.0702,0.3333;0.0086,0.4,0.1385,65,0.0769,0.3231;0.0073,0.3559,0.1695,59,0.0678,0.322;0.009,0.3538,0.1538,65,0.0769,0.2769;0.0099,0.3393,0.1607,56,0.0893,0.3214;0.009,0.3623,0.1594,69,0.087,0.3043;0.0085,0.4154,0.1231,65,0.0615,0.2923;0.01,0.3621,0.1552,58,0.0862,0.3276;0.0091,0.4225,0.1549,71,0.1127,0.2535;0.011,0.4444,0.125,72,0.0833,0.2639;0.0091,0.3913,0.1159,69,0.1159,0.2899;0.0095,0.3448,0.1379,58,0.0862,0.3448;0.0083,0.4805,0.1558,77,0.039,0.2727;0.0095,0.3692,0.1385,65,0.0462,0.2923;0.0091,0.4098,0.1475,61,0.0328,0.3279;0.0081,0.4058,0.1159,69,0.0725,0.3188;0.0115,0.2982,0.1579,57,0.1404,0.3509;0.0118,0.3333,0.1111,72,0.2222,0.2778;0.0105,0.4032,0.1452,62,0.1129,0.3065;0.0107,0.4118,0.1373,51,0.0196,0.3529;0.0124,0.3276,0.1207,58,0.1897,0.2759;0.01,0.3333,0.1373,51,0.0784,0.3333;0.0098,0.3265,0.1429,49,0.0612,0.3469;0.009,0.3725,0.1569,51,0.0784,0.3529;0.0136,0.2222,0.1778,45,0.1111,0.3778;0.0113,0.2609,0.1739,46,0.0435,0.3913;0.013,0.2833,0.1333,60,0.0833,0.3333;0.0111,0.4722,0.0972,72,0.0833,0.3194;0.0111,0.36,0.12,50,0.04,0.4;0.0088,0.3818,0.1636,55,0.0727,0.3091;0.0091,0.3433,0.194,67,0.0448,0.2836;0.0103,0.339,0.1695,59,0.0508,0.322;0.0165,0.1667,0.1296,54,0.2222,0.3704;0.0107,0.234,0.1915,47,0.1064,0.2979;0.0113,0.3279,0.1639,61,0.0984,0.2951;0.011,0.3273,0.1818,55,0.0545,0.2909;0.0166,0.1053,0.2368,38,0.1053,0.4211;0.011,0.3125,0.125,32,0.0312,0.375;0.0095,0.4286,0.119,42,0.0238,0.3095;0.0093,0.3333,0.1282,39,0.0256,0.359;0.0104,0.3409,0.1364,44,0.0455,0.2955;0.0116,0.3333,0.125,48,0.0833,0.2708;0.0124,0.3158,0.1053,38,0.0526,0.3684;0.0168,0.2955,0.1364,44,0.1364,0.3182;0.0095,0.2353,0.1176,34,0.0882,0.4118;0.0123,0.35,0.075,40,0.075,0.3;0.0127,0.2195,0.0976,41,0.0488,0.3171;0.0112,0.303,0.1515,33,0.0303,0.3939;0.0133,0.2439,0.1463,41,0.0976,0.3415;0.0125,0.2093,0.093,43,0.2093,0.3721;0.012,0.2368,0.1316,38,0.1579,0.3421;0.0121,0.2683,0.122,41,0.1951,0.3415;0.0131,0.3019,0.0755,53,0.1132,0.3019;0.0125,0.2703,0.0811,37,0.0811,0.3514;0.0104,0.3333,0.1389,36,0.0833,0.3611;0.0148,0.1591,0.1591,44,0.2045,0.3182;0.0138,0.2162,0.1622,37,0.0541,0.3784;0.0105,0.2308,0.1026,39,0.1795,0.3333;0.0118,0.38,0.08,50,0.06,0.34;0.0111,0.3488,0.1163,43,0.1163,0.3256;0.011,0.2571,0.0857,35,0.1714,0.4;0.0135,0.3095,0.0952,42,0.0714,0.4048;0.0118,0.2727,0.0909,33,0.0909,0.4545;0.0101,0.2857,0.119,42,0.1429,0.3095;0.0094,0.3714,0.0857,35,0.1143,0.3714;0.0068,0.2903,0.0968,31,0.0968,0.4194;0.0147,0.3182,0.0909,44,0.0909,0.3409;0.0126,0.2895,0.0789,38,0.1316,0.3684;0.0135,0.3077,0.1282,39,0.1026,0.3333;0.0138,0.2979,0.0638,47,0.0426,0.3404;0.0132,0.2564,0.1282,39,0.1282,0.359;0.0131,0.2683,0.122,41,0.1707,0.3415;0.0159,0.2195,0.122,41,0.1707,0.3415;0.0119,0.2857,0.1429,42,0.1429,0.381;0.0138,0.2174,0.1087,46,0.1304,0.3043;0.012,0.303,0.0909,33,0.0303,0.3939;0.0114,0.3111,0.0667,45,0.1111,0.3111;0.0156,0.3019,0.1132,53,0.0566,0.283;0.0112,0.2368,0.1053,38,0.1579,0.3947;0.0094,0.2333,0.1333,30,0.0333,0.4;0.0165,0.3409,0.1136,44,0.1364,0.2727;0.0146,0.1778,0.1111,45,0.2667,0.3111;0.0141,0.2308,0.1282,39,0.0769,0.359;0.0124,0.3654,0.0769,52,0.1923,0.2308;0.0109,0.3,0.1,40,0.15,0.325;0.014,0.2381,0.0714,42,0.1905,0.3333;0.0135,0.2619,0.119,42,0.0476,0.3571;0.0145,0.2619,0.0952,42,0.0476,0.381;0.015,0.36,0.12,50,0.04,0.28;0.012,0.1875,0.1562,32,0.0312,0.4375;0.0138,0.1842,0.1316,38,0.1579,0.3421;0.0119,0.275,0.125,40,0.125,0.35;0.0076,0.2857,0.1429,28,0,0.4286;0.0094,0.4048,0.0714,42,0.0714,0.3095;0.009,0.3125,0.125,32,0.0625,0.4375;0.0086,0.4103,0.1282,39,0.0256,0.3333;0.0098,0.2821,0.1026,39,0.2051,0.3846;0.0079,0.3103,0.1379,29,0,0.4138;0.0102,0.3023,0.093,43,0.2093,0.3023;0.0117,0.2703,0.0811,37,0.1351,0.3784;0.0089,0.3243,0.1081,37,0.1351,0.3784;0.0144,0.2308,0.0769,39,0.2308,0.3333;0.0131,0.25,0.1786,28,0.0357,0.4643;0.0066,0.1842,0.1316,38,0.2632,0.4211;0.0059,0.2143,0.1786,28,0.0357,0.5;0.0082,0.1667,0.1111,36,0.2222,0.4167;0.0083,0.1429,0.1071,28,0.1786,0.5357;0.0117,0.1034,0.1034,29,0.2759,0.4483;0.008,0.2083,0.1042,48,0.2708,0.3542;0.0077,0.1818,0.1212,33,0.2121,0.4242;0.0097,0.0952,0.0952,42,0.4286,0.3571;0.0069,0.1481,0.1111,27,0.2222,0.4815;0.0089,0.0606,0.0909,33,0.3939,0.3939;0.0062,0.1875,0.0938,32,0.1562,0.5;0.0094,0.1379,0.1034,29,0.1724,0.5172;0.0074,0.1935,0.0968,31,0.1935,0.4516;0.0088,0.1622,0.0811,37,0.1892,0.4865;0.0087,0.1667,0.119,42,0.3333,0.4048;0.0084,0.1613,0.0968,31,0.2258,0.4516;0.0107,0.1071,0.1071,28,0.1071,0.4643;0.0093,0.1724,0.1034,29,0.2414,0.4483;0.0063,0.2333,0.1,30,0.1,0.4667;0.0089,0.1471,0.0882,34,0.2647,0.4706;0.0104,0.2069,0.1034,29,0.1034,0.5517;0.0093,0.2188,0.0938,32,0.125,0.4375;0.0104,0.16,0.08,25,0.28,0.48;0.0109,0.0909,0.0909,22,0.3182,0.5455;0.0113,0.087,0.087,23,0.3478,0.4783;0.0076,0.25,0.0833,24,0.125,0.5417;0.0112,0.1111,0.1111,27,0.3704,0.4444;0.0114,0.0741,0.0741,27,0.4074,0.4074;0.0079,0.2439,0.122,41,0.0732,0.439;0.0106,0.119,0.0952,42,0.3571,0.381;0.0068,0.3529,0.1176,34,0.0588,0.5;0.0062,0.2121,0.1212,33,0.1212,0.4545;0.0092,0.2059,0.0882,34,0.1471,0.4412;0.0088,0.1471,0.1176,34,0.1471,0.5294;0.0109,0.4211,0.1053,38,0.0263,0.3684;0.0157,0.3889,0.1296,54,0.1296,0.2407;0.0121,0.413,0.1304,46,0.0217,0.2826;0.0138,0.4583,0.1111,72,0.0833,0.2222;0.0108,0.3396,0.1132,53,0.1321,0.2264;0.0099,0.4583,0.0833,48,0.1042,0.2917;0.009,0.5116,0.093,43,0.0233,0.2791;0.0128,0.4706,0.098,51,0.0588,0.2745;0.0121,0.3137,0.098,51,0.0784,0.2941;0.0152,0.3607,0.082,61,0.0984,0.3279;0.0138,0.3333,0.0784,51,0.1176,0.2941;0.0144,0.3061,0.0612,49,0.1633,0.2857;0.012,0.3269,0.0769,52,0.0962,0.3077;0.0117,0.3774,0.0755,53,0.0943,0.2642;0.0121,0.3585,0.0755,53,0.0755,0.3208;0.0111,0.3261,0.1087,46,0.0435,0.3478;0.0132,0.2963,0.0741,54,0.1296,0.2778;0.0112,0.3061,0.0816,49,0.1429,0.2857;0.0099,0.4912,0.1053,57,0.0877,0.2105;0.0098,0.46,0.12,50,0.06,0.24;0.0087,0.4043,0.1489,47,0.0426,0.3404;0.0187,0.2333,0.1667,30,0.1,0.3333;0.0248,0.0952,0.1429,42,0.5238,0.1905;0.0155,0.3846,0.1077,65,0.0769,0.2769;0.0147,0.3667,0.1333,60,0.0667,0.25;0.0152,0.3091,0.1091,55,0.0727,0.2727;0.0161,0.3607,0.082,61,0.082,0.2623;0.0169,0.3636,0.0909,55,0.0727,0.2545;0.015,0.459,0.082,61,0.082,0.2623;0.0147,0.34,0.16,50,0.12,0.28;0.0173,0.1833,0.25,60,0.0833,0.2667;0.0182,0.3864,0.1364,88,0.0568,0.2045;0.0159,0.2121,0.0909,33,0.1818,0.3636;0.0196,0.15,0.075,40,0.275,0.35;0.0138,0.2571,0.0571,35,0.2,0.3429;0.0145,0.3462,0.1154,26,0.0769,0.2692;0.0102,0.5128,0.1026,39,0.1026,0.2564;0.0112,0.55,0.125,40,0.075,0.25;0.012,0.52,0.08,50,0.14,0.2;0.016,0.2308,0.0769,39,0.1026,0.3846;0.0183,0.4746,0.0847,59,0.0508,0.2373`;
+</script>
+<script>
+(function(){
+'use strict';
+
+/* =========================================================
+   1. Parse the Newick string  (topology + internal names)
+   ========================================================= */
+function parseNewick(s){
+  var pos = 0, TERM = ',();';
+  function node(){
+    var n = {kids:null, name:''};
+    if (s[pos] === '('){
+      pos++; n.kids = [];
+      for(;;){
+        n.kids.push(node());
+        if (s[pos] === ','){ pos++; continue; }
+        if (s[pos] === ')'){ pos++; break; }
+        break;
+      }
+    }
+    var st = pos;
+    while (pos < s.length && TERM.indexOf(s[pos]) === -1) pos++;
+    n.name = s.slice(st, pos);
+    return n;
+  }
+  return node();
+}
+
+var root = parseNewick(NWK);
+
+// Flatten into typed arrays, depth-first (leaf order == data row order)
+var name = [], depth = [], parent = [], firstKid = [], kidCount = [],
+    kids = [], isLeaf = [], leafLo = [], leafHi = [], leafIdx = [];
+var leaves = [];            // node indices of leaves, in order
+var MAXD = 0;
+
+(function build(){
+  var stack = [[root, -1, 0]];
+  // iterative pre-order that preserves child order
+  function rec(n, par, d){
+    var i = name.length;
+    name.push(n.name); depth.push(d); parent.push(par);
+    isLeaf.push(!n.kids); kids.push([]);
+    leafLo.push(0); leafHi.push(0); leafIdx.push(-1);
+    if (d > MAXD) MAXD = d;
+    if (par >= 0) kids[par].push(i);
+    if (n.kids){
+      var lo = null, hi = null;
+      for (var k = 0; k < n.kids.length; k++){
+        var c = rec(n.kids[k], i, d+1);
+        if (lo === null) lo = leafLo[c];
+        hi = leafHi[c];
+      }
+      leafLo[i] = lo; leafHi[i] = hi;
+    } else {
+      leafIdx[i] = leaves.length;
+      leafLo[i] = leafHi[i] = leaves.length;
+      leaves.push(i);
+    }
+    return i;
+  }
+  rec(root, -1, 0);
+})();
+
+var N = name.length, L = leaves.length;
+
+/* =========================================================
+   2. Datasets  (order below == drawing order, inner -> outer)
+   ========================================================= */
+var COL = {blue:'#2171b5', orange:'#e6550d', green:'#238b45',
+           purple:'#6a51a3', red:'#cb181d', bar:'#2b8cbe', pale:'#f7fbff'};
+
+var DS = [
+  {col:0, label:'% SAMs in proteome',     kind:'grad', c1:COL.blue,   lo:0.003, hi:0.0258, dec:4},
+  {col:1, label:'% Other SAMs',           kind:'grad', c1:COL.orange, lo:0,     hi:0.8167, dec:3},
+  {col:2, label:'% Protein-binding SAMs', kind:'grad', c1:COL.green,  lo:0,     hi:0.4393, dec:3},
+  {col:4, label:'% DNA-binding SAMs',     kind:'grad', c1:COL.purple, lo:0,     hi:0.5238, dec:3},
+  {col:5, label:'% RNA-binding SAMs',     kind:'grad', c1:COL.red,    lo:0.04,  hi:0.8519, dec:3},
+  {col:0, label:'% SAMs in proteome',     kind:'bar',  c1:COL.bar,    lo:0.005, hi:0.022,  dec:4}
+];
+DS.forEach(function(d){ d.on = true; });
+
+// values[col][leafIndex]
+var V = [[],[],[],[],[],[]];
+(function(){
+  var rows = DATA.split(';');
+  for (var i = 0; i < rows.length; i++){
+    var p = rows[i].split(',');
+    for (var c = 0; c < 6; c++) V[c][i] = +p[c];
+  }
+})();
+
+/* Actinomycetota range (also located by name for robustness) */
+var ACT = -1;
+for (var i = 0; i < N; i++) if (name[i] === 'Actinomycetota'){ ACT = i; break; }
+var ACT_LO = ACT >= 0 ? leafLo[ACT] : 344, ACT_HI = ACT >= 0 ? leafHi[ACT] : 460;
+
+/* Major clades worth labelling on the canvas */
+var CLADE_LABELS = ['Metazoa','Fungi','Viridiplantae','Sar','Alveolata','Stramenopiles',
+  'Amoebozoa','Discoba','Actinomycetota','Bacillota','Pseudomonadota','Bacteroidota',
+  'Archaea','Eukaryota','Bacteria','Chordata','Arthropoda','Ascomycota','Basidiomycota',
+  'Gammaproteobacteria','Alphaproteobacteria','Clostridia','Bacilli','Nematoda'];
+var cladeNodes = [];
+for (var i2 = 0; i2 < N; i2++){
+  if (!isLeaf[i2] && CLADE_LABELS.indexOf(name[i2]) !== -1 && (leafHi[i2]-leafLo[i2]) >= 14)
+    cladeNodes.push(i2);
+}
+
+/* =========================================================
+   3. Geometry
+   ========================================================= */
+var TREE_R = 450, RING_GAP = 6, RING_W = 12, BAR_GAP = 4, BAR_MAX = 100;
+function ringsOn(){ return DS.filter(function(d){ return d.kind==='grad' && d.on; }); }
+function ringBase(){ return TREE_R + RING_GAP; }
+function barBase(){ return ringBase() + ringsOn().length * RING_W + BAR_GAP; }
+function outerR(){ return barBase() + (DS[5].on ? BAR_MAX : 0) + 6; }
+
+var rot = 307;                                  // degrees, clockwise from north
+var SLOT = 360 / L;
+function leafBearing(i){ return rot + (i + 0.5) * SLOT; }
+function nodeBearing(n){ return rot + ((leafLo[n] + leafHi[n]) / 2 + 0.5) * SLOT; }
+function nodeRadius(n){ return depth[n] * (TREE_R / MAXD); }
+function toCanvas(bearing){ return (bearing - 90) * Math.PI / 180; }
+
+/* =========================================================
+   4. Colour helpers
+   ========================================================= */
+function hex2rgb(h){ return [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)]; }
+var PALE = hex2rgb(COL.pale);
+DS.forEach(function(d){ d.rgb = hex2rgb(d.c1); });
+
+function gradColor(d, v){
+  var t = (v - d.lo) / (d.hi - d.lo);
+  if (!(t > 0)) t = 0; if (t > 1) t = 1;
+  var r = Math.round(PALE[0] + (d.rgb[0]-PALE[0])*t),
+      g = Math.round(PALE[1] + (d.rgb[1]-PALE[1])*t),
+      b = Math.round(PALE[2] + (d.rgb[2]-PALE[2])*t);
+  return 'rgb(' + r + ',' + g + ',' + b + ')';
+}
+function fmt(d, v){
+  if (d.kind === 'bar') return (v*100).toFixed(2) + '%';
+  return (v*100).toFixed(d.dec === 4 ? 2 : 1) + '%';
+}
+
+/* =========================================================
+   5. Canvas + view transform
+   ========================================================= */
+var cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+var view = {x:0, y:0, k:1}, dpr = 1, W = 0, H = 0;
+var hoverLeaf = -1, hoverNode = -1, pinned = null, searchHits = null;
+
+function resize(){
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  W = cv.clientWidth; H = cv.clientHeight;
+  cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+  draw();
+}
+function fitView(){
+  var R = outerR();
+  view.k = Math.min(W, H) / (2*R*1.06);
+  view.x = W/2; view.y = H/2;
+}
+function worldToScreen(wx, wy){ return [wx*view.k + view.x, wy*view.k + view.y]; }
+function screenToWorld(sx, sy){ return [(sx - view.x)/view.k, (sy - view.y)/view.k]; }
+
+/* =========================================================
+   6. Drawing
+   ========================================================= */
+var needsDraw = false;
+function requestDraw(){ if (!needsDraw){ needsDraw = true; requestAnimationFrame(function(){ needsDraw = false; draw(); }); } }
+
+function draw(){
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,W,H);
+  ctx.save();
+  ctx.translate(view.x, view.y); ctx.scale(view.k, view.k);
+  var k = view.k;
+
+  // --- Actinomycetota clade wedge (drawn under the tree) ---
+  if (document.getElementById('tgActino').checked && ACT >= 0){
+    var a0 = toCanvas(rot + leafLo[ACT]*SLOT), a1 = toCanvas(rot + (leafHi[ACT]+1)*SLOT);
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.arc(0,0, TREE_R, a0, a1);
+    ctx.closePath();
+    ctx.fillStyle = COL.pale === null ? '#fff' : 'rgba(177,89,40,0.88)';
+    ctx.fill();
+  }
+
+  // --- branches ---
+  var step = TREE_R / MAXD;
+  ctx.lineCap = 'butt';
+  ctx.strokeStyle = 'rgba(40,46,54,0.78)';
+  ctx.lineWidth = Math.max(0.35, 0.9/k);
+  ctx.beginPath();
+  for (var n = 0; n < N; n++){
+    var ch = kids[n];
+    if (!ch.length) continue;
+    var r = nodeRadius(n), rc = r + step;
+    // arc spanning children
+    var b0 = nodeBearing(ch[0]), b1 = nodeBearing(ch[ch.length-1]);
+    if (ch.length > 1){
+      ctx.moveTo(rc*Math.cos(toCanvas(b0)), rc*Math.sin(toCanvas(b0)));
+      ctx.arc(0,0, rc, toCanvas(b0), toCanvas(b1));
+    }
+    // radial stems from parent radius to each child
+    for (var c = 0; c < ch.length; c++){
+      var bb = toCanvas(nodeBearing(ch[c])), co = Math.cos(bb), si = Math.sin(bb);
+      ctx.moveTo(r*co, r*si);
+      ctx.lineTo(rc*co, rc*si);
+    }
+  }
+  ctx.stroke();
+
+  // --- gradient rings ---
+  var rings = ringsOn(), base = ringBase();
+  var half = SLOT/2, pad = 0;            // adjacent sectors touch, as in iTOL
+  for (var ri = 0; ri < rings.length; ri++){
+    var d = rings[ri], mid = base + ri*RING_W + RING_W/2;
+    ctx.lineWidth = RING_W;
+    var vals = V[d.col];
+    for (var i = 0; i < L; i++){
+      var bA = leafBearing(i);
+      ctx.beginPath();
+      ctx.strokeStyle = gradColor(d, vals[i]);
+      ctx.arc(0,0, mid, toCanvas(bA-half-pad), toCanvas(bA+half+pad));
+      ctx.stroke();
+    }
+  }
+
+  // --- bar ring ---
+  if (DS[5].on){
+    var bd = DS[5], bb0 = barBase(), vals2 = V[bd.col];
+    var lw = Math.max(0.45, (2*Math.PI*(bb0+BAR_MAX*0.4))/L * 0.82);
+    ctx.lineWidth = lw; ctx.lineCap = 'butt';
+    ctx.strokeStyle = bd.c1;
+    ctx.beginPath();
+    for (var i3 = 0; i3 < L; i3++){
+      var len = Math.max(0, Math.min(1, (vals2[i3]-bd.lo)/(bd.hi-bd.lo))) * BAR_MAX;
+      if (len < 0.4) continue;
+      var bA2 = toCanvas(leafBearing(i3)), co2 = Math.cos(bA2), si2 = Math.sin(bA2);
+      ctx.moveTo(bb0*co2, bb0*si2);
+      ctx.lineTo((bb0+len)*co2, (bb0+len)*si2);
+    }
+    ctx.stroke();
+  }
+
+  // --- Actinomycetota outer marker arc ---
+  if (document.getElementById('tgActino').checked && ACT >= 0){
+    ctx.beginPath();
+    ctx.lineWidth = 3.5; ctx.strokeStyle = COL.pale && '#b15928';
+    var oR = ringBase() + rings.length*RING_W + 2.5;
+    ctx.arc(0,0, oR, toCanvas(rot + ACT_LO*SLOT), toCanvas(rot + (ACT_HI+1)*SLOT));
+    ctx.stroke();
+  }
+
+  // --- search hits ---
+  if (searchHits && searchHits.length){
+    ctx.lineWidth = Math.max(1.2, 2/k);
+    ctx.strokeStyle = '#111';
+    for (var s = 0; s < searchHits.length; s++){
+      var li = searchHits[s], bA3 = leafBearing(li);
+      ctx.beginPath();
+      ctx.arc(0,0, ringBase()-3, toCanvas(bA3-half), toCanvas(bA3+half));
+      ctx.stroke();
+      var pr = outerR()+4, pa = toCanvas(bA3);
+      ctx.beginPath();
+      ctx.arc(pr*Math.cos(pa), pr*Math.sin(pa), Math.max(2.2, 3/k), 0, 6.2832);
+      ctx.fillStyle = '#111'; ctx.fill();
+    }
+  }
+
+  // --- highlight hovered / pinned tip ---
+  var hl = (pinned !== null && pinned.type === 'leaf') ? pinned.i : hoverLeaf;
+  if (hl >= 0){
+    var hb = leafBearing(hl), hw = Math.max(half, 0.25/k);
+    ctx.beginPath();
+    ctx.arc(0,0, (TREE_R + outerR())/2, toCanvas(hb-hw), toCanvas(hb+hw));
+    ctx.lineWidth = outerR() - TREE_R;
+    ctx.strokeStyle = 'rgba(17,17,17,0.13)';
+    ctx.stroke();
+  }
+  var hn = (pinned !== null && pinned.type === 'node') ? pinned.i : hoverNode;
+  if (hn >= 0 && !isLeaf[hn]){
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.arc(0,0, TREE_R, toCanvas(rot + leafLo[hn]*SLOT), toCanvas(rot + (leafHi[hn]+1)*SLOT));
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(33,113,181,0.10)'; ctx.fill();
+    ctx.lineWidth = Math.max(1, 1.4/k); ctx.strokeStyle = 'rgba(33,113,181,0.85)'; ctx.stroke();
+  }
+
+  ctx.restore();
+
+  drawTipLabels();
+  drawCladeLabels();
+
+  document.getElementById('pillZoom').textContent = Math.round(view.k/ (Math.min(W,H)/(2*outerR()*1.06)) * 100) + '%';
+}
+
+function drawTipLabels(){
+  if (!document.getElementById('tgLabels').checked) return;
+  var slotPx = (2*Math.PI*outerR()*view.k)/L;
+  if (slotPx < 6) return;
+  ctx.save();
+  ctx.translate(view.x, view.y);
+  ctx.fillStyle = '#2a2f36';
+  var fs = Math.min(13, Math.max(7, slotPx*0.82));
+  ctx.font = fs + 'px ' + getComputedStyle(document.body).fontFamily;
+  ctx.textBaseline = 'middle';
+  var r = (outerR()+8) * view.k;
+  for (var i = 0; i < L; i++){
+    var b = leafBearing(i), a = toCanvas(b);
+    var x = r*Math.cos(a), y = r*Math.sin(a);
+    if (x + view.x < -200 || x + view.x > W+200 || y + view.y < -200 || y + view.y > H+200) continue;
+    ctx.save(); ctx.translate(x,y);
+    var flip = (b % 360 + 360) % 360 > 180;
+    ctx.rotate(a + (flip ? Math.PI : 0));
+    ctx.textAlign = flip ? 'right' : 'left';
+    var isAct = i >= ACT_LO && i <= ACT_HI;
+    ctx.fillStyle = isAct ? '#8a4520' : '#2a2f36';
+    ctx.fillText(name[leaves[i]], flip ? -4 : 4, 0);
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+function drawCladeLabels(){
+  if (!document.getElementById('tgClades').checked) return;
+  ctx.save();
+  ctx.translate(view.x, view.y);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  var placed = [];
+  var order = cladeNodes.slice().sort(function(a,b){ return (leafHi[b]-leafLo[b]) - (leafHi[a]-leafLo[a]); });
+  for (var c = 0; c < order.length; c++){
+    var n = order[c];
+    var span = (leafHi[n]-leafLo[n]+1) * SLOT;
+    var arcPx = span/360 * 2*Math.PI * (TREE_R*0.7) * view.k;
+    if (arcPx < 46) continue;
+    var b = nodeBearing(n), a = toCanvas(b);
+    var rr = Math.min(TREE_R - 14, nodeRadius(n) + (TREE_R - nodeRadius(n))*0.58) * view.k;
+    var x = rr*Math.cos(a), y = rr*Math.sin(a);
+    if (x+view.x < -80 || x+view.x > W+80 || y+view.y < -60 || y+view.y > H+60) continue;
+    var fs = Math.max(9, Math.min(15, arcPx*0.16));
+    ctx.font = '600 ' + fs + 'px ' + getComputedStyle(document.body).fontFamily;
+    var t = name[n], w = ctx.measureText(t).width;
+    var box = [x-w/2-5, y-fs*0.85, x+w/2+5, y+fs*0.85];
+    var clash = false;
+    for (var p = 0; p < placed.length; p++){
+      var q = placed[p];
+      if (box[0] < q[2] && box[2] > q[0] && box[1] < q[3] && box[3] > q[1]){ clash = true; break; }
+    }
+    if (clash) continue;
+    placed.push(box);
+    ctx.fillStyle = 'rgba(255,255,255,0.82)';
+    ctx.fillRect(box[0], box[1], box[2]-box[0], box[3]-box[1]);
+    ctx.fillStyle = (n === ACT) ? '#7d3e1c' : '#3c434c';
+    ctx.fillText(t, x, y);
+  }
+  ctx.restore();
+}
+
+/* =========================================================
+   7. Hit testing
+   ========================================================= */
+function hitTest(sx, sy){
+  var w = screenToWorld(sx, sy);
+  var r = Math.sqrt(w[0]*w[0] + w[1]*w[1]);
+  var bearing = (Math.atan2(w[1], w[0]) * 180/Math.PI + 90 + 720) % 360;
+  var rel = ((bearing - rot) % 360 + 360) % 360;
+  var li = Math.floor(rel / SLOT);
+  if (li < 0) li = 0; if (li >= L) li = L-1;
+
+  if (r >= TREE_R - 14 && r <= outerR() + 90) return {type:'leaf', i:li};
+  if (r > outerR() + 90) return null;
+
+  // inside the tree: nearest node in (r, bearing) space
+  var best = -1, bestD = 1e9;
+  for (var n = 0; n < N; n++){
+    if (isLeaf[n]) continue;
+    var nr = nodeRadius(n), nb = nodeBearing(n);
+    var db = ((nb - bearing + 540) % 360) - 180;
+    var arc = db/180*Math.PI * ((nr+r)/2);
+    var d = Math.sqrt((nr-r)*(nr-r) + arc*arc);
+    // only consider nodes whose leaf span actually contains this bearing
+    if (rel >= leafLo[n]*SLOT && rel <= (leafHi[n]+1)*SLOT) d *= 0.35;
+    if (d < bestD){ bestD = d; best = n; }
+  }
+  return best >= 0 ? {type:'node', i:best} : null;
+}
+
+/* =========================================================
+   8. Tooltip + selection panel
+   ========================================================= */
+var tip = document.getElementById('tip');
+function tipForLeaf(li){
+  var h = '<div class="tt">' + esc(name[leaves[li]]) + '</div>';
+  if (li >= ACT_LO && li <= ACT_HI) h += '<div class="tsub" style="color:#b15928">Actinomycetota</div>';
+  h += '<table>';
+  DS.forEach(function(d){
+    h += '<tr><td class="k"><span class="dot" style="background:' +
+         (d.kind==='bar' ? d.c1 : gradColor(d, V[d.col][li])) + '"></span>' + esc(d.label) +
+         '</td><td class="v">' + fmt(d, V[d.col][li]) + '</td></tr>';
+  });
+  return h + '</table>';
+}
+function cladeStats(n){
+  var lo = leafLo[n], hi = leafHi[n], m = [0,0,0,0,0,0], cnt = hi-lo+1;
+  for (var i = lo; i <= hi; i++) for (var c = 0; c < 6; c++) m[c] += V[c][i];
+  for (var c2 = 0; c2 < 6; c2++) m[c2] /= cnt;
+  return {mean:m, n:cnt};
+}
+function tipForNode(n){
+  var st = cladeStats(n);
+  var h = '<div class="tt">' + esc(name[n] || 'unnamed clade') + '</div>' +
+          '<div class="tsub">' + st.n.toLocaleString() + ' tips &middot; mean values</div><table>';
+  DS.forEach(function(d){
+    var v = st.mean[d.col];
+    h += '<tr><td class="k"><span class="dot" style="background:' +
+         (d.kind==='bar' ? d.c1 : gradColor(d, v)) + '"></span>' + esc(d.label) +
+         '</td><td class="v">' + (v*100).toFixed(d.dec===4?2:1)+'%' + '</td></tr>';
+  });
+  return h + '</table>';
+}
+function showTip(html, sx, sy){
+  tip.innerHTML = html; tip.style.display = 'block';
+  var r = tip.getBoundingClientRect();
+  var x = sx + 16, y = sy + 16;
+  if (x + r.width > W - 8) x = sx - r.width - 16;
+  if (y + r.height > H - 8) y = Math.max(8, sy - r.height - 16);
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+function hideTip(){ tip.style.display = 'none'; }
+function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+
+var statEl = document.getElementById('stat');
+function renderStat(sel){
+  if (!sel){ statEl.innerHTML = '<p class="hint" style="margin-top:0">Click a tip or a clade to pin its numbers here.</p>'; return; }
+  var title, sub, vals;
+  if (sel.type === 'leaf'){
+    title = name[leaves[sel.i]];
+    sub = (sel.i >= ACT_LO && sel.i <= ACT_HI) ? 'Actinomycetota &middot; tip ' + (sel.i+1) : 'tip ' + (sel.i+1) + ' of 1,259';
+    vals = DS.map(function(d){ return V[d.col][sel.i]; });
+  } else {
+    var st = cladeStats(sel.i);
+    title = name[sel.i] || 'unnamed clade';
+    sub = st.n.toLocaleString() + ' tips &middot; clade mean';
+    vals = DS.map(function(d){ return st.mean[d.col]; });
+  }
+  var h = '<div class="statbox"><div class="sname">' + esc(title) + '</div><div class="smeta">' + sub + '</div>';
+  DS.forEach(function(d, ix){
+    var v = vals[ix], t = Math.max(0, Math.min(1, (v-d.lo)/(d.hi-d.lo)));
+    h += '<div class="statrow"><span class="sl">' + esc(d.label.replace(/^% /,'')) + '</span>' +
+         '<span class="bar"><i style="width:' + (t*100).toFixed(1) + '%;background:' + d.c1 + '"></i></span>' +
+         '<span class="sv">' + (v*100).toFixed(d.dec===4?2:1)+'%' + '</span></div>';
+  });
+  statEl.innerHTML = h + '</div>';
+}
+renderStat(null);
+
+/* =========================================================
+   9. Sidebar: toggles + legends
+   ========================================================= */
+(function(){
+  var box = document.getElementById('dsToggles'), h = '';
+  DS.forEach(function(d, ix){
+    h += '<label class="tog"><input type="checkbox" data-ds="' + ix + '" checked>' +
+         '<span class="swatch" style="background:' + (d.kind==='bar' ? d.c1 :
+            'linear-gradient(90deg,' + COL.pale + ',' + d.c1 + ')') + '"></span>' +
+         '<span class="tname">' + esc(d.label) + '</span>' +
+         '<span class="ring-n">' + (d.kind==='bar' ? 'bars' : 'ring ' + (ix+1)) + '</span></label>';
+  });
+  box.innerHTML = h;
+  box.addEventListener('change', function(e){
+    var ix = e.target.getAttribute('data-ds');
+    if (ix === null) return;
+    DS[+ix].on = e.target.checked;
+    requestDraw();
+  });
+})();
+
+(function(){
+  var box = document.getElementById('legends'), h = '';
+  DS.forEach(function(d){
+    if (d.kind === 'grad'){
+      h += '<div class="legend"><div class="ltitle">' + esc(d.label) + '</div>' +
+           '<div class="ramp" style="background:linear-gradient(90deg,' + COL.pale + ',' + d.c1 + ')"></div>' +
+           '<div class="lscale"><span>' + (d.lo*100).toFixed(d.dec===4?2:1) + '%</span><span>' +
+           (d.hi*100).toFixed(d.dec===4?2:1) + '%</span></div></div>';
+    } else {
+      h += '<div class="legend"><div class="ltitle">' + esc(d.label) + '</div>' +
+           '<div class="ramp" style="background:' + d.c1 + ';height:7px"></div>' +
+           '<div class="lscale"><span>' + (d.lo*100).toFixed(1) + '%</span><span>' + (d.hi*100).toFixed(1) + '%</span></div></div>';
+    }
+  });
+  h += '<div class="legend"><div class="ltitle"><span class="swatch" style="background:#b15928"></span>' +
+       'Actinomycetota (incl. <i>M. tuberculosis</i>)</div></div>';
+  box.innerHTML = h;
+})();
+
+/* =========================================================
+   10. Interaction
+   ========================================================= */
+var dragging = false, moved = false, lastX = 0, lastY = 0;
+
+cv.addEventListener('mousedown', function(e){
+  dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY; cv.classList.add('drag');
+});
+window.addEventListener('mouseup', function(){ dragging = false; cv.classList.remove('drag'); });
+window.addEventListener('mousemove', function(e){
+  if (!dragging) return;
+  var dx = e.clientX - lastX, dy = e.clientY - lastY;
+  if (Math.abs(dx) + Math.abs(dy) > 2) moved = true;
+  view.x += dx; view.y += dy; lastX = e.clientX; lastY = e.clientY;
+  requestDraw();
+});
+cv.addEventListener('mousemove', function(e){
+  if (dragging) return;
+  var r = cv.getBoundingClientRect(), sx = e.clientX - r.left, sy = e.clientY - r.top;
+  var hit = hitTest(sx, sy);
+  var pl = hoverLeaf, pn = hoverNode;
+  hoverLeaf = -1; hoverNode = -1;
+  if (!hit){ hideTip(); }
+  else if (hit.type === 'leaf'){ hoverLeaf = hit.i; showTip(tipForLeaf(hit.i), sx, sy); }
+  else { hoverNode = hit.i; showTip(tipForNode(hit.i), sx, sy); }
+  if (pl !== hoverLeaf || pn !== hoverNode) requestDraw();
+});
+cv.addEventListener('mouseleave', function(){
+  hoverLeaf = -1; hoverNode = -1; hideTip(); requestDraw();
+});
+cv.addEventListener('click', function(e){
+  if (moved) return;
+  var r = cv.getBoundingClientRect();
+  var hit = hitTest(e.clientX - r.left, e.clientY - r.top);
+  pinned = hit; renderStat(hit); requestDraw();
+});
+cv.addEventListener('wheel', function(e){
+  e.preventDefault();
+  var r = cv.getBoundingClientRect(), sx = e.clientX - r.left, sy = e.clientY - r.top;
+  var f = Math.exp(-e.deltaY * 0.0015);
+  zoomAt(sx, sy, f);
+}, {passive:false});
+
+function zoomAt(sx, sy, f){
+  var kNew = Math.max(0.05, Math.min(60, view.k * f));
+  f = kNew / view.k;
+  view.x = sx - (sx - view.x) * f;
+  view.y = sy - (sy - view.y) * f;
+  view.k = kNew;
+  requestDraw();
+}
+document.getElementById('zIn').onclick  = function(){ zoomAt(W/2, H/2, 1.35); };
+document.getElementById('zOut').onclick = function(){ zoomAt(W/2, H/2, 1/1.35); };
+document.getElementById('btnReset').onclick = function(){ fitView(); requestDraw(); };
+
+document.getElementById('rot').addEventListener('input', function(e){ rot = +e.target.value; requestDraw(); });
+['tgActino','tgLabels','tgClades'].forEach(function(id){
+  document.getElementById(id).addEventListener('change', requestDraw);
+});
+
+function focusLeaves(lo, hi, zoom){
+  var bMid = rot + ((lo+hi)/2 + 0.5) * SLOT, a = toCanvas(bMid);
+  var r = (TREE_R + outerR())/2;
+  view.k = zoom;
+  view.x = W/2 - r*Math.cos(a)*view.k;
+  view.y = H/2 - r*Math.sin(a)*view.k;
+  requestDraw();
+}
+document.getElementById('btnActino').onclick = function(){
+  focusLeaves(ACT_LO, ACT_HI, Math.min(W,H)/(2*outerR()*0.30));
+  pinned = {type:'node', i:ACT}; renderStat(pinned); requestDraw();
+};
+document.getElementById('btnMtb').onclick = function(){
+  var li = -1;
+  for (var i = 0; i < L; i++) if (name[leaves[i]].indexOf('Mycobacterium tuberculosis') === 0){ li = i; break; }
+  if (li < 0) return;
+  searchHits = [li];
+  focusLeaves(li, li, 6);
+  pinned = {type:'leaf', i:li}; renderStat(pinned); requestDraw();
+};
+
+/* ---- search ---- */
+var qEl = document.getElementById('q'), resEl = document.getElementById('results');
+var lcNames = leaves.map(function(n){ return name[n].toLowerCase(); });
+qEl.addEventListener('input', function(){
+  var q = qEl.value.trim().toLowerCase();
+  if (q.length < 2){ searchHits = null; resEl.style.display = 'none'; requestDraw(); return; }
+  var hits = [];
+  for (var i = 0; i < L; i++) if (lcNames[i].indexOf(q) !== -1) hits.push(i);
+  searchHits = hits;
+  if (!hits.length){ resEl.innerHTML = '<div style="color:#7b8592;cursor:default">No match</div>'; }
+  else {
+    var h = '';
+    for (var j = 0; j < Math.min(hits.length, 80); j++)
+      h += '<div data-li="' + hits[j] + '">' + esc(name[leaves[hits[j]]]) + '</div>';
+    if (hits.length > 80) h += '<div style="color:#7b8592;cursor:default">+' + (hits.length-80) + ' more&hellip;</div>';
+    resEl.innerHTML = h;
+  }
+  resEl.style.display = 'block';
+  requestDraw();
+});
+resEl.addEventListener('click', function(e){
+  var li = e.target.getAttribute('data-li');
+  if (li === null) return;
+  li = +li;
+  focusLeaves(li, li, 6);
+  pinned = {type:'leaf', i:li}; renderStat(pinned); requestDraw();
+});
+
+/* ---- export ---- */
+document.getElementById('btnPng').onclick = function(){
+  var S = 2400, c = document.createElement('canvas');
+  c.width = S; c.height = S;
+  var g = c.getContext('2d');
+  var oldCtx = ctx, oldView = {x:view.x,y:view.y,k:view.k}, oldW = W, oldH = H, oldDpr = dpr;
+  ctx = g; dpr = 1; W = S; H = S;
+  view.k = S/(2*outerR()*1.04); view.x = S/2; view.y = S/2;
+  ctx.setTransform(1,0,0,1,0,0);
+  draw();
+  ctx = oldCtx; view = oldView; W = oldW; H = oldH; dpr = oldDpr;
+  draw();
+  var a = document.createElement('a');
+  a.download = 'sam-mtase-tree.png';
+  a.href = c.toDataURL('image/png');
+  a.click();
+};
+document.getElementById('btnCsv').onclick = function(){
+  var head = ['taxon','in_actinomycetota'].concat(DS.map(function(d){ return d.label; })).join(',');
+  var lines = [head];
+  for (var i = 0; i < L; i++){
+    var row = ['"' + name[leaves[i]].replace(/"/g,'""') + '"', (i>=ACT_LO && i<=ACT_HI) ? 'yes' : 'no'];
+    DS.forEach(function(d){ row.push(V[d.col][i]); });
+    lines.push(row.join(','));
+  }
+  var blob = new Blob([lines.join('\n')], {type:'text/csv'});
+  var a = document.createElement('a');
+  a.download = 'sam-mtase-by-taxon.csv';
+  a.href = URL.createObjectURL(blob);
+  a.click();
+};
+
+/* ---- table view ---- */
+var tableView = document.getElementById('tableView'), tableWrap = document.getElementById('tableWrap');
+var sortCol = -1, sortDir = 1;
+function renderTable(){
+  var q = document.getElementById('tq').value.trim().toLowerCase();
+  var idx = [];
+  for (var i = 0; i < L; i++) if (!q || lcNames[i].indexOf(q) !== -1) idx.push(i);
+  if (sortCol >= 0){
+    var c = DS[sortCol].col;
+    idx.sort(function(a,b){ return (V[c][a]-V[c][b]) * sortDir; });
+  }
+  var h = '<table class="data"><thead><tr><th data-s="-1">Taxon</th>';
+  DS.forEach(function(d, ix){ h += '<th data-s="' + ix + '" style="text-align:right">' + esc(d.label) +
+    (sortCol===ix ? (sortDir>0?' ↑':' ↓') : '') + '</th>'; });
+  h += '</tr></thead><tbody>';
+  for (var j = 0; j < idx.length; j++){
+    var li = idx[j], act = li>=ACT_LO && li<=ACT_HI;
+    h += '<tr' + (act?' class="act"':'') + '><td class="name">' + esc(name[leaves[li]]) + '</td>';
+    DS.forEach(function(d){ h += '<td class="num">' + fmt(d, V[d.col][li]) + '</td>'; });
+    h += '</tr>';
+  }
+  tableWrap.innerHTML = h + '</tbody></table>';
+  document.getElementById('tcount').textContent = idx.length.toLocaleString() + ' rows';
+}
+document.getElementById('btnTable').onclick = function(){
+  tableView.style.display = 'flex'; renderTable();
+};
+document.getElementById('btnCloseTable').onclick = function(){ tableView.style.display = 'none'; };
+document.getElementById('tq').addEventListener('input', renderTable);
+tableWrap.addEventListener('click', function(e){
+  var s = e.target.getAttribute('data-s');
+  if (s === null) return;
+  s = +s;
+  if (s < 0){ sortCol = -1; }
+  else if (sortCol === s){ sortDir = -sortDir; }
+  else { sortCol = s; sortDir = -1; }
+  renderTable();
+});
+
+/* ---- boot ---- */
+window.addEventListener('resize', function(){ resize(); });
+resize(); fitView(); draw();
+document.getElementById('pillCount').textContent = L.toLocaleString() + ' tips · ' + N.toLocaleString() + ' nodes';
+})();
+
+</script>
+</body>
+</html>

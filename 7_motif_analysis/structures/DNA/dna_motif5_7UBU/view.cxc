@@ -1,0 +1,23 @@
+# DNA-5 IQVGNAVAVPVARALG - DNA (cytosine-5)-methyltransferase 1 (7UBU; X-ray; SAH + DNA) - near substrate/SAM.  Open:  chimerax view.cxc
+open dna_motif5_7UBU.pdb
+set bgColor white
+hide atoms
+cartoon
+color #1 #b0b0b0
+color /C #9c7a5b
+show ligand
+style ligand stick
+color ligand byelement
+color :0XU,NEA,QVR,SAH,SAM,SFG #b5651d
+color :0XU,NEA,QVR,SAH,SAM,SFG byhetero
+hide /C atoms
+color /A:847-862 #6a51a3
+show /A:847-862 atoms
+style /A:847-862 stick
+color /A:847-862 byhetero
+hbonds /A:847-862 restrict ligand reveal true color #303030 dashes 8 radius 0.05
+2dlabel text "DNA-5 IQVGNAVAVPVARALG - DNA (cytosine-5)-methyltransferase 1 (7UBU; X-ray; SAH + DNA) - near substrate/SAM" xpos .03 ypos .04 size 14
+lighting soft
+graphics silhouettes true
+view
+# >>> rotate to taste, then:  save dna_motif5_7UBU.png width 2400 height 1800 supersample 3

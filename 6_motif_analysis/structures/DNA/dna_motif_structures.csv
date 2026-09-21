@@ -1,9 +1,0 @@
-motif,folder,pdb,source_structure,motif_residues,consensus,cofactor,role,contacts
-1,motif1_PCQ,motif1_PCQ.pdb,1MHT,/A:76-88,IGGPPCQGFSRAG,SAH,Motif IV catalytic PCQ (Cys81),DNA flipped-base 1.8A + cofactor 3.6A
-2,motif2_SAMloop,motif2_SAMloop.pdb,1MHT,/A:17-24,PFAGSGGT,SAH,Motif I SAM glycine loop,cofactor 2.9A (DNA 12.7A)
-3,motif3_TRDbasic,motif3_TRDbasic.pdb,1MHT,/A:157-167,YGVPQRRERVF,SAH,TRD DNA-contacting basic loop,DNA 2.8A / base 2.6A
-4,motif4_TRD,motif4_TRD.pdb,1MHT,/A:274-291,LTPREAARLQGFPDDYTF,SAH,cofactor-proximal (NOT DNA/TRD),cofactor 3.8A (DNA 9.6A far)
-5,motif5_TRD,motif5_TRD.pdb,1MHT,/A:300-315,KQIGNAVPPPVARA,SAH,DNA-cofactor junction,DNA 5.2 / base 3.4 / cofactor 3.2A
-6,motif6_GluVI,motif6_GluVI.pdb,1MHT,/A:116-124,FLLENVPGL,SAH,Motif VI catalytic Glu119,DNA 3.8A / base 2.8A
-7,motif7_NPPY,motif7_NPPY.pdb,1G38,/A:103-110,YTBPPYNT,NEA,Motif IV catalytic NPPY (Asn105),DNA 2.9A + cofactor 2.9A
-8,motif8_SAMregion,motif8_SAMregion.pdb,1G38,/A:19-27,GZFFTPREI,NEA,DNA-cofactor junction (NOT SAM-only),DNA 3.3A + cofactor 3.8A

@@ -1,0 +1,7 @@
+TREE_COLORS
+SEPARATOR TAB
+DATA
+Arabidopsis_thaliana_Mouse-ear_cress|Chloropicon_primus	range	#33a02c	Plants
+Homo_sapiens_Human|Frankliniella_occidentalis_Western_flower_thrips_Euthrips_occidentalis	range	#1f78b4	Metazoa
+Homo_sapiens_Human|Ictalurus_punctatus_Channel_catfish_Silurus_punctatus	range	#6a3d9a	Vertebrates
+Mycobacterium_tuberculosis_strain_ATCC_25618_H37Rv|Enorma_massiliensis	range	#b15928	Actinomycetota

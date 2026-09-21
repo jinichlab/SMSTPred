@@ -8,14 +8,16 @@ training data differs.
 
 Design (MVP -- exact-entry holdout; homolog exclusion deferred)
 --------------------------------------------------------------
-SAM is clustered (greedy cosine on ProtT5 @ 0.6, in-script like the deployment) and
-packed into K=5 folds of whole clusters. For each fold:
-  TEST     = the SAM proteins in the held-out fold (cluster-disjoint within SAM).
-  SAM model trains on the other 4 folds (cluster-disjoint).
+SAM is clustered once (greedy cosine on ProtT5 @ 0.6, in-script like the deployment).
+Over N=16 iterations, whole clusters are shuffled into a fresh 90/10 train/test split
+(cluster-disjoint within SAM; the split is retried until every label, including the
+108-protein DNA class, has a positive in the test set). Per iteration:
+  TEST     = the held-out 10% of SAM clusters (cluster-disjoint within SAM).
+  SAM model trains on the 90% train pool (cluster-disjoint).
   UP  model trains on ALL UP proteins MINUS the exact TEST entry IDs.
-  Both predict the SAME held-out SAM test fold.
-Every SAM protein is tested exactly once (out-of-fold). Metrics are mean +/- SD over
-the 5 folds.
+  Both predict the SAME held-out SAM test set.
+Metrics are mean +/- SD over the 16 repeated splits. This mirrors Panel A's
+16-iteration repeated-split design, so the two Figure-2 panels are consistent.
 
   *** CAVEAT (known, deferred): the UP training set still contains the non-test SAM
   proteins AND any UP homologs of the test proteins -- only the exact test entries are
@@ -29,8 +31,8 @@ Per-label decision thresholds are MCC-optimal, tuned on each model's own TRAIN
 predictions (matching the deployment), so MCC/F1 are at the deployment operating point.
 
 Outputs (./sam_vs_up_prostt5_comparison_output/)
-  sam_vs_up_prostt5_comparison_summary.csv    model x label x metric, mean/std over folds
-  sam_vs_up_prostt5_comparison_detailed.csv    per-fold rows
+  sam_vs_up_prostt5_comparison_summary.csv    model x label x metric, mean/std over iters
+  sam_vs_up_prostt5_comparison_detailed.csv    per-iteration rows
   sam_vs_up_prostt5_comparison_mcc.png         per-label MCC + AUPRC, SAM vs UP
 
 Env: classifier_env (GPU).
@@ -65,7 +67,8 @@ PROSTT5_UP = FILES / "prostt5_UP_swiss.h5"       # UP features (mean group)
 OUT = Path(__file__).resolve().parent / "sam_vs_up_prostt5_comparison_output"
 LABELS = ["Other", "Protein", "RNA", "DNA"]
 CLUSTER_THRESHOLD = 0.6
-K_FOLDS = 5
+N_ITER = 16              # repeated cluster-disjoint 90/10 splits (matches Panel A)
+TRAIN_RATIO = 0.9
 LR = 0.001
 HIDDEN = (512, 256)
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -125,16 +128,21 @@ def greedy_clustering(sim, threshold):
     return clusters
 
 
-def pack_folds(clusters, n_folds, n):
-    fold_members = [[] for _ in range(n_folds)]
-    sizes = [0] * n_folds
-    for members in sorted(clusters.values(), key=len, reverse=True):
-        f = int(np.argmin(sizes)); fold_members[f].extend(members); sizes[f] += len(members)
-    fold_id = np.empty(n, dtype=int)
-    for f, mem in enumerate(fold_members):
-        for i in mem:
-            fold_id[i] = f
-    return fold_id
+def split_clusters_train_test(clusters, y, train_ratio=TRAIN_RATIO, max_attempts=1000):
+    """Shuffle whole clusters into a train/test split; retry until every label has a
+    positive in test (guards the rare DNA class -> MCC always defined). Mirrors
+    Panel A's split_clusters_train_test. Relies on the module RNG state, so calling
+    it repeatedly in a loop yields distinct-but-reproducible splits."""
+    cluster_ids = list(clusters.keys())
+    n_labels = y.shape[1]
+    for _ in range(max_attempts):
+        random.shuffle(cluster_ids)
+        k = int(train_ratio * len(cluster_ids))
+        train_idx = [i for c in cluster_ids[:k] for i in clusters[c]]
+        test_idx = [i for c in cluster_ids[k:] for i in clusters[c]]
+        if all(y[test_idx][:, j].sum() > 0 for j in range(n_labels)):
+            return np.array(train_idx), np.array(test_idx)
+    raise ValueError("Could not find a valid cluster split with all labels in test.")
 
 
 # ----------------------------------------------------------- model + loss
@@ -242,30 +250,28 @@ def main():
           f"SAM labels {dict(zip(LABELS, ysam.sum(0).astype(int)))}")
 
     clusters = greedy_clustering(cosine_similarity(Xsam_c), CLUSTER_THRESHOLD)
-    fold_id = pack_folds(clusters, K_FOLDS, len(sam_e))
-    print(f"{len(clusters)} SAM clusters -> {K_FOLDS} folds "
-          f"(sizes {[int((fold_id == f).sum()) for f in range(K_FOLDS)]})")
+    print(f"{len(clusters)} SAM clusters -> {N_ITER} repeated {int(TRAIN_RATIO*100)}/"
+          f"{int((1-TRAIN_RATIO)*100)} cluster-disjoint splits")
     up_idx = {e: i for i, e in enumerate(up_e)}
 
     rows = []
-    for f in range(K_FOLDS):
-        te = np.where(fold_id == f)[0]
-        sam_tr = np.where(fold_id != f)[0]
+    for it in range(N_ITER):
+        sam_tr, te = split_clusters_train_test(clusters, ysam)
         test_set = set(sam_e[te])
         up_tr = np.array([i for e, i in up_idx.items() if e not in test_set])
-        print(f"\nfold {f}: test {len(te)} | SAM train {len(sam_tr)} | "
+        print(f"\niter {it}: test {len(te)} | SAM train {len(sam_tr)} | "
               f"UP train {len(up_tr)} (removed {len(up_e) - len(up_tr)} test entries) | "
               f"test labels {dict(zip(LABELS, ysam[te].sum(0).astype(int)))}")
 
         for name, (Xtr, ytr, cfg, seed) in {
-            "SAM": (Xsam_p[sam_tr], ysam[sam_tr], SAM_CFG, f),
-            "UP":  (Xup_p[up_tr],   yup[up_tr],   UP_CFG, 100 + f),
+            "SAM": (Xsam_p[sam_tr], ysam[sam_tr], SAM_CFG, it),
+            "UP":  (Xup_p[up_tr],   yup[up_tr],   UP_CFG, 100 + it),
         }.items():
             model = train_mlp(Xtr, ytr, cfg, seed)
             thr = optimal_thresholds(ytr, predict(model, Xtr))   # tuned on TRAIN
             mt = metrics(ysam[te], predict(model, Xsam_p[te]), thr)
             for lab in LABELS:
-                rows.append({"model": name, "fold": f, "label": lab, **mt[lab]})
+                rows.append({"model": name, "iteration": it, "label": lab, **mt[lab]})
             mcc_mean = np.nanmean([mt[l]["mcc"] for l in LABELS])
             print(f"  {name:3} thr={np.round(thr,3)}  meanMCC={mcc_mean:.4f}  "
                   + " ".join(f"{l}:{mt[l]['mcc']:.3f}" for l in LABELS))
@@ -276,15 +282,15 @@ def main():
     METR = ["mcc", "auprc", "auroc", "f1", "accuracy"]
     summ = (det.groupby(["model", "label"])[METR].agg(["mean", "std"]).reset_index())
     summ.columns = ["model", "label"] + [f"{m}_{s}" for m in METR for s in ("mean", "std")]
-    # overall = mean across labels, per model/fold, then mean/std over folds
-    ov = det.groupby(["model", "fold"])[METR].mean().reset_index()
+    # overall = mean across labels, per model/iteration, then mean/std over iterations
+    ov = det.groupby(["model", "iteration"])[METR].mean().reset_index()
     ovs = ov.groupby("model")[METR].agg(["mean", "std"]).reset_index()
     ovs.columns = ["model"] + [f"{m}_{s}" for m in METR for s in ("mean", "std")]
     ovs.insert(1, "label", "Overall")
     summ = pd.concat([summ, ovs], ignore_index=True)
     summ.to_csv(OUT / "sam_vs_up_prostt5_comparison_summary.csv", index=False)
 
-    print("\n=== SAM vs UP  (mean +/- SD over folds, tuned-threshold) ===")
+    print("\n=== SAM vs UP  (mean +/- SD over iterations, tuned-threshold) ===")
     for lab in LABELS + ["Overall"]:
         r = {m: summ[(summ.label == lab) & (summ.model == m)] for m in ["SAM", "UP"]}
         s_mcc = r["SAM"].mcc_mean.values[0]; u_mcc = r["UP"].mcc_mean.values[0]
@@ -306,7 +312,7 @@ def main():
         ax.set_ylim(0, 1.0); ax.grid(True, axis="y", alpha=0.3); ax.legend()
         ax.set_title(lbl, fontweight="bold")
     fig.suptitle("SAM-trained vs UP-trained ProstT5 MLP — evaluated on held-out SAM "
-                 f"(5-fold cluster-disjoint, mean±SD)", fontsize=12, fontweight="bold")
+                 f"({N_ITER} cluster-disjoint splits, mean±SD)", fontsize=12, fontweight="bold")
     fig.tight_layout(rect=[0, 0, 1, 0.95])
     fig.savefig(OUT / "sam_vs_up_prostt5_comparison_mcc.png", dpi=150)
     print(f"\nwrote summary/detailed CSVs + figure -> {OUT}")

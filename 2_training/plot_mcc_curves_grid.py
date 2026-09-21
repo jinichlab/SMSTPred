@@ -76,7 +76,13 @@ def main():
     # --- SAM embedding sweep: rows = embedding, sharey to compare embeddings ---
     emb_dir = HERE / "mlp_embedding_comparison_output"
     epl = pd.read_csv(emb_dir / "mlp_embedding_comparison_per_label.csv")
-    EMBS = ["ProtT5", "ProstT5", "ESM-IF", "ProtT5+ESM-IF", "ProstT5+ESM-IF"]
+    # SaProt was swept separately (Code/classifier/mlp_embedding_comparison_saprot_output);
+    # identical schema/epochs/iterations -> fold it in as one more embedding row.
+    sap_csv = Path("/home/nroethler/Code/classifier/mlp_embedding_comparison_saprot_output"
+                   "/mlp_embedding_comparison_per_label.csv")
+    if sap_csv.exists():
+        epl = pd.concat([epl, pd.read_csv(sap_csv)[epl.columns]], ignore_index=True)
+    EMBS = ["ProstT5", "SaProt", "ProtT5", "ESM-IF", "ProtT5+ESM-IF", "ProstT5+ESM-IF"]
     for ds in ["full", "balanced"]:
         render_grid(epl[epl.dataset == ds], EMBS,
                     f"SAM {ds.upper()} SET — per-label MCC vs epoch  "

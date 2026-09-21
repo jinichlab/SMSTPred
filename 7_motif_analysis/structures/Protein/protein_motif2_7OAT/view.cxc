@@ -1,0 +1,22 @@
+# Protein-2 GGVGCVVWDAAIVLS - Protein N-lysine methyltransferase M (7OAT; X-ray; SAH + partner protein) - near substrate/SAM.  Open:  chimerax view.cxc
+open protein_motif2_7OAT.pdb
+set bgColor white
+hide atoms
+cartoon
+color #1 #b0b0b0
+color /B #d9b38c
+show ligand
+style ligand stick
+color ligand byelement
+color :0XU,NEA,QVR,SAH,SAM,SFG #b5651d
+color :0XU,NEA,QVR,SAH,SAM,SFG byhetero
+color /C:36-50 #238b45
+show /C:36-50 atoms
+style /C:36-50 stick
+color /C:36-50 byhetero
+hbonds /C:36-50 restrict /B | ligand reveal true color #303030 dashes 8 radius 0.05
+2dlabel text "Protein-2 GGVGCVVWDAAIVLS - Protein N-lysine methyltransferase M (7OAT; X-ray; SAH + partner protein) - near substrate/SAM" xpos .03 ypos .04 size 14
+lighting soft
+graphics silhouettes true
+view
+# >>> rotate to taste, then:  save protein_motif2_7OAT.png width 2400 height 1800 supersample 3

@@ -1,0 +1,23 @@
+# RNA-8 RARSAFKLLQL - tRNA (cytidine(32)/guanosine(34)-2'- (8Y2O; cryo-EM; SAH + RNA) - near substrate/SAM.  Open:  chimerax view.cxc
+open rna_motif8_8Y2O.pdb
+set bgColor white
+hide atoms
+cartoon
+color #1 #b0b0b0
+color /C #9c7a5b
+show ligand
+style ligand stick
+color ligand byelement
+color :0XU,NEA,QVR,SAH,SAM,SFG #b5651d
+color :0XU,NEA,QVR,SAH,SAM,SFG byhetero
+hide /C atoms
+color /B:22-32 #cb181d
+show /B:22-32 atoms
+style /B:22-32 stick
+color /B:22-32 byhetero
+hbonds /B:22-32 restrict ligand reveal true color #303030 dashes 8 radius 0.05
+2dlabel text "RNA-8 RARSAFKLLQL - tRNA (cytidine(32)/guanosine(34)-2'- (8Y2O; cryo-EM; SAH + RNA) - near substrate/SAM" xpos .03 ypos .04 size 14
+lighting soft
+graphics silhouettes true
+view
+# >>> rotate to taste, then:  save rna_motif8_8Y2O.png width 2400 height 1800 supersample 3

@@ -33,6 +33,19 @@ OUTDIR = Path(__file__).resolve().parent / "itol_output_reference"
 # Minimum SAMs required per organism to be included
 MIN_SAMS = 20
 
+# Taxonomic clades to shade with a native iTOL colored range (TREE_COLORS 'range').
+# Each entry is (taxon as it appears in "Taxonomic lineage", range name, hex color).
+# The name identifies the range in iTOL's Colored-ranges panel/legend but is NOT a
+# big on-tree label. Coverage (label / clade / full tree) is chosen interactively in
+# that panel and applies to all ranges together (split into separate files for
+# per-clade coverage). The tree is taxonomic, so each taxon is exactly one clade.
+CLADE_HIGHLIGHTS = [
+    ("Viridiplantae",  "Plants",         "#33a02c"),   # green
+    ("Metazoa",        "Metazoa",        "#1f78b4"),   # blue
+    ("Vertebrata",     "Vertebrates",    "#6a3d9a"),   # purple (nested in Metazoa)
+    ("Actinomycetota", "Actinomycetota", "#b15928"),   # brown
+]
+
 # ================= HELPERS =================
 def canon(name: str) -> str:
     """
@@ -177,6 +190,55 @@ def write_bar(fname: Path, label: str, values: Dict[str, int], color: str = "#21
             f.write(f"{k}\t{v}\n")
 
     print(f"  Wrote {fname.name} ({len(values)} entries)")
+
+
+def find_node(node: Node, name: str) -> Optional[Node]:
+    """Depth-first search for the (internal or leaf) node with a given name."""
+    if node.name == name:
+        return node
+    for child in node.children.values():
+        hit = find_node(child, name)
+        if hit is not None:
+            return hit
+    return None
+
+
+def write_tree_colors(fname: Path, root: Node, highlights):
+    """Write an iTOL TREE_COLORS file with one 'range' per clade in `highlights`.
+
+    The 4th field is the range's name: it identifies the range in iTOL's
+    "Colored ranges" panel / legend (so entries aren't "undefined"), but does NOT
+    draw a big on-tree label the way DATASET_RANGE's SHOW_LABELS does. Coverage
+    (leaf label / clade / full tree) is chosen interactively in that panel and
+    applies to all ranges in the dataset together. Each clade taxon is a named
+    internal node; the range is keyed by LEAF1|LEAF2 (its leftmost/rightmost
+    leaves), whose MRCA is that node."""
+    rows = []
+    for taxon, label, color in highlights:
+        node = find_node(root, canon(taxon))
+        if node is None:
+            print(f"  Clade '{taxon}' not present in pruned tree - skipping")
+            continue
+        leaves = get_leaves(node)
+        if len(leaves) < 2:
+            print(f"  Clade '{taxon}' has < 2 leaves in pruned tree - skipping")
+            continue
+        rows.append((f"{leaves[0]}|{leaves[-1]}", color, label, len(leaves)))
+
+    if not rows:
+        print(f"  Skipping {fname.name} - no clades matched")
+        return
+
+    with open(fname, "w") as f:
+        f.write("TREE_COLORS\n")
+        f.write("SEPARATOR TAB\n")
+        f.write("DATA\n")
+        for node_id, color, label, _n in rows:
+            f.write(f"{node_id}\trange\t{color}\t{label}\n")
+
+    print(f"  Wrote {fname.name} ({len(rows)} clade range(s))")
+    for node_id, color, label, n in rows:
+        print(f"    {label}: {n} leaves, {color}, MRCA {node_id}")
 
 
 # ================= MAIN PIPELINE =================
@@ -373,6 +435,7 @@ def main():
     write_gradient(OUTDIR / "itol_pct_dna.txt", "% DNA-binding SAMs", pct_DNA, "#6a51a3")
     write_gradient(OUTDIR / "itol_pct_protein.txt", "% Protein-binding SAMs", pct_PROT, "#238b45")
     write_gradient(OUTDIR / "itol_pct_other.txt", "% Other SAMs", pct_OTHER, "#e6550d")
+    write_tree_colors(OUTDIR / "itol_clade_highlights.txt", pruned_root, CLADE_HIGHLIGHTS)
 
     # --- Final report ---
     print("\n" + "=" * 50)
