@@ -1,6 +1,8 @@
 # --- large / regenerable intermediates (produced by the stage scripts) ---
-*.dat                 # disk-backed cosine-similarity matrices (~170 MB each)
-*.h5                  # ProstT5 / ProtT5 embeddings (regenerated upstream by embed_prostt5.py)
+# disk-backed cosine-similarity matrices (~170-210 MB each)
+*.dat
+# ProstT5 / ProtT5 embeddings (regenerated upstream by embed_prostt5.py)
+*.h5
 *.gz
 __pycache__/
 *.pyc
