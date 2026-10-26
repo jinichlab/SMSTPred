@@ -56,7 +56,7 @@ np.random.seed(42)
 DATA_ROOT = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data"))
 
 TRAIN_CSV = DATA_ROOT / "labels_UP.csv"
-TRAIN_H5 = DATA_ROOT / "per-protein.h5"           # UP ProtT5 embeddings (not archived)
+TRAIN_H5 = DATA_ROOT / "embeddings_UP_ProtT5.h5"   # UP ProtT5 embeddings (Zenodo)
 # Deployment set: the same tree-of-life SAM MTases the SAM model predicts on
 # (prediction_files_mlp), scored here against the UP training set. This gives a
 # like-for-like comparison with sam_clustering.py's validation (identical

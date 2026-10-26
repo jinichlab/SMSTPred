@@ -11,7 +11,7 @@ git clone https://github.com/jinichlab/SMSTPred.git && cd SMSTPred
 conda env create -f environment.yml && conda activate classifier_env   # Python 3.12, pinned versions
 
 # Zenodo data -> data/ (or any folder, then: export SMSTPRED_DATA=/path/to/folder)
-cd data && for t in embeddings_tree_of_life_*.tar prediction_files_mlp.tar; do tar -xf "$t"; done && cd ..
+cd data && for t in embeddings_tree_of_life_*.tar prediction_files_mlp.tar; do tar -xf "$t"; done && tar -xzf sam_structures.tar.gz && cd ..
 tar -xf data/motif_analysis_intermediates.tar     # Stage 7 corpus, FASTAs, FIMO tables -> 7_motif_analysis/
 ```
 
@@ -30,6 +30,8 @@ Run each from the script's own folder, e.g. `cd figures/Fig4_trends && python bu
 | Fig 2, Fig S4 and their statistics | `2_training/classifier_mcc_stats.py`, `plot_cluster_mcc_zoom.py`, `sam_vs_up_prostt5_stats.py`, `plot_sam_vs_up_prostt5.py`, `plot_fig2_main.py` |
 | Table 1 | `2_training/build_metrics_table.py` |
 | Figs S2, S3, S5 | `2_training/plot_mcc_curves_grid.py` |
+| Fig 1 (run the Fig 3 steps first: they write the tree panel, `tree_only.png`) | `figures/Fig1_overview_schematic/build_fig1_flow.py` (the two structure panels are included; `render_prmt1_sam.pml` re-renders one with PyMOL) |
+| Figs 8 and 9 (structure panels A–D) | `figures/Fig9_structures/make_panels.py` (the eight PyMOL snapshots are included; the per-motif `view.pml` scripts in `7_motif_analysis/structures/` re-render them) |
 | Fig 3 (two steps, in this order) | `figures/Fig3_tree_landscape/widen_rings.py`, then `make_tree_figure.py` |
 | Fig 4A–D and composite | `figures/Fig4_trends/build_fig4_panels.py`, then `make_fig4_trends.py` (4A original: `4_phylo_trends/protein_cellularity_violin.py`) |
 | Fig 5 | `figures/Fig5_proteome_scaling/proteome_vs_sam_domain_highlight.py` |
@@ -53,10 +55,7 @@ the manuscript PNGs (anti-aliasing, label offsets of a pixel) across matplotlib/
 
 | Result | Why not | What would be needed |
 |---|---|---|
-| Fig 1 (`figures/Fig1_overview_schematic/`) | composes PyMOL renders and BioRender components that are not shipped (the tree panel comes from the Fig 3 step) | the two structure images |
-| UP clustering (`1_clustering/up_clustering.py`) | needs the UP ProtT5 embeddings (`per-protein.h5`) | not archived (listed in `data/README.md`); `clusters_UP_ProtT5_t0.5.csv` already provides its result |
 | Stage 4 tree (`4_phylo_trends/reference_tree.py`), Stage 7 corpus (`7_motif_analysis/1_build_corpus.py`) | need the per-organism UniProt proteome tables (about 30 GB) | download of the 1,259 UniProt reference proteomes |
-| Foldseek baseline (part of `2_training/sam_full_vs_balanced_classifier_comparison.py`) | needs AlphaFold models of the 7,405 SAM proteins (`sam_structures/`) and the `foldseek` binary | AlphaFold DB download |
 | Stage 6 CLEAN / Horizyn runs | external installs | `CLEAN_APP_DIR`, `HORIZYN_DIR` (see `6_dark_cluster_annotation/README.md`) |
 
 ## C. Heavy computations (path-checked, not re-run here)
@@ -67,9 +66,12 @@ re-training will agree with the committed results up to seed and hardware noise.
 
 - Embedding x loss x epoch sweeps: `2_training/mlp_embedding_comparison.py`, `mlp_embedding_comparison_saprot.py`,
   `mlp_loss_comparison.py`, `mlp_loss_comparison_prostt5.py`
-- Classifier bake-off: `2_training/sam_full_vs_balanced_classifier_comparison.py`; SAM vs UP:
+- Classifier bake-off: `2_training/sam_full_vs_balanced_classifier_comparison.py` (its Foldseek, MMseqs2 and
+  profile-HMM baselines need those binaries on `PATH`; the structures are in `sam_structures.tar.gz`); SAM vs UP:
   `sam_vs_up_prostt5_comparison.py`
 - Deployment model: `2_training/train_deployment_ensemble.py` (rewrites `2_training/deployment_model/`)
+- Stage 1 UP clustering: `1_clustering/up_clustering.py` (inputs archived; the full 201,339-protein similarity matrix
+  needs about 160 GB of disk, so `clusters_UP_ProtT5_t0.5.csv` is provided instead)
 - Stage 5 UMAP: `5_umap/global_reumap_prostt5.py`
 - Stage 7 motif pipeline, in order: `1_build_corpus.py` -> `2_make_reps.py` (MMseqs2) -> `run_streme.sh` (STREME)
   -> `run_fimo_all.sh` -> `fimo_all_manifest.py` -> `build_motif_table.py`; structure mapping:

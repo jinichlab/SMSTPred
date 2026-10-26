@@ -34,8 +34,9 @@ ChEBI). See the manuscript Methods.
 Embeddings (ProtT5, ProstT5, ESM-IF, SaProt for the SAM set; ProstT5 for UP; ProstT5 and ProtT5 for the
 tree-of-life set), the UP clustering (`clusters_UP_ProtT5_t0.5.csv`), copies of the label tables above, the
 per-organism ProtT5-MLP prediction files (`prediction_files_mlp.tar`), the Stage 7 intermediates
-(`motif_analysis_intermediates.tar`: single-label corpus, class and representative FASTAs, FIMO hit tables), and
-the raw iTOL SVG used for Fig 3.
+(`motif_analysis_intermediates.tar`: single-label corpus, class and representative FASTAs, FIMO hit tables), the UP
+ProtT5 embeddings (`embeddings_UP_ProtT5.h5`), the structures of the SAM proteins (`sam_structures.tar.gz`: 7,379
+AlphaFold DB models plus 26 locally predicted ones), and the raw iTOL SVG used for Fig 3.
 
 ## Using the archived data
 
@@ -49,6 +50,7 @@ cd data
 tar -xf embeddings_tree_of_life_ProstT5.tar     # -> tree_of_life_ProstT5/
 tar -xf embeddings_tree_of_life_ProtT5.tar      # -> tree_of_life_ProtT5/
 tar -xf prediction_files_mlp.tar                # -> prediction_files_mlp/
+tar -xzf sam_structures.tar.gz                  # -> sam_structures/ (Foldseek baseline)
 export SMSTPRED_DATA=$PWD                       # only needed if the data live outside <repo>/data
 cd .. && tar -xf data/motif_analysis_intermediates.tar   # Stage 7 corpus, FASTAs, FIMO tables -> 7_motif_analysis/
 ```
@@ -57,16 +59,14 @@ Files are expected under their Zenodo names (`labels_SAM_full.csv`, `embeddings_
 Paths to other repository folders (predictions, UMAP coordinates, result tables) are derived from each
 script's own location.
 
-## Inputs that are not archived
+## Input that is not archived
 
-Needed only to re-run the steps listed; none is required for the figures and tables built from the
-files above.
+Needed only to re-run the two steps listed; neither is required for the figures and tables built from the files
+above.
 
 | Input (expected under `SMSTPRED_DATA`) | Needed by | Where it comes from |
 |---|---|---|
-| `per-protein.h5` (ProtT5 embeddings of the UP set, about 1.4 GB) | `1_clustering/up_clustering.py`, `2_training/mlp_loss_comparison.py` (UP) | Embed the UniProt sequences for the accessions in `labels_UP.csv` with ProtT5 |
 | `reference_proteomes/` (per-organism UniProt proteome tables, about 30 GB) | `4_phylo_trends/reference_tree.py`, `7_motif_analysis/1_build_corpus.py` | UniProt reference proteomes of the organisms in `selected_1259_organisms.csv` |
-| `sam_structures/` (AlphaFold DB models of the 7,405 SAM proteins, about 0.5 GB) | Foldseek baseline in `2_training/sam_full_vs_balanced_classifier_comparison.py` | AlphaFold DB, by UniProt accession |
 
 External tools and installs: `foldseek` and `mmseqs` on `PATH` (override with `FOLDSEEK_BIN`); for Stage 6, a
 CLEAN checkout (`CLEAN_APP_DIR`, used by `6_dark_cluster_annotation/clean/run_clean_dark33*.sh`) and a

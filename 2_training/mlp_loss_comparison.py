@@ -87,7 +87,7 @@ DATASETS = {
     },
     "UP": {
         "csv": FILES_DIR / "labels_UP.csv",
-        "h5": FILES_DIR / "per-protein.h5",
+        "h5": FILES_DIR / "embeddings_UP_ProtT5.h5",
         "threshold": 0.5,
     },
 }
