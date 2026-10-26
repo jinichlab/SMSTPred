@@ -11,7 +11,8 @@ git clone https://github.com/jinichlab/SMSTPred.git && cd SMSTPred
 conda env create -f environment.yml && conda activate classifier_env   # Python 3.12, pinned versions
 
 # Zenodo data -> data/ (or any folder, then: export SMSTPRED_DATA=/path/to/folder)
-cd data && for t in embeddings_tree_of_life_*.tar; do tar -xf "$t"; done && cd ..
+cd data && for t in embeddings_tree_of_life_*.tar prediction_files_mlp.tar; do tar -xf "$t"; done && cd ..
+tar -xf data/motif_analysis_intermediates.tar     # Stage 7 corpus, FASTAs, FIMO tables -> 7_motif_analysis/
 ```
 
 Scripts take their inputs from `data/` (or `$SMSTPRED_DATA`) and from other folders of this repository, and write
@@ -37,19 +38,23 @@ Run each from the script's own folder, e.g. `cd figures/Fig4_trends && python bu
 | Fig 10 (static and interactive) | `7_motif_analysis/no_motif_umap.py`, `no_motif_umap_interactive.py` |
 | Tables S1, S2 (from the Stage 6 table, rebuilt by `6_dark_cluster_annotation/build_table2.py`) | `figures/TableS1_…/build_table.py`, `figures/TableS2_…/build_table.py` |
 | Table S3 | `figures/TableS3_domain_enrichment/build_domain_enrichment_table.py` |
+| Table 2 (needs `motif_analysis_intermediates.tar`) | `7_motif_analysis/build_motif_table.py` |
+| Per-protein motif status (12,866 of 106,608 motif-less, 12.1 %) | `7_motif_analysis/fimo_all_manifest.py` |
+| Motif class specificity (26 of 32 motifs at least 2-fold; DNA-1 11.5-fold) | `7_motif_analysis/fimo_cross_manifest.py` |
+| Family representatives (22,976) | `7_motif_analysis/2_make_reps.py` |
+| Stage 1 clustering and Fig S1 (needs `prediction_files_mlp.tar` and the tree-of-life ProtT5 archive) | `1_clustering/sam_clustering.py` |
 
 **What "reproduces" means here.** Every table CSV and statistics file regenerated identical to the committed
-versions. Figures regenerated with the same content (same curves, values and labels); pixels differ slightly from
+versions (the Stage 1 clustering tables agree to within 4e-7 of floating-point noise, with identical cluster counts,
+sizes and purities at every threshold). Figures regenerated with the same content (same curves, values and labels); pixels differ slightly from
 the manuscript PNGs (anti-aliasing, label offsets of a pixel) across matplotlib/FreeType builds.
 
 ## B. Not reproducible from the repository and Zenodo alone
 
 | Result | Why not | What would be needed |
 |---|---|---|
-| Table 2 (`7_motif_analysis/build_motif_table.py`) | reads `fimo_all_*/fimo.tsv` and `class_*.fasta` | the Stage 7 intermediates (FIMO scan of all class members, class FASTAs) |
 | Fig 1 (`figures/Fig1_overview_schematic/`) | composes PyMOL renders and BioRender components that are not shipped (the tree panel comes from the Fig 3 step) | the two structure images |
-| Fig S1B (deployment-domain similarity, `1_clustering/sam_clustering.py` validation stage) | needs `prediction_files_mlp/` | not archived (listed in `data/README.md`) |
-| UP clustering (`1_clustering/up_clustering.py`) | needs `prediction_files_mlp/` and the UP ProtT5 embeddings (`per-protein.h5`) | not archived (listed in `data/README.md`) |
+| UP clustering (`1_clustering/up_clustering.py`) | needs the UP ProtT5 embeddings (`per-protein.h5`) | not archived (listed in `data/README.md`); `clusters_UP_ProtT5_t0.5.csv` already provides its result |
 | Stage 4 tree (`4_phylo_trends/reference_tree.py`), Stage 7 corpus (`7_motif_analysis/1_build_corpus.py`) | need the per-organism UniProt proteome tables (about 30 GB) | download of the 1,259 UniProt reference proteomes |
 | Foldseek baseline (part of `2_training/sam_full_vs_balanced_classifier_comparison.py`) | needs AlphaFold models of the 7,405 SAM proteins (`sam_structures/`) and the `foldseek` binary | AlphaFold DB download |
 | Stage 6 CLEAN / Horizyn runs | external installs | `CLEAN_APP_DIR`, `HORIZYN_DIR` (see `6_dark_cluster_annotation/README.md`) |
@@ -65,8 +70,6 @@ re-training will agree with the committed results up to seed and hardware noise.
 - Classifier bake-off: `2_training/sam_full_vs_balanced_classifier_comparison.py`; SAM vs UP:
   `sam_vs_up_prostt5_comparison.py`
 - Deployment model: `2_training/train_deployment_ensemble.py` (rewrites `2_training/deployment_model/`)
-- Stage 1 clustering: `1_clustering/sam_clustering.py` (the deployment-domain validation stage is skipped when
-  `prediction_files_mlp/` is absent)
 - Stage 5 UMAP: `5_umap/global_reumap_prostt5.py`
 - Stage 7 motif pipeline, in order: `1_build_corpus.py` -> `2_make_reps.py` (MMseqs2) -> `run_streme.sh` (STREME)
   -> `run_fimo_all.sh` -> `fimo_all_manifest.py` -> `build_motif_table.py`; structure mapping:
