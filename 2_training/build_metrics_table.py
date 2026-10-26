@@ -6,9 +6,10 @@ manuscript caption carries the description); family-shaded rows, bold deployed
 row, best-per-metric highlighted.
 
 Source: sam_classifier_comparison_output/sam_classifier_comparison_summary.csv
-        (written by sam_full_vs_balanced_classifier_comparison.py)
+        (written by sam_classifier_comparison.py)
 Output: sam_classifier_comparison_output/metrics_table.png
 """
+import os
 from pathlib import Path
 
 import pandas as pd
@@ -17,7 +18,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
-OUT_DIR = HERE / "sam_classifier_comparison_output"
+OUT_DIR = HERE / os.environ.get("BAKEOFF_OUT", "sam_classifier_comparison_output")   # BAKEOFF_OUT: optional re-run folder
 SRC = OUT_DIR / "sam_classifier_comparison_summary.csv"
 
 CONTROL = "MLP_ProstT5"

@@ -22,7 +22,7 @@ import pandas as pd
 from scipy import stats
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "sam_vs_up_prostt5_comparison_output")
+OUT = os.path.join(HERE, os.environ.get("SAM_VS_UP_OUT", "sam_vs_up_prostt5_comparison_output"))
 SRC = os.path.join(OUT, "sam_vs_up_prostt5_comparison_detailed.csv")
 LABELS = ["Other", "Protein", "RNA", "DNA"]
 N_ITER = 16

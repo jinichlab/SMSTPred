@@ -2,9 +2,9 @@
 """
 Per-label MCC vs epoch grids for the MLP substrate classifiers (one figure family).
 
-Writes three consistently-styled grids:
+Writes two consistently-styled grids (plus a third with --balanced):
   mlp_embedding_comparison_output/full_mcc_curves_grid.png       SAM full
-  mlp_embedding_comparison_output/balanced_mcc_curves_grid.png   SAM balanced
+  mlp_embedding_comparison_output/balanced_mcc_curves_grid.png   SAM balanced (only with --balanced; not in the manuscript)
         -> rows = embedding (ProtT5 / ProstT5 / ESM-IF / the two concatenations),
            cols = label, lines = the 4 loss types
   UP_prostt5_loss_comparison_output/UP_prostt5_mcc_curves_grid.png  UP (ProstT5)
@@ -20,6 +20,7 @@ Sources:
   UP_prostt5_loss_comparison_output/UP_prostt5_mlp_loss_comparison_per_label.csv
       (UP ProstT5 loss sweep; single embedding -> embedding column added here)
 """
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -81,7 +82,7 @@ def main():
     if sap_csv.exists():
         epl = pd.concat([epl, pd.read_csv(sap_csv)[epl.columns]], ignore_index=True)
     EMBS = ["ProstT5", "SaProt", "ProtT5", "ESM-IF", "ProtT5+ESM-IF", "ProstT5+ESM-IF"]
-    for ds in ["full", "balanced"]:
+    for ds in (["full", "balanced"] if "--balanced" in sys.argv else ["full"]):
         render_grid(epl[epl.dataset == ds], EMBS,
                     emb_dir / f"{ds}_mcc_curves_grid.png", ylim=(0.0, 1.0))
 

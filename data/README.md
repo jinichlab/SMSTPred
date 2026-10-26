@@ -9,7 +9,7 @@ checksums and provenance.
 | File | Rows | What it is |
 |---|---|---|
 | `labels_SAM_full.csv` | 7,405 | Curated SAM-methyltransferase training set (UniProtKB/Swiss-Prot, reviewed): `Entry, Reviewed, Entry Name, Protein names, Length, Sequence, Annotation, InterPro, Catalytic activity, RheaID, type, ChEBI, Other, Protein, RNA, DNA`. Label counts: Other 1,290 · Protein 1,015 · RNA 5,006 · DNA 108 (multi-label, so counts are positive labels, not a partition). |
-| `labels_SAM_balanced.csv` | 2,924 | Class-balanced subset of the above (Fig S3): `Entry, Sequence, Annotation, RNA, DNA, Other, Protein`. Other 689 · Protein 1,015 · RNA 1,126 · DNA 108. |
+| `labels_SAM_balanced.csv` | 2,924 | Class-balanced subset of the above: `Entry, Sequence, Annotation, RNA, DNA, Other, Protein`. Other 689 · Protein 1,015 · RNA 1,126 · DNA 108. Not used in the manuscript; the optional balanced-training arm of `2_training/sam_classifier_comparison.py` reads it, and the classifier comparison reads it in every run to keep its random splits unchanged. |
 | `labels_UP.csv` | 201,339 | Broad enzyme comparison set (UP): `Entry` plus the four labels only; sequences are retrievable from UniProt by accession. Other 133,297 · Protein 30,967 · RNA 36,846 · DNA 5,691. |
 | `selected_1259_organisms.csv` | 1,259 | The tree-of-life reference proteomes: proteome id, organism, taxonomic lineage, BUSCO score, lifestyle and its confidence, genus, and the metazoa / vertebrate / parasite flags used by the Stage 4 and 5 trend analyses. |
 

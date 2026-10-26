@@ -3,186 +3,90 @@ Statistical comparison of classifier MCC (Demsar 2006 procedure)
 ======================================================================
 cluster/full   (N=16 iterations, k=16 methods)
 ======================================================================
-Friedman omnibus:  chi2=124.797, df=15, p=2.208e-19   -> reject H0 (methods differ)
+Friedman omnibus:  chi2=120.545, df=15, p=1.483e-18   -> reject H0 (methods differ)
 
 Average ranks (1 = best):
-    4.44  MLP_ProstT5             MCC=0.928+-0.053
-    4.56  SVM_Linear              MCC=0.925+-0.056
-    4.81  MLP_SaProt              MCC=0.934+-0.059
-    5.56  SVM_RBF                 MCC=0.921+-0.056
-    5.69  SVM_Polynomial          MCC=0.916+-0.059
-    6.75  MMseqs2_1NN             MCC=0.882+-0.121
-    7.44  MLP_ProstT5+ESM-IF      MCC=0.891+-0.065
-    7.50  Foldseek_1NN            MCC=0.873+-0.116
-    8.06  MLP_ProtT5              MCC=0.875+-0.081
-    9.19  MLP_ProtT5+ESM-IF       MCC=0.877+-0.067
-    9.31  SVM_Sigmoidal           MCC=0.876+-0.087
-    9.62  Logistic Regression     MCC=0.873+-0.067
-   10.81  MLP_ESM-IF              MCC=0.852+-0.092
-   11.94  XGBoost                 MCC=0.823+-0.094
-   14.56  Random Forest           MCC=0.711+-0.138
+    5.09  SVM_Linear              MCC=0.925+-0.056
+    5.53  MLP_ProstT5             MCC=0.926+-0.053
+    5.88  MLP_ProtT5+ESM-IF       MCC=0.928+-0.048
+    5.97  SVM_RBF                 MCC=0.921+-0.056
+    6.16  MLP_ProstT5+ESM-IF      MCC=0.920+-0.061
+    6.22  SVM_Polynomial          MCC=0.916+-0.059
+    6.25  MLP_SaProt              MCC=0.927+-0.053
+    6.72  MLP_ProtT5              MCC=0.919+-0.055
+    6.97  MMseqs2_1NN             MCC=0.882+-0.121
+    8.00  Foldseek_1NN            MCC=0.873+-0.116
+    9.41  SVM_Sigmoidal           MCC=0.876+-0.087
+   10.00  Logistic Regression     MCC=0.873+-0.067
+   11.00  MLP_ESM-IF              MCC=0.859+-0.089
+   12.44  XGBoost                 MCC=0.823+-0.094
+   14.62  Random Forest           MCC=0.711+-0.138
    15.75  Profile_HMM             MCC=0.582+-0.096
 
 Nemenyi critical difference (all-pairs, a=0.05): CD = 5.767 rank units
 Bonferroni-Dunn CD vs control (MLP_ProstT5):          CD = 4.941 rank units
 
 Nemenyi significant pairs (p<0.05): 29 of 120
-   p=0.000  MLP_ProstT5  vs  Profile_HMM
    p=0.000  SVM_Linear  vs  Profile_HMM
-   p=0.000  MLP_SaProt  vs  Profile_HMM
+   p=0.000  MLP_ProstT5  vs  Profile_HMM
+   p=0.000  MLP_ProtT5+ESM-IF  vs  Profile_HMM
    p=0.000  SVM_RBF  vs  Profile_HMM
-   p=0.000  MLP_ProstT5  vs  Random Forest
-   p=0.000  SVM_Polynomial  vs  Profile_HMM
-   p=0.000  SVM_Linear  vs  Random Forest
-   p=0.000  MLP_SaProt  vs  Random Forest
-   p=0.000  SVM_RBF  vs  Random Forest
-   p=0.000  MMseqs2_1NN  vs  Profile_HMM
-   p=0.000  SVM_Polynomial  vs  Random Forest
    p=0.000  MLP_ProstT5+ESM-IF  vs  Profile_HMM
+   p=0.000  SVM_Linear  vs  Random Forest
+   p=0.000  SVM_Polynomial  vs  Profile_HMM
+   p=0.000  MLP_SaProt  vs  Profile_HMM
+   p=0.000  MLP_ProstT5  vs  Random Forest
+   p=0.000  MLP_ProtT5  vs  Profile_HMM
+   p=0.000  MMseqs2_1NN  vs  Profile_HMM
+   p=0.000  MLP_ProtT5+ESM-IF  vs  Random Forest
+   p=0.000  SVM_RBF  vs  Random Forest
+   p=0.000  MLP_ProstT5+ESM-IF  vs  Random Forest
+   p=0.000  SVM_Polynomial  vs  Random Forest
+   p=0.000  MLP_SaProt  vs  Random Forest
+   p=0.000  MLP_ProtT5  vs  Random Forest
    p=0.000  Foldseek_1NN  vs  Profile_HMM
-   p=0.000  MMseqs2_1NN  vs  Random Forest
-   p=0.001  MLP_ProtT5  vs  Profile_HMM
-   p=0.001  MLP_ProstT5  vs  XGBoost
+   p=0.001  MMseqs2_1NN  vs  Random Forest
    p=0.001  SVM_Linear  vs  XGBoost
-   p=0.002  MLP_SaProt  vs  XGBoost
-   p=0.002  MLP_ProstT5+ESM-IF  vs  Random Forest
-   p=0.003  Foldseek_1NN  vs  Random Forest
-   p=0.009  MLP_ProtT5+ESM-IF  vs  Profile_HMM
-   p=0.011  MLP_ProtT5  vs  Random Forest
-   p=0.013  SVM_Sigmoidal  vs  Profile_HMM
-   p=0.014  MLP_ProstT5  vs  MLP_ESM-IF
-   p=0.014  SVM_RBF  vs  XGBoost
-   p=0.019  SVM_Linear  vs  MLP_ESM-IF
-   p=0.019  SVM_Polynomial  vs  XGBoost
-   p=0.025  Logistic Regression  vs  Profile_HMM
-   p=0.032  MLP_SaProt  vs  MLP_ESM-IF
+   p=0.004  MLP_ProstT5  vs  XGBoost
+   p=0.008  Foldseek_1NN  vs  Random Forest
+   p=0.009  MLP_ProtT5+ESM-IF  vs  XGBoost
+   p=0.012  SVM_RBF  vs  XGBoost
+   p=0.015  SVM_Sigmoidal  vs  Profile_HMM
+   p=0.018  MLP_ProstT5+ESM-IF  vs  XGBoost
+   p=0.020  SVM_Polynomial  vs  XGBoost
+   p=0.022  MLP_SaProt  vs  XGBoost
+   p=0.038  SVM_Linear  vs  MLP_ESM-IF
 
 Bonferroni-Dunn vs control = MLP_ProstT5 (rank diff > CD_BD=4.94 => sig):
-   d_rank= 0.12  MLP_ProstT5 vs SVM_Linear            
-   d_rank= 0.38  MLP_ProstT5 vs MLP_SaProt            
-   d_rank= 1.12  MLP_ProstT5 vs SVM_RBF               
-   d_rank= 1.25  MLP_ProstT5 vs SVM_Polynomial        
-   d_rank= 2.31  MLP_ProstT5 vs MMseqs2_1NN           
-   d_rank= 3.00  MLP_ProstT5 vs MLP_ProstT5+ESM-IF    
-   d_rank= 3.06  MLP_ProstT5 vs Foldseek_1NN          
-   d_rank= 3.62  MLP_ProstT5 vs MLP_ProtT5            
-   d_rank= 4.75  MLP_ProstT5 vs MLP_ProtT5+ESM-IF     
-   d_rank= 4.88  MLP_ProstT5 vs SVM_Sigmoidal         
-   d_rank= 5.19  MLP_ProstT5 vs Logistic Regression     *SIG*
-   d_rank= 6.38  MLP_ProstT5 vs MLP_ESM-IF              *SIG*
-   d_rank= 7.50  MLP_ProstT5 vs XGBoost                 *SIG*
-   d_rank=10.12  MLP_ProstT5 vs Random Forest           *SIG*
-   d_rank=11.31  MLP_ProstT5 vs Profile_HMM             *SIG*
+   d_rank=-0.44  MLP_ProstT5 vs SVM_Linear            
+   d_rank= 0.34  MLP_ProstT5 vs MLP_ProtT5+ESM-IF     
+   d_rank= 0.44  MLP_ProstT5 vs SVM_RBF               
+   d_rank= 0.62  MLP_ProstT5 vs MLP_ProstT5+ESM-IF    
+   d_rank= 0.69  MLP_ProstT5 vs SVM_Polynomial        
+   d_rank= 0.72  MLP_ProstT5 vs MLP_SaProt            
+   d_rank= 1.19  MLP_ProstT5 vs MLP_ProtT5            
+   d_rank= 1.44  MLP_ProstT5 vs MMseqs2_1NN           
+   d_rank= 2.47  MLP_ProstT5 vs Foldseek_1NN          
+   d_rank= 3.88  MLP_ProstT5 vs SVM_Sigmoidal         
+   d_rank= 4.47  MLP_ProstT5 vs Logistic Regression   
+   d_rank= 5.47  MLP_ProstT5 vs MLP_ESM-IF              *SIG*
+   d_rank= 6.91  MLP_ProstT5 vs XGBoost                 *SIG*
+   d_rank= 9.09  MLP_ProstT5 vs Random Forest           *SIG*
+   d_rank=10.22  MLP_ProstT5 vs Profile_HMM             *SIG*
 
 Wilcoxon signed-rank, MLP_ProstT5 vs each (Holm-adjusted):
    p_raw=0.000  p_holm=0.000  sig  XGBoost
    p_raw=0.000  p_holm=0.000  sig  Random Forest
    p_raw=0.000  p_holm=0.000  sig  Profile_HMM
-   p_raw=0.000  p_holm=0.003  sig  MLP_ESM-IF
-   p_raw=0.002  p_holm=0.023  sig  MLP_ProtT5+ESM-IF
-   p_raw=0.003  p_holm=0.027  sig  SVM_Sigmoidal
-   p_raw=0.004  p_holm=0.038  sig  Logistic Regression
-   p_raw=0.008  p_holm=0.061  ns   MLP_ProtT5
-   p_raw=0.013  p_holm=0.092  ns   MLP_ProstT5+ESM-IF
-   p_raw=0.093  p_holm=0.561  ns   Foldseek_1NN
-   p_raw=0.233  p_holm=1.000  ns   MMseqs2_1NN
-   p_raw=0.307  p_holm=1.000  ns   SVM_Polynomial
-   p_raw=0.427  p_holm=1.000  ns   SVM_RBF
-   p_raw=0.706  p_holm=1.000  ns   MLP_SaProt
-   p_raw=0.865  p_holm=1.000  ns   SVM_Linear
-
-======================================================================
-cluster/balanced   (N=16 iterations, k=16 methods)
-======================================================================
-Friedman omnibus:  chi2=133.022, df=15, p=5.436e-21   -> reject H0 (methods differ)
-
-Average ranks (1 = best):
-    3.34  SVM_Linear              MCC=0.925+-0.052
-    5.00  SVM_Polynomial          MCC=0.915+-0.046
-    5.47  SVM_RBF                 MCC=0.917+-0.039
-    5.84  MMseqs2_1NN             MCC=0.899+-0.095
-    6.31  Foldseek_1NN            MCC=0.897+-0.074
-    6.50  MLP_SaProt              MCC=0.902+-0.062
-    7.16  MLP_ProtT5              MCC=0.896+-0.064
-    7.44  MLP_ProstT5             MCC=0.886+-0.097
-    7.81  MLP_ProstT5+ESM-IF      MCC=0.880+-0.083
-    8.19  MLP_ProtT5+ESM-IF       MCC=0.882+-0.074
-    8.19  SVM_Sigmoidal           MCC=0.879+-0.071
-    9.69  Logistic Regression     MCC=0.866+-0.053
-   12.06  XGBoost                 MCC=0.806+-0.071
-   12.81  MLP_ESM-IF              MCC=0.807+-0.090
-   14.31  Random Forest           MCC=0.731+-0.089
-   15.88  Profile_HMM             MCC=0.588+-0.087
-
-Nemenyi critical difference (all-pairs, a=0.05): CD = 5.767 rank units
-Bonferroni-Dunn CD vs control (MLP_ProstT5):          CD = 4.941 rank units
-
-Nemenyi significant pairs (p<0.05): 34 of 120
-   p=0.000  SVM_Linear  vs  Profile_HMM
-   p=0.000  SVM_Linear  vs  Random Forest
-   p=0.000  SVM_Polynomial  vs  Profile_HMM
-   p=0.000  SVM_RBF  vs  Profile_HMM
-   p=0.000  MMseqs2_1NN  vs  Profile_HMM
-   p=0.000  Foldseek_1NN  vs  Profile_HMM
-   p=0.000  SVM_Linear  vs  MLP_ESM-IF
-   p=0.000  MLP_SaProt  vs  Profile_HMM
-   p=0.000  SVM_Polynomial  vs  Random Forest
-   p=0.000  SVM_RBF  vs  Random Forest
-   p=0.000  SVM_Linear  vs  XGBoost
-   p=0.000  MLP_ProtT5  vs  Profile_HMM
-   p=0.000  MMseqs2_1NN  vs  Random Forest
-   p=0.000  MLP_ProstT5  vs  Profile_HMM
-   p=0.000  MLP_ProstT5+ESM-IF  vs  Profile_HMM
-   p=0.000  Foldseek_1NN  vs  Random Forest
-   p=0.000  SVM_Polynomial  vs  MLP_ESM-IF
-   p=0.000  MLP_SaProt  vs  Random Forest
-   p=0.001  MLP_ProtT5+ESM-IF  vs  Profile_HMM
-   p=0.001  SVM_Sigmoidal  vs  Profile_HMM
-   p=0.001  SVM_RBF  vs  MLP_ESM-IF
-   p=0.002  MLP_ProtT5  vs  Random Forest
-   p=0.003  SVM_Polynomial  vs  XGBoost
-   p=0.004  MMseqs2_1NN  vs  MLP_ESM-IF
-   p=0.005  MLP_ProstT5  vs  Random Forest
-   p=0.009  SVM_RBF  vs  XGBoost
-   p=0.011  Foldseek_1NN  vs  MLP_ESM-IF
-   p=0.011  MLP_ProstT5+ESM-IF  vs  Random Forest
-   p=0.015  SVM_Linear  vs  Logistic Regression
-   p=0.017  MLP_SaProt  vs  MLP_ESM-IF
-   p=0.020  MMseqs2_1NN  vs  XGBoost
-   p=0.022  Logistic Regression  vs  Profile_HMM
-   p=0.025  MLP_ProtT5+ESM-IF  vs  Random Forest
-   p=0.025  SVM_Sigmoidal  vs  Random Forest
-
-Bonferroni-Dunn vs control = MLP_ProstT5 (rank diff > CD_BD=4.94 => sig):
-   d_rank=-4.09  MLP_ProstT5 vs SVM_Linear            
-   d_rank=-2.44  MLP_ProstT5 vs SVM_Polynomial        
-   d_rank=-1.97  MLP_ProstT5 vs SVM_RBF               
-   d_rank=-1.59  MLP_ProstT5 vs MMseqs2_1NN           
-   d_rank=-1.12  MLP_ProstT5 vs Foldseek_1NN          
-   d_rank=-0.94  MLP_ProstT5 vs MLP_SaProt            
-   d_rank=-0.28  MLP_ProstT5 vs MLP_ProtT5            
-   d_rank= 0.38  MLP_ProstT5 vs MLP_ProstT5+ESM-IF    
-   d_rank= 0.75  MLP_ProstT5 vs MLP_ProtT5+ESM-IF     
-   d_rank= 0.75  MLP_ProstT5 vs SVM_Sigmoidal         
-   d_rank= 2.25  MLP_ProstT5 vs Logistic Regression   
-   d_rank= 4.62  MLP_ProstT5 vs XGBoost               
-   d_rank= 5.38  MLP_ProstT5 vs MLP_ESM-IF              *SIG*
-   d_rank= 6.88  MLP_ProstT5 vs Random Forest           *SIG*
-   d_rank= 8.44  MLP_ProstT5 vs Profile_HMM             *SIG*
-
-Wilcoxon signed-rank, MLP_ProstT5 vs each (Holm-adjusted):
-   p_raw=0.000  p_holm=0.000  sig  Random Forest
-   p_raw=0.000  p_holm=0.000  sig  Profile_HMM
-   p_raw=0.000  p_holm=0.002  sig  MLP_ESM-IF
-   p_raw=0.001  p_holm=0.016  sig  XGBoost
-   p_raw=0.011  p_holm=0.121  ns   SVM_Linear
-   p_raw=0.065  p_holm=0.654  ns   SVM_Polynomial
-   p_raw=0.130  p_holm=1.000  ns   SVM_RBF
-   p_raw=0.159  p_holm=1.000  ns   Logistic Regression
-   p_raw=0.404  p_holm=1.000  ns   MMseqs2_1NN
+   p_raw=0.001  p_holm=0.007  sig  MLP_ESM-IF
+   p_raw=0.003  p_holm=0.030  sig  Logistic Regression
+   p_raw=0.005  p_holm=0.052  ns   SVM_Sigmoidal
+   p_raw=0.105  p_holm=0.941  ns   Foldseek_1NN
+   p_raw=0.256  p_holm=1.000  ns   MMseqs2_1NN
+   p_raw=0.363  p_holm=1.000  ns   MLP_ProstT5+ESM-IF
    p_raw=0.464  p_holm=1.000  ns   MLP_ProtT5
-   p_raw=0.597  p_holm=1.000  ns   MLP_SaProt
-   p_raw=0.632  p_holm=1.000  ns   MLP_ProtT5+ESM-IF
-   p_raw=0.782  p_holm=1.000  ns   Foldseek_1NN
-   p_raw=0.940  p_holm=1.000  ns   MLP_ProstT5+ESM-IF
-   p_raw=0.940  p_holm=1.000  ns   SVM_Sigmoidal
+   p_raw=0.496  p_holm=1.000  ns   SVM_Polynomial
+   p_raw=0.820  p_holm=1.000  ns   SVM_RBF
+   p_raw=0.860  p_holm=1.000  ns   MLP_ProtT5+ESM-IF
+   p_raw=0.865  p_holm=1.000  ns   SVM_Linear
+   p_raw=0.900  p_holm=1.000  ns   MLP_SaProt

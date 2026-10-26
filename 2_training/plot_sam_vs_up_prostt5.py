@@ -11,6 +11,7 @@ sam_vs_up_prostt5_stats.py). Two-sided corrected p is used for the bracket.
 Over N=16 repeated cluster-disjoint splits, the DNA gap is read against its across-
 split variance rather than the bar heights alone; the marks make that explicit.
 """
+import os
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -21,7 +22,7 @@ import matplotlib.pyplot as plt
 import sam_vs_up_prostt5_stats as stx   # reuse paired_table / corrected_t / LABELS / K
 
 HERE = Path(__file__).resolve().parent
-OUT = HERE / "sam_vs_up_prostt5_comparison_output"
+OUT = HERE / os.environ.get("SAM_VS_UP_OUT", "sam_vs_up_prostt5_comparison_output")
 LABELS = stx.LABELS
 ORDER = LABELS + ["Overall"]
 MODELS = [("SAM", "#2c7fb8"), ("UP", "#e6550d")]

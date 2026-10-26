@@ -11,7 +11,9 @@ set -e
 
 # SAM-trained vs UP-trained ProstT5 MLP on a held-out SAM test set, over N=16
 # repeated cluster-disjoint 90/10 splits (matches Panel A's design). MVP: only
-# the exact test entries are removed from UP training (homolog exclusion deferred).
+# the exact test entries are removed from UP training (homolog exclusion deferred). The UP model trains for 400 epochs
+# with the per-label losses set in UP_CFG (sam_vs_up_prostt5_comparison.py).
+# Inputs are read from <repo>/data, or from $SMSTPRED_DATA.
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate classifier_env
 python -u sam_vs_up_prostt5_comparison.py

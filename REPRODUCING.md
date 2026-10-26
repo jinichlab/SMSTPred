@@ -29,7 +29,8 @@ Run each from the script's own folder, e.g. `cd figures/Fig4_trends && python bu
 | Stage 3 predictions (any ProstT5 embedding file) | `3_predictions/predict.py --input <embeddings.h5> --out-dir <dir>` |
 | Fig 2, Fig S4 and their statistics | `2_training/classifier_mcc_stats.py`, `plot_cluster_mcc_zoom.py`, `sam_vs_up_prostt5_stats.py`, `plot_sam_vs_up_prostt5.py`, `plot_fig2_main.py` |
 | Table 1 | `2_training/build_metrics_table.py` |
-| Figs S2, S3, S5 | `2_training/plot_mcc_curves_grid.py` |
+| Figs S2, S5 | `2_training/plot_mcc_curves_grid.py` |
+| Figs S3, S6 (needs `train_val_loss_curves.tar`: extract it into `2_training/`) | `2_training/plot_train_val_loss_curves.py` |
 | Fig 1 (run the Fig 3 steps first: they write the tree panel, `tree_only.png`) | `figures/Fig1_overview_schematic/build_fig1_flow.py` (the two structure panels are included; `render_prmt1_sam.pml` re-renders one with PyMOL) |
 | Figs 8 and 9 (structure panels A–D) | `figures/Fig9_structures/make_panels.py` (the eight PyMOL snapshots are included; the per-motif `view.pml` scripts in `7_motif_analysis/structures/` re-render them) |
 | Fig 3 (two steps, in this order) | `figures/Fig3_tree_landscape/widen_rings.py`, then `make_tree_figure.py` |
@@ -66,9 +67,13 @@ re-training will agree with the committed results up to seed and hardware noise.
 
 - Embedding x loss x epoch sweeps: `2_training/mlp_embedding_comparison.py`, `mlp_embedding_comparison_saprot.py`,
   `mlp_loss_comparison.py`, `mlp_loss_comparison_prostt5.py`
-- Classifier bake-off: `2_training/sam_full_vs_balanced_classifier_comparison.py` (its Foldseek, MMseqs2 and
-  profile-HMM baselines need those binaries on `PATH`; the structures are in `sam_structures.tar.gz`); SAM vs UP:
+- Classifier bake-off: `2_training/sam_classifier_comparison.py` (its Foldseek, MMseqs2 and
+  profile-HMM baselines need those binaries on `PATH`; the structures are in `sam_structures.tar.gz`). Its MLP
+  rows alone can be retrained in about 15 minutes with `run_bakeoff_mlp_only.sh` (same splits); the committed
+  results were assembled that way, see `2_training/sam_classifier_comparison_output/PROVENANCE.md`. SAM vs UP:
   `sam_vs_up_prostt5_comparison.py`
+- Train/validation loss curves (Figs S3, S6): `2_training/train_val_loss_curves.py` (SLURM array,
+  `run_train_val_loss.sh`; the raw curves are archived on Zenodo)
 - Deployment model: `2_training/train_deployment_ensemble.py` (rewrites `2_training/deployment_model/`)
 - Stage 1 UP clustering: `1_clustering/up_clustering.py` (inputs archived; the full 201,339-protein similarity matrix
   needs about 160 GB of disk, so `clusters_UP_ProtT5_t0.5.csv` is provided instead)

@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 """
-Unified SAM substrate-type classifier comparison: full vs balanced, every method.
+Unified SAM substrate-type classifier comparison: every method, one shared test set.
 
 One script that, for each split mode (cluster-disjoint and random) over 16
-iterations, trains and tests EVERY classifier family on both the full SAM_swiss
-set and the class-balanced SAM_swiss subset, scoring all of them on a single
-shared held-out test set so full-vs-balanced is a fair, like-for-like contrast.
+iterations, trains and tests EVERY classifier family on the full SAM_swiss set
+and scores all of them on a single shared held-out test set, so the methods are
+compared like for like. An optional second arm trains on the class-balanced
+SAM_swiss subset instead (BAKEOFF_DATASETS=full,balanced); it is off by default
+and is not part of the manuscript.
 
 Shared-test-set design (per split mode, per iteration)
 ------------------------------------------------------
   1. Split the FULL SAM set into a 90% train pool and a 10% held-out TEST set
      (cluster-disjoint or random). That test set is the common evaluation set.
   2. FULL models train on the full 90% train pool.
-  3. BALANCED models train on the balanced set with any sequence whose Entry ID
-     appears in the test set withheld (no leakage), then predict on the SAME
-     test set.
-  -> full and balanced are always scored on identical sequences.
+  3. (Optional balanced arm.) BALANCED models train on the balanced set with any
+     sequence whose Entry ID appears in the test set withheld (no leakage), then
+     predict on the SAME test set.
+  The balanced labels are read even when that arm is off: the Profile HMM draws
+  random numbers per training set, so a skipped arm still has to advance the
+  random stream (replay_hmm_rng) or every later split would differ.
 
 Classifiers
 -----------
@@ -32,10 +36,11 @@ Classifiers
   the data partition, not of any model, and holding it fixed keeps all 16
   classifiers on identical train/test sequences.
 
-  Each MLP carries an embedding-and-dataset-specific shared epoch count and a
-  per-label mixed loss (gamma=2.0), taken from the embedding sweep (provisional;
-  see MLP_VARIANTS). The per-label loss lets the rare DNA head use focal where
-  the weighted-BCE family overfits it at high epochs.
+  Each MLP carries a shared epoch count and a per-label mixed loss (gamma=2.0)
+  chosen from the embedding sweeps (see MLP_VARIANTS): 300 epochs for every
+  full-set MLP, and for each embedding and label the loss with the best MCC at
+  that epoch. The per-label loss lets the rare DNA head use focal where the
+  weighted-BCE family overfits it at high epochs.
 
   Per-class decision thresholds are tuned on TRAIN predictions (MCC-optimal) for
   every classifier, so HMM/MMseqs bit-score outputs and the probabilistic models
@@ -44,7 +49,7 @@ Classifiers
 
 Requires external tools on PATH: mmseqs, mafft, hmmbuild, hmmsearch.
 
-Outputs (./sam_classifier_comparison_output/)
+Outputs (./sam_classifier_comparison_output/, or $BAKEOFF_OUT)
   - sam_classifier_comparison_detailed.csv   one row per split/dataset/iter/classifier
   - sam_classifier_comparison_summary.csv     mean +/- SD over iterations
   - sam_classifier_comparison_per_label.csv   per-label breakdown
@@ -56,6 +61,7 @@ import sys
 import pickle
 import random
 import tempfile
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -112,7 +118,7 @@ SKLEARN_SOURCE = "prostt5"
 # every classifier's train/test partition, not just the sklearn ones.
 CLUSTER_SOURCE = "prott5"
 
-OUT_DIR = Path(__file__).resolve().parent / "sam_classifier_comparison_output"
+OUT_DIR = Path(__file__).resolve().parent / os.environ.get("BAKEOFF_OUT", "sam_classifier_comparison_output")
 
 # Foldseek structural-homology baseline: {Entry}.pdb structures + the binary.
 STRUCT_DIR = FILES_DIR / "sam_structures"      # AlphaFold DB models of the SAM set (not archived)
@@ -127,33 +133,52 @@ LEARNING_RATE = 0.001
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # MLP variants: one per embedding (singletons + structural concatenations).
-# Each carries a per-dataset shared epoch count and a per-label mixed-loss map
-# (label order [Other, Protein, RNA, DNA] = idx 0,1,2,3). Derived from the
-# 6-iteration dense-grid embedding sweep: per embedding, the shared epoch is the
-# earliest one within 0.005 of the joint (4-head) MCC optimum, with each head's
-# loss chosen by spike-guarded mean MCC. Full peaks early (100-300 ep); balanced
-# (smaller train pool) peaks late (16k-20k).
+# Each carries a per-dataset epoch count and a per-label mixed-loss map (label
+# order [Other, Protein, RNA, DNA] = idx 0,1,2,3), read off the 6-split
+# embedding x loss x epoch sweeps (mlp_embedding_comparison*.py; Fig S2) by one rule:
+#   full      300 epochs for every embedding; per label, the loss with the highest mean MCC over the six
+#             sweep splits at epoch 300 (fixed 0.5 cutoff). An exact tie goes to the first of bce,
+#             weighted_bce, sqrt_weighted_bce, focal (one tie in the 48 cells: DNA of ProtT5+ESM-IF).
+#             Exception: MLP_ProstT5 keeps the DEPLOYED map (Other = sqrt_weighted_bce), so the benchmark scores
+#             the model that ships; the rule alone would pick weighted_bce for Other, a 0.001-MCC tie.
+#   balanced  (optional arm, not in the manuscript) 100 epochs, same rule on the balanced-set sweep.
 _SQ, _BCE, _WB, _FOC = "sqrt_weighted_bce", "bce", "weighted_bce", "focal"
 MLP_VARIANTS = {
     "MLP_ProtT5": {"sources": ["prott5"],
-        "full":     {"epochs":   100, "loss": {0: _SQ,  1: _SQ,  2: _BCE, 3: _BCE}},
-        "balanced": {"epochs": 20000, "loss": {0: _SQ,  1: _BCE, 2: _SQ,  3: _WB}}},
+        "full":     {"epochs": 300, "loss": {0: _BCE, 1: _WB,  2: _SQ,  3: _SQ}},
+        "balanced": {"epochs": 100, "loss": {0: _WB,  1: _WB,  2: _FOC, 3: _SQ}}},
     "MLP_ProstT5": {"sources": ["prostt5"],
-        "full":     {"epochs":   300, "loss": {0: _SQ,  1: _BCE, 2: _BCE, 3: _BCE}},
-        "balanced": {"epochs": 16000, "loss": {0: _WB,  1: _BCE, 2: _FOC, 3: _WB}}},
+        "full":     {"epochs": 300, "loss": {0: _SQ,  1: _BCE, 2: _BCE, 3: _BCE}},     # = deployed model
+        "balanced": {"epochs": 100, "loss": {0: _SQ,  1: _FOC, 2: _FOC, 3: _WB}}},
     "MLP_ESM-IF": {"sources": ["esmif"],
-        "full":     {"epochs":   300, "loss": {0: _FOC, 1: _FOC, 2: _WB,  3: _BCE}},
-        "balanced": {"epochs":   100, "loss": {0: _SQ,  1: _FOC, 2: _FOC, 3: _WB}}},
+        "full":     {"epochs": 300, "loss": {0: _WB,  1: _FOC, 2: _WB,  3: _FOC}},
+        "balanced": {"epochs": 100, "loss": {0: _FOC, 1: _FOC, 2: _FOC, 3: _WB}}},
     "MLP_ProtT5+ESM-IF": {"sources": ["prott5", "esmif"],
-        "full":     {"epochs":   100, "loss": {0: _BCE, 1: _WB,  2: _FOC, 3: _FOC}},
-        "balanced": {"epochs": 19000, "loss": {0: _BCE, 1: _BCE, 2: _SQ,  3: _SQ}}},
+        "full":     {"epochs": 300, "loss": {0: _SQ,  1: _WB,  2: _WB,  3: _SQ}},
+        "balanced": {"epochs": 100, "loss": {0: _BCE, 1: _WB,  2: _FOC, 3: _SQ}}},
     "MLP_ProstT5+ESM-IF": {"sources": ["prostt5", "esmif"],
-        "full":     {"epochs":   100, "loss": {0: _FOC, 1: _WB,  2: _WB,  3: _SQ}},
-        "balanced": {"epochs": 20000, "loss": {0: _BCE, 1: _SQ,  2: _SQ,  3: _SQ}}},
+        "full":     {"epochs": 300, "loss": {0: _SQ,  1: _WB,  2: _SQ,  3: _SQ}},
+        "balanced": {"epochs": 100, "loss": {0: _WB,  1: _FOC, 2: _FOC, 3: _SQ}}},
     "MLP_SaProt": {"sources": ["saprot"],
-        "full":     {"epochs":   400, "loss": {0: _SQ,  1: _BCE, 2: _BCE, 3: _BCE}},
-        "balanced": {"epochs":   100, "loss": {0: _SQ,  1: _SQ,  2: _FOC, 3: _WB}}},
+        "full":     {"epochs": 300, "loss": {0: _SQ,  1: _SQ,  2: _FOC, 3: _BCE}},
+        "balanced": {"epochs": 100, "loss": {0: _SQ,  1: _WB,  2: _FOC, 3: _SQ}}},
 }
+
+# ---------------------------------------------------------------------------
+# Run options (environment variables; with none set the script runs every method on the full set):
+#   BAKEOFF_DATASETS=full,balanced   also train the optional balanced arm (default: full only)
+#   BAKEOFF_ONLY=mlp                 train only the MLP variants; Profile-HMM's random draws are replayed so the
+#                                    train/test splits stay identical to a full run
+#   BAKEOFF_MLP_VARIANTS=a,b         with BAKEOFF_ONLY=mlp: only the named variants (e.g. MLP_ProstT5)
+#   BAKEOFF_OUT=<dir>                output folder (relative to this script, or absolute)
+# ---------------------------------------------------------------------------
+DATASETS = [d.strip() for d in os.environ.get("BAKEOFF_DATASETS", "full").split(",")]
+assert DATASETS and all(d in ("full", "balanced") for d in DATASETS), f"BAKEOFF_DATASETS must list full and/or balanced, got {DATASETS}"
+ONLY_MLP = os.environ.get("BAKEOFF_ONLY") == "mlp"
+if os.environ.get("BAKEOFF_MLP_VARIANTS"):
+    _keep = [n.strip() for n in os.environ["BAKEOFF_MLP_VARIANTS"].split(",")]
+    assert all(n in MLP_VARIANTS for n in _keep), f"unknown MLP variant in {_keep}; choose from {list(MLP_VARIANTS)}"
+    MLP_VARIANTS = {n: MLP_VARIANTS[n] for n in _keep}
 
 SKLEARN_CLASSIFIERS = {
     "XGBoost": XGBClassifier(eval_metric="logloss", random_state=42, n_jobs=-1),
@@ -173,7 +198,7 @@ SKLEARN_CLASSIFIERS = {
 def check_tools():
     missing = [t for t in ["mmseqs", "mafft", "hmmbuild", "hmmsearch"]
                if subprocess.run(["which", t], capture_output=True).returncode != 0]
-    if not os.path.exists(FOLDSEEK):
+    if not (shutil.which(FOLDSEEK) or os.path.exists(FOLDSEEK)):
         missing.append(f"foldseek (expected at {FOLDSEEK}; set FOLDSEEK_BIN)")
     if not STRUCT_DIR.is_dir():
         missing.append(f"structure dir {STRUCT_DIR} (run esm_if/fetch_structures.py)")
@@ -769,6 +794,16 @@ def run_profile_hmm(train_entries, train_seqs, train_labels, test_entries, test_
 # One dataset x split x iteration: train all classifiers, score on shared test
 # ============================================================================
 
+def replay_hmm_rng(y_train, max_hmm_seqs=500):
+    """Consume exactly the random draws run_profile_hmm() makes for this training set (one
+    random.sample per label with more than max_hmm_seqs positives), so a run that skips the
+    HMM still produces the same splits for all later iterations."""
+    for class_idx in range(y_train.shape[1]):
+        n_pos = int((y_train[:, class_idx] == 1).sum())
+        if n_pos >= 2 and n_pos > max_hmm_seqs:
+            random.sample(range(n_pos), max_hmm_seqs)
+
+
 def evaluate_all_classifiers(dataset, X_train, y_train, entries_train, seqs_train,
                              X_test, y_test, entries_test, seqs_test,
                              src_train, src_test):
@@ -778,7 +813,7 @@ def evaluate_all_classifiers(dataset, X_train, y_train, entries_train, seqs_trai
     overall, per_label = {}, {}
 
     # sklearn (probabilistic): tune thresholds on train predictions
-    for clf_name, template in SKLEARN_CLASSIFIERS.items():
+    for clf_name, template in ({} if ONLY_MLP else SKLEARN_CLASSIFIERS).items():
         print(f"    [{dataset}] {clf_name}")
         train_probs, test_probs = train_sklearn(clf_name, template, X_train, y_train, X_test)
         thr = find_optimal_thresholds(y_train, train_probs, LABELS)
@@ -797,6 +832,10 @@ def evaluate_all_classifiers(dataset, X_train, y_train, entries_train, seqs_trai
         thr = find_optimal_thresholds(y_train, train_probs, LABELS)
         overall[mlp_name] = compute_all_metrics(y_test, test_probs, thr)
         per_label[mlp_name] = compute_per_label_metrics(y_test, test_probs, LABELS, thr)
+
+    if ONLY_MLP:
+        replay_hmm_rng(y_train)          # keep the random stream (and so the splits) identical
+        return overall, per_label
 
     # MMseqs2 1-NN (tunes thresholds internally on train)
     print(f"    [{dataset}] MMseqs2 1-NN")
@@ -821,11 +860,16 @@ def evaluate_all_classifiers(dataset, X_train, y_train, entries_train, seqs_trai
 # ============================================================================
 
 def main():
-    check_tools()
+    if not ONLY_MLP:
+        check_tools()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     print("=" * 70)
-    print("SAM full-vs-balanced unified classifier comparison")
+    print("SAM classifier comparison")
     print("=" * 70)
+    print(f"output: {OUT_DIR} | datasets: {DATASETS} | only MLPs: {ONLY_MLP}")
+    for _n, _c in MLP_VARIANTS.items():
+        _txt = " | ".join(f"{d} {_c[d]['epochs']:>4} ep {list(_c[d]['loss'].values())}" for d in DATASETS)
+        print(f"  {_n:20s} {_txt}")
 
     print(f"Device: {DEVICE}. Loading embedding sources: {', '.join(EMB_SOURCES)}")
     source_maps = {s: load_source_map(p, layout)
@@ -888,6 +932,9 @@ def main():
             print(f"  balanced train={keep.sum()} (withheld {len(bal_entries) - keep.sum()} test entries)")
 
             for dataset, tr in [("full", full_train), ("balanced", bal_train)]:
+                if dataset not in DATASETS:
+                    replay_hmm_rng(tr["y"])      # a skipped arm still advances the random stream, so later splits are unchanged
+                    continue
                 overall, per_label = evaluate_all_classifiers(
                     dataset, tr["X"], tr["y"], tr["e"], tr["s"],
                     X_test, y_test, e_test, s_test, tr["src"], src_test)
@@ -912,7 +959,7 @@ def main():
     print(f"\nWrote detailed / summary / per-label CSVs to {OUT_DIR}")
 
     # ---- Figure: mean metric bars (rows=metric, cols=split x dataset) ----
-    panels = [(sm, ds) for sm in SPLIT_MODES for ds in ("full", "balanced")]
+    panels = [(sm, ds) for sm in SPLIT_MODES for ds in DATASETS]
     fig, axes = plt.subplots(len(metric_cols), len(panels),
                              figsize=(5 * len(panels), 3.2 * len(metric_cols)), squeeze=False)
     for r, metric in enumerate(metric_cols):

@@ -22,9 +22,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, "sam_classifier_comparison_output",
-                   "sam_classifier_comparison_detailed.csv")
-OUT = os.path.join(HERE, "sam_classifier_comparison_output", "stats")
+# BAKEOFF_OUT (optional) points at another bake-off output folder, e.g. a re-run, without touching the committed one
+BASE = os.path.join(HERE, os.environ.get("BAKEOFF_OUT", "sam_classifier_comparison_output"))
+SRC = os.path.join(BASE, "sam_classifier_comparison_detailed.csv")
+OUT = os.path.join(BASE, "stats")
 os.makedirs(OUT, exist_ok=True)
 CONTROL = "MLP_ProstT5"
 ALPHA = 0.05
@@ -174,7 +175,7 @@ def analyze(df, split_mode, dataset, log):
 if __name__ == "__main__":
     df = pd.read_csv(SRC)
     log = ["Statistical comparison of classifier MCC (Demsar 2006 procedure)"]
-    for ds in ("full", "balanced"):
+    for ds in [d for d in ("full", "balanced") if d in set(df.dataset)]:     # the balanced arm is optional
         analyze(df, "cluster", ds, log)
     text = "\n".join(log)
     print(text)

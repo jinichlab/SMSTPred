@@ -25,21 +25,20 @@ organism metadata) are in [`data/`](data).
 
 ## Headline results
 
-- **Structure-aware embeddings lead.** Under cluster-disjoint CV (16 iterations) the ProstT5
-  MLP reaches **MCC 0.928** and the SaProt MLP 0.934 (statistically tied for best), ahead of
-  sequence homology (MMseqs2 1-NN 0.882, not significantly separated), the sequence-only
-  ProtT5 MLP (0.875), structural homology (Foldseek 1-NN 0.873) and the profile-HMM (0.582,
-  the floor). On the same ProstT5 features a linear SVM (0.925) matches the MLP, so the
-  representation, not the classifier head, drives performance. ProstT5 is deployed because
-  it needs only sequence as input (Stage 2).
+- **Embedding MLPs are statistically tied at the top.** Under cluster-disjoint CV (16 iterations) the ProstT5
+  MLP reaches **MCC 0.926**, tied with the ProtT5+ESM-IF (0.928), SaProt (0.927), ProstT5+ESM-IF (0.920) and
+  ProtT5 (0.919) MLPs; sequence homology (MMseqs2 1-NN 0.882) and structural homology (Foldseek 1-NN
+  0.873) are not significantly separated either, while the ESM-IF-only MLP (0.859) and the profile-HMM (0.582,
+  the floor) are significantly worse. On the same ProstT5 features a linear SVM (0.925) matches the MLP, so the
+  representation, not the classifier head, drives performance. ProstT5 is deployed because it needs only
+  sequence as input (Stage 2).
 - **The deployment model** is a 6-seed ProstT5 MLP (1024→512→256→4) with per-label
   MCC-optimal thresholds calibrated on **cluster-disjoint out-of-fold** predictions and an
   applicability-domain flag (Stage 2 → 3).
-- **Focused training matches broad training.** A SAM-trained model is at least as good as
-  one trained on the broad 201k-enzyme UP set on the SAM-MTase task (overall MCC 0.908 vs
-  0.826); no individual substrate class differs significantly under the Nadeau-Bengio
-  corrected paired test, the rare DNA class showing the largest gap (0.913 vs 0.729)
-  (Stage 2).
+- **Focused training is not worse than broad training.** A SAM-trained model scores overall MCC 0.908
+  against 0.862 for one trained on the broad 201k-enzyme UP set, on held-out SAM-MTases; no individual
+  substrate class differs significantly under the Nadeau-Bengio corrected paired test (the rare DNA class
+  shows the largest gap, 0.913 vs 0.770) (Stage 2).
 - **Tree-of-life sweep** of ~112k reference-proteome MTases (Stage 3) reveals
   taxonomic/lifestyle substrate trends (Stage 4) and a structured embedding landscape with
   recoverable, family-specific clusters (Stage 5), including 33 uncharacterized clusters

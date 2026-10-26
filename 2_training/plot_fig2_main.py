@@ -7,12 +7,12 @@
       corrected-paired-test significance (from plot_sam_vs_up_prostt5).
 
 Everything else in the benchmark family is supplementary (MLP-vs-classical-ML zoom,
-balanced classifier zoom, full/balanced MCC-vs-epoch grids, the SAM-vs-UP AUPRC
-panel, UP loss tuning).
+the MCC-vs-epoch and train/validation-loss grids, the SAM-vs-UP AUPRC panel, UP loss tuning).
 
 Pure CSV -> PNG (no GPU). Reuses the panel draw functions from the two sibling
 scripts so styling/statistics stay identical to their standalone versions.
 """
+import os
 from pathlib import Path
 import pandas as pd
 import matplotlib
@@ -23,8 +23,9 @@ import plot_cluster_mcc_zoom as cz          # draw_panel(ax, ds); LEGEND
 import plot_sam_vs_up_prostt5 as su         # draw_panel(ax, metric, summ, det, ylab)
 
 HERE = Path(__file__).resolve().parent
-OUTA = HERE / "sam_classifier_comparison_output"
-OUTB = HERE / "sam_vs_up_prostt5_comparison_output"
+# Optional re-run folders (environment variables); the defaults reproduce the committed Fig 2.
+OUTA = HERE / os.environ.get("BAKEOFF_OUT", "sam_classifier_comparison_output")
+OUTB = HERE / os.environ.get("SAM_VS_UP_OUT", "sam_vs_up_prostt5_comparison_output")
 
 
 def main():

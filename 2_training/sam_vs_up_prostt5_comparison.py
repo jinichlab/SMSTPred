@@ -24,11 +24,20 @@ Metrics are mean +/- SD over the 16 repeated splits. This mirrors Panel A's
   removed. So the UP model has a mild homology advantage over the cluster-disjoint SAM
   model. A later version will also drop UP proteins within 0.6 cosine of the test set. ***
 
-Both models use their own deployment config:
-  SAM:  300 epochs, loss {Other: sqrt_weighted_bce, Protein/RNA/DNA: bce}
-  UP : 3500 epochs, loss {Other/Protein: weighted_bce, RNA/DNA: sqrt_weighted_bce}
+Each model gets its own epochs and per-label loss:
+  SAM:  300 epochs, loss {Other: sqrt_weighted_bce, Protein/RNA/DNA: bce}   (the deployed model)
+  UP :  400 epochs, loss {Other: bce, Protein/RNA: sqrt_weighted_bce, DNA: focal}
+        (per label, the loss with the highest mean MCC at epoch 400 in the UP sweep, Fig S5; Fig S6 shows that
+        validation loss is near its minimum there)
 Per-label decision thresholds are MCC-optimal, tuned on each model's own TRAIN
 predictions (matching the deployment), so MCC/F1 are at the deployment operating point.
+
+Optional overrides (environment variables; the defaults are the Fig 2B configuration):
+  UP_EPOCHS   UP model epochs, e.g. 3500
+  UP_LOSS     UP per-label losses in label order Other,Protein,RNA,DNA, e.g. bce,sqrt_weighted_bce,sqrt_weighted_bce,focal
+  (An earlier run trained the UP model for 3,500 epochs with weighted_bce,weighted_bce,sqrt_weighted_bce,sqrt_weighted_bce;
+  the overall SAM-vs-UP difference was then significant, Nadeau-Bengio p = 0.042, against p = 0.30 at 400 epochs.)
+  SAM_VS_UP_OUT   output folder (relative to this script, or absolute) so a re-run does not overwrite the defaults
 
 Outputs (./sam_vs_up_prostt5_comparison_output/)
   sam_vs_up_prostt5_comparison_summary.csv    model x label x metric, mean/std over iters
@@ -65,7 +74,7 @@ PROSTT5_SAM = FILES / "embeddings_SAM_ProstT5.h5"     # SAM features (mean group
 PROTT5_SAM = FILES / "embeddings_SAM_ProtT5.h5"              # SAM clustering space (flat)
 PROSTT5_UP = FILES / "embeddings_UP_ProstT5.h5"       # UP features (mean group)
 
-OUT = Path(__file__).resolve().parent / "sam_vs_up_prostt5_comparison_output"
+OUT = Path(__file__).resolve().parent / os.environ.get("SAM_VS_UP_OUT", "sam_vs_up_prostt5_comparison_output")
 LABELS = ["Other", "Protein", "RNA", "DNA"]
 CLUSTER_THRESHOLD = 0.6
 N_ITER = 16              # repeated cluster-disjoint 90/10 splits (matches Panel A)
@@ -76,8 +85,15 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 SAM_CFG = {"epochs": 300,
            "loss": {0: "sqrt_weighted_bce", 1: "bce", 2: "bce", 3: "bce"}}
-UP_CFG = {"epochs": 3500,
-          "loss": {0: "weighted_bce", 1: "weighted_bce", 2: "sqrt_weighted_bce", 3: "sqrt_weighted_bce"}}
+UP_CFG = {"epochs": 400,
+          "loss": {0: "bce", 1: "sqrt_weighted_bce", 2: "sqrt_weighted_bce", 3: "focal"}}
+_LOSSES = {"bce", "weighted_bce", "sqrt_weighted_bce", "focal"}
+if os.environ.get("UP_EPOCHS"):
+    UP_CFG = {**UP_CFG, "epochs": int(os.environ["UP_EPOCHS"])}
+if os.environ.get("UP_LOSS"):
+    _l = os.environ["UP_LOSS"].split(",")
+    assert len(_l) == 4 and set(_l) <= _LOSSES, f"UP_LOSS needs 4 of {sorted(_LOSSES)} (Other,Protein,RNA,DNA): {_l}"
+    UP_CFG = {**UP_CFG, "loss": dict(enumerate(_l))}
 
 
 # ---------------------------------------------------------------- data loading
@@ -244,6 +260,7 @@ def metrics(y, probs, thr):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     print("=" * 70 + f"\nSAM vs UP ProstT5 MLP  (device={DEVICE})\n" + "=" * 70)
+    print(f"SAM config: {SAM_CFG}\nUP  config: {UP_CFG}\noutput    : {OUT}", flush=True)
 
     sam_e, Xsam_p, Xsam_c, ysam = load_sam()
     up_e, Xup_p, yup = load_up()

@@ -25,7 +25,8 @@ Palette throughout: **RNA `#cb181d` · DNA `#6a51a3` · Protein `#238b45` · Oth
 |---|---|
 | Fig 2, Fig S4 | `2_training/plot_fig2_main.py`, `plot_cluster_mcc_zoom.py`, `classifier_mcc_stats.py`, `sam_vs_up_prostt5_stats.py`, `plot_sam_vs_up_prostt5.py` |
 | Table 1 | `2_training/build_metrics_table.py` |
-| Figs S2, S3, S5 | `2_training/plot_mcc_curves_grid.py` (data: `mlp_embedding_comparison.py`, `mlp_embedding_comparison_saprot.py`, `mlp_loss_comparison_prostt5.py`) |
+| Figs S2, S5 | `2_training/plot_mcc_curves_grid.py` (data: `mlp_embedding_comparison.py`, `mlp_embedding_comparison_saprot.py`, `mlp_loss_comparison_prostt5.py`) |
+| Figs S3, S6 | `2_training/plot_train_val_loss_curves.py` (data: `train_val_loss_curves.py`; raw curves on Zenodo) |
 | Fig 4A (original) | `4_phylo_trends/protein_cellularity_violin.py` |
 | Fig 6 | `5_umap/plot_umap_static.py` |
 | Table 2, Fig 10 | `7_motif_analysis/build_motif_table.py`, `no_motif_umap.py` |

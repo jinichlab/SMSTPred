@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
 """Zoomed cluster-split MCC bar charts with mean labels and post-hoc significance.
 
-Two method families, each drawn on the full and the class-balanced training set:
+Two method families, drawn on the full training set:
 
   Representations & tools (main Fig 2A) -- the six embedding MLPs vs the three
   off-the-shelf search-tool baselines (MMseqs2 sequence-homology, Profile HMM,
   Foldseek structure-homology). Asks: which INPUT REPRESENTATION wins?
-    sam_classifier_cluster_mcc_zoom.png            full      (main Fig 2A)
-    sam_classifier_cluster_mcc_zoom_balanced.png   balanced  (supplementary)
+    sam_classifier_cluster_mcc_zoom.png
 
-  MLP vs classical ML (supplementary) -- the deployed MLP_ProstT5 vs XGBoost /
+  MLP vs classical ML (Fig S4) -- the deployed MLP_ProstT5 vs XGBoost /
   Random Forest / Logistic Regression / four SVMs, ALL trained on identical
   ProstT5 features. A controlled "same representation, different classifier head"
   contrast. Asks: given ProstT5, does the CLASSIFIER choice matter?
-    sam_classifier_classical_ml_comparison.png            full      (supplementary)
-    sam_classifier_classical_ml_comparison_balanced.png   balanced  (supplementary)
+    sam_classifier_classical_ml_comparison.png
 
 Per figure: cluster-disjoint MCC for each classifier sorted high->low, +/-1 SD
 error bars, each bar labelled with its mean. Y-axis zoomed to amplify the top.
@@ -27,6 +25,7 @@ shown, not the full 16):
     bars significantly WORSE than control (a=0.05) are starred/red; the leading
     run that is NOT significantly worse is bracketed as the "top tier".
 """
+import os
 from pathlib import Path
 import numpy as np
 import matplotlib
@@ -36,7 +35,7 @@ import matplotlib.patches as mpatches
 import pandas as pd
 from scipy import stats
 
-OUT = Path(__file__).resolve().parent / "sam_classifier_comparison_output"
+OUT = Path(__file__).resolve().parent / os.environ.get("BAKEOFF_OUT", "sam_classifier_comparison_output")   # BAKEOFF_OUT: optional re-run folder
 s = pd.read_csv(OUT / "sam_classifier_comparison_summary.csv")
 d = pd.read_csv(OUT / "sam_classifier_comparison_detailed.csv")
 
@@ -139,17 +138,17 @@ LEGEND_CLASSICAL = [mpatches.Patch(color="#2c7fb8", label="Embedding MLP (deploy
 
 
 def _saprot_prostt5_note(fig, ds):
-    """Bottom caption line: SaProt vs ProstT5 tie (only when both are shown)."""
+    """Bottom caption line: deployed ProstT5 (sequence only) vs SaProt (needs structure)."""
     pv = (d[(d.split_mode == "cluster") & (d.dataset == ds)]
           .pivot_table(index="iteration", columns="classifier", values="mcc"))
     dd = pv["MLP_SaProt"] - pv["MLP_ProstT5"]
     wp = stats.wilcoxon(pv["MLP_SaProt"], pv["MLP_ProstT5"]).pvalue
+    verdict = "statistically tied" if wp >= ALPHA else "significantly different"
     fig.text(0.5, 0.060,
-             "MLP_SaProt and MLP_ProstT5 are the top-ranked structure-aware MLPs and are statistically tied",
+             f"MLP_ProstT5 (deployed; needs only sequence) and MLP_SaProt (needs a structure) are {verdict}",
              ha="center", va="bottom", fontsize=8.5, color="#333")
     fig.text(0.5, 0.035,
-             f"(Δ={dd.mean():+.3f} MCC, SaProt wins {int((dd > 0).sum())}/{len(dd)} iters, Wilcoxon p={wp:.2f}); "
-             f"ProstT5 is deployed as it needs only sequence input.",
+             f"(SaProt minus ProstT5: Δ={dd.mean():+.3f} MCC, SaProt wins {int((dd > 0).sum())}/{len(dd)} iters, Wilcoxon p={wp:.2f}).",
              ha="center", va="bottom", fontsize=8.5, color="#333")
 
 
@@ -168,20 +167,15 @@ def make_fig(ds, methods, fname, legend, bracket_label, saprot_note):
 
 
 if __name__ == "__main__":
-    # --- Fig 2A + balanced supplementary: representations & tools ---
+    # --- Fig 2A: representations & tools ---
     make_fig("full", REPRO_TOOLS, "sam_classifier_cluster_mcc_zoom.png",
              LEGEND, f"top tier — n.s. vs {CONTROL}", saprot_note=True)
-    make_fig("balanced", REPRO_TOOLS, "sam_classifier_cluster_mcc_zoom_balanced.png",
-             LEGEND, f"top tier — n.s. vs {CONTROL}", saprot_note=True)
 
-    # --- supplementary: MLP vs classical ML, all on ProstT5 ---
+    # --- Fig S4: MLP vs classical ML, all on ProstT5 ---
     make_fig("full", CLASSICAL_SET, "sam_classifier_classical_ml_comparison.png",
-             LEGEND_CLASSICAL, f"top tier — n.s. vs {CONTROL}", saprot_note=False)
-    make_fig("balanced", CLASSICAL_SET, "sam_classifier_classical_ml_comparison_balanced.png",
              LEGEND_CLASSICAL, f"top tier — n.s. vs {CONTROL}", saprot_note=False)
 
     for name, methods in [("representations+tools", REPRO_TOOLS), ("classical-ML", CLASSICAL_SET)]:
-        for ds in ("full", "balanced"):
-            st = posthoc("cluster", ds, methods)
-            print(f"  {name} cluster/{ds}: Friedman p={st['p']:.2e}; "
-                  f"worse-than-{CONTROL} = {sorted(st['worse'])}")
+        st = posthoc("cluster", "full", methods)
+        print(f"  {name} cluster/full: Friedman chi2({st['df']})={st['chi2']:.1f}, p={st['p']:.2e}; "
+              f"worse-than-{CONTROL} = {sorted(st['worse'])}")
