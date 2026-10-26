@@ -6,7 +6,7 @@ SaProt-only variant of the embedding sweep: characterises the loss/epoch
 behaviour of a single condition so its best config can be chosen the same way as
 the other embeddings, before adding SaProt to the main comparison.
 
-    SaProt   ../files/saprot_SAM_swiss.h5   (structure-aware PLM, 3Di-fused, 1280-D)
+    SaProt   embeddings_SAM_SaProt.h5       (structure-aware PLM, 3Di-fused, 1280-D)
 
 Fairness rules
 --------------
@@ -55,13 +55,15 @@ torch.manual_seed(42)
 # ============================================================================
 # Configuration
 # ============================================================================
+DATA_DIR = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data"))
+# Input files live in DATA_DIR under their Zenodo names (see data/README.md).
 DATASETS = {
-    "full":     "../files/SAM_swiss_enzymes_substrate_types.csv",   # deduped: 7,405 proteins
-    "balanced": "../files/SAM_swiss_substrate_types_balanced.csv",  # deduped: 2,924 proteins
+    "full":     DATA_DIR / "labels_SAM_full.csv",       # deduped: 7,405 proteins
+    "balanced": DATA_DIR / "labels_SAM_balanced.csv",   # deduped: 2,924 proteins
 }
 SOURCES = {
-    "prott5":  ("../files/SAM_swiss.h5",          "flat"),        # split clustering only
-    "saprot":  ("../files/saprot_SAM_swiss.h5",   "flat"),        # Entry -> 1280
+    "prott5":  (DATA_DIR / "embeddings_SAM_ProtT5.h5",   "flat"),        # split clustering only
+    "saprot":  (DATA_DIR / "embeddings_SAM_SaProt.h5",   "flat"),        # Entry -> 1280
 }
 # Each condition is a list of sources to concatenate (in order).
 CONDITIONS = {

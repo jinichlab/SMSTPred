@@ -19,6 +19,7 @@ draw an iTOL-style clade strip just outside the bar band with a label + a faint
 accent wedge. Add a lineage by name in HIGHLIGHTS; a polyphyletic pick simply
 yields multiple strips."""
 import os
+import sys
 from pathlib import Path
 import io
 import re
@@ -39,7 +40,7 @@ BASE = Path(__file__).resolve().parent
 # Gradient rings widened 3x from the raw iTOL export via widen_rings.py (the
 # native export's rings are only 25 local units thick -- hard to tell apart).
 SVG = BASE / "V4prbvTzDgPu09RO61xuyg_widened.svg"
-SVG_RAW = BASE / "V4prbvTzDgPu09RO61xuyg.svg"    # iTOL export with native clade ranges baked in
+SVG_RAW = Path(os.environ.get("SMSTPRED_DATA", BASE.parents[1] / "data")) / "itol_tree_export_Fig3.svg"  # raw iTOL export (Zenodo)
 RENDER_W = 7000                                  # rasterize width (px)
 DROP_GROUPS = {"legendHolder", "scaleHolder", "timeScaleHolder", "wrapperHolder"}
 
@@ -127,6 +128,9 @@ def render_svg():
     """Strip legend/scale groups, rasterize on white, crop to content, and recover
     the tree geometry (center, leaf tip radius, per-leaf angle, bar-band radius) in
     cropped-raster pixel coordinates for clade highlighting."""
+    if not SVG.exists():
+        sys.exit(f"{SVG.name} not found: run widen_rings.py first (it reads the raw iTOL export "
+                 f"{SVG_RAW.name} from the data directory).")
     tree = etree.parse(str(SVG)); root = tree.getroot()
     vb = [float(x) for x in re.split(r"[,\s]+", root.get("viewBox"))]
     main = next((_parse_transform(e.get("transform")) for e in root.iter()

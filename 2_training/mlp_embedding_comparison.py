@@ -5,10 +5,10 @@ MLP loss sweep across EMBEDDING TYPES for SAM MTase substrate classification.
 Same loss/epoch sweep as the SAM loss test, but the variable is the EMBEDDING
 rather than the loss config. Four embedding conditions are compared:
 
-    ProtT5            ../files/SAM_swiss.h5            (sequence PLM, 1024-D)
-    ProstT5           ../files/prostt5_SAM_swiss.h5    (structure-aware PLM, 1024-D)
+    ProtT5            embeddings_SAM_ProtT5.h5         (sequence PLM, 1024-D)
+    ProstT5           embeddings_SAM_ProstT5.h5        (structure-aware PLM, 1024-D)
     ProtT5+ProstT5    concat                            (2048-D)
-    ProtT5+ESM-IF     ../files/esmif_SAM_swiss.h5      (1024 + 512 structural GNN)
+    ProtT5+ESM-IF     embeddings_SAM_ESM-IF.h5         (1024 + 512 structural GNN)
 
 Fairness rules
 --------------
@@ -58,14 +58,16 @@ torch.manual_seed(42)
 # ============================================================================
 # Configuration
 # ============================================================================
+DATA_DIR = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data"))
+# Input files live in DATA_DIR under their Zenodo names (see data/README.md).
 DATASETS = {
-    "full":     "../files/SAM_swiss_enzymes_substrate_types.csv",   # deduped: 7,405 proteins
-    "balanced": "../files/SAM_swiss_substrate_types_balanced.csv",  # deduped: 2,924 proteins
+    "full":     DATA_DIR / "labels_SAM_full.csv",       # deduped: 7,405 proteins
+    "balanced": DATA_DIR / "labels_SAM_balanced.csv",   # deduped: 2,924 proteins
 }
 SOURCES = {
-    "prott5":  ("../files/SAM_swiss.h5",          "flat"),        # Entry -> 1024
-    "prostt5": ("../files/prostt5_SAM_swiss.h5",  "mean_group"),  # Entry/mean -> 1024
-    "esmif":   ("../files/esmif_SAM_swiss.h5",    "flat"),        # Entry -> 512
+    "prott5":  (DATA_DIR / "embeddings_SAM_ProtT5.h5",   "flat"),        # Entry -> 1024
+    "prostt5": (DATA_DIR / "embeddings_SAM_ProstT5.h5",  "mean_group"),  # Entry/mean -> 1024
+    "esmif":   (DATA_DIR / "embeddings_SAM_ESM-IF.h5",   "flat"),        # Entry -> 512
 }
 # Each condition is a list of sources to concatenate (in order).
 CONDITIONS = {

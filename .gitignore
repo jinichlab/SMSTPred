@@ -17,9 +17,13 @@ ctrl_*.fasta
 pos_*.fasta
 reps_*.fasta
 clust_*
+!7_motif_analysis/clust_cluster.tsv
 tmp_mmseqs/
 cosine_sim_matrix.dat
 
 # stray editor/OS backups
 *.bak
 .DS_Store
+
+# generated Fig 3 intermediate (rebuilt by figures/Fig3_tree_landscape/widen_rings.py)
+figures/Fig3_tree_landscape/*.svg

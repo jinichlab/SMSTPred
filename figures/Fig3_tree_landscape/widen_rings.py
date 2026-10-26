@@ -20,9 +20,12 @@ the radius that curve sits at -- this preserves the tangential curvature
 direction while matching the new radius's larger arc.
 
 Usage: python3 widen_rings.py [factor]   (default factor 3.0 -> 75-unit rings)
-Output: V4prbvTzDgPu09RO61xuyg_widened.svg (sibling of the source SVG)
+Input:  itol_tree_export_Fig3.svg, the raw iTOL export from the Zenodo record (in the data directory,
+        data/ or $SMSTPRED_DATA).
+Output: V4prbvTzDgPu09RO61xuyg_widened.svg next to this script (read by make_tree_figure.py).
 """
 import math
+import os
 import re
 import sys
 from pathlib import Path
@@ -30,7 +33,8 @@ from pathlib import Path
 from lxml import etree
 
 HERE = Path(__file__).resolve().parent
-SRC = HERE / "V4prbvTzDgPu09RO61xuyg.svg"
+DATA_DIR = Path(os.environ.get("SMSTPRED_DATA", HERE.parents[1] / "data"))
+SRC = DATA_DIR / "itol_tree_export_Fig3.svg"
 N_RINGS = 5
 RING_THICKNESS = 25.0          # local units, verified constant across all leaves/rings
 RING0_START = 1160.596679807108  # local-frame radius where ring 0 begins (verified constant)
