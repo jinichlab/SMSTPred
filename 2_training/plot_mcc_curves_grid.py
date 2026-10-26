@@ -33,7 +33,7 @@ LOSSES = ["bce", "weighted_bce", "sqrt_weighted_bce", "focal"]
 LOSS_COLORS = dict(zip(LOSSES, ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"]))
 
 
-def render_grid(pl, embeddings, title, outpath, ylim=None):
+def render_grid(pl, embeddings, outpath, ylim=None):
     n_iters = pl["iteration"].nunique()
     nr, nc = len(embeddings), len(LABELS)
     fig, axes = plt.subplots(nr, nc, figsize=(4.4 * nc, 3.0 * nr + 1.0),
@@ -65,8 +65,7 @@ def render_grid(pl, embeddings, title, outpath, ylim=None):
             if r == nr - 1:
                 ax.set_xlabel("epoch (log)")
     axes[0][-1].legend(fontsize=7, loc="lower right", title=f"loss (n={n_iters})")
-    fig.suptitle(title, fontsize=13, fontweight="bold")
-    fig.tight_layout(rect=[0, 0, 1, 1 - 0.55 / (3.0 * nr + 1.0)])
+    fig.tight_layout()
     fig.savefig(outpath, dpi=140)
     plt.close(fig)
     print("wrote", outpath)
@@ -85,8 +84,6 @@ def main():
     EMBS = ["ProstT5", "SaProt", "ProtT5", "ESM-IF", "ProtT5+ESM-IF", "ProstT5+ESM-IF"]
     for ds in ["full", "balanced"]:
         render_grid(epl[epl.dataset == ds], EMBS,
-                    f"SAM {ds.upper()} SET — per-label MCC vs epoch  "
-                    f"(rows = embedding, cols = label, lines = loss, band = ±1 SD, dot = peak)",
                     emb_dir / f"{ds}_mcc_curves_grid.png", ylim=(0.0, 1.0))
 
     # --- UP ProstT5 loss sweep: single embedding, per-panel y to show loss split ---
@@ -94,8 +91,6 @@ def main():
     upl = pd.read_csv(up_dir / "UP_prostt5_mlp_loss_comparison_per_label.csv")
     upl["embedding"] = "ProstT5"
     render_grid(upl, ["ProstT5"],
-                "UP (all-UniProt) ProstT5 — per-label MCC vs epoch  "
-                "(cols = label, lines = loss, band = ±1 SD, dot = peak)",
                 up_dir / "UP_prostt5_mcc_curves_grid.png", ylim=None)
 
 

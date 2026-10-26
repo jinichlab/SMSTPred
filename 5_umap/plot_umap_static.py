@@ -37,12 +37,6 @@ def main():
                                   c=SUBSTRATE_COLORS[sub], label=f"{sub} (n={int(m.sum()):,})",
                                   alpha=alpha, s=size, edgecolors="none", zorder=2 + k)
     ax.set_xlabel("UMAP 1", fontsize=12); ax.set_ylabel("UMAP 2", fontsize=12)
-    ax.set_title("Tree-of-life SAM-MTases resolve into distinct, substrate-coherent islands",
-                 fontsize=15, fontweight="bold", pad=26)
-    ax.text(0.5, 1.012,
-            f"UMAP of {len(df):,} ProstT5 embeddings, colored by predicted substrate — "
-            "explore the interactive version in the repo (5_umap/)",
-            transform=ax.transAxes, ha="center", va="bottom", fontsize=10.5, color="#555")
     order = [s for s in SUBSTRATE_COLORS if s in handles]
     ax.legend([handles[s] for s in order], [handles[s].get_label() for s in order],
               loc="upper right", fontsize=10, framealpha=0.9)

@@ -272,7 +272,6 @@ def plot_baseline_histogram(all_sims, save_path):
     plt.hist(all_sims, bins=50, edgecolor="black", alpha=0.7, color="steelblue")
     plt.xlabel("Cosine Similarity", fontsize=12)
     plt.ylabel("Frequency", fontsize=12)
-    plt.title("All Pairwise Cosine Similarities (Before Clustering)", fontsize=14)
     stats_text = (
         f"Mean: {np.mean(all_sims):.4f}\nMedian: {np.median(all_sims):.4f}\n"
         f"Std: {np.std(all_sims):.4f}\nN pairs: {len(all_sims):,}"
@@ -337,11 +336,6 @@ def plot_validation_histogram(max_sims, save_path, chosen_threshold):
     ax.hist(max_sims, bins=50, edgecolor="black", alpha=0.7, color="#4C72B0")
     ax.set_xlabel("Max Cosine Similarity to Training Set", fontsize=13)
     ax.set_ylabel("Count", fontsize=13)
-    ax.set_title(
-        "Deployment-domain validation\n"
-        f"(n={len(max_sims):,} predicted SAM MTases vs training set)",
-        fontsize=14,
-    )
     ax.axvline(np.median(max_sims), color="red", linestyle="--", linewidth=1.5,
                label=f"Median: {np.median(max_sims):.4f}")
     ax.axvline(max_sims.min(), color="green", linestyle="--", linewidth=1.5,

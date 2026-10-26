@@ -153,19 +153,14 @@ def _saprot_prostt5_note(fig, ds):
              ha="center", va="bottom", fontsize=8.5, color="#333")
 
 
-def make_fig(ds, methods, fname, suptitle, legend, bracket_label, saprot_note):
+def make_fig(ds, methods, fname, legend, bracket_label, saprot_note):
     fig, ax = plt.subplots(figsize=(12.5, 7.0))
     draw_panel(ax, ds, methods, bracket_label=bracket_label)
     fig.legend(handles=legend, fontsize=9.5, loc="upper center", ncol=len(legend),
-               bbox_to_anchor=(0.5, 0.945), frameon=True)
-    fig.suptitle(suptitle, fontsize=14, fontweight="bold", y=0.99)
+               bbox_to_anchor=(0.5, 0.985), frameon=True)
     if saprot_note:
         _saprot_prostt5_note(fig, ds)
-    fig.text(0.5, 0.009,
-             f"Blue band / bracket = top tier n.s. vs {CONTROL} (control).    "
-             f"Red label + * = significantly worse (Bonferroni–Dunn, α=0.05, N={NITERS}).",
-             ha="center", va="bottom", fontsize=8.5, color="#333")
-    fig.tight_layout(rect=[0, 0.10, 1, 0.90])
+    fig.tight_layout(rect=[0, 0.10 if saprot_note else 0.03, 1, 0.95])
     p = OUT / fname
     fig.savefig(p, dpi=150)
     plt.close(fig)
@@ -175,20 +170,14 @@ def make_fig(ds, methods, fname, suptitle, legend, bracket_label, saprot_note):
 if __name__ == "__main__":
     # --- Fig 2A + balanced supplementary: representations & tools ---
     make_fig("full", REPRO_TOOLS, "sam_classifier_cluster_mcc_zoom.png",
-             "SAM substrate-type classifiers — representations & tools (cluster-disjoint MCC)",
              LEGEND, f"top tier — n.s. vs {CONTROL}", saprot_note=True)
     make_fig("balanced", REPRO_TOOLS, "sam_classifier_cluster_mcc_zoom_balanced.png",
-             "SAM substrate-type classifiers — representations & tools "
-             "(cluster-disjoint MCC, class-balanced training set)",
              LEGEND, f"top tier — n.s. vs {CONTROL}", saprot_note=True)
 
     # --- supplementary: MLP vs classical ML, all on ProstT5 ---
     make_fig("full", CLASSICAL_SET, "sam_classifier_classical_ml_comparison.png",
-             "Deployed MLP vs classical ML on ProstT5 features — cluster-disjoint MCC",
              LEGEND_CLASSICAL, f"top tier — n.s. vs {CONTROL}", saprot_note=False)
     make_fig("balanced", CLASSICAL_SET, "sam_classifier_classical_ml_comparison_balanced.png",
-             "Deployed MLP vs classical ML on ProstT5 features — cluster-disjoint MCC "
-             "(class-balanced training set)",
              LEGEND_CLASSICAL, f"top tier — n.s. vs {CONTROL}", saprot_note=False)
 
     for name, methods in [("representations+tools", REPRO_TOOLS), ("classical-ML", CLASSICAL_SET)]:

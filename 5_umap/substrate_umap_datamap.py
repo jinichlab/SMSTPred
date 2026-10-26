@@ -176,8 +176,6 @@ def create_static_plot(df, output_path):
             label=f"{substrate} (n={mask.sum():,})", alpha=alpha, s=size,
             edgecolors="none", zorder=2 + k)
     ax.set_xlabel("UMAP 1", fontsize=12); ax.set_ylabel("UMAP 2", fontsize=12)
-    ax.set_title("SAM Methyltransferases by Predicted Substrate Type (ProstT5)",
-                 fontsize=14, fontweight="bold")
     legend_order = [s for s in SUBSTRATE_COLORS if s in handles]
     ax.legend([handles[s] for s in legend_order], [handles[s].get_label() for s in legend_order],
               loc="upper right", fontsize=10, framealpha=0.9)

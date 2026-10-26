@@ -35,7 +35,7 @@ ACTINO_CLUSTERS = {17, 57, 200, 289, 309, 451, 452, 469, 470, 522, 692, 693, 795
 
 def _clean(name):
     name = re.sub(r"\s*\(EC [^)]*\)", "", str(name))
-    return re.sub(r"\s*\((Fragment|isoform[^)]*)\)", "", name, flags=re.I)[:44]
+    return re.sub(r"\s*\((Fragment|isoform[^)]*)\)", "", name, flags=re.I)[:30]
 
 
 def load():
@@ -73,9 +73,9 @@ def panel(ax, d, c, name, f_po):
     mx = np.percentile(sub.UMAP_1.values, [1, 99]); my = np.percentile(sub.UMAP_2.values, [1, 99])
     px = max((mx[1] - mx[0]) * 0.12, 0.15); py = max((my[1] - my[0]) * 0.12, 0.15)
     ax.set_xlim(mx[0] - px, mx[1] + px); ax.set_ylim(my[0] - py, my[1] + py)
-    ax.set_title(f"c{c}: {name}\n(n={len(sub)}, {f_po:.0%} actino&Other)", fontsize=8)
-    ax.set_xlabel("UMAP 1", fontsize=7); ax.set_ylabel("UMAP 2", fontsize=7)
-    ax.tick_params(labelsize=6)
+    ax.set_title(f"c{c}: {name}\n(n={len(sub)}, {f_po:.0%} actino&Other)", fontsize=15)
+    ax.set_xlabel("UMAP 1", fontsize=12); ax.set_ylabel("UMAP 2", fontsize=12)
+    ax.tick_params(labelsize=10)
 
 
 def main():
@@ -85,14 +85,14 @@ def main():
     print(f"{n} clusters: >=80% Actinomycetota&Other and 0 SwissProt "
           f"({int(sel['size'].sum()):,} proteins)", flush=True)
     nrows = ceil(n / NCOLS)
-    fig, axes = plt.subplots(nrows, NCOLS, figsize=(3.3 * NCOLS, 3.0 * nrows))
+    fig, axes = plt.subplots(nrows, NCOLS, figsize=(4.8 * NCOLS, 3.9 * nrows))
     axes = np.atleast_1d(axes).ravel()
     for ax, (_, r) in zip(axes, sel.iterrows()):
         panel(ax, d, int(r.cluster), r["name"], r.f_actino_other)
     for ax in axes[n:]:
         ax.axis("off")
     fig.suptitle(f"Uncharacterized Actinomycetota 'Other'-MTase clusters "
-                 f"({n} clusters, >=80% actino&Other, 0 SwissProt anchors)", fontsize=13, y=1.00)
+                 f"({n} clusters, >=80% actino&Other, 0 SwissProt anchors)", fontsize=20, y=1.00)
     fig.tight_layout(rect=[0, 0, 1, 0.99])
     fig.savefig(IO / "actino_other_dark_clusters_prostt5.png", dpi=150)
     print("wrote actino_other_dark_clusters_prostt5.png", flush=True)

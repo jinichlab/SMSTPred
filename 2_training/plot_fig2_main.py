@@ -31,15 +31,13 @@ def main():
     summ = pd.read_csv(OUTB / "sam_vs_up_prostt5_comparison_summary.csv")
     det = pd.read_csv(OUTB / "sam_vs_up_prostt5_comparison_detailed.csv")
 
-    fig = plt.figure(figsize=(13.5, 12.6))
+    fig = plt.figure(figsize=(13.5, 11.6))
     gs = fig.add_gridspec(2, 1, height_ratios=[1.18, 0.86], hspace=0.62,
-                          left=0.065, right=0.985, top=0.90, bottom=0.125)
+                          left=0.065, right=0.985, top=0.90, bottom=0.05)
 
     # ---- Panel A: representations & tools, cluster-disjoint MCC (full set) ----
     axA = fig.add_subplot(gs[0])
     cz.draw_panel(axA, "full", cz.REPRO_TOOLS)
-    axA.set_title("Representations & tools — cluster-disjoint MCC (full training set, N=16 iters)",
-                  loc="left", fontsize=12, fontweight="bold", pad=34)
     axA.text(-0.055, 1.20, "A", transform=axA.transAxes, fontsize=19, fontweight="bold", va="top")
     axA.legend(handles=cz.LEGEND, fontsize=9, loc="lower center",
                bbox_to_anchor=(0.5, 1.005), ncol=len(cz.LEGEND), frameon=True)
@@ -47,28 +45,7 @@ def main():
     # ---- Panel B: SAM-trained vs UP-trained ProstT5 MLP, MCC ----
     axB = fig.add_subplot(gs[1])
     su.draw_panel(axB, "mcc", summ, det, "MCC (tuned threshold)")
-    axB.set_title(f"SAM-trained vs UP-trained ProstT5 MLP — held-out SAM "
-                  f"({su.stx.N_ITER} cluster-disjoint splits)",
-                  loc="left", fontsize=12, fontweight="bold", pad=8)
     axB.text(-0.055, 1.14, "B", transform=axB.transAxes, fontsize=19, fontweight="bold", va="top")
-
-    # ---- combined caption ----
-    fig.text(0.5, 0.085,
-             "A — Friedman χ² omnibus (methods differ overall). Blue band / bracket = top tier not significantly "
-             "worse than MLP_ProstT5 (control);",
-             ha="center", va="bottom", fontsize=8.5, color="#333")
-    fig.text(0.5, 0.065,
-             "red label + * = significantly worse (Bonferroni–Dunn, α=0.05). MLP_SaProt ≈ MLP_ProstT5 (tied); "
-             "ProstT5 deployed (sequence-only input).",
-             ha="center", va="bottom", fontsize=8.5, color="#333")
-    fig.text(0.5, 0.032,
-             f"B — brackets = Nadeau–Bengio corrected paired t-test (N={su.stx.N_ITER} splits, two-sided). "
-             "No substrate class differs significantly;",
-             ha="center", va="bottom", fontsize=8.5, color="#333")
-    fig.text(0.5, 0.012,
-             "the marginal aggregate edge (Overall) favors focused SAM, not broad UP — more data does not beat "
-             "task-matched data.",
-             ha="center", va="bottom", fontsize=8.5, color="#333")
 
     p = OUTA / "fig2_benchmark_main.png"
     fig.savefig(p, dpi=150)

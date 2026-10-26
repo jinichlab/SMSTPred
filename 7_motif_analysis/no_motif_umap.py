@@ -59,13 +59,14 @@ def near_motif_dark_clusters(umap, thresh=NEAR_DARK_FRAC):
     return set(frac[frac >= thresh].index)
 
 
-def scatter(ax, umap, colored_mask, title, fg_s=3.0):
+def scatter(ax, umap, colored_mask, letter, fg_s=3.0):
     bg = umap[~colored_mask]
     ax.scatter(bg["UMAP_1"], bg["UMAP_2"], s=1.2, c=GREY, linewidths=0, rasterized=True)
     fg = umap[colored_mask]
     cols = fg["Substrate"].map(SUBSTRATE_COLORS).fillna("#999999")
     ax.scatter(fg["UMAP_1"], fg["UMAP_2"], s=fg_s, c=cols, linewidths=0, rasterized=True)
-    ax.set_title(title, fontsize=12, fontweight="bold")
+    ax.text(0.0, 1.0, letter, transform=ax.transAxes, ha="left", va="bottom",
+            fontsize=20, fontweight="bold")
     ax.set_xticks([]); ax.set_yticks([])
     for sp in ax.spines.values():
         sp.set_visible(False)
@@ -86,19 +87,14 @@ def main():
     print(f"all no-motif points on UMAP: {n_nomotif:,}")
 
     fig, axes = plt.subplots(1, 2, figsize=(15, 7.2))
-    scatter(axes[0], umap, in_near,
-            f"A. Near-motif-dark families\n({len(near)} UMAP clusters ≥{pct}% no-motif, {n_near_pts:,} proteins)",
-            fg_s=9.0)
-    scatter(axes[1], umap, is_no_motif,
-            f"B. All STREME-negative proteins\n({n_nomotif:,} no-motif, scattered within motif families)")
+    scatter(axes[0], umap, in_near, "A", fg_s=9.0)
+    scatter(axes[1], umap, is_no_motif, "B")
 
     handles = [mpatches.Patch(color=SUBSTRATE_COLORS[s], label=s) for s in SUB_ORDER]
     handles.append(mpatches.Patch(color=GREY, label="motif / other (grey)"))
     fig.legend(handles=handles, loc="lower center", ncol=5, fontsize=10,
                frameon=False, bbox_to_anchor=(0.5, 0.005))
-    fig.suptitle("SAM-MTase embedding landscape — proteins carrying no discriminative STREME motif "
-                 "(real per-protein FIMO)", fontsize=13, fontweight="bold")
-    fig.tight_layout(rect=[0, 0.05, 1, 0.96])
+    fig.tight_layout(rect=[0, 0.05, 1, 1.0])
     fig.savefig(OUT_PNG, dpi=200)
     print(f"[wrote] {OUT_PNG}")
 

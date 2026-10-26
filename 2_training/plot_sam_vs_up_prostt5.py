@@ -74,8 +74,6 @@ def main():
     for ax, metric, lbl in zip(axes, ["mcc", "auprc"], ["MCC (tuned threshold)", "AUPRC"]):
         draw_panel(ax, metric, summ, det, lbl, title=lbl)
 
-    fig.suptitle("SAM-trained vs UP-trained ProstT5 MLP — evaluated on held-out SAM "
-                 f"({stx.N_ITER} cluster-disjoint splits, mean±SD)", fontsize=12, fontweight="bold")
     fig.text(0.5, 0.045,
              f"Significance: Nadeau–Bengio corrected paired t-test over N={stx.N_ITER} cluster-disjoint splits "
              "(two-sided; corrects for train-set overlap across splits).",
@@ -84,7 +82,7 @@ def main():
              "No individual substrate class differs; the marginal aggregate edge (Overall, p=0.04) favors focused "
              "SAM, not broad UP — more training data does not beat precise, task-matched data.",
              ha="center", va="bottom", fontsize=8.5, color="#333")
-    fig.tight_layout(rect=[0, 0.08, 1, 0.95])
+    fig.tight_layout(rect=[0, 0.08, 1, 1.0])
     p = OUT / "sam_vs_up_prostt5_comparison_mcc.png"
     fig.savefig(p, dpi=150)
     plt.close(fig)

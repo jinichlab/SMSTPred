@@ -76,7 +76,7 @@ def main():
 
     # ---- rendered table ----
     cols = list(df.columns)
-    fig, ax = plt.subplots(figsize=(15, 0.34 * len(df) + 1.0))
+    fig, ax = plt.subplots(figsize=(15, 0.34 * len(df) + 0.3))
     ax.axis("off")
     tbl = ax.table(cellText=df.values, colLabels=cols, cellLoc="left",
                    loc="center", bbox=[0, 0, 1, 1])
@@ -97,9 +97,6 @@ def main():
                 cell.set_facecolor("#ffffff" if (r % 2) else "#f4f4f4")
             if cols[c] == "Consensus":
                 cell.set_text_props(fontfamily="monospace")
-    ax.set_title("Discriminative STREME motifs per substrate label — consensus, discovery E-value, "
-                 "and real per-protein coverage (FIMO over all class members)",
-                 fontsize=12, fontweight="bold", pad=14)
     fig.tight_layout()
     fig.savefig(HERE / "motif_table.png", dpi=200, bbox_inches="tight")
     plt.close(fig)
