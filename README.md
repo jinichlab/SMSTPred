@@ -19,20 +19,27 @@ homology and classical-ML baselines, deploys it across the tree of life, and int
 | 6 | [`6_dark_cluster_annotation/`](6_dark_cluster_annotation) | Cross-validates the 33 uncharacterized ("dark", zero-SwissProt-anchor) clusters surfaced in Stage 5 against two independent methods — **CLEAN** (EC-centroid nearest neighbor) and **Horizyn** (reaction-retrieval) — to flag genuine discovery leads vs clusters mis-swept in from other chemistry. |
 | 7 | [`7_motif_analysis/`](7_motif_analysis) | **Interpretability**: discriminative sequence motifs (STREME), per-residue attribution (Integrated Gradients), and structural mapping of both — *why* the classifier works. |
 
-Each folder has its own `README.md` with scripts, inputs, outputs, and parameters.
+Each folder has its own `README.md` with scripts, inputs, outputs, and parameters. Composite-figure
+and rendered-table builders are in [`figures/`](figures); the small data tables (training labels,
+organism metadata) are in [`data/`](data).
 
 ## Headline results
 
-- **ProstT5 is the best embedding.** Under cluster-disjoint CV the ProstT5 MLP reaches
-  **MCC 0.955**, beating sequence-homology (MMseqs2 1-NN 0.917), structural-homology
-  (Foldseek 1-NN 0.876), classical ML, and other PLMs — i.e. the structure-aware embedding
-  carries substrate-type information *beyond* homology (Stage 2).
+- **Structure-aware embeddings lead.** Under cluster-disjoint CV (16 iterations) the ProstT5
+  MLP reaches **MCC 0.928** and the SaProt MLP 0.934 (statistically tied for best), ahead of
+  sequence homology (MMseqs2 1-NN 0.882, not significantly separated), the sequence-only
+  ProtT5 MLP (0.875), structural homology (Foldseek 1-NN 0.873) and the profile-HMM (0.582,
+  the floor). On the same ProstT5 features a linear SVM (0.925) matches the MLP, so the
+  representation, not the classifier head, drives performance. ProstT5 is deployed because
+  it needs only sequence as input (Stage 2).
 - **The deployment model** is a 6-seed ProstT5 MLP (1024→512→256→4) with per-label
   MCC-optimal thresholds calibrated on **cluster-disjoint out-of-fold** predictions and an
   applicability-domain flag (Stage 2 → 3).
-- **Focused beats broad.** A SAM-trained model out-performs a model trained on the broad
-  201k-enzyme UP set on the SAM-MTase task (overall MCC 0.883 vs 0.824), driven mostly by
-  the rare DNA class (Stage 2).
+- **Focused training matches broad training.** A SAM-trained model is at least as good as
+  one trained on the broad 201k-enzyme UP set on the SAM-MTase task (overall MCC 0.908 vs
+  0.826); no individual substrate class differs significantly under the Nadeau-Bengio
+  corrected paired test, the rare DNA class showing the largest gap (0.913 vs 0.729)
+  (Stage 2).
 - **Tree-of-life sweep** of ~112k reference-proteome MTases (Stage 3) reveals
   taxonomic/lifestyle substrate trends (Stage 4) and a structured embedding landscape with
   recoverable, family-specific clusters (Stage 5), including 33 uncharacterized clusters
@@ -46,8 +53,9 @@ Each folder has its own `README.md` with scripts, inputs, outputs, and parameter
 
 - **Embeddings.** ProstT5 (structure-aware, 1024-D) per-protein mean embeddings are the
   classifier features; ProtT5 embeddings are used **only for clustering** (homology splits),
-  "to match the rest of the project". Embeddings are produced upstream by
-  `Code/prostt5/embed_prostt5.py` into `Code/files/prostt5_*.h5` (not shipped here).
+  "to match the rest of the project". Embeddings are produced upstream by the model
+  scripts (mean-pooled per protein); the precomputed embedding files are archived on Zenodo
+  (see [`data/README.md`](data/README.md)), not shipped here.
 - **Labels.** Multi-label `[Other, Protein, RNA, DNA]`; single-substrate proteins are used
   for the headline analyses.
 - **Validation.** Homology-aware **cluster-disjoint** cross-validation everywhere
@@ -57,7 +65,9 @@ Each folder has its own `README.md` with scripts, inputs, outputs, and parameter
 
 ## Reproduction note
 
-Large regenerable inputs (per-protein/per-residue embedding `*.h5`, the raw corpus/UniProt
-FASTAs, mmseqs temp dirs) are **not** shipped — they are produced by the upstream embedding
-step and the stage scripts. Models, result tables, figures, and the Stage-6 structures are
-included.
+Large inputs (per-protein embedding `*.h5` files, the raw iTOL tree export) are archived on
+**Zenodo** (DOI to be added at publication) rather than in git; per-residue embeddings, the raw
+corpus/UniProt FASTAs and mmseqs temp dirs are regenerable and not shipped. Small data tables
+are in [`data/`](data). Models, result tables, figures, and the Stage-6 structures are
+included. Several scripts still read inputs from absolute paths on the authors' workstation;
+[`data/README.md`](data/README.md) explains where each input lives and how the names map.
