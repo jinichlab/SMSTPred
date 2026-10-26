@@ -3,7 +3,7 @@
 "Dark-matter" plant 'Other'-MTase clusters: the 19 clusters identified by the
 corrected reviewed-status lookup (>= 80% plant&Other AND zero SwissProt/
 reviewed members) -- the same 19 clusters reported everywhere else in the
-paper (Table 2/3, CLEAN, Horizyn). Zoom-grid (Other = orange), titled by the
+paper (Table S2, CLEAN, Horizyn). Zoom-grid (Other = orange), titled by the
 dominant (TrEMBL) protein name.
 
 Inputs:  sam_mtase_umap_prostt5_coords.csv, reviewed_status_full.csv
@@ -32,7 +32,7 @@ NCOLS = 5
 BASE = "#e6550d"   # 'Other' UMAP color
 BADGE_COLOR = "#1a1a1a"
 
-# Authoritative cluster membership (matches Table 2/3, CLEAN, Horizyn analyses):
+# Authoritative cluster membership (matches Table S2, CLEAN, Horizyn analyses):
 # the 19 dark33 clusters that are NOT Actinomycetota.
 ACTINO_CLUSTERS = {17, 57, 200, 289, 309, 451, 452, 469, 470, 522, 692, 693, 795, 823}
 

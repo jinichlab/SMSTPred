@@ -67,8 +67,8 @@ family's chemistry, and flags families that are **not methylation at all**
 
 `build_table2.py` joins `clean/clean_dark33_cluster_summary.csv` +
 `horizyn/protein_clusters_family_final.csv` + `family_descriptions.csv` →
-`table2_dark_clusters.csv`, reproducing the data behind the manuscript's Table 2
-(a: Actinomycetota, b: Plant) — CLEAN's and Horizyn's independent calls side by
+`table2_dark_clusters.csv`, reproducing the data behind the manuscript's Tables S1
+(Actinomycetota) and S2 (Plant) — CLEAN's and Horizyn's independent calls side by
 side for all 33 clusters.
 
 ## Headline results
@@ -99,7 +99,7 @@ side for all 33 clusters.
 | `horizyn/protein_clusters_family_final.csv` | Per-cluster dominant reaction family, share, and noise fraction. |
 | `horizyn/reaction_family_summary.csv` | Per-reaction-family size, orphan rate, sample equations (all 2,441 families incl. noise). |
 | `horizyn/horizyn_full_validation.csv` | Per-protein rank/percentile of the best-scoring true SAM-methylation reaction (validation stat source). |
-| `table2_dark_clusters.csv` | Final combined table — the data behind manuscript Table 2. |
+| `table2_dark_clusters.csv` | Final combined table — the data behind manuscript Tables S1 and S2. |
 
 **Not shipped** (large, regenerable): `horizyn_full_scores.npz` (the full
 3,478×36,552 score matrix, ~425 MB) and `horizyn_full_topk.csv` (~9 MB

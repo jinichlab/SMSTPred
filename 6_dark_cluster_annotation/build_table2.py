@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Build the manuscript's Table 2 (a: Actinomycetota, b: Plant) -- the two
+"""Build the manuscript's Tables S1 (Actinomycetota) and S2 (Plant) -- the two
 independent computational calls for each of the 33 dark protein-clusters:
 CLEAN's EC-centroid nearest-known-enzyme assignment, and Horizyn's dominant
 reaction family from screening all 3,478 dark proteins against all 36,552
 Rhea reactions (see ../README.md for the full methodology).
 
-This reproduces the CSV content of Table 2 as it appears in article_draft.docx
+This reproduces the CSV content of Tables S1 and S2 as it appears in article_draft.docx
 -- not the docx formatting/coloring itself, just the data.
 
 Inputs:

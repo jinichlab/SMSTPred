@@ -3,7 +3,7 @@
 "Dark-matter" Actinomycetota 'Other'-MTase clusters: the 14 clusters identified
 by the corrected reviewed-status lookup (>= 80% Actinomycetota&Other AND zero
 SwissProt/reviewed members) -- the same 14 clusters reported everywhere else
-in the paper (Table 2/3, CLEAN, Horizyn). Zoom-grid (Other = orange).
+in the paper (Table S1, CLEAN, Horizyn). Zoom-grid (Other = orange).
 
 Inputs:  sam_mtase_umap_prostt5_coords.csv, reviewed_status_full.csv
          (corrected reviewed-status lookup -- NOT the incomplete
@@ -30,7 +30,7 @@ DARK33_CSV = IO.parent / "6_dark_cluster_annotation" / "dark33_members.csv"
 NCOLS = 5
 BASE = "#e6550d"   # 'Other' UMAP color
 
-# Authoritative cluster membership (matches Table 2/3, CLEAN, Horizyn analyses).
+# Authoritative cluster membership (matches Table S1, CLEAN, Horizyn analyses).
 ACTINO_CLUSTERS = {17, 57, 200, 289, 309, 451, 452, 469, 470, 522, 692, 693, 795, 823}
 
 

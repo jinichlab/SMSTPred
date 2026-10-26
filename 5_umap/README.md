@@ -13,7 +13,7 @@ substrate-type / taxonomic structure within it, and zooms into family-specific c
 | `plant_other_dark_clusters_prostt5.py` | Zoom-grid of the 19 plant "dark-matter" clusters (Fig. 6C): zero SwissProt/reviewed members, ≥80% plant & Other. |
 
 Both dark-cluster scripts hard-filter to the authoritative 33-cluster set in
-`../6_dark_cluster_annotation/dark33_members.csv` (the same ground truth used by Table 2
+`../6_dark_cluster_annotation/dark33_members.csv` (the same ground truth used by Tables S1 and S2
 and Stage 6) and read `reviewed_status_full.csv` for reviewed/TrEMBL status and protein
 names — **not** `uniprot_metadata.csv`, an earlier, incomplete lookup that undercounted
 reviewed members and silently produced the wrong cluster membership (a stale 15-cluster
