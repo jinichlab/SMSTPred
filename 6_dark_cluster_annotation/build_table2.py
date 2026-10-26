@@ -15,6 +15,11 @@ Inputs:
     nomenclature by hand to get a human-readable name and MTase yes/no judgment;
     that lookup step is not automated)
   horizyn/protein_clusters_family_final.csv  -- Horizyn side (fully automated)
+  horizyn/avg_top1_score.csv  -- mean cosine-similarity score of each member's
+    own rank-1 (top) reaction match, averaged per cluster -- a reliability
+    signal independent of family-vote share (a cluster can vote unanimously
+    for the same family while each member's best individual match is still a
+    mediocre absolute score, or vice versa)
   family_descriptions.csv  -- short hand-written descriptions of each Horizyn
     reaction family's chemistry, verified against real Rhea equations
 
@@ -35,6 +40,7 @@ def main():
     clean = load_csv(IO / "clean" / "clean_dark33_cluster_summary.csv", "cluster")
     fam = load_csv(IO / "horizyn" / "protein_clusters_family_final.csv", "cluster")
     desc = load_csv(IO / "family_descriptions.csv", "family_id")
+    avg_score = load_csv(IO / "horizyn" / "avg_top1_score.csv", "cluster")
 
     rows = []
     for cluster, c in clean.items():
@@ -49,15 +55,18 @@ def main():
                                f"{float(f['coherent_family_pct_orphan']):.0f}% orphan)")
             horizyn_share = (f"{float(f['coherent_family_share']) * 100:.0f}% of cluster, "
                               f"{float(f['pct_noise_votes']):.0f}% noise")
+        a = avg_score.get(cluster)
+        horizyn_avg_score = f"{float(a['avg_top1_score']):.2f}" if a else "-"
         rows.append(dict(
             cluster=cluster, lineage=c["lineage"], n=c["n"],
             clean_enzyme=c["enzyme"], clean_mtase=c["mtase"], clean_confidence=c["confidence"],
             horizyn_family=horizyn_family, horizyn_share=horizyn_share,
+            horizyn_avg_score=horizyn_avg_score,
         ))
 
     rows.sort(key=lambda r: (r["lineage"], -int(r["n"])))
     fields = ["cluster", "lineage", "n", "clean_enzyme", "clean_mtase", "clean_confidence",
-              "horizyn_family", "horizyn_share"]
+              "horizyn_family", "horizyn_share", "horizyn_avg_score"]
     out = IO / "table2_dark_clusters.csv"
     with open(out, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fields)
