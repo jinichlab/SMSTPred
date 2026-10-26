@@ -261,7 +261,6 @@ find_bound_structures.py       §7 cluster-member → UniProt→PDB → bound-st
 verify_upgrade_motifs.py       FIMO-verify each upgrade structure carries its motif
 no_motif_prep.py / no_motif_manifest.csv   the 3,023 no-motif family reps (Entry, class, length)
 no_motif_umap.py / _interactive.py   motif coverage on the embedding UMAP (§5)
-interprot/                     scope note for planned (not yet run) per-residue attribution and SAE work
 ```
 
 Reproduction note: large intermediates (`corpus.csv`, `corpus_all.fasta`, `clust_*`,
