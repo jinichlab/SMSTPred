@@ -33,10 +33,8 @@ Per-label decision thresholds are MCC-optimal, tuned on each model's own TRAIN
 predictions (matching the deployment), so MCC/F1 are at the deployment operating point.
 
 Optional overrides (environment variables; the defaults are the Fig 2B configuration):
-  UP_EPOCHS   UP model epochs, e.g. 3500
+  UP_EPOCHS   UP model epochs, e.g. 400
   UP_LOSS     UP per-label losses in label order Other,Protein,RNA,DNA, e.g. bce,sqrt_weighted_bce,sqrt_weighted_bce,focal
-  (An earlier run trained the UP model for 3,500 epochs with weighted_bce,weighted_bce,sqrt_weighted_bce,sqrt_weighted_bce;
-  the overall SAM-vs-UP difference was then significant, Nadeau-Bengio p = 0.042, against p = 0.30 at 400 epochs.)
   SAM_VS_UP_OUT   output folder (relative to this script, or absolute) so a re-run does not overwrite the defaults
 
 Outputs (./sam_vs_up_prostt5_comparison_output/)

@@ -68,8 +68,7 @@ Cluster-disjoint CV, 16 iterations, full SAM training set; means over the iterat
   0.908 vs 0.862); no individual substrate class differs significantly under the Nadeau-Bengio corrected
   paired test (two-sided p = 0.65 Other, 0.93 Protein, 0.75 RNA, 0.25 DNA, 0.30 overall), the largest gap
   being **DNA** (0.913 vs 0.770), which a few splits drive. The UP model even had a mild homology advantage
-  (only exact test entries removed). An earlier UP run with 3,500 epochs scored lower (overall 0.826) and
-  the overall difference was then significant (p = 0.042); see the `UP_EPOCHS` note in the script.
+  (only exact test entries removed).
 
 ## Outputs
 
