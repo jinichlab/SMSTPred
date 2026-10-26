@@ -35,8 +35,10 @@ Palette throughout: **RNA `#cb181d` · DNA `#6a51a3` · Protein `#238b45` · Oth
 - Small input tables are in [`../data/`](../data); the large embeddings are archived on Zenodo
   (see [`../data/README.md`](../data/README.md)); scripts find them relative to the repository or via
   `$SMSTPRED_DATA`.
-- Checked against the manuscript versions, these reproduce pixel for pixel from the repository: Fig 4A–D,
-  Fig 7A–D and Tables 1, S1, S2, S3. Table S1 needs Python 3.12 (matplotlib 3.10) for an exact match: under Python
-  3.9, `textwrap` breaks one long chemical name at different points, so only that table's line wraps differ.
+- Rerun from a fresh clone with `environment.yml` and the Zenodo data, every table CSV regenerates
+  identically and every figure regenerates with the same content (same curves, values, labels); pixels can differ
+  slightly from the manuscript PNGs (anti-aliasing, label offsets of a pixel) across matplotlib/FreeType builds.
+  Table S1's line wraps need Python 3.12 for an exact match (under 3.9, `textwrap` breaks one long chemical name
+  at different points). See [`../REPRODUCING.md`](../REPRODUCING.md) for the full status.
 - The Fig 3 raw iTOL SVG export (`V4prbvTzDgPu09RO61xuyg.svg`) is an input to
   `Fig3_tree_landscape/` and is archived on Zenodo (as `itol_tree_export_Fig3.svg`), not in git.

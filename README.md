@@ -67,6 +67,9 @@ organism metadata) are in [`data/`](data).
 
 ## Reproduction note
 
+Step-by-step status of every analysis (what reruns from a clean clone, what needs extra inputs) is in
+[`REPRODUCING.md`](REPRODUCING.md).
+
 Large inputs (per-protein embedding `*.h5` files, the raw iTOL tree export) are archived on
 **Zenodo** (DOI to be added at publication) rather than in git; per-residue embeddings, the raw
 corpus/UniProt FASTAs and mmseqs temp dirs are regenerable and not shipped. Small data tables
