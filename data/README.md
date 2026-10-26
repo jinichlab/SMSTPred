@@ -35,9 +35,37 @@ Embeddings (ProtT5, ProstT5, ESM-IF, SaProt for the SAM set; ProstT5 for UP; Pro
 tree-of-life set), the UP clustering (`clusters_UP_ProtT5_t0.5.csv`), copies of the label tables above, and the
 raw iTOL SVG used for Fig 3.
 
-## Paths
+## Using the archived data
 
-Several scripts still read these files from absolute paths on the authors' workstation
-(`/home/nroethler/Code/files/...`, `/home/nroethler/Code/classifier/reference_files/...`) under their
-original names, which differ from the names used here and on Zenodo. The Zenodo README has the
-name-mapping table. Making the paths configurable is tracked as follow-up work.
+Every script locates its inputs relative to the repository, so a fresh clone runs without edits.
+Large inputs are looked up in one data directory, **`data/` by default**, or wherever the environment
+variable `SMSTPRED_DATA` points:
+
+```bash
+# download the Zenodo record into data/ (or any folder) and extract the tree-of-life archives
+cd data
+tar -xf embeddings_tree_of_life_ProstT5.tar     # -> tree_of_life_ProstT5/
+tar -xf embeddings_tree_of_life_ProtT5.tar      # -> tree_of_life_ProtT5/
+export SMSTPRED_DATA=$PWD                       # only needed if the data live outside <repo>/data
+```
+
+Files are expected under their Zenodo names (`labels_SAM_full.csv`, `embeddings_SAM_ProstT5.h5`, ...).
+Paths to other repository folders (predictions, UMAP coordinates, result tables) are derived from each
+script's own location.
+
+## Inputs that are not archived
+
+Needed only to re-run the steps listed; none is required for the figures and tables built from the
+files above.
+
+| Input (expected under `SMSTPRED_DATA`) | Needed by | Where it comes from |
+|---|---|---|
+| `per-protein.h5` (ProtT5 embeddings of the UP set, about 1.4 GB) | `1_clustering/up_clustering.py`, `2_training/mlp_loss_comparison.py` (UP) | Embed the UniProt sequences for the accessions in `labels_UP.csv` with ProtT5 |
+| `reference_proteomes/` (per-organism UniProt proteome tables, about 30 GB) | `4_phylo_trends/reference_tree.py`, `7_motif_analysis/1_build_corpus.py` | UniProt reference proteomes of the organisms in `selected_1259_organisms.csv` |
+| `prediction_files_mlp/` (per-organism ProtT5-MLP predictions, about 45 MB) | validation stage of `1_clustering/sam_clustering.py` and `up_clustering.py` (skipped if absent) | Output of the earlier ProtT5-MLP deployment run |
+| `sam_structures/` (AlphaFold DB models of the 7,405 SAM proteins, about 0.5 GB) | Foldseek baseline in `2_training/sam_full_vs_balanced_classifier_comparison.py` | AlphaFold DB, by UniProt accession |
+
+External tools and installs: `foldseek` and `mmseqs` on `PATH` (override with `FOLDSEEK_BIN`); for Stage 6, a
+CLEAN checkout (`CLEAN_APP_DIR`, used by `6_dark_cluster_annotation/clean/run_clean_dark33*.sh`) and a
+Horizyn checkout (`HORIZYN_DIR`, used by the Horizyn scripts). The Rhea reaction tables Horizyn reads are
+included in `6_dark_cluster_annotation/horizyn/inputs/` (override with `SMSTPRED_HORIZYN_INPUTS`).

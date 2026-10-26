@@ -71,5 +71,5 @@ Large inputs (per-protein embedding `*.h5` files, the raw iTOL tree export) are 
 **Zenodo** (DOI to be added at publication) rather than in git; per-residue embeddings, the raw
 corpus/UniProt FASTAs and mmseqs temp dirs are regenerable and not shipped. Small data tables
 are in [`data/`](data). Models, result tables, figures, and the Stage-6 structures are
-included. Several scripts still read inputs from absolute paths on the authors' workstation;
-[`data/README.md`](data/README.md) explains where each input lives and how the names map.
+included. Scripts resolve their inputs relative to the repository (data directory: `data/`, or
+`$SMSTPRED_DATA`); [`data/README.md`](data/README.md) lists what is archived and what is not.

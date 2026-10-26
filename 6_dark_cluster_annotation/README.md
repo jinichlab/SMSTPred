@@ -116,3 +116,11 @@ dark proteins via `horizyn/embed_prott5.py`).
 - CLEAN's EC-centroid distance is a nearest-neighbor call, not a functional
   proof; "reliable/marginal/unreliable" reflects distance-to-centroid, not
   experimental validation.
+
+## Paths and environment variables
+
+- `clean/run_clean_dark33*.sh` need `CLEAN_APP_DIR` (the `app/` directory of a CLEAN checkout); the Horizyn
+  scripts and `horizyn/run_*.sh` need `HORIZYN_DIR` (a Horizyn checkout holding `checkpoints/` and `configs/`).
+- `horizyn/inputs/` holds the Rhea reaction table (`rhea-reaction-smiles.tsv`) and the SAM-methylation reaction
+  list the Horizyn scripts read; point `SMSTPRED_HORIZYN_INPUTS` elsewhere to override.
+- `dark33.fasta` and `dark33_members.csv` are read from this folder (`SMSTPRED_STAGE6` overrides).

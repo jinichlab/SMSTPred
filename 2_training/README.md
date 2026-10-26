@@ -45,7 +45,7 @@ DNA 0.11), `model_config.json` (incl. applicability-domain cosine cutoff ≈ 0.9
 
 ## Outputs
 
-`mlp_embedding_comparison_output/`, `sam_classifier_comparison_output/`,
+`mlp_embedding_comparison_output/` (+ `mlp_embedding_comparison_saprot_output/` for SaProt), `sam_classifier_comparison_output/`,
 `UP_prostt5_loss_comparison_output/`, `sam_vs_up_prostt5_comparison_output/`,
 `deployment_model/` — summary/detailed/per-label CSVs, MCC grids, the zoom bar chart, the
 SAM-vs-UP figure, and the trained model.
