@@ -18,7 +18,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-SRC = Path("/home/nroethler/Code/journal_article/repo/7_motif_analysis/domain_enrichment.csv")
+SRC = Path(__file__).resolve().parents[2] / "7_motif_analysis" / "domain_enrichment.csv"
 HERE = Path(__file__).resolve().parent
 
 CLASSES = ["DNA", "Protein", "RNA", "Other"]

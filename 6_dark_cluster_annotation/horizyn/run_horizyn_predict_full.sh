@@ -12,5 +12,5 @@
 # (GPU, ProtT5-XL) + seconds for the score matmul.
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate horizyn
-cd /home/nroethler/Code/horizyn/horizyn_local
+cd "${HORIZYN_DIR:?set HORIZYN_DIR to your Horizyn checkout (the folder holding checkpoints/ and configs/)}"
 python run_horizyn_predict_full.py

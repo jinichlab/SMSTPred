@@ -86,21 +86,21 @@ np.random.seed(42)
 torch.manual_seed(42)
 
 # ============================================================================
-# Configuration  --  edit DATA_ROOT to match your layout
+# Configuration  --  data directory (see data/README.md; override with $SMSTPRED_DATA)
 # ============================================================================
-DATA_ROOT = Path("/home/nroethler/Code")
-FILES_DIR = DATA_ROOT / "files"
+DATA_ROOT = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data"))
+FILES_DIR = DATA_ROOT
 
-FULL_CSV = FILES_DIR / "SAM_swiss_enzymes_substrate_types.csv"
-BAL_CSV = FILES_DIR / "SAM_swiss_substrate_types_balanced.csv"
+FULL_CSV = FILES_DIR / "labels_SAM_full.csv"
+BAL_CSV = FILES_DIR / "labels_SAM_balanced.csv"
 
 # Embedding sources keyed by short name -> (h5 path, layout, dim). "flat" = the
 # H5 value is the vector itself; "mean_group" = vector lives at f[entry]["mean"].
 EMB_SOURCES = {
-    "prott5":  (FILES_DIR / "SAM_swiss.h5",         "flat",       1024),
-    "prostt5": (FILES_DIR / "prostt5_SAM_swiss.h5", "mean_group", 1024),
-    "esmif":   (FILES_DIR / "esmif_SAM_swiss.h5",   "flat",        512),
-    "saprot":  (FILES_DIR / "saprot_SAM_swiss.h5",  "flat",       1280),
+    "prott5":  (FILES_DIR / "embeddings_SAM_ProtT5.h5",  "flat",       1024),
+    "prostt5": (FILES_DIR / "embeddings_SAM_ProstT5.h5", "mean_group", 1024),
+    "esmif":   (FILES_DIR / "embeddings_SAM_ESM-IF.h5",  "flat",        512),
+    "saprot":  (FILES_DIR / "embeddings_SAM_SaProt.h5", "flat",       1280),
 }
 
 # Feature source for the sklearn classifiers (XGBoost/RF/LR/SVMs): ProstT5, the
@@ -115,9 +115,8 @@ CLUSTER_SOURCE = "prott5"
 OUT_DIR = Path(__file__).resolve().parent / "sam_classifier_comparison_output"
 
 # Foldseek structural-homology baseline: {Entry}.pdb structures + the binary.
-STRUCT_DIR = FILES_DIR / "sam_structures"
-FOLDSEEK = os.environ.get("FOLDSEEK_BIN",
-                          str(Path.home() / "Code/tools/foldseek/bin/foldseek"))
+STRUCT_DIR = FILES_DIR / "sam_structures"      # AlphaFold DB models of the SAM set (not archived)
+FOLDSEEK = os.environ.get("FOLDSEEK_BIN", "foldseek")        # default: foldseek on PATH
 
 LABELS = ["Other", "Protein", "RNA", "DNA"]
 SPLIT_MODES = ["cluster", "random"]

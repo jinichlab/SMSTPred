@@ -36,6 +36,7 @@ MLP 1024->512->256->4, 300 epochs, per-label loss {Other: sqrt_weighted_bce;
 Protein/RNA/DNA: bce}.
 """
 
+import os
 import json
 import random
 from datetime import date
@@ -58,11 +59,11 @@ torch.manual_seed(42)
 # ============================================================================
 # Configuration
 # ============================================================================
-DATA_ROOT = Path("/home/nroethler/Code")
-FILES_DIR = DATA_ROOT / "files"
-FULL_CSV = FILES_DIR / "SAM_swiss_enzymes_substrate_types.csv"
-PROSTT5_H5 = FILES_DIR / "prostt5_SAM_swiss.h5"     # deployment features (mean group)
-PROTT5_H5 = FILES_DIR / "SAM_swiss.h5"              # clustering only (flat)
+DATA_ROOT = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data"))
+FILES_DIR = DATA_ROOT
+FULL_CSV = FILES_DIR / "labels_SAM_full.csv"
+PROSTT5_H5 = FILES_DIR / "embeddings_SAM_ProstT5.h5"     # deployment features (mean group)
+PROTT5_H5 = FILES_DIR / "embeddings_SAM_ProtT5.h5"              # clustering only (flat)
 
 OUT_DIR = Path(__file__).resolve().parent / "deployment_model"
 

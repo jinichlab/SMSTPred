@@ -18,11 +18,11 @@ The payoff is the PER-LABEL CSV: which loss wins for each label.
 Convention (matches train_deployment_ensemble.py)
 -------------------------------------------------
   - CLUSTER on ProtT5 @ 0.5 : reuse the cached UP greedy-cosine clustering
-    (classifier/UP_clusters_t0.5.pkl, 201,339 labels in CSV row order -> mapped
-    to Entry, so the cluster-disjoint splits match the rest of the project).
-  - TRAIN + EVAL on ProstT5 : features from prostt5_UP_swiss.h5 (/Entry/mean).
+    (clusters_UP_ProtT5_t0.5.csv: 201,339 Entry -> cluster rows, aligned to
+    labels_UP.csv, so the cluster-disjoint splits match the rest of the project).
+  - TRAIN + EVAL on ProstT5 : features from embeddings_UP_ProstT5.h5 (/Entry/mean).
 Proteins without a ProstT5 embedding are dropped (their cluster id is still known
-from the pickle, but they carry no features).
+from the cluster table, but they carry no features).
 
 Outputs (./UP_prostt5_loss_comparison_output/)
   - UP_prostt5_mlp_loss_comparison_summary.csv      mean +/- SD per loss/epoch
@@ -34,7 +34,7 @@ Outputs (./UP_prostt5_loss_comparison_output/)
 Env: classifier_env (GPU strongly recommended -- 201k proteins x 20k epochs).
 """
 
-import pickle
+import os
 import random
 from pathlib import Path
 
@@ -57,10 +57,10 @@ torch.manual_seed(42)
 # ============================================================================
 # Configuration
 # ============================================================================
-FILES_DIR = Path("/home/nroethler/Code/files")
-CSV = FILES_DIR / "UP_swiss_enzymes_substrate_types.csv"
-PROSTT5_H5 = FILES_DIR / "prostt5_UP_swiss.h5"                  # /Entry/mean (1024)
-CLUSTER_PKL = Path("/home/nroethler/Code/classifier/UP_clusters_t0.5.pkl")
+FILES_DIR = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data"))
+CSV = FILES_DIR / "labels_UP.csv"
+PROSTT5_H5 = FILES_DIR / "embeddings_UP_ProstT5.h5"                  # /Entry/mean (1024)
+CLUSTER_CSV = FILES_DIR / "clusters_UP_ProtT5_t0.5.csv"     # Entry, cluster (row-aligned to labels_UP.csv)
 
 OUT_DIR = Path(__file__).resolve().parent / "UP_prostt5_loss_comparison_output"
 
@@ -93,16 +93,13 @@ def load_prostt5_mean(path):
 
 def load_data():
     """Return X (ProstT5), y, and per-row cluster id, for UP enzymes that have a
-    ProstT5 embedding. Cluster ids come from the cached ProtT5 clustering pickle,
-    whose label array is in CSV row order."""
+    ProstT5 embedding. Cluster ids come from the cached ProtT5 clustering table
+    (clusters_UP_ProtT5_t0.5.csv), whose rows are aligned to the label table."""
     df = pd.read_csv(CSV, low_memory=False).drop_duplicates("Entry").reset_index(drop=True)
-    with open(CLUSTER_PKL, "rb") as fh:
-        cl = pickle.load(fh)
-    cluster_labels = np.asarray(cl["cluster_labels"])
-    assert len(cluster_labels) == len(df), (
-        f"pickle has {len(cluster_labels)} labels but CSV has {len(df)} rows -- "
-        "row-order alignment broken")
-    entry_to_cluster = dict(zip(df["Entry"].values, cluster_labels))
+    cl = pd.read_csv(CLUSTER_CSV)
+    assert list(cl["Entry"]) == list(df["Entry"]), (
+        "cluster table and label table are not row-aligned (different entries/order)")
+    entry_to_cluster = dict(zip(cl["Entry"].values, cl["cluster"].values))
 
     feats = load_prostt5_mean(PROSTT5_H5)
     keep = df["Entry"].apply(lambda e: e in feats)

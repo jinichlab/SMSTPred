@@ -36,6 +36,7 @@ Outputs (written to ./up_clustering_output/)
   - up_validation_max_similarity.png     deployment-domain validation histogram
 """
 
+import os
 import random
 from pathlib import Path
 
@@ -50,18 +51,18 @@ random.seed(42)
 np.random.seed(42)
 
 # ============================================================================
-# Configuration  --  edit DATA_ROOT to match your layout
+# Configuration  --  data directory (see data/README.md; override with $SMSTPRED_DATA)
 # ============================================================================
-DATA_ROOT = Path("/home/nroethler/Code")
+DATA_ROOT = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data"))
 
-TRAIN_CSV = DATA_ROOT / "files" / "UP_swiss_enzymes_substrate_types.csv"
-TRAIN_H5 = DATA_ROOT / "files" / "per-protein.h5"
+TRAIN_CSV = DATA_ROOT / "labels_UP.csv"
+TRAIN_H5 = DATA_ROOT / "per-protein.h5"           # UP ProtT5 embeddings (not archived)
 # Deployment set: the same tree-of-life SAM MTases the SAM model predicts on
 # (prediction_files_mlp), scored here against the UP training set. This gives a
 # like-for-like comparison with sam_clustering.py's validation (identical
 # sequences, UP training as the reference instead of SAM training).
-PRED_DIR = DATA_ROOT / "classifier" / "reference_files" / "prediction_files_mlp"
-EMBED_DIR = DATA_ROOT / "classifier" / "reference_files" / "embeddings"
+PRED_DIR = DATA_ROOT / "prediction_files_mlp"      # per-organism ProtT5-MLP predictions (not archived)
+EMBED_DIR = DATA_ROOT / "tree_of_life_ProtT5"      # extract embeddings_tree_of_life_ProtT5.tar here
 
 OUT_DIR = Path(__file__).resolve().parent / "up_clustering_output"
 

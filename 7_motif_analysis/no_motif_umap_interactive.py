@@ -27,7 +27,7 @@ import pandas as pd
 import datamapplot
 
 MA = Path(__file__).resolve().parent
-COORDS = Path("/home/nroethler/Code/journal_article/repo/5_umap/sam_mtase_umap_prostt5_coords.csv")
+COORDS = Path(__file__).resolve().parents[1] / "5_umap" / "sam_mtase_umap_prostt5_coords.csv"
 CLUST = MA / "clust_cluster.tsv"
 NOMOTIF = MA / "no_motif_manifest.csv"
 OUT_HTML = MA / "no_motif_umap_interactive.html"

@@ -5,10 +5,11 @@ then recompute the dominant-reaction / diversity summary at the family level
 instead of the raw-ID level. Also computes each reaction cluster's own
 orphan-ness (fraction of its member reactions with no annotated enzyme).
 """
+import os
 import numpy as np
 import pandas as pd
 
-HERE = "/home/nroethler/Code/horizyn/horizyn_local"
+HERE = os.environ.get("HORIZYN_DIR", os.path.dirname(os.path.abspath(__file__)))
 TOPK_CSV = f"{HERE}/horizyn_full_topk.csv"
 RXN_CLUSTERS_CSV = f"{HERE}/rhea_reaction_clusters.csv"
 OUT_SUMMARY = f"{HERE}/protein_clusters_by_reaction_family.csv"

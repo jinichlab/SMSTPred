@@ -68,25 +68,25 @@ torch.manual_seed(42)
 
 
 # ============================================================================
-# Configuration  --  edit DATA_ROOT to match your layout
+# Configuration  --  data directory (see data/README.md; override with $SMSTPRED_DATA)
 # ============================================================================
-DATA_ROOT = Path("/home/nroethler/Code")
-FILES_DIR = DATA_ROOT / "files"
+DATA_ROOT = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data"))
+FILES_DIR = DATA_ROOT
 
 # Per-dataset config. The three training sets differ only in these values.
 DATASETS = {
     "SAM": {
-        "csv": FILES_DIR / "SAM_swiss_enzymes_substrate_types.csv",
-        "h5": FILES_DIR / "SAM_swiss.h5",
+        "csv": FILES_DIR / "labels_SAM_full.csv",
+        "h5": FILES_DIR / "embeddings_SAM_ProtT5.h5",
         "threshold": 0.6,
     },
     "SAM_balanced": {
-        "csv": FILES_DIR / "SAM_swiss_substrate_types_balanced.csv",
-        "h5": FILES_DIR / "SAM_swiss.h5",
+        "csv": FILES_DIR / "labels_SAM_balanced.csv",
+        "h5": FILES_DIR / "embeddings_SAM_ProtT5.h5",
         "threshold": 0.6,
     },
     "UP": {
-        "csv": FILES_DIR / "UP_swiss_enzymes_substrate_types.csv",
+        "csv": FILES_DIR / "labels_UP.csv",
         "h5": FILES_DIR / "per-protein.h5",
         "threshold": 0.5,
     },

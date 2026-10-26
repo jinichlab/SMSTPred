@@ -12,12 +12,13 @@ Panel D: Other-substrate load, Actinomycetota vs other Bacteria.
 
 Source: Stage-3 ProstT5 deployment predictions (repo/3_predictions/predictions_output/
 *_embeddings_predictions.csv, multi-label call_* columns) joined to
-/home/nroethler/Code/classifier/reference_files/selected_1259_organisms.csv
+data/selected_1259_organisms.csv
 (Taxonomic lineage, is_metazoa, is_vertebrate).
 
 Outputs (this dir): A_protein_3group_violin.png, B_vertebrate_invertebrate_violins.png,
 C_plant_other_violin.png, D_actino_other_violin.png
 """
+import os
 from itertools import combinations
 from pathlib import Path
 
@@ -28,9 +29,9 @@ import numpy as np
 import pandas as pd
 from scipy.stats import kruskal, mannwhitneyu
 
-ROOT = Path("/home/nroethler/Code/journal_article")
-PRED_DIR = ROOT / "repo" / "3_predictions" / "predictions_output"
-META_CSV = Path("/home/nroethler/Code/classifier/reference_files/selected_1259_organisms.csv")
+REPO = Path(__file__).resolve().parents[2]
+PRED_DIR = REPO / "3_predictions" / "predictions_output"
+META_CSV = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[2] / "data")) / "selected_1259_organisms.csv"
 PRED_SUFFIX = "_embeddings_predictions.csv"
 OUT_DIR = Path(__file__).resolve().parent
 MIN_N = 5

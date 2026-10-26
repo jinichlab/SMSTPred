@@ -37,6 +37,7 @@ Outputs (./sam_vs_up_prostt5_comparison_output/)
 
 Env: classifier_env (GPU).
 """
+import os
 import json
 import random
 from pathlib import Path
@@ -57,12 +58,12 @@ import matplotlib.pyplot as plt
 
 random.seed(42); np.random.seed(42); torch.manual_seed(42)
 
-FILES = Path("/home/nroethler/Code/files")
-SAM_CSV = FILES / "SAM_swiss_enzymes_substrate_types.csv"
-UP_CSV = FILES / "UP_swiss_enzymes_substrate_types.csv"
-PROSTT5_SAM = FILES / "prostt5_SAM_swiss.h5"     # SAM features (mean group)
-PROTT5_SAM = FILES / "SAM_swiss.h5"              # SAM clustering space (flat)
-PROSTT5_UP = FILES / "prostt5_UP_swiss.h5"       # UP features (mean group)
+FILES = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data"))
+SAM_CSV = FILES / "labels_SAM_full.csv"
+UP_CSV = FILES / "labels_UP.csv"
+PROSTT5_SAM = FILES / "embeddings_SAM_ProstT5.h5"     # SAM features (mean group)
+PROTT5_SAM = FILES / "embeddings_SAM_ProtT5.h5"              # SAM clustering space (flat)
+PROSTT5_UP = FILES / "embeddings_UP_ProstT5.h5"       # UP features (mean group)
 
 OUT = Path(__file__).resolve().parent / "sam_vs_up_prostt5_comparison_output"
 LABELS = ["Other", "Protein", "RNA", "DNA"]

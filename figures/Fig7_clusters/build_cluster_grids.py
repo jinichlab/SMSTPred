@@ -28,10 +28,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-ROOT = Path("/home/nroethler/Code/journal_article")
-COORDS = ROOT / "repo/5_umap/sam_mtase_umap_prostt5_coords.csv"
-REVIEWED = ROOT / "repo/5_umap/reviewed_status_full.csv"
-DARK_TABLE = ROOT / "repo/6_dark_cluster_annotation/table2_dark_clusters.csv"
+ROOT = Path(__file__).resolve().parents[2]      # repository root
+COORDS = ROOT / "5_umap/sam_mtase_umap_prostt5_coords.csv"
+REVIEWED = ROOT / "5_umap/reviewed_status_full.csv"
+DARK_TABLE = ROOT / "6_dark_cluster_annotation/table2_dark_clusters.csv"
 HERE = Path(__file__).resolve().parent
 
 GOLD = "#FFD700"

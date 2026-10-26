@@ -7,7 +7,7 @@
 
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate clean
-cd /home/nroethler/Code/abhiram/CLEAN/app
+cd "${CLEAN_APP_DIR:?set CLEAN_APP_DIR to the app/ directory of your CLEAN checkout}"
 # use the vendored fair-esm (env's site-packages esm is EvolutionaryScale ESM-3, wrong API)
-export PYTHONPATH=/home/nroethler/Code/abhiram/CLEAN/app/esm:$PYTHONPATH
+export PYTHONPATH="$CLEAN_APP_DIR/esm:$PYTHONPATH"
 python -u CLEAN_infer_fasta.py -d dark33

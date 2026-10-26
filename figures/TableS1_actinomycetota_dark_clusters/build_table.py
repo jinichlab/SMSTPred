@@ -23,7 +23,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-SRC = Path("/home/nroethler/Code/journal_article/repo/6_dark_cluster_annotation/table2_dark_clusters.csv")
+SRC = Path(__file__).resolve().parents[2] / "6_dark_cluster_annotation" / "table2_dark_clusters.csv"
 HERE = Path(__file__).resolve().parent
 LINEAGE = "Actinomycetota"
 HEADER_COLOR = "#333333"

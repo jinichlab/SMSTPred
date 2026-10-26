@@ -18,6 +18,7 @@ Outputs (this dir):
                               matrix + protein/reaction id arrays, for later slicing
                               without re-running embeddings
 """
+import os
 import sys
 from os.path import join, dirname, abspath
 
@@ -40,10 +41,13 @@ from embed_prott5 import load_prott5, embed_sequences  # noqa: E402
 CHECKPOINT = join(HERE, "checkpoints", "horizyn_v1_0_inf.ckpt")
 CONFIG = join(HERE, "configs", "sota.yaml")
 
-DARK33_FASTA = "/home/nroethler/Code/abhiram/CLEAN/app/data/inputs/dark33.fasta"
-DARK33_MEMBERS = "/home/nroethler/Code/horizyn/dark33_members.csv"
-RHEA_MASTER_TSV = "/home/nroethler/Code/UMAP/sam_umap_output/dark33_annotation/rhea-reaction-smiles.tsv"
-SAM_METHYLATION_CSV = "/home/nroethler/Code/UMAP/sam_umap_output/dark33_annotation/sam_methylation_reactions_smiles.csv"
+# STAGE6 = the 6_dark_cluster_annotation/ folder of the repository
+STAGE6 = os.environ.get("SMSTPRED_STAGE6", dirname(HERE))
+DARK33_FASTA = join(STAGE6, "clean", "dark33.fasta")
+DARK33_MEMBERS = join(STAGE6, "dark33_members.csv")
+INPUTS = os.environ.get("SMSTPRED_HORIZYN_INPUTS", join(HERE, "inputs"))     # rhea-reaction-smiles.tsv and sam_methylation_reactions_smiles.csv
+RHEA_MASTER_TSV = join(INPUTS, "rhea-reaction-smiles.tsv")
+SAM_METHYLATION_CSV = join(INPUTS, "sam_methylation_reactions_smiles.csv")
 
 OUT_TOPK = join(HERE, "horizyn_full_topk.csv")
 OUT_VALIDATION = join(HERE, "horizyn_full_validation.csv")

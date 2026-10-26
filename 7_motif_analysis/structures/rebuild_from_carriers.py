@@ -126,7 +126,7 @@ def evaluate(cls, pdb, matched):
 
 
 def main():
-    lig = pd.read_csv(Path("/home/nroethler/Code/motif_analysis/motif_structure_ligands.csv"))
+    lig = pd.read_csv(Path(__file__).resolve().parent / "motif_structure_ligands.csv")
     cand = lig[lig.in_class & lig.has_cof & lig.has_sub].copy()
     model_meta = []
     for motif in sorted(PICKS.motif, key=lambda m: (m.split("-")[0], int(m.split("-")[1]))):

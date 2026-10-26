@@ -18,6 +18,7 @@ chain into cropped-raster pixel coordinates, match leaf label -> canon(Organism)
 draw an iTOL-style clade strip just outside the bar band with a label + a faint
 accent wedge. Add a lineage by name in HIGHLIGHTS; a polyphyletic pick simply
 yields multiple strips."""
+import os
 from pathlib import Path
 import io
 import re
@@ -58,7 +59,7 @@ BAR_COLOR = "#2b8cbe"
 # polyphyletic picks draw several. Add entries freely, e.g.
 #   ("Vertebrata", "Vertebrates", "#1f78b4"),
 #   ("Actinomycetota", "Actinomycetes", "#e6550d"),
-ORG_CSV = Path("/home/nroethler/Code/classifier/reference_files/selected_1259_organisms.csv")
+ORG_CSV = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[2] / "data")) / "selected_1259_organisms.csv"
 # The clade ranges are now baked into the iTOL SVG export (native TREE_COLORS
 # ranges from reference_tree.py's itol_clade_highlights.txt), so the matplotlib
 # overlay is off to avoid drawing them twice. Re-populate to add non-taxonomic

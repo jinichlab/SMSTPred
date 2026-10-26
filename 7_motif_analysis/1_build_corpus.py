@@ -23,9 +23,11 @@ from pathlib import Path
 import pandas as pd
 
 LABELS = ["Other", "Protein", "RNA", "DNA"]
-TRAIN_CSV = "/home/nroethler/Code/files/SAM_swiss_enzymes_substrate_types.csv"
-REF_DIR = "/home/nroethler/Code/classifier/reference_files/reference_proteomes"
-PRED_DIR = "/home/nroethler/Code/journal_article/repo/3_predictions/predictions_output"
+REPO = Path(__file__).resolve().parents[1]
+DATA = Path(os.environ.get("SMSTPRED_DATA", REPO / "data"))
+TRAIN_CSV = str(DATA / "labels_SAM_full.csv")
+REF_DIR = str(DATA / "reference_proteomes")      # per-organism UniProt proteome tables (not archived; ~30 GB)
+PRED_DIR = str(REPO / "3_predictions" / "predictions_output")
 PRED_SUFFIX = "_embeddings_predictions.csv"
 OUT = Path(__file__).resolve().parent
 

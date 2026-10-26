@@ -23,6 +23,7 @@ Headline: Metazoa carry significantly more Protein-substrate MTases (count and
 Outputs (this directory): protein_3group_violin.png, protein_cellularity_stats.csv
 Env: classifier_env.
 """
+import os
 from itertools import combinations
 from pathlib import Path
 
@@ -34,7 +35,7 @@ import pandas as pd
 from scipy.stats import kruskal, mannwhitneyu
 
 PRED_DIR = Path(__file__).resolve().parent.parent / "3_predictions" / "predictions_output"
-META_CSV = Path("/home/nroethler/Code/classifier/reference_files/selected_1259_organisms.csv")
+META_CSV = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data")) / "selected_1259_organisms.csv"
 PRED_SUFFIX = "_embeddings_predictions.csv"
 OUT_DIR = Path(__file__).resolve().parent
 OUT_PNG = OUT_DIR / "protein_3group_violin.png"

@@ -12,6 +12,7 @@ Input:  proteome_vs_sam_bylabel.csv (organism, domain, proteome_size, n_sam,
         joined by organism-name stem)
 Output: proteome_vs_sam_domain_highlight.png
 """
+import os
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -20,7 +21,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 IO = Path(__file__).resolve().parent
-META_CSV = Path("/home/nroethler/Code/classifier/reference_files/selected_1259_organisms.csv")
+META_CSV = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[2] / "data")) / "selected_1259_organisms.csv"
 
 BASE_COLOR = "#707070"
 ACTINO_COLOR = "#e6550d"

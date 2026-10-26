@@ -15,6 +15,7 @@
 # Other} columns), NOT the old ProtT5 *_pred files.
 # =============================================================
 
+import os
 import pandas as pd
 import re
 from pathlib import Path
@@ -22,9 +23,9 @@ from typing import Dict, List, Optional
 from collections import defaultdict
 
 # ================= PATHS =================
-REF_DIR = Path("/home/nroethler/Code/classifier/reference_files")
-PROTEOME_CSV = REF_DIR / "selected_1259_organisms.csv"
-SAM_DIR = REF_DIR / "reference_proteomes"
+DATA_DIR = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data"))
+PROTEOME_CSV = DATA_DIR / "selected_1259_organisms.csv"
+SAM_DIR = DATA_DIR / "reference_proteomes"      # per-organism UniProt proteome tables (not archived; ~30 GB)
 # ProstT5 Stage-3 deployment predictions (one CSV per organism).
 PRED_DIR = Path(__file__).resolve().parent.parent / "3_predictions" / "predictions_output"
 PRED_SUFFIX = "_embeddings_predictions.csv"

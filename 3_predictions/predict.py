@@ -20,6 +20,7 @@ predictions CSV per input file to --out-dir.
 
 Env: classifier_env (GPU).
 """
+import os
 import argparse
 import json
 from pathlib import Path
@@ -32,7 +33,7 @@ import torch.nn as nn
 
 REPO = Path(__file__).resolve().parent.parent
 MODEL_DIR = REPO / "2_training" / "deployment_model"
-FILES_DIR = Path("/home/nroethler/Code/files")
+FILES_DIR = Path(os.environ.get("SMSTPRED_DATA", REPO / "data"))
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 BATCH = 4096
 

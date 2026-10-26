@@ -33,8 +33,7 @@ import matplotlib.pyplot as plt
 SCRIPT_DIR = Path(__file__).parent.resolve()
 OUTPUT_DIR = SCRIPT_DIR
 COORDS_CSV = OUTPUT_DIR / "sam_mtase_umap_prostt5_coords.csv"
-THRESHOLDS_JSON = Path("/home/nroethler/Code/journal_article/repo/2_training/"
-                       "deployment_model/thresholds.json")
+THRESHOLDS_JSON = SCRIPT_DIR.parent / "2_training" / "deployment_model" / "thresholds.json"
 
 LABELS = ["RNA", "DNA", "Protein", "Other"]
 SUBSTRATE_COLORS = {

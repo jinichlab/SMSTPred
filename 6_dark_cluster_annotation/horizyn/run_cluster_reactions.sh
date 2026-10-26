@@ -12,5 +12,5 @@
 # chemistry, as with c758's menaquinone chain-length variants).
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate horizyn
-cd /home/nroethler/Code/horizyn/horizyn_local
+cd "${HORIZYN_DIR:?set HORIZYN_DIR to your Horizyn checkout (the folder holding checkpoints/ and configs/)}"
 python cluster_rhea_reactions.py

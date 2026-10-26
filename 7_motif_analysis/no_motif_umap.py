@@ -27,7 +27,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
 MA = Path(__file__).resolve().parent
-COORDS = Path("/home/nroethler/Code/journal_article/repo/5_umap/sam_mtase_umap_prostt5_coords.csv")
+COORDS = Path(__file__).resolve().parents[1] / "5_umap" / "sam_mtase_umap_prostt5_coords.csv"
 MOTIF_STATUS = MA / "motif_status_all.csv"     # real per-protein FIMO status
 OUT_PNG = MA / "no_motif_umap.png"
 

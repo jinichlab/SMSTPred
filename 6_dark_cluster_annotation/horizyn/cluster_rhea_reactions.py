@@ -17,6 +17,7 @@ Outputs:
                                 has_enzyme, equation (where available)
   rhea_reaction_embeds.npz     the (n, 512) embeddings + ids, for reuse
 """
+import os
 import sys
 from os.path import join, dirname, abspath
 
@@ -47,8 +48,9 @@ from horizyn.lightning_module import HorizynLitModule  # noqa: E402
 
 CHECKPOINT = join(HERE, "checkpoints", "horizyn_v1_0_inf.ckpt")
 CONFIG = join(HERE, "configs", "sota.yaml")
-RHEA_MASTER_TSV = "/home/nroethler/Code/UMAP/sam_umap_output/dark33_annotation/rhea-reaction-smiles.tsv"
-SAM_METHYLATION_CSV = "/home/nroethler/Code/UMAP/sam_umap_output/dark33_annotation/sam_methylation_reactions_smiles.csv"
+INPUTS = os.environ.get("SMSTPRED_HORIZYN_INPUTS", join(HERE, "inputs"))     # rhea-reaction-smiles.tsv and sam_methylation_reactions_smiles.csv
+RHEA_MASTER_TSV = join(INPUTS, "rhea-reaction-smiles.tsv")
+SAM_METHYLATION_CSV = join(INPUTS, "sam_methylation_reactions_smiles.csv")
 
 OUT_CSV = join(HERE, "rhea_reaction_clusters.csv")
 OUT_NPZ = join(HERE, "rhea_reaction_embeds.npz")

@@ -24,9 +24,9 @@ FIG = BASE.parent
 TREE = FIG / "Fig3_tree_landscape/tree_only.png"
 STRUCT_REP = BASE / "biorender_components/struct_1OR8_SAM.png"   # stage 2: plain grey PRMT1 + faint SAH
 STRUCT_INT = FIG / "Fig8_structures/Known/dna_motif1.png"        # stage 5: motif on structure
-COORDS = Path("/home/nroethler/Code/journal_article/repo/5_umap/sam_mtase_umap_prostt5_coords.csv")
-SUMMARY = Path("/home/nroethler/Code/journal_article/repo/2_training/"
-               "sam_classifier_comparison_output/sam_classifier_comparison_summary.csv")
+REPO = Path(__file__).resolve().parents[2]
+COORDS = REPO / "5_umap" / "sam_mtase_umap_prostt5_coords.csv"
+SUMMARY = REPO / "2_training" / "sam_classifier_comparison_output" / "sam_classifier_comparison_summary.csv"
 Image.MAX_IMAGE_PIXELS = None
 
 SUB = {"RNA": "#cb181d", "DNA": "#6a51a3", "Protein": "#238b45", "Other": "#e6550d"}

@@ -1,6 +1,6 @@
 {
   "embedding": "ProstT5",
-  "embedding_h5": "prostt5_SAM_swiss.h5",
+  "embedding_h5": "embeddings_SAM_ProstT5.h5",
   "input_dim": 1024,
   "hidden": [
     512,
@@ -22,7 +22,7 @@
   "learning_rate": 0.001,
   "n_ensemble": 6,
   "trained_on": 7405,
-  "ad_reference_h5": "prostt5_SAM_swiss.h5",
+  "ad_reference_h5": "embeddings_SAM_ProstT5.h5",
   "ad_cutoff": 0.9398860931396484,
   "built": "2026-06-15"
 }

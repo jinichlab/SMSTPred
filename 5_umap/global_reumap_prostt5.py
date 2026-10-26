@@ -18,6 +18,7 @@ Outputs:
 
 Env: UMAP (umap-learn). Interactive HTML: substrate_umap_datamap.py.
 """
+import os
 from pathlib import Path
 
 import numpy as np
@@ -29,9 +30,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from sklearn.cluster import HDBSCAN
 
-EMB_DIR = Path("/home/nroethler/Code/classifier/reference_files/prostt5_embeddings")
-PRED_DIR = Path("/home/nroethler/Code/journal_article/repo/3_predictions/predictions_output")
-META_CSV = Path("/home/nroethler/Code/classifier/reference_files/selected_1259_organisms.csv")
+EMB_DIR = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data")) / "tree_of_life_ProstT5"   # extract embeddings_tree_of_life_ProstT5.tar here
+PRED_DIR = Path(__file__).resolve().parents[1] / "3_predictions" / "predictions_output"
+META_CSV = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data")) / "selected_1259_organisms.csv"
 IO = Path(__file__).parent.resolve()
 EMB_SUFFIX = "_embeddings.h5"
 PRED_SUFFIX = "_embeddings_predictions.csv"

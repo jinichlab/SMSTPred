@@ -57,16 +57,15 @@ random.seed(42)
 np.random.seed(42)
 
 # ============================================================================
-# Configuration  --  edit DATA_ROOT to match your layout
+# Configuration  --  data directory (see data/README.md; override with $SMSTPRED_DATA)
 # ============================================================================
-# DATA_ROOT is the directory containing both the training `files/` folder and
-# the `classifier/reference_files/` deployment outputs.
-DATA_ROOT = Path("/home/nroethler/Code")
+# DATA_ROOT holds the input files under their Zenodo names.
+DATA_ROOT = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data"))
 
-TRAIN_CSV = DATA_ROOT / "files" / "SAM_swiss_enzymes_substrate_types.csv"
-TRAIN_H5 = DATA_ROOT / "files" / "SAM_swiss.h5"
-PRED_DIR = DATA_ROOT / "classifier" / "reference_files" / "prediction_files_mlp"
-EMBED_DIR = DATA_ROOT / "classifier" / "reference_files" / "embeddings"
+TRAIN_CSV = DATA_ROOT / "labels_SAM_full.csv"
+TRAIN_H5 = DATA_ROOT / "embeddings_SAM_ProtT5.h5"
+PRED_DIR = DATA_ROOT / "prediction_files_mlp"      # per-organism ProtT5-MLP predictions (not archived)
+EMBED_DIR = DATA_ROOT / "tree_of_life_ProtT5"      # extract embeddings_tree_of_life_ProtT5.tar here
 
 OUT_DIR = Path(__file__).resolve().parent / "sam_clustering_output"
 

@@ -14,6 +14,7 @@ Inputs:  sam_mtase_umap_prostt5_coords.csv, reviewed_status_full.csv
          (ground-truth cluster membership shared with the rest of the manuscript)
 Output:  plant_other_dark_clusters_prostt5.png
 """
+import os
 import re
 from math import ceil
 from pathlib import Path
@@ -25,7 +26,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 IO = Path(__file__).parent.resolve()
-META_CSV = Path("/home/nroethler/Code/classifier/reference_files/selected_1259_organisms.csv")
+META_CSV = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[1] / "data")) / "selected_1259_organisms.csv"
 DARK33_CSV = IO.parent / "6_dark_cluster_annotation" / "dark33_members.csv"
 NCOLS = 5
 BASE = "#e6550d"   # 'Other' UMAP color
