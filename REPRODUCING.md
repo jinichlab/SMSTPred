@@ -48,7 +48,8 @@ the manuscript PNGs (anti-aliasing, label offsets of a pixel) across matplotlib/
 |---|---|---|
 | Table 2 (`7_motif_analysis/build_motif_table.py`) | reads `fimo_all_*/fimo.tsv` and `class_*.fasta` | the Stage 7 intermediates (FIMO scan of all class members, class FASTAs) |
 | Fig 1 (`figures/Fig1_overview_schematic/`) | composes PyMOL renders and BioRender components that are not shipped (the tree panel comes from the Fig 3 step) | the two structure images |
-| Fig S1B (deployment-domain similarity) and `1_clustering/up_clustering.py` | need `prediction_files_mlp/` and the UP ProtT5 embeddings (`per-protein.h5`) | not archived (listed in `data/README.md`) |
+| Fig S1B (deployment-domain similarity, `1_clustering/sam_clustering.py` validation stage) | needs `prediction_files_mlp/` | not archived (listed in `data/README.md`) |
+| UP clustering (`1_clustering/up_clustering.py`) | needs `prediction_files_mlp/` and the UP ProtT5 embeddings (`per-protein.h5`) | not archived (listed in `data/README.md`) |
 | Stage 4 tree (`4_phylo_trends/reference_tree.py`), Stage 7 corpus (`7_motif_analysis/1_build_corpus.py`) | need the per-organism UniProt proteome tables (about 30 GB) | download of the 1,259 UniProt reference proteomes |
 | Foldseek baseline (part of `2_training/sam_full_vs_balanced_classifier_comparison.py`) | needs AlphaFold models of the 7,405 SAM proteins (`sam_structures/`) and the `foldseek` binary | AlphaFold DB download |
 | Stage 6 CLEAN / Horizyn runs | external installs | `CLEAN_APP_DIR`, `HORIZYN_DIR` (see `6_dark_cluster_annotation/README.md`) |
