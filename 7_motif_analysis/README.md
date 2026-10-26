@@ -1,20 +1,19 @@
-# Sequence-Motif, Attribution & Structural Analysis of SAM-MTase Substrate Specificity
+# Sequence-Motif & Structural Analysis of SAM-MTase Substrate Specificity
 
 This directory contains the **motif / interpretability** stage of the project: a set of
-analyses that ask **what sequence and structural features the ProstT5→MLP classifier
-uses to distinguish methyltransferase (MTase) substrate type** (DNA / RNA / Protein /
-Other-small-molecule). It combines three complementary lines of evidence:
+analyses that ask **what sequence and structural features distinguish methyltransferase
+(MTase) substrate types** (DNA / RNA / Protein / Other-small-molecule). It combines two
+complementary lines of evidence:
 
-1. **Discriminative linear-motif discovery** (STREME) — what short sequence motifs
-   separate each substrate class;
-2. **Per-residue attribution** (Integrated Gradients on the classifier) — which residues
-   actually drive each call, especially for proteins that have *no* discriminative motif;
-3. **Structural mapping** — placing both the motifs and the IG-important residues onto
-   experimental structures of real motif-carrying enzymes.
+1. **Discriminative linear-motif discovery** (STREME, scanned with FIMO) — what short sequence
+   motifs separate each substrate class, and how many enzymes carry none;
+2. **Structural mapping** — placing the class-specific motifs onto experimental structures of
+   real motif-carrying enzymes and measuring their distance to the cofactor and the substrate.
 
-Together they converge on a single conclusion (Section 9): **the classifier reads
-substrate identity from family-specific buried fold architecture, not from the conserved
-catalytic/cofactor machinery.**
+Together they show that the discriminative motifs recover the canonical catalytic and
+cofactor signatures of each class, while a substantial fraction of enzymes (about 12 %)
+carry no discriminative motif at all and sit scattered inside motif-bearing families — the
+substrate signal is distributed rather than a short linear motif.
 
 ---
 
@@ -173,7 +172,7 @@ A rep is "no-motif" if it matches **none** of its class's motifs.
 | **Total** | **22,976** | 19,953 | **3,023** | **13.2 %** |
 
 RNA is the outlier (its motifs are weak/binding-patch rather than a sharp catalytic
-signature). These **3,023 no-motif reps** are the focus of the attribution analysis.
+signature).
 
 ---
 
@@ -197,78 +196,20 @@ Stage-5 UMAP (coords reused, no recompute). Two-level labeling: each 50%-id clus
 motif status (its rep, from FIMO) is propagated to **all 106,608 members** via
 `clust_cluster.tsv`, then judged per UMAP (HDBSCAN) cluster.
 
-- **A — entirely motif-dark families:** only **11 of 868** UMAP clusters (822 proteins)
-  have *no* motif in any member — mostly **RNA**. These are the coherent "dark" families.
-- **B — all no-motif proteins:** the 11,112 STREME-negative proteins are **mostly
-  scattered inside motif-bearing families**, i.e. divergent members rather than novel
-  groups. (Consistent with the out-of-domain / fragment enrichment above.)
+- **A — near-motif-dark families:** only **12** UMAP clusters (about 960 proteins) are
+  at least 90 % motif-less (91–99 %), mostly **RNA**; **no cluster is entirely motif-free**.
+- **B — all no-motif proteins:** the **12,866** motif-less proteins (12.1 % of all 106,608
+  class members) are **mostly scattered inside motif-bearing families**, i.e. divergent
+  members rather than novel groups. (Consistent with the out-of-domain / fragment enrichment
+  above.)
 
-Outputs: `no_motif_umap.png` (A|B panels), `no_motif_umap_clusters.csv` (the 11 clusters),
+Outputs: `no_motif_umap.png` (A|B panels), `no_motif_umap_clusters.csv` (the 12 clusters),
 and `no_motif_umap_interactive.html` — a `datamapplot` view with an **A/B toggle**, hover,
 search, and click-to-UniProt.
 
 ---
 
-## 6. Per-residue attribution (Integrated Gradients)
-
-`attribution/integrated_gradients.py` + `no_motif_attribution.py`.
-
-**Method.** The classifier eats a **mean-pooled** ProstT5 embedding, so naive saliency is
-uniform/useless. IG attributes through each residue's own embedding:
-`A_i = (1/L)(e_i − b)·G`, where `G` is the path-averaged gradient of the (logit-space)
-class score and `b` is the mean-MTase baseline. Completeness verified (Σ A_i = F(z)−F(b),
-ratio ≈ 1.0). **Logit space** is essential — the deployed probability saturates at ~0.999
-(vanishing gradient) and the mean baseline is degenerate for the majority class (RNA).
-
-**No-motif aggregate trends** (`no_motif_attr_output/`): per class, the amino-acid
-identities over-represented among the top-10 % IG residues, and the peakedness (Gini) of
-the attribution:
-
-| Class | top-enriched residues | median Gini |
-|---|---|---|
-| DNA | **F, T, W** (aromatic) | 0.556 (most distributed) |
-| Protein | **L, M, Y** | 0.636 |
-| RNA | **N, C, K** (Asn / catalytic Cys / basic) | 0.692 (most focal) |
-| Other | **T, W, F** (Thr + aromatic) | 0.613 |
-
-Each class shows a chemically-sensible, *distinct* fingerprint even without a linear
-motif. `top_windows_<class>.fasta` holds the ±4 window around each protein's single
-most-essential residue (ready to re-STREME for short sub-motifs).
-
----
-
-## 7. IG on structure — the central result
-
-For one representative **no-motif** protein per class that has an **experimental
-structure**, full per-residue IG was mapped onto the structure (B-factor column) and the
-burial of the top-10 IG residues quantified (CA neighbours within 10 Å — high = buried
-core, low = surface). Deliverables in `structures/IG_<class>/` (`*_IG.pdb` + `view.pml`/
-`view.cxc`).
-
-| Class | Protein / structure (cofactor, substrate) | top-10 IG burial | protein avg | substrate-contacting |
-|---|---|---|---|---|
-| DNA | T4 Dam / **1YF3** (AdoHcy + DNA) | **18.3** | 16.6 | 15.3 (surface) |
-| RNA | Q9V2G1 / **5WT1** (SAM + tRNA, cognate) | **20.4** | 17.2 | 14.6 (surface) |
-| Protein | NDUFAF7 / **5ZTZ** (apo) | **20.5** | 17.1 | — |
-| Other | PsiM / **8PB3** (SAH + norbaeocystin, catalytic 3.5 Å) | **18.8** | 17.7 | distal to both |
-
-**Finding (all 4 classes):** the IG-important residues are **buried hydrophobic core**
-residues (coordination 18.3–20.5, above the ~17 average), markedly **more buried than the
-substrate-binding residues** (which are surface, ~15, and polar). This holds even in
-**cognate/productive complexes** (RNA: SAM–tRNA 4.4 Å; Other: SAH–substrate 3.5 Å), so it
-is not an artefact of non-productive crystal forms.
-
-**Interpretation.** All SAM-MTases share the catalytic SAM-binding machinery, so the
-active site cannot discriminate substrate type. ProstT5 is *structure-aware* (encodes 3Di
-structural tokens); the classifier therefore reads substrate identity from
-**family-specific fold architecture encoded in the buried core**, not from the conserved
-catalytic or substrate-contacting residues. This explains why the signal is distributed,
-why STREME misses many proteins (the signal is structural, not a linear motif), and why
-IG repeatedly lands on hydrophobic core clusters.
-
----
-
-## 8. Structure selection — from FIMO carriers, not by hand
+## 6. Structure selection — from FIMO carriers, not by hand
 
 Every structure panel in the table above is selected automatically from FIMO evidence
 (`structures/rebuild_from_carriers.py`). For each of the 26 class-specific motifs we take the
@@ -290,31 +231,12 @@ small-molecule substrate in **gold**, and the **SAM/SAH cofactor (and analogs `0
 
 ---
 
-## 9. Supporting analyses
-
-- **ProstT5 self-attention** (`attribution/attention_analysis.py`, `attn_output/`): on the
-  showcase proteins, attention does not globally track IG, but its *peak* attention lands
-  on the catalytic/cofactor motifs (DPPY at 90th percentile, SAM loop at 80th) — the model
-  internally flags the functional residues even though substrate discrimination is
-  distributed.
-- **Showcase per-residue IG** (`attribution/ig_output_logit/`): five reference enzymes,
-  one per class, used to validate IG against known catalytic residues (e.g. C5-cytosine
-  Cys160, Dam DPPY).
-- **ProstT5 SAE** (`interprot/prostt5_sae/`, scope in `interprot/PROSTT5_SAE_SCOPE.md`):
-  InterProt-style TopK sparse autoencoder trained on the 22,976 reps' per-residue ProstT5
-  activations (val FVU 0.107, ~89% variance explained, 1/4096 dead). `phase_c_probe.py` scores
-  each latent's substrate-specificity (one-vs-rest AUROC) and firing pattern; `phase_d_
-  concordance.py` tests whether those latents fire on the STREME motif residues, and what the
-  motif-less enzymes use instead.
-
----
-
-## 10. Structure due-diligence (superseded)
+## 7. Structure due-diligence (superseded)
 
 Earlier versions selected one representative structure per motif and then ran two manual
-"upgrade" searches — a cluster-member search (§10) and a FIMO-carrier search (§10.1) — to move
+"upgrade" searches — a cluster-member search and a FIMO-carrier search — to move
 motifs off apo/AlphaFold structures onto substrate/cofactor-bound ones. Both are **superseded**
-by the systematic pipeline in §8: the FIMO cross-scan (`fimo_cross/`, all 32 motifs × 118,816
+by the systematic pipeline in §6: the FIMO cross-scan (`fimo_cross/`, all 32 motifs × 118,816
 proteins), `scan_pdb_ligands.py`, and `rebuild_from_carriers.py` now pick the best
 substrate+SAM-bound in-class carrier for every motif directly and re-measure placement. This
 also corrected several mis-mappings from the manual era — e.g. RNA-2 had been placed on METTL16
@@ -330,26 +252,18 @@ run_dedup.sh / run_domain_enrichment.sh / run_streme.sh        SLURM drivers
 streme_<class>/                STREME motifs (txt, html, logos)
 fimo_<class>/                  motif → rep matches (no-motif derivation)
 domain_enrichment.csv          InterPro enrichment (Part A)
-attribution/
-  integrated_gradients.py      core IG (mean-pool-aware, logit space, completeness)
-  no_motif_attribution.py      IG over all 3,023 no-motif reps + aggregate trends
-  no_motif_attr_output/        per_sequence.csv, aa_enrichment, peakedness, top_windows
-  attention_analysis.py        ProstT5 attention vs IG
-  ig_output_logit/             showcase per-residue IG
-  ig_q9v2g1/ ig_q54s83/ ig_p0dpa9/   per-protein IG for the structure-mapped cases
 structures/
   <class>/                     motif-on-structure: each motif folder = full-structure PDB
                                + view.cxc + view.pml (grey fold, motif highlighted); built by
   make_context_views.py          self-contained context views (27 motifs, from source PDBs)
-  make_context_views_upgrades.py the 5 bound-structure upgrades (§10, from _upgrade_src/)
-  IG_<class>/                  IG-on-structure (B-factor PDB + view scripts) per class
-find_bound_structures.py       §10 cluster-member → UniProt→PDB → bound-structure search
+  make_context_views_upgrades.py the 5 bound-structure upgrades (§7, from _upgrade_src/)
+find_bound_structures.py       §7 cluster-member → UniProt→PDB → bound-structure search
 verify_upgrade_motifs.py       FIMO-verify each upgrade structure carries its motif
+no_motif_prep.py / no_motif_manifest.csv   the 3,023 no-motif family reps (Entry, class, length)
 no_motif_umap.py / _interactive.py   motif coverage on the embedding UMAP (§5)
-interprot/                     deferred SAE scope + the InterProt paper
+interprot/                     scope note for planned (not yet run) per-residue attribution and SAE work
 ```
 
 Reproduction note: large intermediates (`corpus.csv`, `corpus_all.fasta`, `clust_*`,
 `tmp_mmseqs/`, `*_prostt5.h5` per-residue embeddings) are regenerable from the scripts and
-are *not* shipped in the journal_article copy; structures, motif outputs, attribution
-results, and figures are.
+are *not* shipped in the journal_article copy; structures, motif outputs, and figures are.

@@ -29,7 +29,7 @@ import datamapplot
 MA = Path(__file__).resolve().parent
 COORDS = Path("/home/nroethler/Code/journal_article/repo/5_umap/sam_mtase_umap_prostt5_coords.csv")
 CLUST = MA / "clust_cluster.tsv"
-NOMOTIF = MA / "attribution/no_motif_manifest.csv"
+NOMOTIF = MA / "no_motif_manifest.csv"
 OUT_HTML = MA / "no_motif_umap_interactive.html"
 
 SUBSTRATE_COLORS = {"RNA": "#cb181d", "DNA": "#6a51a3", "Protein": "#238b45",

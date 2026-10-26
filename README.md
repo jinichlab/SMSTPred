@@ -17,7 +17,7 @@ homology and classical-ML baselines, deploys it across the tree of life, and int
 | 4 | [`4_phylo_trends/`](4_phylo_trends) | Phylogenetic / taxonomic trends in the predicted substrate usage across the tree of life. |
 | 5 | [`5_umap/`](5_umap) | Global ProstT5 UMAP of all tree-of-life MTases + substrate-coloured maps and cluster-enrichment figures. |
 | 6 | [`6_dark_cluster_annotation/`](6_dark_cluster_annotation) | Cross-validates the 33 uncharacterized ("dark", zero-SwissProt-anchor) clusters surfaced in Stage 5 against two independent methods — **CLEAN** (EC-centroid nearest neighbor) and **Horizyn** (reaction-retrieval) — to flag genuine discovery leads vs clusters mis-swept in from other chemistry. |
-| 7 | [`7_motif_analysis/`](7_motif_analysis) | **Interpretability**: discriminative sequence motifs (STREME), per-residue attribution (Integrated Gradients), and structural mapping of both — *why* the classifier works. |
+| 7 | [`7_motif_analysis/`](7_motif_analysis) | **Interpretability**: discriminative sequence motifs (STREME, FIMO) and their structural mapping onto experimental enzyme–cofactor–substrate complexes — *what* distinguishes the substrate classes. |
 
 Each folder has its own `README.md` with scripts, inputs, outputs, and parameters. Composite-figure
 and rendered-table builders are in [`figures/`](figures); the small data tables (training labels,
@@ -45,9 +45,11 @@ organism metadata) are in [`data/`](data).
   recoverable, family-specific clusters (Stage 5), including 33 uncharacterized clusters
   with no reviewed anchor — two independent orthogonal methods flag several as genuine
   novel-methylation discovery leads and others as likely mis-assigned non-MTases (Stage 6).
-- **Interpretation** (Stage 7): discriminative motifs recover the canonical catalytic /
-  cofactor signatures, but the classifier's substrate signal localises to **buried fold-core
-  residues**, not the conserved catalytic site — across all four substrate classes.
+- **Interpretation** (Stage 7): STREME recovers the canonical catalytic and cofactor
+  signatures of each class (26 of 32 motifs class-specific; 22 of those 26 within 4 Å of the
+  substrate or cofactor), yet about 12 % of enzymes carry no such motif and sit scattered
+  within motif-bearing families — the substrate signal is distributed rather than a short
+  linear motif.
 
 ## Conventions used throughout
 
