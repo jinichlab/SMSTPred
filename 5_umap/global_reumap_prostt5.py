@@ -39,10 +39,10 @@ PRED_SUFFIX = "_embeddings_predictions.csv"
 
 RANDOM_SEED, N_NEIGHBORS, MIN_DIST, METRIC = 42, 15, 0.1, "cosine"
 HDBSCAN_MIN_CLUSTER_SIZE, HDBSCAN_MIN_SAMPLES = 50, 10
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 SUBSTRATE_COLORS = {
     "RNA": "#cb181d", "DNA": "#6a51a3", "Protein": "#238b45",
-    "Other": "#e6550d", "Mixed": "#636363", "Unassigned": "#dddddd",
+    "Metabolite": "#e6550d", "Mixed": "#636363", "Unassigned": "#dddddd",
 }
 
 
@@ -66,7 +66,7 @@ def load_predictions():
         d["Organism"] = stem_to_org.get(f.name[:-len(PRED_SUFFIX)], "")
         d["Substrate"] = d.apply(derive_substrate, axis=1)
         frames.append(d[["Entry", "Organism", "Substrate",
-                         "score_RNA", "score_DNA", "score_Protein", "score_Other"]])
+                         "score_RNA", "score_DNA", "score_Protein", "score_Metabolite"]])
     pred = pd.concat(frames, ignore_index=True).drop_duplicates("Entry").set_index("Entry")
     print(f"predictions: {len(pred):,} proteins | "
           f"{pred['Substrate'].value_counts().to_dict()}", flush=True)
@@ -109,7 +109,7 @@ def main():
 
     # --- static PNG ---
     fig, ax = plt.subplots(figsize=(14, 11))
-    order = ["Unassigned", "Mixed", "Other", "Protein", "DNA", "RNA"]
+    order = ["Unassigned", "Mixed", "Metabolite", "Protein", "DNA", "RNA"]
     dim = {"Unassigned": (0.20, 4), "Mixed": (0.40, 6)}
     for k, sub in enumerate(order):
         m = df["Substrate"] == sub

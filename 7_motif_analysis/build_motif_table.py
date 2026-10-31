@@ -20,8 +20,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
-CLASSES = ["DNA", "RNA", "Protein", "Other"]
-COLORS = {"DNA": "#6a51a3", "RNA": "#cb181d", "Protein": "#238b45", "Other": "#e6550d"}
+CLASSES = ["DNA", "RNA", "Protein", "Metabolite"]
+COLORS = {"DNA": "#6a51a3", "RNA": "#c14445", "Protein": "#618d43", "Metabolite": "#ed8c44"}
 
 # README-curated catalytic / cofactor roles, keyed by (class, motif number)
 KNOWN = {
@@ -31,7 +31,7 @@ KNOWN = {
     ("RNA", 7): "basic RNA-binding patch (Lys-rich)",
     ("Protein", 5): "PRMT THW loop",
     ("Protein", 8): "NPPY (N-MTase catalytic)",
-    ("Other", 3): "Motif I GxGxG (SAM-binding)",
+    ("Metabolite", 3): "Motif I GxGxG (SAM-binding)",
 }
 
 

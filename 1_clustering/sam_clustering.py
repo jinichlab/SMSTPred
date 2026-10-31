@@ -17,7 +17,7 @@ Stages
                  report cluster-structure diagnostics (cluster count, singleton
                  fraction, size percentiles), within- vs between-cluster cosine
                  distributions, and label purity (fraction of multi-member
-                 clusters sharing an identical [Other, Protein, RNA, DNA]
+                 clusters sharing an identical [Metabolite, Protein, RNA, DNA]
                  vector). Cluster assignments are cached for downstream
                  stratified-by-cluster train/val splitting.
 3. VALIDATION    For every SAM MTase predicted across the reference proteomes,
@@ -69,7 +69,7 @@ EMBED_DIR = DATA_ROOT / "tree_of_life_ProtT5"      # extract embeddings_tree_of_
 
 OUT_DIR = Path(__file__).resolve().parent / "sam_clustering_output"
 
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 THRESHOLDS = [0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.95]
 CHOSEN_THRESHOLD = 0.6
 
@@ -332,7 +332,7 @@ def plot_within_between(within_between, save_path):
 
 def plot_validation_histogram(max_sims, save_path, chosen_threshold):
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.hist(max_sims, bins=50, edgecolor="black", alpha=0.7, color="#4C72B0")
+    ax.hist(max_sims, bins=50, edgecolor="black", alpha=0.7, color="#4578aa")
     ax.set_xlabel("Max Cosine Similarity to Training Set", fontsize=13)
     ax.set_ylabel("Count", fontsize=13)
     ax.axvline(np.median(max_sims), color="red", linestyle="--", linewidth=1.5,

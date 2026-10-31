@@ -7,8 +7,8 @@ the manuscript caption carries the description). Replaces the four PNGs that
 Panel A: Protein-substrate load, Metazoa vs unicellular vs non-metazoan
          multicellular eukaryotes (reproduces repo/4_phylo_trends/protein_cellularity_violin.py).
 Panel B: DNA- and Protein-substrate load, Vertebrata vs invertebrate Metazoa.
-Panel C: Other-substrate load, Plants (Viridiplantae) vs non-plant eukaryotes.
-Panel D: Other-substrate load, Actinomycetota vs other Bacteria.
+Panel C: Metabolite-substrate load, Plants (Viridiplantae) vs non-plant eukaryotes.
+Panel D: Metabolite-substrate load, Actinomycetota vs other Bacteria.
 
 Source: Stage-3 ProstT5 deployment predictions (repo/3_predictions/predictions_output/
 *_embeddings_predictions.csv, multi-label call_* columns) joined to
@@ -16,7 +16,7 @@ data/selected_1259_organisms.csv
 (Taxonomic lineage, is_metazoa, is_vertebrate).
 
 Outputs (this dir): A_protein_3group_violin.png, B_vertebrate_invertebrate_violins.png,
-C_plant_other_violin.png, D_actino_other_violin.png
+C_plant_metabolite_violin.png, D_actino_metabolite_violin.png
 """
 import os
 from itertools import combinations
@@ -97,7 +97,7 @@ def build_org_table(meta):
         row = {"Organism": stem_to_org.get(stem, stem), "lineage": stem_to_lineage.get(stem),
                "is_vertebrate": stem_to_vert.get(stem, False), "is_metazoa": stem_to_metazoa.get(stem, False),
                "n_total": n_total}
-        for cls in ["Protein", "DNA", "Other"]:
+        for cls in ["Protein", "DNA", "Metabolite"]:
             col = f"call_{cls}"
             n = int((pd.to_numeric(d[col], errors="coerce") == 1).sum()) if col in d.columns else 0
             row[cls] = n
@@ -156,7 +156,7 @@ def pairwise_brackets(ax, data_by_group, groups, ymax, kruskal_box=True):
 
 def panel_A(org):
     groups = ["Metazoa", "Unicellular eukaryote", "Non-metazoan multicellular"]
-    palette = {"Metazoa": "#d95f02", "Unicellular eukaryote": "#7570b3", "Non-metazoan multicellular": "#1b9e77"}
+    palette = {"Metazoa": "#ed8c44", "Unicellular eukaryote": "#4578aa", "Non-metazoan multicellular": "#618d43"}
     org = org.copy()
     org["grp"] = org["lineage"].apply(cellularity)
     sub = org.dropna(subset=["grp"])
@@ -182,7 +182,7 @@ def panel_B(org):
     met["grp"] = met["is_vertebrate"].map({True: "Vertebrata", False: "Invertebrate\nMetazoa"})
     met = met[met["n_total"] >= MIN_N]
     print("Panel B counts:\n", met["grp"].value_counts().to_string())
-    palette = {"Vertebrata": "#b2604a", "Invertebrate\nMetazoa": "#e8b98a"}
+    palette = {"Vertebrata": "#c14445", "Invertebrate\nMetazoa": "#e8b98a"}
 
     fig, axes = plt.subplots(2, 2, figsize=(16, 15.5), constrained_layout=True)
     for row, cls in enumerate(["DNA", "Protein"]):
@@ -203,7 +203,7 @@ def panel_B(org):
 
 def panel_C(org):
     groups = ["Plants", "Non-plant\neukaryotes"]
-    palette = {"Plants": "#2ca25f", "Non-plant\neukaryotes": "#9e9ac8"}
+    palette = {"Plants": "#618d43", "Non-plant\neukaryotes": "#a2b8d4"}
     org = org.copy()
     org["grp"] = org["lineage"].apply(plant_group).replace({"Non-plant eukaryotes": "Non-plant\neukaryotes"})
     sub = org.dropna(subset=["grp"])
@@ -211,22 +211,22 @@ def panel_C(org):
     print("Panel C counts:\n", sub["grp"].value_counts().to_string())
 
     fig, axes = plt.subplots(1, 2, figsize=(16, 13), constrained_layout=True)
-    for ax, key, ylab in [(axes[0], "Other", "Other-substrate SAM-MTases per organism"),
-                           (axes[1], "pct_Other", "% of organism's SAM-MTases that are 'Other'")]:
+    for ax, key, ylab in [(axes[0], "Metabolite", "Metabolite-substrate SAM-MTases per organism"),
+                           (axes[1], "pct_Metabolite", "% of organism's SAM-MTases that are 'Metabolite'")]:
         data = {g: sub.loc[sub["grp"] == g, key].to_numpy() for g in groups}
         ymax = violin(ax, data, groups, palette, ylab)
         _, p = mannwhitneyu(data[groups[0]], data[groups[1]])
         ax.plot([0, 0, 1, 1], [ymax * 1.07, ymax * 1.09, ymax * 1.09, ymax * 1.07], color="black", lw=1.6)
         ax.text(0.5, ymax * 1.12, f"{stars(p)}  (p={p:.1e})", ha="center", va="bottom", fontsize=26, fontweight="bold")
         ax.set_ylim(top=ymax * 1.34)
-    fig.savefig(OUT_DIR / "C_plant_other_violin.png", dpi=200)
+    fig.savefig(OUT_DIR / "C_plant_metabolite_violin.png", dpi=200)
     plt.close(fig)
-    print("[wrote] C_plant_other_violin.png")
+    print("[wrote] C_plant_metabolite_violin.png")
 
 
 def panel_D(org):
     groups = ["Actinomycetota", "Other\nbacteria"]
-    palette = {"Actinomycetota": "#d95f02", "Other\nbacteria": "#bdbdbd"}
+    palette = {"Actinomycetota": "#ed8c44", "Other\nbacteria": "#bdbdbd"}
     org = org.copy()
     org["grp"] = org["lineage"].apply(bacteria_group).replace({"Other bacteria": "Other\nbacteria"})
     sub = org.dropna(subset=["grp"])
@@ -234,17 +234,17 @@ def panel_D(org):
     print("Panel D counts:\n", sub["grp"].value_counts().to_string())
 
     fig, axes = plt.subplots(1, 2, figsize=(16, 13), constrained_layout=True)
-    for ax, key, ylab in [(axes[0], "Other", "Other-substrate SAM-MTases per organism"),
-                           (axes[1], "pct_Other", "% of organism's SAM-MTases that are 'Other'")]:
+    for ax, key, ylab in [(axes[0], "Metabolite", "Metabolite-substrate SAM-MTases per organism"),
+                           (axes[1], "pct_Metabolite", "% of organism's SAM-MTases that are 'Metabolite'")]:
         data = {g: sub.loc[sub["grp"] == g, key].to_numpy() for g in groups}
         ymax = violin(ax, data, groups, palette, ylab)
         _, p = mannwhitneyu(data[groups[0]], data[groups[1]])
         ax.plot([0, 0, 1, 1], [ymax * 1.07, ymax * 1.09, ymax * 1.09, ymax * 1.07], color="black", lw=1.6)
         ax.text(0.5, ymax * 1.12, f"{stars(p)}  (p={p:.1e})", ha="center", va="bottom", fontsize=26, fontweight="bold")
         ax.set_ylim(top=ymax * 1.34)
-    fig.savefig(OUT_DIR / "D_actino_other_violin.png", dpi=200)
+    fig.savefig(OUT_DIR / "D_actino_metabolite_violin.png", dpi=200)
     plt.close(fig)
-    print("[wrote] D_actino_other_violin.png")
+    print("[wrote] D_actino_metabolite_violin.png")
 
 
 def main():

@@ -66,7 +66,7 @@ EMBED_DIR = DATA_ROOT / "tree_of_life_ProtT5"      # extract embeddings_tree_of_
 
 OUT_DIR = Path(__file__).resolve().parent / "up_clustering_output"
 
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 CHOSEN_THRESHOLD = 0.5
 
 
@@ -126,7 +126,7 @@ def plot_streaming_baseline(bin_edges, hist_counts, running_count, mean_sim, med
 
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.bar(bin_centers, density, width=bin_widths, edgecolor="black",
-           alpha=0.7, color="#4C72B0", linewidth=0.3)
+           alpha=0.7, color="#4578aa", linewidth=0.3)
     ax.set_xlabel("Cosine Similarity", fontsize=13)
     ax.set_ylabel("Density", fontsize=13)
     ax.set_title(
@@ -148,7 +148,7 @@ def plot_streaming_baseline(bin_edges, hist_counts, running_count, mean_sim, med
 
 def plot_validation_histogram(max_sims, save_path, chosen_threshold):
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.hist(max_sims, bins=50, edgecolor="black", alpha=0.7, color="#4C72B0")
+    ax.hist(max_sims, bins=50, edgecolor="black", alpha=0.7, color="#4578aa")
     ax.set_xlabel("Max Cosine Similarity to UP Training Set", fontsize=13)
     ax.set_ylabel("Count", fontsize=13)
     ax.set_title(

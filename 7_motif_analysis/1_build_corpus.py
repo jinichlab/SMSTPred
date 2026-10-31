@@ -3,7 +3,7 @@
 Stage 6 / motif analysis -- step 1: assemble the labeled SAM-MTase corpus.
 
 Combines every SAM-MTase sequence with its substrate label:
-  - training (7,405 SAM_swiss):   GROUND-TRUTH label (Other/Protein/RNA/DNA cols)
+  - training (7,405 SAM_swiss):   GROUND-TRUTH label (Metabolite/Protein/RNA/DNA cols)
   - deployment (tree of life):    PREDICTED label (call_* from predictions_output)
 
 Each protein is assigned a single substrate (exactly one positive -> that class;
@@ -14,7 +14,7 @@ de-redundification, domain enrichment, and STREME.
 Outputs (./):
   corpus.csv                 Entry, Sequence, InterPro, class, source, in_domain
   corpus_all.fasta           all single-label sequences (header: >Entry|class)
-  class_{RNA,DNA,Protein,Other}.fasta
+  class_{RNA,DNA,Protein,Metabolite}.fasta
 """
 import glob
 import os
@@ -22,7 +22,7 @@ from pathlib import Path
 
 import pandas as pd
 
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 REPO = Path(__file__).resolve().parents[1]
 DATA = Path(os.environ.get("SMSTPRED_DATA", REPO / "data"))
 TRAIN_CSV = str(DATA / "labels_SAM_full.csv")

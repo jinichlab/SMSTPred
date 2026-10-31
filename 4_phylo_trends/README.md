@@ -7,7 +7,7 @@ how predicted MTase substrate usage varies across the tree and with host lifesty
 
 | Script | Purpose |
 |---|---|
-| `reference_tree.py` | Builds a taxonomic **Newick tree** over the ~1,259 reference organisms and annotates each leaf with its per-substrate call composition for **iTOL** rendering (ring/bar tracks of DNA/RNA/Protein/Other usage). |
+| `reference_tree.py` | Builds a taxonomic **Newick tree** over the ~1,259 reference organisms and annotates each leaf with its per-substrate call composition for **iTOL** rendering (ring/bar tracks of DNA/RNA/Protein/Metabolite usage). |
 | `protein_cellularity_violin.py` | Per-organism **Protein-substrate** MTase load (count or fraction) split across eukaryotic **cellularity groups** (e.g. metazoa / unicellular / plant), on the ProstT5 deployment predictions — testing whether protein-methylation capacity tracks multicellular complexity. |
 | `run_reference_tree.sh` | SLURM driver. |
 

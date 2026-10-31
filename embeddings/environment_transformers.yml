@@ -1,0 +1,19 @@
+# Environment for the ProtT5, ProstT5 and SaProt embedders (embed_prott5.py, embed_prostt5.py, embed_saprot.py).
+#   conda env create -f environment_transformers.yml        # creates "smstpred_embed"
+# SaProt also needs the Foldseek binary (`make tools` at the repository root, or FOLDSEEK_BIN=/path/to/foldseek).
+# Versions are those the archived embeddings were made with (transformers 4.57.1, sentencepiece 0.2.1); torch 2.8.0 is the release the rest of the
+# repository uses. A GPU is strongly recommended (the models have 1.2-3 billion parameters); the pip wheel of torch carries its own CUDA libraries.
+name: smstpred_embed
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - h5py
+  - numpy
+  - pandas
+  - pip:
+      - torch==2.8.0
+      - transformers==4.57.1
+      - sentencepiece==0.2.1
+      - protobuf

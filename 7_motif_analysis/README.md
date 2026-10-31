@@ -2,7 +2,7 @@
 
 This directory contains the **motif / interpretability** stage of the project: a set of
 analyses that ask **what sequence and structural features distinguish methyltransferase
-(MTase) substrate types** (DNA / RNA / Protein / Other-small-molecule). It combines two
+(MTase) substrate types** (DNA / RNA / Protein / Metabolite, i.e. small-molecule). It combines two
 complementary lines of evidence:
 
 1. **Discriminative linear-motif discovery** (STREME, scanned with FIMO) — what short sequence
@@ -12,8 +12,9 @@ complementary lines of evidence:
 
 Together they show that the discriminative motifs recover the canonical catalytic and
 cofactor signatures of each class, while a substantial fraction of enzymes (about 12 %)
-carry no discriminative motif at all and sit scattered inside motif-bearing families — the
-substrate signal is distributed rather than a short linear motif.
+carry no discriminative motif at all and sit scattered inside motif-bearing families. These
+enzymes are enriched for out-of-domain and fragment sequences, so the analysis shows that a short
+discriminative motif does not carry their calls, not where their signal lies.
 
 ---
 
@@ -35,7 +36,7 @@ in_domain).
 
 | Class | single-label corpus |
 |---|---|
-| Other | 41,941 |
+| Metabolite | 41,941 |
 | RNA | 39,079 |
 | Protein | 18,766 |
 | DNA | 6,822 |
@@ -50,7 +51,7 @@ thousands of near-duplicates.
 
 | Class | family reps |
 |---|---|
-| Other | 10,470 |
+| Metabolite | 10,470 |
 | RNA | 5,986 |
 | Protein | 3,959 |
 | DNA | 2,561 |
@@ -66,7 +67,7 @@ input).
 `3_domain_enrichment.py` — per-class **InterPro** enrichment (Fisher exact) →
 `domain_enrichment.csv`. Confirms each predicted class recovers the expected enzyme
 families: **DNA** → C5-cytosine/DNMT + N6-adenine/N4 MTases; **Protein** → PRMT/SET +
-HemK; **RNA** → RsmB/NOP2/FtsJ; **Other** → O-MTase / SABATH. This is independent of the
+HemK; **RNA** → RsmB/NOP2/FtsJ; **Metabolite** → O-MTase / SABATH. This is independent of the
 classifier and validates the labels.
 
 ---
@@ -134,25 +135,25 @@ See `structures/rebuild_from_carriers.py` for the pipeline.
 | 6 | Protein-7 | `AFGTGTHPTTRLCLEAL` | PrmA (L11 MTase) `3CJQ` — X-ray; **SAH + protein substrate** | **near substrate/SAM** — SAM 2.6, sub 2.6 Å |
 | 7 | Protein-8 | `SNPPYIPT` | PrmC/HemK `2B3T` — X-ray; **SAH + protein substrate** | **near substrate/SAM** — SAM 3.4, sub 2.7 Å |
 
-**Other**
+**Metabolite**
 
 | # | Motif | Consensus | Structure | Placement |
 |---|---|---|---|---|
-| 1 | Other-5 | `GGKERTEEEWRAL` | norcoclaurine 6-OMT `5ICE` — X-ray; **SAH + small-molecule substrate (`2H4`)** | **distal** — SAM 10.3, sub 6.5 Å |
-| 2 | Other-6 | `LHDWPDEDCVKIL` | GedA OMT `7WH9` — X-ray; **SAH + small-molecule substrate (`EMO`)** | **near substrate/SAM** — SAM 3.3, sub 2.8 Å |
-| 3 | Other-7 | `HDFFTPQPVKGADVYL` | MpaG' OMT `8XTE` — X-ray; **SAH + small-molecule substrate (`A1LWB`)** | **near SAM** — SAM 3.0, sub 6.9 Å |
-| 4 | Other-8 | `GIVQDLPEVIA` | scoulerine 9-OMT `6I6K` — X-ray; **SAH + small-molecule substrate (`SLX`)** | **near SAM** — SAM 2.6, sub 9.2 Å |
+| 1 | Metabolite-5 | `GGKERTEEEWRAL` | norcoclaurine 6-OMT `5ICE` — X-ray; **SAH + small-molecule substrate (`2H4`)** | **distal** — SAM 10.3, sub 6.5 Å |
+| 2 | Metabolite-6 | `LHDWPDEDCVKIL` | GedA OMT `7WH9` — X-ray; **SAH + small-molecule substrate (`EMO`)** | **near substrate/SAM** — SAM 3.3, sub 2.8 Å |
+| 3 | Metabolite-7 | `HDFFTPQPVKGADVYL` | MpaG' OMT `8XTE` — X-ray; **SAH + small-molecule substrate (`A1LWB`)** | **near SAM** — SAM 3.0, sub 6.9 Å |
+| 4 | Metabolite-8 | `GIVQDLPEVIA` | scoulerine 9-OMT `6I6K` — X-ray; **SAH + small-molecule substrate (`SLX`)** | **near SAM** — SAM 2.6, sub 9.2 Å |
 
 **Summary.** All **26** class-specific motifs map onto an **experimental** structure of a
 real MTase that carries the motif (X-ray; cryo-EM for the FTSJ1 panel), with **both** SAM/SAH
 and substrate bound and the placement measured directly — no homology models, no AlphaFold-only
 mappings, no hand-picked ranges. The motifs are overwhelmingly **active-site elements**:
 13 sit at the substrate–cofactor junction (both ligands ≤ 4 Å), 6 contact only the substrate, 3 only the SAM pocket,
-and **4** are **distal** — > 4 Å from *both* ligands: RNA-6 (`ENEAVVAAALK`), RNA-7 (`KKKKKKRK`), DNA-4 (`LTPREAARLQGFPDDYTF`), Other-5 (`GGKERTEEEWRAL`).
-Of these, Other-5, RNA-7 and RNA-6 sit well off the cofactor (> 9 Å from SAM) on the
+and **4** are **distal** — > 4 Å from *both* ligands: RNA-6 (`ENEAVVAAALK`), RNA-7 (`KKKKKKRK`), DNA-4 (`LTPREAARLQGFPDDYTF`), Metabolite-5 (`GGKERTEEEWRAL`).
+Of these, Metabolite-5, RNA-7 and RNA-6 sit well off the cofactor (> 9 Å from SAM) on the
 substrate-recognition face, while DNA-4 lies ~5–6 Å from both in the active-site cleft
 (junction-adjacent, in second shell rather than direct contact). The 6 non-specific
-motifs (RNA-3, Protein-1, Other-1/2/3/4) are excluded as pan-MTase SAM-binding / Rossmann-core
+motifs (RNA-3, Protein-1, Metabolite-1/2/3/4) are excluded as pan-MTase SAM-binding / Rossmann-core
 elements shared across classes.
 
 
@@ -168,7 +169,7 @@ A rep is "no-motif" if it matches **none** of its class's motifs.
 | RNA | 5,986 | 4,367 | **1,619** | **27.0 %** |
 | DNA | 2,561 | 2,145 | 416 | 16.2 % |
 | Protein | 3,959 | 3,560 | 399 | 10.1 % |
-| Other | 10,470 | 9,881 | 589 | 5.6 % |
+| Metabolite | 10,470 | 9,881 | 589 | 5.6 % |
 | **Total** | **22,976** | 19,953 | **3,023** | **13.2 %** |
 
 RNA is the outlier (its motifs are weak/binding-patch rather than a sharp catalytic
@@ -186,8 +187,9 @@ Characterisation of the 3,023 no-motif reps vs the motif-having majority:
   extrapolated calls; DNA no-motif is 99 % out-of-domain.
 - **Enriched for short/fragment sequences** (15 % <150 aa vs 1 %).
 
-So the no-motif set = real MTases whose discriminative signal is *distributed/structural*
-rather than a short linear motif (plus a fragment tail).
+So the no-motif set is a mixture: a fragment tail, enzymes whose calls extrapolate beyond the
+training data, and enzymes whose signal the discriminative motifs do not capture. The analysis does
+not say whether that signal is distributed along the sequence or structural.
 
 ### Where the no-motif proteins sit on the embedding landscape
 

@@ -17,7 +17,7 @@
 #   1. motif x class SPECIFICITY matrix -- the evidence behind calling these
 #      motifs "discriminative" (so far that rests only on STREME discovery-time
 #      enrichment, never verified by scanning). Rate-normalised, because the
-#      classes differ ~6x in size (Other 41,941 vs DNA 6,822).
+#      classes differ ~6x in size (Metabolite 41,941 vs DNA 6,822).
 #   2. motif status for Mixed / Unassigned proteins (never scanned before).
 #   3. a lookup to verify a structure's protein really carries its motif, for any
 #      motif/protein pair regardless of class (see the structure-mapping audit).
@@ -32,15 +32,22 @@
 # (118,816, plain '>Entry' headers) from corpus.csv here.
 set -e   # fail fast: don't cascade four broken FIMO runs off a bad prep
 
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate classifier_env
+# Environment: the conda environment that is already active, else the one `make env` builds (SMSTPRED_ENV renames it).
+# Runs as `sbatch run_*.sh` (the job inherits the submitting shell's environment) or as plain `bash run_*.sh`.
+if [ -z "${CONDA_DEFAULT_ENV:-}" ] || [ "$CONDA_DEFAULT_ENV" = base ]; then
+    if command -v conda > /dev/null; then
+        eval "$(conda shell.bash hook)"
+        conda activate "${SMSTPRED_ENV:-smstpred}" || { echo "conda environment ${SMSTPRED_ENV:-smstpred} not found: run 'make env' first" >&2; exit 1; }
+    fi
+fi
 
-# SLURM copies this script to /var/spool/slurmd/..., so "$(dirname $0)" is NOT the
-# script's real home -- use the submit dir (falling back to $0 for direct runs).
-cd "${SLURM_SUBMIT_DIR:-$(dirname "$0")}"
+# Work from this script's folder (under sbatch $0 is a spooled copy: ask SLURM where it came from).
+here="$(dirname "$0")"
+[ "$(basename "$0")" = slurm_script ] && here="$(dirname "$(scontrol show job "$SLURM_JOB_ID" | sed -n 's/^ *Command=\([^ ]*\).*/\1/p' | head -n 1)")"
+cd "$here" || exit 1
 for need in corpus.csv streme_DNA/streme.txt streme_RNA/streme.txt \
-            streme_Protein/streme.txt streme_Other/streme.txt; do
-    [ -e "$need" ] || { echo "ERROR: $need not found in $PWD -- sbatch from motif_analysis/"; exit 1; }
+            streme_Protein/streme.txt streme_Metabolite/streme.txt; do
+    [ -e "$need" ] || { echo "ERROR: $need not found in $PWD -- run the earlier Stage 7 steps first (see REPRODUCING.md)"; exit 1; }
 done
 echo "[cwd] $PWD"
 
@@ -54,13 +61,13 @@ with open("corpus_every.clean.fasta", "w") as f:
     for e, s in zip(c["Entry"], c["Sequence"]):
         f.write(f">{e}\n{re.sub(r'[^ACDEFGHIKLMNPQRSTVWY]', 'X', str(s))}\n")
 print(f"[prep] corpus_every.clean.fasta: {len(c):,} sequences "
-      f"({(~c['class'].isin(['DNA','RNA','Protein','Other'])).sum():,} Mixed/Unassigned "
+      f"({(~c['class'].isin(['DNA','RNA','Protein','Metabolite'])).sum():,} Mixed/Unassigned "
       f"the diagonal never scanned)")
 PY
 
 # 2) each class's 8 motifs vs ALL sequences
 mkdir -p fimo_cross
-for cls in DNA RNA Protein Other; do
+for cls in DNA RNA Protein Metabolite; do
     echo "=== FIMO cross ${cls}: 8 motifs vs $(grep -c '^>' corpus_every.clean.fasta) sequences ==="
     fimo --text --thresh 1e-4 --verbosity 1 \
         "streme_${cls}/streme.txt" corpus_every.clean.fasta > "fimo_cross/${cls}.tsv"

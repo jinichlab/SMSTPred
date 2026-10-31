@@ -3,9 +3,8 @@
 Row 1 (A/B) = characterized families recovered de novo and anchored to
 reviewed SwissProt members (PRMT/CARM; DNMT3A/3B). Row 2 (C/D) = uncharacterized
 'dark-matter' families with no reviewed members (plant and actinomycete
-small-molecule enzymes); panel C's four badged clusters (1-4) are where CLEAN's
-EC-centroid call and Horizyn's dominant reaction family independently name the
-same specific chemistry (panel E)."""
+small-molecule enzymes); the four outlined clusters in panel C (c110, c551, c667,
+c714) are the ones examined in Figure 8 (CLEAN / Horizyn reaction profiles)."""
 import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -15,16 +14,14 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 PANELS = [
     ("A", "A_metazoa_protein_clusters.png"),
     ("B", "B_vertebrate_dna_clusters.png"),
-    ("C", "C_plant_other_dark_clusters.png"),
-    ("D", "D_actino_other_dark_clusters.png"),
+    ("C", "C_plant_metabolite_dark_clusters.png"),
+    ("D", "D_actino_metabolite_dark_clusters.png"),
 ]
-PANEL_E = ("E", "E_reaction_matches.png")
 
 FDIR = os.path.join(matplotlib.get_data_path(), "fonts", "ttf")
 F_LETTER = ImageFont.truetype(os.path.join(FDIR, "DejaVuSans-Bold.ttf"), 72)
 
 CW, CH = 1740, 1180        # A-D cell content box
-CH_E = 1750                 # panel E is a wide reference table (larger text/structures)
 MARGIN, GAP, TITLE_H = 50, 44, 20
 
 
@@ -59,7 +56,7 @@ def cell(path, letter, cw, ch):
 
 def main():
     W = 2 * CW + GAP + 2 * MARGIN
-    H = TITLE_H + 2 * CH + 2 * GAP + CH_E + 2 * MARGIN
+    H = TITLE_H + 2 * CH + GAP + 2 * MARGIN
     fig = Image.new("RGB", (W, H), "white")
     for i, (letter, fname) in enumerate(PANELS):
         c = cell(os.path.join(BASE, fname), letter, CW, CH)
@@ -67,12 +64,6 @@ def main():
         x = MARGIN + col * (CW + GAP)
         y = MARGIN + TITLE_H + row * (CH + GAP)
         fig.paste(c, (x, y))
-
-    letter, fname = PANEL_E
-    ce = cell(os.path.join(BASE, fname), letter, 2 * CW + GAP, CH_E)
-    x = MARGIN
-    y = MARGIN + TITLE_H + 2 * CH + GAP + GAP
-    fig.paste(ce, (x, y))
 
     out = os.path.join(BASE, "Fig7_clusters_combined.png")
     fig.save(out, dpi=(300, 300))

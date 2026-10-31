@@ -1,0 +1,1061 @@
+{
+ "generated": "2026-10-30T17:31:28",
+ "versions": {
+  "python": "3.12.15",
+  "platform": "Linux-6.8.0-64-generic-x86_64-with-glibc2.35",
+  "numpy": "2.1.3",
+  "pandas": "2.2.3",
+  "scipy": "1.15.2",
+  "sklearn": "1.6.1",
+  "torch": "2.8.0",
+  "matplotlib": "3.10.9",
+  "PIL": "13.0.0"
+ },
+ "steps": [
+  {
+   "id": "s1_clustering",
+   "stage": "1",
+   "tier": "A",
+   "paper": "Stage 1 clustering tables at thresholds 0.5-0.95; Fig S1",
+   "cmd": "python sam_clustering.py",
+   "cwd": "1_clustering",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 58.6,
+   "files": [
+    {
+     "path": "1_clustering/sam_clustering_output/all_pairwise_similarities.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "1_clustering/sam_clustering_output/cosine_similarity_to_training_set.csv",
+     "status": "numeric-match",
+     "detail": "max relative diff nan"
+    },
+    {
+     "path": "1_clustering/sam_clustering_output/sam_cluster_size_histograms.png",
+     "status": "image-match",
+     "detail": "mean abs pixel diff 3.78/255 (rendering noise tolerated up to 12)"
+    },
+    {
+     "path": "1_clustering/sam_clustering_output/sam_cluster_threshold_sweep.csv",
+     "status": "numeric-match",
+     "detail": "max relative diff 2.9e-06"
+    },
+    {
+     "path": "1_clustering/sam_clustering_output/sam_cluster_within_between.png",
+     "status": "image-match",
+     "detail": "mean abs pixel diff 4.00/255 (rendering noise tolerated up to 12)"
+    },
+    {
+     "path": "1_clustering/sam_clustering_output/sam_cosine_sim.dat",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "1_clustering/sam_clustering_output/validation_max_similarity.png",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s2_bakeoff_stats",
+   "stage": "2",
+   "tier": "A",
+   "paper": "Friedman / Bonferroni-Dunn / Holm-Wilcoxon statistics of the benchmark (stats_report.txt)",
+   "cmd": "python classifier_mcc_stats.py",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 2.7,
+   "files": [
+    {
+     "path": "2_training/sam_classifier_comparison_output/stats/cd_diagram_cluster_full.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/sam_classifier_comparison_output/stats/nemenyi_cluster_full.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/sam_classifier_comparison_output/stats/stats_report.txt",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s2_fig2a_zoom",
+   "stage": "2",
+   "tier": "A",
+   "paper": "Fig 2A (cluster MCC, Friedman, Bonferroni-Dunn) and Fig S4",
+   "cmd": "python plot_cluster_mcc_zoom.py",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 1.3,
+   "files": [
+    {
+     "path": "2_training/sam_classifier_comparison_output/sam_classifier_classical_ml_comparison.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/sam_classifier_comparison_output/sam_classifier_cluster_mcc_zoom.png",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s2_sam_vs_up_stats",
+   "stage": "2",
+   "tier": "A",
+   "paper": "Fig 2B statistics (Nadeau-Bengio paired test)",
+   "cmd": "python sam_vs_up_prostt5_stats.py",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 0.7,
+   "files": [
+    {
+     "path": "2_training/sam_vs_up_prostt5_comparison_output/sam_vs_up_prostt5_stats.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/sam_vs_up_prostt5_comparison_output/sam_vs_up_prostt5_stats.txt",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s2_sam_vs_up_plot",
+   "stage": "2",
+   "tier": "A",
+   "paper": "Fig 2B bars",
+   "cmd": "python plot_sam_vs_up_prostt5.py",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 1.1,
+   "files": [
+    {
+     "path": "2_training/sam_vs_up_prostt5_comparison_output/sam_vs_up_prostt5_comparison_mcc.png",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s2_fig2_main",
+   "stage": "2",
+   "tier": "A",
+   "paper": "Fig 2 (A + B)",
+   "cmd": "python plot_fig2_main.py",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 1.1,
+   "files": [
+    {
+     "path": "2_training/sam_classifier_comparison_output/fig2_benchmark_main.png",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s2_table1",
+   "stage": "2",
+   "tier": "A",
+   "paper": "Table 1",
+   "cmd": "python build_metrics_table.py",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 0.7,
+   "files": [
+    {
+     "path": "2_training/sam_classifier_comparison_output/metrics_table.png",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s2_figs_S2_S5",
+   "stage": "2",
+   "tier": "A",
+   "paper": "Figs S2 and S5 (MCC versus epoch)",
+   "cmd": "python plot_mcc_curves_grid.py",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 2.8,
+   "files": [
+    {
+     "path": "2_training/UP_prostt5_loss_comparison_output/UP_prostt5_mcc_curves_grid.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/mlp_embedding_comparison_output/full_mcc_curves_grid.png",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s2_figs_S3_S6",
+   "stage": "2",
+   "tier": "A",
+   "paper": "Figs S3 and S6 (train / validation loss)",
+   "cmd": "python plot_train_val_loss_curves.py",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 31.0,
+   "files": [
+    {
+     "path": "2_training/train_val_loss_output/UP_prostt5_train_val_loss_grid.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/train_val_loss_output/full_train_val_loss_grid.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/train_val_loss_output/per_label/sam_full_bce_per_label_grid.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/train_val_loss_output/per_label/sam_full_focal_per_label_grid.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/train_val_loss_output/per_label/sam_full_sqrt_weighted_bce_per_label_grid.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/train_val_loss_output/per_label/sam_full_weighted_bce_per_label_grid.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/train_val_loss_output/per_label/up_bce_per_label_grid.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/train_val_loss_output/per_label/up_focal_per_label_grid.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/train_val_loss_output/per_label/up_sqrt_weighted_bce_per_label_grid.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/train_val_loss_output/per_label/up_weighted_bce_per_label_grid.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/train_val_loss_output/train_val_loss_summary.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/train_val_loss_output/train_val_loss_summary_by_iteration.csv",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s2_supp_stats",
+   "stage": "2",
+   "tier": "A",
+   "paper": "Table S4 (Holm-adjusted Wilcoxon), Friedman tests for Fig 2A / Fig S4, the eleven ordinary iterations, per-iteration summary",
+   "cmd": "python benchmark_supplement_stats.py",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 0.9,
+   "files": [
+    {
+     "path": "2_training/sam_classifier_comparison_output/stats/eleven_iterations.txt",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/sam_classifier_comparison_output/stats/friedman_fig2A.txt",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/sam_classifier_comparison_output/stats/friedman_figS4.txt",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/sam_classifier_comparison_output/stats/iteration_summary.txt",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/sam_classifier_comparison_output/stats/per_iteration_summary.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "2_training/sam_classifier_comparison_output/stats/table_S4_wilcoxon_holm.csv",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s3_predict",
+   "stage": "3",
+   "tier": "A",
+   "paper": "Deployment model: scores, calls, ensemble disagreement and applicability-domain flag for one organism",
+   "cmd": "python predict.py --input ../data/tree_of_life_ProstT5/Dickeya_undicola_embeddings.h5 --out-dir _verify_predict",
+   "cwd": "3_predictions",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 4.2,
+   "files": [
+    {
+     "path": "3_predictions/_verify_predict/Dickeya_undicola_embeddings_predictions.csv",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "3_predictions/predictions_output/Dickeya_undicola_embeddings_predictions.csv",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s3_summary",
+   "stage": "3",
+   "tier": "A",
+   "paper": "Prediction summary: 112,019 proteins, single / multi / no call, applicability domain, ensemble disagreement",
+   "cmd": "python summarize_predictions.py",
+   "cwd": "3_predictions",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 2.8,
+   "files": [
+    {
+     "path": "3_predictions/prediction_summary.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "3_predictions/prediction_summary.txt",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s4_lineage_stats",
+   "stage": "4",
+   "tier": "A",
+   "paper": "Lineage comparisons in the text (Micrococcales, Chlorophyta, plants, Actinomycetota; Mann-Whitney)",
+   "cmd": "python lineage_statistics.py",
+   "cwd": "4_phylo_trends",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 0.8,
+   "files": [
+    {
+     "path": "4_phylo_trends/lineage_statistics.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "4_phylo_trends/lineage_statistics.txt",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s5_fig6_umap",
+   "stage": "5",
+   "tier": "A",
+   "paper": "Fig 6 (static UMAP)",
+   "cmd": "python plot_umap_static.py",
+   "cwd": "5_umap",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 1.7,
+   "files": [
+    {
+     "path": "5_umap/sam_mtase_umap_prostt5_static_datamap.png",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s5_dark_definition",
+   "stage": "5",
+   "tier": "A",
+   "paper": "Dark-cluster definition: 868 clusters, 510 without a reviewed member, 33 dark (3,478 proteins, 3.6%)",
+   "cmd": "python dark_cluster_definition.py",
+   "cwd": "5_umap",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 1.2,
+   "files": [
+    {
+     "path": "5_umap/dark_cluster_definition.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "5_umap/dark_cluster_definition.txt",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s6_dark_table",
+   "stage": "6",
+   "tier": "A",
+   "paper": "Dark-cluster table (data behind Tables S1 and S2)",
+   "cmd": "python build_table2.py",
+   "cwd": "6_dark_cluster_annotation",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 0.6,
+   "files": [
+    {
+     "path": "6_dark_cluster_annotation/table2_dark_clusters.csv",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s6_horizyn_direction",
+   "stage": "6",
+   "tier": "A",
+   "paper": "Horizyn validation: top-1 is a SAM-methylation reaction, 44.0% forward only vs 85.7% either direction (chance 2.3% vs 4.7%)",
+   "cmd": "python validation_by_direction.py",
+   "cwd": "6_dark_cluster_annotation/horizyn",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 7.1,
+   "files": [
+    {
+     "path": "6_dark_cluster_annotation/horizyn/validation_by_direction.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "6_dark_cluster_annotation/horizyn/validation_by_direction.txt",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s7_domain_enrichment",
+   "stage": "7",
+   "tier": "A",
+   "paper": "InterPro domain enrichment (Table S3 data)",
+   "cmd": "python 3_domain_enrichment.py",
+   "cwd": "7_motif_analysis",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 2.1,
+   "files": [
+    {
+     "path": "7_motif_analysis/domain_enrichment.csv",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s7_motif_table",
+   "stage": "7",
+   "tier": "A",
+   "paper": "Table 2 (26 class-specific motifs)",
+   "cmd": "python build_motif_table.py",
+   "cwd": "7_motif_analysis",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 1.7,
+   "files": [
+    {
+     "path": "7_motif_analysis/motif_table.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "7_motif_analysis/motif_table.png",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s7_motif_status",
+   "stage": "7",
+   "tier": "A",
+   "paper": "Per-protein motif status (12,866 of 106,608 motif-less)",
+   "cmd": "python fimo_all_manifest.py",
+   "cwd": "7_motif_analysis",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 1.4,
+   "files": [
+    {
+     "path": "7_motif_analysis/motif_status_all.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "7_motif_analysis/no_motif_real.csv",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s7_motif_specificity",
+   "stage": "7",
+   "tier": "A",
+   "paper": "Motif class specificity (26 of 32 at least 2-fold)",
+   "cmd": "python fimo_cross_manifest.py",
+   "cwd": "7_motif_analysis",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 3.6,
+   "files": [
+    {
+     "path": "7_motif_analysis/fimo_cross_protein_motifs.csv",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "7_motif_analysis/fimo_cross_summary.txt",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "7_motif_analysis/motif_specificity_matrix.csv",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s7_family_reps",
+   "stage": "7",
+   "tier": "A",
+   "paper": "50%-identity family representatives (22,976)",
+   "cmd": "python 2_make_reps.py",
+   "cwd": "7_motif_analysis",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 0.8,
+   "files": [
+    {
+     "path": "7_motif_analysis/cluster_reps.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "7_motif_analysis/reps_DNA.fasta",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "7_motif_analysis/reps_Metabolite.fasta",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "7_motif_analysis/reps_Protein.fasta",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "7_motif_analysis/reps_RNA.fasta",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "s7_fig11_nomotif",
+   "stage": "7",
+   "tier": "A",
+   "paper": "Fig 11 (motif-less enzymes on the UMAP)",
+   "cmd": "python no_motif_umap.py",
+   "cwd": "7_motif_analysis",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 1.0,
+   "files": [
+    {
+     "path": "7_motif_analysis/no_motif_umap.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "7_motif_analysis/no_motif_umap_clusters.csv",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "f_fig3_widen",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Fig 3, step 1 (widen the iTOL gradient rings)",
+   "cmd": "python widen_rings.py",
+   "cwd": "figures/Fig3_tree_landscape",
+   "status": "BUILT",
+   "detail": "output written; no committed counterpart to compare",
+   "seconds": 0.9,
+   "files": [
+    {
+     "path": "figures/Fig3_tree_landscape/V4prbvTzDgPu09RO61xuyg_widened.svg",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_fig3_tree",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Fig 3, step 2 (tree + legend)",
+   "cmd": "python make_tree_figure.py",
+   "cwd": "figures/Fig3_tree_landscape",
+   "status": "BUILT",
+   "detail": "output written; no committed counterpart to compare",
+   "seconds": 9.3,
+   "files": [
+    {
+     "path": "figures/Fig3_tree_landscape/fig3_tree_landscape.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "figures/Fig3_tree_landscape/tree_only.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_fig1",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Fig 1 (study overview)",
+   "cmd": "python build_fig1_flow.py",
+   "cwd": "figures/Fig1_overview_schematic",
+   "status": "BUILT",
+   "detail": "output written; no committed counterpart to compare",
+   "seconds": 1.9,
+   "files": [
+    {
+     "path": "figures/Fig1_overview_schematic/Fig1_flow.pdf",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "figures/Fig1_overview_schematic/Fig1_flow.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "figures/Fig1_overview_schematic/Fig1_flow.svg",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_fig4_panels",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Fig 4A-D",
+   "cmd": "python build_fig4_panels.py",
+   "cwd": "figures/Fig4_trends",
+   "status": "BUILT",
+   "detail": "output written; no committed counterpart to compare",
+   "seconds": 3.0,
+   "files": [
+    {
+     "path": "figures/Fig4_trends/A_protein_3group_violin.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "figures/Fig4_trends/B_vertebrate_invertebrate_violins.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "figures/Fig4_trends/C_plant_metabolite_violin.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "figures/Fig4_trends/D_actino_metabolite_violin.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_fig4_combined",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Fig 4 composite",
+   "cmd": "python make_fig4_trends.py",
+   "cwd": "figures/Fig4_trends",
+   "status": "BUILT",
+   "detail": "output written; no committed counterpart to compare",
+   "seconds": 1.1,
+   "files": [
+    {
+     "path": "figures/Fig4_trends/Fig4_trends_combined.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_fig5",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Fig 5 (proteome scaling)",
+   "cmd": "python proteome_vs_sam_domain_highlight.py",
+   "cwd": "figures/Fig5_proteome_scaling",
+   "status": "BUILT",
+   "detail": "output written; no committed counterpart to compare",
+   "seconds": 1.0,
+   "files": [
+    {
+     "path": "figures/Fig5_proteome_scaling/proteome_vs_sam_domain_highlight.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_fig7_grids",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Fig 7A-D cluster grids",
+   "cmd": "python build_cluster_grids.py",
+   "cwd": "figures/Fig7_clusters",
+   "status": "BUILT",
+   "detail": "output written; no committed counterpart to compare",
+   "seconds": 1.8,
+   "files": [
+    {
+     "path": "figures/Fig7_clusters/A_metazoa_protein_clusters.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "figures/Fig7_clusters/B_vertebrate_dna_clusters.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "figures/Fig7_clusters/C_plant_metabolite_dark_clusters.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "figures/Fig7_clusters/D_actino_metabolite_dark_clusters.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_fig7_combined",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Fig 7 composite",
+   "cmd": "python make_fig7_clusters.py",
+   "cwd": "figures/Fig7_clusters",
+   "status": "BUILT",
+   "detail": "output written; no committed counterpart to compare",
+   "seconds": 1.3,
+   "files": [
+    {
+     "path": "figures/Fig7_clusters/Fig7_clusters_combined.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_fig8_reaction_profiles",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Fig 8 (Horizyn reaction profiles of four dark clusters)",
+   "cmd": "python make_fig8_reaction_profiles.py",
+   "cwd": "figures/Fig8_reaction_profiles",
+   "status": "BUILT",
+   "detail": "output written; no committed counterpart to compare",
+   "seconds": 4.3,
+   "files": [
+    {
+     "path": "figures/Fig8_reaction_profiles/Fig8_reaction_profiles.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_fig9_structures",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Structure panels (Figs 9 and 10)",
+   "cmd": "python make_panels.py",
+   "cwd": "figures/Fig9_10_structures",
+   "status": "BUILT",
+   "detail": "output written; no committed counterpart to compare",
+   "seconds": 0.9,
+   "files": [
+    {
+     "path": "figures/Fig9_10_structures/Fig10_Distal.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    },
+    {
+     "path": "figures/Fig9_10_structures/Fig9_Known.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_table_S1",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Table S1",
+   "cmd": "python build_table.py",
+   "cwd": "figures/TableS1_actinomycetota_dark_clusters",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 1.1,
+   "files": [
+    {
+     "path": "figures/TableS1_actinomycetota_dark_clusters/table_s1.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "figures/TableS1_actinomycetota_dark_clusters/table_s1.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_table_S2",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Table S2",
+   "cmd": "python build_table.py",
+   "cwd": "figures/TableS2_plant_dark_clusters",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 1.0,
+   "files": [
+    {
+     "path": "figures/TableS2_plant_dark_clusters/table_s2.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "figures/TableS2_plant_dark_clusters/table_s2.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "f_table_S3",
+   "stage": "figures",
+   "tier": "A",
+   "paper": "Table S3",
+   "cmd": "python build_domain_enrichment_table.py",
+   "cwd": "figures/TableS3_domain_enrichment",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 1.4,
+   "files": [
+    {
+     "path": "figures/TableS3_domain_enrichment/domain_enrichment_table.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "figures/TableS3_domain_enrichment/domain_enrichment_table.png",
+     "status": "new-file",
+     "detail": "no committed counterpart"
+    }
+   ]
+  },
+  {
+   "id": "b_deployment",
+   "stage": "2",
+   "tier": "B",
+   "paper": "Deployment model re-trained from scratch: thresholds, out-of-fold MCC (0.969), out-of-fold scores",
+   "cmd": "bash run_train_deployment.sh",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 13.0,
+   "files": [
+    {
+     "path": "same proteins, clusters and folds",
+     "status": "numeric-match",
+     "detail": "7405 proteins"
+    },
+    {
+     "path": "per-label thresholds within 0.02",
+     "status": "numeric-match",
+     "detail": "Metabolite 0.626 vs 0.634, Protein 0.635 vs 0.632, RNA 0.827 vs 0.826, DNA 0.109 vs 0.109"
+    },
+    {
+     "path": "per-label out-of-fold MCC within 0.01",
+     "status": "numeric-match",
+     "detail": "Metabolite 0.970 vs 0.970, Protein 0.971 vs 0.973, RNA 0.990 vs 0.990, DNA 0.945 vs 0.945"
+    },
+    {
+     "path": "out-of-fold scores within 0.03",
+     "status": "numeric-match",
+     "detail": "max difference 0.0117"
+    }
+   ]
+  },
+  {
+   "id": "b_predict_all",
+   "stage": "3",
+   "tier": "B",
+   "paper": "Predictions for all 1,259 proteomes (112,019 proteins) from the re-trained model",
+   "cmd": "bash run_predict.sh",
+   "cwd": "3_predictions",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 31.9,
+   "files": [
+    {
+     "path": "same organism files",
+     "status": "numeric-match",
+     "detail": "1259 files"
+    },
+    {
+     "path": "identical class calls for at least 99.5% of proteins",
+     "status": "numeric-match",
+     "detail": "99.80% of 112,019 proteins"
+    },
+    {
+     "path": "scores within 0.05",
+     "status": "numeric-match",
+     "detail": "max difference 0.0228"
+    },
+    {
+     "path": "applicability-domain flags identical",
+     "status": "numeric-match",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "b_bakeoff_mlp",
+   "stage": "2",
+   "tier": "B",
+   "paper": "Bake-off: the six MLP variants over the 16 cluster-disjoint iterations (Fig 2A, Table 1 rows)",
+   "cmd": "bash run_bakeoff_mlp_only.sh",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 168.2,
+   "files": [
+    {
+     "path": "every MLP row of the re-run has a committed counterpart",
+     "status": "numeric-match",
+     "detail": "192 of 192 rows"
+    },
+    {
+     "path": "max absolute MCC difference per iteration at most 0.06",
+     "status": "numeric-match",
+     "detail": "max 0.040, mean 0.0062"
+    },
+    {
+     "path": "mean MCC per method within 0.01 of the committed run",
+     "status": "numeric-match",
+     "detail": "MLP_ESM-IF 0.9137 vs 0.9118; MLP_ProstT5 0.9563 vs 0.9514; MLP_ProstT5+ESM-IF 0.9483 vs 0.9474; MLP_ProtT5 0.9504 vs 0.9489; MLP_ProtT5+ESM-IF 0.9498 vs 0.9520; MLP_SaProt 0.9512 vs 0.9503"
+    }
+   ]
+  },
+  {
+   "id": "b_loss_curves",
+   "stage": "2",
+   "tier": "B",
+   "paper": "Train / validation loss curves behind Figs S3 and S6 (ten sweeps, SLURM array when sbatch exists)",
+   "cmd": "rm -rf train_val_loss_output && if command -v sbatch > /dev/null; then sbatch --wait run_train_val_loss.sh; else bash run_train_val_loss.sh; fi",
+   "cwd": "2_training",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 4205.6,
+   "files": [
+    {
+     "path": "a curves file for every committed sweep",
+     "status": "numeric-match",
+     "detail": "10 of 10 sweeps"
+    },
+    {
+     "path": "median absolute validation-loss difference over all epochs at most 0.01",
+     "status": "numeric-match",
+     "detail": "median 0.0015, 95th percentile 0.1863"
+    },
+    {
+     "path": "median absolute final-epoch validation-loss difference at most 0.01",
+     "status": "numeric-match",
+     "detail": "median 0.0072, max 22.6662"
+    },
+    {
+     "path": "median absolute checkpoint-MCC difference at most 0.02",
+     "status": "numeric-match",
+     "detail": "median 0.0000, 95th percentile 0.0756"
+    }
+   ]
+  }
+ ]
+}

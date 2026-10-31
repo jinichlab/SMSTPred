@@ -10,7 +10,7 @@ Every figure, table and statistic in this folder (Fig 2A, Fig S4, Table 1, `stat
 |---|---|
 | XGBoost, Random Forest, Logistic Regression, the four SVMs, MMseqs2 1-NN, Foldseek 1-NN, Profile-HMM | The original bake-off run: all methods trained from scratch with `sam_classifier_comparison.py` (then named `sam_full_vs_balanced_classifier_comparison.py`, commit `72c3d17`). |
 | MLP over ProtT5, ESM-IF, ProtT5+ESM-IF, ProstT5+ESM-IF, SaProt | MLP-only re-run (`BAKEOFF_ONLY=mlp`, SLURM job 300280) with 300 epochs and, per embedding and label, the loss that is best at epoch 300 in the Fig S2 sweep: the settings in `MLP_VARIANTS`. Raw rows: `provenance/mlp_rerun_all_six_variants_full.csv`. |
-| MLP over ProstT5 | MLP-only re-run of that variant alone with the **deployed** loss map (Other: sqrt-weighted BCE; `BAKEOFF_MLP_VARIANTS=MLP_ProstT5`, SLURM job 300283). The first re-run had used weighted BCE for the Other head, which the selection rule picks by a 0.001-MCC tie; the deployed map was kept so the benchmark scores the shipped model. Raw rows: `provenance/mlp_rerun_prostt5_deployed_full.csv`. |
+| MLP over ProstT5 | MLP-only re-run of that variant alone with the **deployed** loss map (Metabolite: sqrt-weighted BCE; `BAKEOFF_MLP_VARIANTS=MLP_ProstT5`, SLURM job 300283). The first re-run had used weighted BCE for the Metabolite head, which the selection rule picks by a 0.001-MCC tie; the deployed map was kept so the benchmark scores the shipped model. Raw rows: `provenance/mlp_rerun_prostt5_deployed_full.csv`. |
 
 The MLP settings of the original run (100–400 epochs and other loss maps) are in git history at `72c3d17`.
 The original run also trained on a class-balanced subset; those rows were dropped, because the manuscript does not use

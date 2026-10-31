@@ -1,6 +1,6 @@
 # Stage 6 — Annotating the dark clusters: CLEAN + Horizyn cross-validation
 
-Stage 5's global UMAP surfaces 33 tight, family-specific "Other"-substrate clusters
+Stage 5's global UMAP surfaces 33 tight, family-specific "Metabolite"-substrate clusters
 (14 Actinomycetota, 19 plant; `dark33_members.csv`, 3,478 proteins total) that have
 **zero reviewed/SwissProt members** — no experimentally characterized enzyme anchors
 them, so the classifier's substrate-type call is the only annotation they have. This
@@ -29,8 +29,13 @@ Two orthogonal, unsupervised methods are cross-validated against each other:
    SAM-methylation) — a deliberately hard, unbiased test. As a validation of the
    approach itself: with no hint that these are methyltransferases, Horizyn ranks
    a true SAM-methylation reaction as the single best match (rank 1 of 36,552) for
-   **44%** of proteins, and within the top 100 for **98.6%**, against a 2.3%
-   random-chance baseline (median rank 2) — see `horizyn/horizyn_full_validation.csv`.
+   **85.7%** of proteins (2,981 of 3,478), against a 4.7% random-chance baseline.
+   Rhea lists every reaction twice, once per direction, and Horizyn scores the two
+   entries almost identically (embedding cosine median 0.998), so a reaction counts
+   as a SAM-methylation hit in either direction; counting the forward entry only
+   gives 44.0% against 2.3% chance. The top-100 rate (98.6%) is not informative,
+   because the chance level is already 91% to 99%. `horizyn/validation_by_direction.py`
+   reproduces these numbers; per-protein ranks are in `horizyn/horizyn_full_validation.csv`.
 
    Because Rhea encodes one real chemistry as many near-duplicate reactions (e.g.
    one reaction per isoprenoid chain length for menaquinone), raw top-1 reaction
@@ -93,7 +98,7 @@ side for all 33 clusters.
 
 | File | Contents |
 |---|---|
-| `dark33_members.csv` | Ground-truth membership for all 33 dark clusters (Entry, Organism, cluster) — shared with Stage 5's Fig. 6C/D and used throughout this stage. |
+| `dark33_members.csv` | Ground-truth membership for all 33 dark clusters (Entry, Organism, cluster) — shared with Stage 5's dark-cluster grids and used throughout this stage. |
 | `clean/clean_dark33_per_cluster_ec.csv` | Per-cluster dominant EC call, mechanically aggregated from CLEAN's raw per-protein output. |
 | `clean/clean_dark33_cluster_summary.csv` | Curated per-cluster enzyme name / MTase yes-no / confidence tier (manual EC lookup). |
 | `horizyn/protein_clusters_family_final.csv` | Per-cluster dominant reaction family, share, and noise fraction. |
@@ -101,11 +106,12 @@ side for all 33 clusters.
 | `horizyn/horizyn_full_validation.csv` | Per-protein rank/percentile of the best-scoring true SAM-methylation reaction (validation stat source). |
 | `table2_dark_clusters.csv` | Final combined table — the data behind manuscript Tables S1 and S2. |
 
-**Not shipped** (large, regenerable): `horizyn_full_scores.npz` (the full
-3,478×36,552 score matrix, ~425 MB) and `horizyn_full_topk.csv` (~9 MB
-per-protein top-50) — regenerate with `horizyn/run_horizyn_predict_full.py`
-(requires the Horizyn `inf` checkpoint and a ProtT5-XL embedding of the 3,478
-dark proteins via `horizyn/embed_prott5.py`).
+**Archived on Zenodo, not in git** (large): `horizyn_dark_scores.npz` (the full
+3,478×36,552 score matrix, ~425 MB), `horizyn_dark_top50.csv` (~9 MB per-protein top-50) and
+`horizyn_rhea_reaction_embeddings.npz` (the 512-D embedding of every Rhea reaction); `make data`
+puts them in `data/`. Fig 8 and `horizyn/validation_by_direction.py` read them. To regenerate the scores, run
+`horizyn/run_horizyn_predict_full.py` (requires the Horizyn `inf` checkpoint and a ProtT5-XL embedding of the
+3,478 dark proteins via `horizyn/embed_prott5.py`).
 
 ## Caveats
 
@@ -119,8 +125,13 @@ dark proteins via `horizyn/embed_prott5.py`).
 
 ## Paths and environment variables
 
+- Both tools run in their own conda environments (not the repository's `environment.yml`); the versions used are in
+  `clean/environment_clean.yml` and `horizyn/environment_horizyn.yml`, and the drivers activate `clean` / `horizyn`
+  (`CLEAN_ENV` / `HORIZYN_ENV` rename them).
 - `clean/run_clean_dark33*.sh` need `CLEAN_APP_DIR` (the `app/` directory of a CLEAN checkout); the Horizyn
-  scripts and `horizyn/run_*.sh` need `HORIZYN_DIR` (a Horizyn checkout holding `checkpoints/` and `configs/`).
+  scripts and `horizyn/run_*.sh` need `HORIZYN_DIR` (a Horizyn checkout holding `checkpoints/` and `configs/`). The Horizyn
+  python scripts import the `horizyn` package from the folder they sit in, so copy `horizyn/*.py` into `$HORIZYN_DIR` before
+  running the drivers (they `cd` there); outputs are written next to the scripts, so copy them back into this folder.
 - `horizyn/inputs/` holds the Rhea reaction table (`rhea-reaction-smiles.tsv`) and the SAM-methylation reaction
   list the Horizyn scripts read; point `SMSTPRED_HORIZYN_INPUTS` elsewhere to override.
 - `dark33.fasta` and `dark33_members.csv` are read from this folder (`SMSTPRED_STAGE6` overrides).

@@ -21,7 +21,7 @@ For each (embedding x loss_type x iteration), the MLP (input -> 512 -> 256 -> 4)
 is trained to 20,000 epochs with 1,000-epoch checkpoints, under the same
 PerLabelUniformLoss sweep (bce / weighted_bce / sqrt_weighted_bce / focal).
 
-Env: classifier_env.
+Env: smstpred (`make env`).
 
 Outputs (./mlp_embedding_comparison_saprot_output/)
   - mlp_embedding_comparison_summary.csv      mean +/- SD per embedding/loss/epoch
@@ -70,7 +70,7 @@ CONDITIONS = {
     "SaProt":          ["saprot"],
 }
 
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 LOSS_TYPES = ["bce", "weighted_bce", "sqrt_weighted_bce", "focal"]
 THRESHOLD = 0.6
 MAX_EPOCHS = 20000

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Figure 4 — substrate-load trends across the tree of life (four violin panels,
 2x2, labelled A/B/C/D). Row 1 = animal expansions (protein/DNA); row 2 = plant
-and actinomycete small-molecule ('Other') expansions. These are the statistical
-trends that the UMAP (Figure 5) and family clusters (Figure 6) then dissect."""
+and actinomycete small-molecule ('Metabolite') expansions. These are the statistical
+trends that the UMAP (Figure 6) and family clusters (Figure 7) then dissect."""
 import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -12,8 +12,8 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 PANELS = [
     ("A", "A_protein_3group_violin.png"),
     ("B", "B_vertebrate_invertebrate_violins.png"),
-    ("C", "C_plant_other_violin.png"),
-    ("D", "D_actino_other_violin.png"),
+    ("C", "C_plant_metabolite_violin.png"),
+    ("D", "D_actino_metabolite_violin.png"),
 ]
 FDIR = os.path.join(matplotlib.get_data_path(), "fonts", "ttf")
 F_LETTER = ImageFont.truetype(os.path.join(FDIR, "DejaVuSans-Bold.ttf"), 72)

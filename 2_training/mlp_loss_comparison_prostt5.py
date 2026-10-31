@@ -31,7 +31,7 @@ Outputs (./UP_prostt5_loss_comparison_output/)
   - UP_prostt5_mlp_loss_comparison_metrics.png
   - best_UP_prostt5_mlp_loss_comparison_model.pth
 
-Env: classifier_env (GPU strongly recommended -- 201k proteins x 20k epochs).
+Env: smstpred (`make env`) (GPU strongly recommended -- 201k proteins x 20k epochs).
 """
 
 import os
@@ -64,7 +64,7 @@ CLUSTER_CSV = FILES_DIR / "clusters_UP_ProtT5_t0.5.csv"     # Entry, cluster (ro
 
 OUT_DIR = Path(__file__).resolve().parent / "UP_prostt5_loss_comparison_output"
 
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 LOSS_TYPES = ["bce", "weighted_bce", "sqrt_weighted_bce", "focal"]
 MAX_EPOCHS = 20000
 # Dense early grid (ProstT5 peaks by ~1k), coarse 1k spacing thereafter.

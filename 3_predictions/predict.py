@@ -18,7 +18,7 @@ Input: one ProstT5 embedding H5 file, or a directory of them (Entry -> /mean or
 flat vector), as produced by embed_prostt5.py on the target sequences. Writes one
 predictions CSV per input file to --out-dir.
 
-Env: classifier_env (GPU).
+Env: smstpred (`make env`) (GPU).
 """
 import os
 import argparse

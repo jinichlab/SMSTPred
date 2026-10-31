@@ -7,13 +7,13 @@
     256
   ],
   "labels": [
-    "Other",
+    "Metabolite",
     "Protein",
     "RNA",
     "DNA"
   ],
   "loss_map": {
-    "Other": "sqrt_weighted_bce",
+    "Metabolite": "sqrt_weighted_bce",
     "Protein": "bce",
     "RNA": "bce",
     "DNA": "bce"

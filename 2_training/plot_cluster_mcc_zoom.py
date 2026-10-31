@@ -73,67 +73,82 @@ def posthoc(split_mode, dataset, methods):
     return dict(chi2=chi2, p=p, df=k - 1, N=N, cd=cd, worse=worse)
 
 
-def color(clf):
+# Style knobs. The defaults are the look of the supplementary figures (Fig S4 and the standalone Fig 2A); plot_fig2_main passes its own
+# (softer colours, larger type) so the composite Figure 2 can differ without changing the others.
+STYLE = dict(embed="#4578aa", search="#ed8c44", other="#969696", accent="#2e5a86",
+             fs_tick=9, fs_ylabel=11, fs_value=9, fs_bracket=9.5, fs_stats=9, ytick_pad=3.5,
+             value_bbox=False, stats_short=False, stats_xy=(0.985, 0.90))
+
+
+def color(clf, style=STYLE):
     if clf in EMBED_MLPS:
-        return "#2c7fb8"          # embedding MLPs
+        return style["embed"]         # embedding MLPs
     if clf in SEARCH_TOOLS:
-        return "#e6550d"          # homology / structure-search baselines
-    return "#969696"              # classical ML
+        return style["search"]        # homology / structure-search baselines
+    return style["other"]             # classical ML
 
 
-def draw_panel(ax, ds, methods, bracket_label=f"top tier — n.s. vs {CONTROL}"):
+def draw_panel(ax, ds, methods, bracket_label=f"top tier — n.s. vs {CONTROL}", style=STYLE):
     sub = (s[(s.split_mode == "cluster") & (s.dataset == ds)
              & (s.classifier.isin(methods))]
            .sort_values("mcc_mean", ascending=False).reset_index(drop=True))
     st = posthoc("cluster", ds, methods)
     x = range(len(sub))
     ax.bar(x, sub.mcc_mean, yerr=sub.mcc_std, capsize=3,
-           color=[color(c) for c in sub.classifier], edgecolor="black",
+           color=[color(c, style) for c in sub.classifier], edgecolor="black",
            linewidth=0.6, error_kw=dict(ecolor="#444444", lw=1))
     for i, (mm, sdd) in enumerate(zip(sub.mcc_mean, sub.mcc_std)):
         ax.text(i, min(mm + sdd + 0.006, 0.998), f"{mm:.3f}",
-                ha="center", va="bottom", fontsize=9, fontweight="bold")
+                ha="center", va="bottom", fontsize=style["fs_value"], fontweight="bold",
+                bbox=dict(boxstyle="square,pad=0.12", fc="white", ec="none", alpha=0.9) if style["value_bbox"] else None)
     # top-tier band + bracket: leading run NOT significantly worse than control
     last = 0
     for i, c in enumerate(sub.classifier):
         if c in st["worse"]:
             break
         last = i
-    ax.axvspan(-0.5, last + 0.5, color="#08519c", alpha=0.06, zorder=0)
+    ax.axvspan(-0.5, last + 0.5, color=style["accent"], alpha=0.06, zorder=0)
     yb = 1.02
-    ax.plot([-0.4, last + 0.4], [yb, yb], color="#08519c", lw=1.4, clip_on=False)
+    ax.plot([-0.4, last + 0.4], [yb, yb], color=style["accent"], lw=1.4, clip_on=False)
     for xe in (-0.4, last + 0.4):
-        ax.plot([xe, xe], [yb - 0.012, yb], color="#08519c", lw=1.4, clip_on=False)
+        ax.plot([xe, xe], [yb - 0.012, yb], color=style["accent"], lw=1.4, clip_on=False)
     ax.text(last / 2.0, yb + 0.008, bracket_label,
-            ha="center", va="bottom", fontsize=9.5, fontweight="bold",
-            color="#08519c", clip_on=False)
+            ha="center", va="bottom", fontsize=style["fs_bracket"], fontweight="bold",
+            color=style["accent"], clip_on=False)
     # x tick labels: control bold-blue; significantly worse = red + trailing *
     ax.set_xticks(list(x))
     ticklabels = [f"{c} *" if c in st["worse"] else c for c in sub.classifier]
-    ax.set_xticklabels(ticklabels, rotation=45, ha="right", fontsize=9)
+    ax.set_xticklabels(ticklabels, rotation=45, ha="right", fontsize=style["fs_tick"])
     for lab, clf in zip(ax.get_xticklabels(), sub.classifier):
         if clf == CONTROL:
-            lab.set_color("#08519c"); lab.set_fontweight("bold")
+            lab.set_color(style["accent"]); lab.set_fontweight("bold")
         elif clf in st["worse"]:
             lab.set_color("crimson")
     ax.set_ylim(YMIN, YMAX)
     ax.set_yticks(np.arange(0.5, 1.001, 0.1))
-    ax.set_ylabel(f"MCC (mean ± SD over {NITERS} iters)", fontsize=11)
+    ax.set_ylabel(f"MCC (mean ± SD over {NITERS} iters)", fontsize=style["fs_ylabel"])
+    ax.tick_params(axis="y", labelsize=style["fs_tick"], pad=style["ytick_pad"])
     ax.grid(True, axis="y", alpha=0.3)
     ax.axhline(YMIN, color="black", lw=0.8)
-    ax.text(0.985, 0.90,
-            f"Friedman $\\chi^2$({st['df']})={st['chi2']:.1f}, p={st['p']:.1e}\n"
-            f"(N={st['N']} iters, methods differ overall)",
-            transform=ax.transAxes, ha="right", va="top", fontsize=9,
+    stats_txt = (f"Friedman $\\chi^2$({st['df']}) = {st['chi2']:.1f}, p = {st['p']:.0e}" if style["stats_short"] else
+                 f"Friedman $\\chi^2$({st['df']})={st['chi2']:.1f}, p={st['p']:.1e}\n"
+                 f"(N={st['N']} iters, methods differ overall)")
+    ax.text(*style["stats_xy"], stats_txt,
+            transform=ax.transAxes, ha="right", va="top", fontsize=style["fs_stats"],
             bbox=dict(boxstyle="round,pad=0.35", fc="#f2f2f2", ec="#999", lw=0.6))
     return st
 
 
 # Legend used by plot_fig2_main for the composite (Fig 2A = representations & tools).
-LEGEND = [mpatches.Patch(color="#2c7fb8", label="Embedding MLP"),
-          mpatches.Patch(color="#e6550d", label="Homology / structure-search baseline")]
+def legend_handles(style=STYLE):
+    return [mpatches.Patch(facecolor=style["embed"], edgecolor="black", linewidth=0.6, label="Embedding MLP"),
+            mpatches.Patch(facecolor=style["search"], edgecolor="black", linewidth=0.6, label="Homology / structure-search baseline")]
 
-LEGEND_CLASSICAL = [mpatches.Patch(color="#2c7fb8", label="Embedding MLP (deployed)"),
+
+LEGEND = [mpatches.Patch(color="#4578aa", label="Embedding MLP"),
+          mpatches.Patch(color="#ed8c44", label="Homology / structure-search baseline")]
+
+LEGEND_CLASSICAL = [mpatches.Patch(color="#4578aa", label="Embedding MLP (deployed)"),
                     mpatches.Patch(color="#969696", label="Classical ML (on ProstT5)")]
 
 

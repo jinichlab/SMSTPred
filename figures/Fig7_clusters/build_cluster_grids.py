@@ -15,11 +15,11 @@ Recipe:
   - Panel C/D (dark, uncharacterized) cluster lists/order:
     repo/6_dark_cluster_annotation/table2_dark_clusters.csv, sorted by n
     descending (matches the original reading order).
-  - Badged clusters (Figure 7E numbered reactions): c551->1, c667->2, c110->3,
-    c714->4 (plant dark set only).
+  - Outlined clusters (the four examined in Figure 8): c551, c667, c110, c714
+    (plant dark set only). Thick outline, no number.
 
 Outputs (this dir): A_metazoa_protein_clusters.png, B_vertebrate_dna_clusters.png,
-C_plant_other_dark_clusters.png, D_actino_other_dark_clusters.png
+C_plant_metabolite_dark_clusters.png, D_actino_metabolite_dark_clusters.png
 """
 from pathlib import Path
 
@@ -34,8 +34,8 @@ REVIEWED = ROOT / "5_umap/reviewed_status_full.csv"
 DARK_TABLE = ROOT / "6_dark_cluster_annotation/table2_dark_clusters.csv"
 HERE = Path(__file__).resolve().parent
 
-GOLD = "#FFD700"
-BADGES = {551: "1", 667: "2", 110: "3", 714: "4"}
+GOLD = "#f4d23b"
+OUTLINED = {551, 667, 110, 714}      # the four dark clusters examined in Figure 8
 
 
 def load_data():
@@ -50,14 +50,10 @@ def bare_axes(ax):
         s.set_linewidth(1.2)
 
 
-def draw_badge(ax, label):
-    ax.add_patch(plt.Circle((0.08, 0.90), 0.1, transform=ax.transAxes,
-                             facecolor="black", edgecolor="white", linewidth=1.4, zorder=10))
-    ax.text(0.08, 0.90, label, transform=ax.transAxes, ha="center", va="center",
-            color="white", fontsize=19, fontweight="bold", zorder=11)
-    for s in ax.spines.values():
-        s.set_linewidth(3.5)
-        s.set_color("black")
+def outline_panel(ax):
+    for s_ in ax.spines.values():
+        s_.set_linewidth(3.5)
+        s_.set_color("black")
 
 
 def cluster_label(ax, cluster_id):
@@ -81,8 +77,8 @@ def dark_panel(ax, sub_members, cluster_id, color):
                alpha=0.6, linewidths=0, zorder=2)
     cluster_label(ax, cluster_id)
     bare_axes(ax)
-    if cluster_id in BADGES:
-        draw_badge(ax, BADGES[cluster_id])
+    if cluster_id in OUTLINED:
+        outline_panel(ax)
 
 
 def main():
@@ -99,8 +95,8 @@ def main():
     fig, axes = plt.subplots(2, 3, figsize=(15, 10.5), gridspec_kw={"wspace": 0.22, "hspace": 0.3})
     for cl, ax in zip(A_CLUSTERS, axes.flat):
         sub = coords[coords.cluster == cl]
-        characterized_panel(ax, sub, rev, cl, "#238b45")
-    fig.legend(handles=legend_handles("#238b45"), loc="lower center", ncol=2, fontsize=20,
+        characterized_panel(ax, sub, rev, cl, "#618d43")
+    fig.legend(handles=legend_handles("#618d43"), loc="lower center", ncol=2, fontsize=20,
                bbox_to_anchor=(0.5, -0.03), frameon=False)
     fig.tight_layout(rect=[0, 0.04, 1, 1])
     fig.savefig(HERE / "A_metazoa_protein_clusters.png", dpi=200, bbox_inches="tight")
@@ -129,11 +125,11 @@ def main():
     for cl, ax in zip(plant_ids, axes.flat):
         ax.axis("on")
         sub = coords[coords.cluster == cl]
-        dark_panel(ax, sub, cl, "#e6550d")
+        dark_panel(ax, sub, cl, "#ed8c44")
     fig.tight_layout()
-    fig.savefig(HERE / "C_plant_other_dark_clusters.png", dpi=200, bbox_inches="tight")
+    fig.savefig(HERE / "C_plant_metabolite_dark_clusters.png", dpi=200, bbox_inches="tight")
     plt.close(fig)
-    print("[wrote] C_plant_other_dark_clusters.png")
+    print("[wrote] C_plant_metabolite_dark_clusters.png")
 
     # ---- Panel D: Actinomycetota dark clusters ----
     actino_ids = dark[dark.lineage == "Actinomycetota"].sort_values("n", ascending=False)["cluster"].tolist()
@@ -143,11 +139,11 @@ def main():
     for cl, ax in zip(actino_ids, axes.flat):
         ax.axis("on")
         sub = coords[coords.cluster == cl]
-        dark_panel(ax, sub, cl, "#e6550d")
+        dark_panel(ax, sub, cl, "#ed8c44")
     fig.tight_layout()
-    fig.savefig(HERE / "D_actino_other_dark_clusters.png", dpi=200, bbox_inches="tight")
+    fig.savefig(HERE / "D_actino_metabolite_dark_clusters.png", dpi=200, bbox_inches="tight")
     plt.close(fig)
-    print("[wrote] D_actino_other_dark_clusters.png")
+    print("[wrote] D_actino_metabolite_dark_clusters.png")
 
 
 if __name__ == "__main__":

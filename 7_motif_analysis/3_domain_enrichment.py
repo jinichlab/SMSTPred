@@ -18,7 +18,7 @@ import pandas as pd
 from scipy.stats import fisher_exact
 
 IO = Path(__file__).resolve().parent
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 MIN_IN = 20   # minimum occurrences in-class to test a domain
 
 
@@ -66,7 +66,7 @@ def main():
             rows.append({"class": lab, "interpro": dom, "name": name_map.get(dom, ""),
                          "n_in": a, "pct_in": round(fin, 4), "pct_out": round(fout, 4),
                          "fold": round(fold, 2), "p": p})
-    m = pd.DataFrame(rows).sort_values(["class", "fold", "n_in"], ascending=[True, False, False])
+    m = pd.DataFrame(rows).sort_values(["class", "fold", "n_in", "interpro"], ascending=[True, False, False, False], kind="stable")  # ties: InterPro accession, descending
     m.to_csv(IO / "domain_enrichment.csv", index=False)
 
     for lab in LABELS:

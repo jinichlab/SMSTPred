@@ -9,8 +9,8 @@ substrate-type / taxonomic structure within it, and zooms into family-specific c
 |---|---|
 | `global_reumap_prostt5.py` | Global **UMAP** of every tree-of-life MTase from its ProstT5 embedding, coloured by predicted substrate type (the ProstT5 counterpart to the earlier ProtT5 map). Writes the 2-D coordinates, a static figure, and an interactive map. |
 | `substrate_umap_datamap.py` | Substrate-type UMAP rendered with **datamapplot** — a clickable/interactive map (chosen over plotly), with SwissProt-anchored cluster labels. |
-| `actino_other_dark_clusters_prostt5.py` | Zoom-grid of the 14 Actinomycetota "dark-matter" clusters (Fig. 6D): zero SwissProt/reviewed members, ≥80% Actinomycetota & Other. |
-| `plant_other_dark_clusters_prostt5.py` | Zoom-grid of the 19 plant "dark-matter" clusters (Fig. 6C): zero SwissProt/reviewed members, ≥80% plant & Other. |
+| `actino_metabolite_dark_clusters_prostt5.py` | Zoom-grid of the 14 Actinomycetota "dark-matter" clusters: zero SwissProt/reviewed members, ≥80% of members both Actinomycetota and predicted Metabolite (the rule is written out in `dark_cluster_definition.py`). |
+| `plant_metabolite_dark_clusters_prostt5.py` | Zoom-grid of the 19 plant "dark-matter" clusters: zero SwissProt/reviewed members, ≥80% of members both plants (Viridiplantae) and predicted Metabolite. |
 
 Both dark-cluster scripts hard-filter to the authoritative 33-cluster set in
 `../6_dark_cluster_annotation/dark33_members.csv` (the same ground truth used by Tables S1 and S2
@@ -34,16 +34,18 @@ HDBSCAN clustering and the deployment predictions):
   **anchored** on SwissProt members.
 - `vertebrate_dna_clusters_prostt5.png` — vertebrate DNA-substrate clusters (DNMT3A/3B),
   **anchored** on SwissProt members.
-- `plant_other_dark_clusters_prostt5.png` — the 19 plant small-molecule "dark-matter"
+- `plant_metabolite_dark_clusters_prostt5.png` — the 19 plant small-molecule "dark-matter"
   clusters, **zero** SwissProt anchors by construction (see Stage 6 for CLEAN/Horizyn
   annotation of these).
-- `actino_other_dark_clusters_prostt5.png` — the 14 actinobacterial small-molecule
+- `actino_metabolite_dark_clusters_prostt5.png` — the 14 actinobacterial small-molecule
   "dark-matter" clusters, **zero** SwissProt anchors by construction (see Stage 6).
 - `*_violin_prostt5.png` — per-branch substrate-load violins (vertebrate vs invertebrate
-  DNA/Protein; plant-Other; actinobacteria-Other vs other bacteria).
+  DNA/Protein; plant-Metabolite; actinobacteria-Metabolite vs other bacteria). The two `*_other_violin_prostt5.png` files predate the class
+  name Metabolite, still show the old label 'Other' in the picture, and have no generating script in this repository; the current
+  versions of those panels are built by `figures/Fig4_trends/build_fig4_panels.py` (Fig 4C, 4D).
 
 Substrate colours are consistent project-wide: RNA `#cb181d`, DNA `#6a51a3`,
-Protein `#238b45`, Other `#e6550d`.
+Protein `#238b45`, Metabolite `#e6550d`.
 
 ## Why it matters
 

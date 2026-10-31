@@ -3,7 +3,7 @@
 
 For each of the 26 motifs that pass the specificity filter (own-class rate >= 2x
 pooled background, from the FIMO cross-scan), list the FIMO carriers that have an
-experimental PDB structure -- so the Figure 8/9 structure panels are chosen from
+experimental PDB structure -- so the Figure 9/10 structure panels are chosen from
 data, not hand-picked. Replaces the eyeballed ranges in make_context_views.py.
 
 Selection (per user): rank carriers by FIMO p-value regardless of class, but flag
@@ -36,7 +36,7 @@ import pandas as pd
 HERE = Path(__file__).resolve().parent
 API = "https://rest.uniprot.org/uniprotkb/search"
 FIELDS = "accession,reviewed,protein_name,organism_name,length,xref_pdb"
-CLASSES = ["DNA", "RNA", "Protein", "Other"]
+CLASSES = ["DNA", "RNA", "Protein", "Metabolite"]
 SPEC_MIN = 2.0
 # how many carriers per motif to look up (bounds network; structures are enriched
 # in reviewed + strong-p hits, so we over-sample those)

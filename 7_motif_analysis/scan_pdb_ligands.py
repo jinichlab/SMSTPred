@@ -10,7 +10,7 @@ Reads the distinct PDB IDs from motif_structure_carriers.csv and queries RCSB
      DNA motif  -> a DNA chain present
      RNA motif  -> an RNA chain present
      Protein    -> a second protein chain (candidate substrate/partner)
-     Other      -> a non-cofactor, non-additive small molecule present
+     Metabolite      -> a non-cofactor, non-additive small molecule present
 
 Outputs:
   pdb_ligand_characterization.csv   one row per PDB: polymer counts, cofactor, ligands

@@ -25,8 +25,8 @@ Metrics are mean +/- SD over the 16 repeated splits. This mirrors Panel A's
   model. A later version will also drop UP proteins within 0.6 cosine of the test set. ***
 
 Each model gets its own epochs and per-label loss:
-  SAM:  300 epochs, loss {Other: sqrt_weighted_bce, Protein/RNA/DNA: bce}   (the deployed model)
-  UP :  400 epochs, loss {Other: bce, Protein/RNA: sqrt_weighted_bce, DNA: focal}
+  SAM:  300 epochs, loss {Metabolite: sqrt_weighted_bce, Protein/RNA/DNA: bce}   (the deployed model)
+  UP :  400 epochs, loss {Metabolite: bce, Protein/RNA: sqrt_weighted_bce, DNA: focal}
         (per label, the loss with the highest mean MCC at epoch 400 in the UP sweep, Fig S5; Fig S6 shows that
         validation loss is near its minimum there)
 Per-label decision thresholds are MCC-optimal, tuned on each model's own TRAIN
@@ -34,7 +34,7 @@ predictions (matching the deployment), so MCC/F1 are at the deployment operating
 
 Optional overrides (environment variables; the defaults are the Fig 2B configuration):
   UP_EPOCHS   UP model epochs, e.g. 400
-  UP_LOSS     UP per-label losses in label order Other,Protein,RNA,DNA, e.g. bce,sqrt_weighted_bce,sqrt_weighted_bce,focal
+  UP_LOSS     UP per-label losses in label order Metabolite,Protein,RNA,DNA, e.g. bce,sqrt_weighted_bce,sqrt_weighted_bce,focal
   SAM_VS_UP_OUT   output folder (relative to this script, or absolute) so a re-run does not overwrite the defaults
 
 Outputs (./sam_vs_up_prostt5_comparison_output/)
@@ -42,7 +42,7 @@ Outputs (./sam_vs_up_prostt5_comparison_output/)
   sam_vs_up_prostt5_comparison_detailed.csv    per-iteration rows
   sam_vs_up_prostt5_comparison_mcc.png         per-label MCC + AUPRC, SAM vs UP
 
-Env: classifier_env (GPU).
+Env: smstpred (`make env`) (GPU).
 """
 import os
 import json
@@ -73,7 +73,7 @@ PROTT5_SAM = FILES / "embeddings_SAM_ProtT5.h5"              # SAM clustering sp
 PROSTT5_UP = FILES / "embeddings_UP_ProstT5.h5"       # UP features (mean group)
 
 OUT = Path(__file__).resolve().parent / os.environ.get("SAM_VS_UP_OUT", "sam_vs_up_prostt5_comparison_output")
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 CLUSTER_THRESHOLD = 0.6
 N_ITER = 16              # repeated cluster-disjoint 90/10 splits (matches Panel A)
 TRAIN_RATIO = 0.9
@@ -90,7 +90,7 @@ if os.environ.get("UP_EPOCHS"):
     UP_CFG = {**UP_CFG, "epochs": int(os.environ["UP_EPOCHS"])}
 if os.environ.get("UP_LOSS"):
     _l = os.environ["UP_LOSS"].split(",")
-    assert len(_l) == 4 and set(_l) <= _LOSSES, f"UP_LOSS needs 4 of {sorted(_LOSSES)} (Other,Protein,RNA,DNA): {_l}"
+    assert len(_l) == 4 and set(_l) <= _LOSSES, f"UP_LOSS needs 4 of {sorted(_LOSSES)} (Metabolite,Protein,RNA,DNA): {_l}"
     UP_CFG = {**UP_CFG, "loss": dict(enumerate(_l))}
 
 

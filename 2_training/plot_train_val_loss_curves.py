@@ -38,10 +38,10 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 IN_DIR = HERE / "train_val_loss_output"     # overridable with --dir
-LABELS = ["DNA", "RNA", "Protein", "Other"]               # S2/S5 column order
+LABELS = ["DNA", "RNA", "Protein", "Metabolite"]               # S2/S5 column order
 LOSSES = ["bce", "weighted_bce", "sqrt_weighted_bce", "focal"]
 EMBS = ["ProstT5", "SaProt", "ProtT5", "ESM-IF", "ProtT5+ESM-IF", "ProstT5+ESM-IF"]
-C_TRAIN, C_VAL = "#1f77b4", "#d62728"
+C_TRAIN, C_VAL = "#4578aa", "#c14445"
 
 
 class PlainLogFormatter(LogFormatter):

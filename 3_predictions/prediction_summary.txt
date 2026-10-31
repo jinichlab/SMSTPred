@@ -1,0 +1,16 @@
+organism files                                            1259  
+proteins scored (rows)                                  112019  
+unique accessions                                       112019  
+rows whose accession is in the SAM training set            608  labelled training proteins that are also in the proteomes
+rows not in the training set                            111411  
+exactly one call: Metabolite                             40786  36.4% of rows
+exactly one call: RNA                                    34435  30.7% of rows
+exactly one call: Protein                                17863  15.9% of rows
+exactly one call: DNA                                     6731  6.0% of rows
+two or more calls (multi-label)                           1949  1.7% of rows
+no call (every score below its threshold)                10255  9.2% of rows
+outside the applicability domain (in_domain = 0)         42740  38.2% of rows
+median ensemble disagreement, all                       0.0012  
+median ensemble disagreement, in-domain                 0.0003  
+median ensemble disagreement, out-of-domain             0.0089  
+median ad_maxsim, proteins not in the training set       0.955  

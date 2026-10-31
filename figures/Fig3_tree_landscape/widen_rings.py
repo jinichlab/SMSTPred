@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Widen the 5 gradient rings (Protein/DNA/RNA/Other/%SAMs-in-proteome) baked
+"""Widen the 5 gradient rings (Protein/DNA/RNA/Metabolite/%SAMs-in-proteome) baked
 into the iTOL SVG export, by rewriting their per-leaf wedge paths directly.
 
 Geometry (verified empirically, see session notes): datasetHolder has 6

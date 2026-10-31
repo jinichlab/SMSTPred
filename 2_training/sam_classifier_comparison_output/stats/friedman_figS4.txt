@@ -1,0 +1,15 @@
+Fig S4: N = 16 iterations, k = 8 methods
+Friedman chi-square(7) = 65.5, p = 1.2e-11
+Bonferroni-Dunn critical difference vs MLP_ProstT5 = 2.33 rank units
+
+mean rank (1 = best), mean MCC, rank difference vs control:
+  SVM_Linear              2.66   MCC 0.925   -0.19
+  MLP_ProstT5             2.84   MCC 0.926   +0.00
+  SVM_RBF                 3.09   MCC 0.921   +0.25
+  SVM_Polynomial          3.09   MCC 0.916   +0.25
+  SVM_Sigmoidal           5.06   MCC 0.876   +2.22
+  Logistic Regression     5.31   MCC 0.873   +2.47  significantly different
+  XGBoost                 6.25   MCC 0.823   +3.41  significantly different
+  Random Forest           7.69   MCC 0.711   +4.84  significantly different
+
+significantly different from MLP_ProstT5: Logistic Regression, XGBoost, Random Forest

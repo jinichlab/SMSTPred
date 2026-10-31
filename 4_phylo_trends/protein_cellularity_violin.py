@@ -21,7 +21,7 @@ Headline: Metazoa carry significantly more Protein-substrate MTases (count and
 %) than either unicellular or non-metazoan multicellular eukaryotes.
 
 Outputs (this directory): protein_3group_violin.png, protein_cellularity_stats.csv
-Env: classifier_env.
+Env: smstpred (`make env`).
 """
 import os
 from itertools import combinations
@@ -46,9 +46,9 @@ MIN_N = 5
 GROUPS = ["Metazoa", "Unicellular eukaryote", "Non-metazoan multicellular"]
 YEASTS = ("Saccharomycotina", "Schizosaccharomyces", "Taphrinomycotina")
 PALETTE = {
-    "Metazoa": "#d95f02",
-    "Unicellular eukaryote": "#7570b3",
-    "Non-metazoan multicellular": "#1b9e77",
+    "Metazoa": "#ed8c44",
+    "Unicellular eukaryote": "#4578aa",
+    "Non-metazoan multicellular": "#618d43",
 }
 
 

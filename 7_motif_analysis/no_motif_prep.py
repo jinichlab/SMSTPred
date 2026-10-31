@@ -14,7 +14,7 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 MA = HERE
-CLASSES = ["DNA", "Protein", "RNA", "Other"]
+CLASSES = ["DNA", "Protein", "RNA", "Metabolite"]
 
 
 def read_fasta(path):

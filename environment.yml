@@ -1,17 +1,19 @@
 # SMSTPred analysis environment (Stages 1-5, 7 scripts and all figure/table builders).
 #
-#   conda env create -f environment.yml        # creates "classifier_env", the name the run_*.sh drivers activate
-#   conda activate classifier_env
+#   make env                                   # = conda env create -f environment.yml -n smstpred
+#   conda activate smstpred                    # the run_*.sh drivers use the active environment, else "smstpred"
 #
 # Versions are the ones the analyses were run and checked with (Python 3.12; a fresh clone plus this
 # environment reproduces the figures/tables listed in REPRODUCING.md). pytorch resolves to a CPU or CUDA
 # build automatically; GPU training/sweeps need a CUDA-enabled install.
 #
-# Not included (separate installs, see data/README.md): MEME suite (STREME/FIMO), MMseqs2, Foldseek,
-# HMMER/MAFFT (bake-off baselines), and the CLEAN and Horizyn checkouts used in Stage 6.
-name: classifier_env
+# The MEME suite (STREME/FIMO), MMseqs2, HMMER and MAFFT are included (bioconda, the versions used). Not included:
+# Foldseek (separate static binary, needed only for the bake-off baseline and the SaProt embeddings; `make tools`
+# downloads it), PyMOL (only to re-render the structure snapshots) and the CLEAN and Horizyn checkouts used in Stage 6.
+name: smstpred
 channels:
   - conda-forge
+  - bioconda
 dependencies:
   - python=3.12
   # core numerics / ML
@@ -37,6 +39,11 @@ dependencies:
   - cairosvg=2.9
   - rdkit=2024.03
   - gemmi=0.7
+  # command-line tools used by Stages 2 (baselines) and 7 (motif discovery)
+  - meme=5.5.9
+  - mmseqs2=18.8cc5c
+  - hmmer=3.4
+  - mafft=7.525
   - pip
   - pip:
       - datamapplot==0.7.1

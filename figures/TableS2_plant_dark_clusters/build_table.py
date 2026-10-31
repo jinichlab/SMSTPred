@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Table S2 -- Plant dark clusters (19), rendered as a figure (matches the
 Table S3 visual convention: banded matplotlib table, no embedded title,
-class-colored accent -- here the uniform "Other" substrate-class orange, since
-every dark cluster is an Other-substrate, small-molecule family).
+class-colored accent -- here the uniform "Metabolite" substrate-class orange, since
+every dark cluster is an Metabolite-substrate, small-molecule family).
 
 Two independent computational calls per cluster:
   - CLEAN's EC-centroid nearest-known-enzyme assignment (distance d;
@@ -27,7 +27,7 @@ SRC = Path(__file__).resolve().parents[2] / "6_dark_cluster_annotation" / "table
 HERE = Path(__file__).resolve().parent
 LINEAGE = "Plant"
 HEADER_COLOR = "#333333"
-ACCENT = "#e6550d"   # "Other" substrate-class orange (Fig7 panel C dots)
+ACCENT = "#ed8c44"   # "Metabolite" substrate-class orange (Fig7 panel C dots)
 GREEN, YELLOW, PINK = "#c7e9c0", "#fee391", "#fcbba1"
 
 COLS = ["Cluster", "Nearest known enzyme\n(CLEAN)", "MTase?", "Confidence\n(CLEAN)",
@@ -111,7 +111,7 @@ def main():
             cell.set_facecolor("#ffffff" if (r % 2) else "#f4f4f4")
             cell.set_text_props(va="center")
             if col_name == "Dominant reaction family (Horizyn)" and row["_not_meth"]:
-                cell.set_text_props(color="#b30000", fontweight="bold", va="center")
+                cell.set_text_props(color="#c14445", fontweight="bold", va="center")
     fig.savefig(HERE / "table_s2.png", dpi=200, bbox_inches="tight")
     plt.close(fig)
     print("[wrote] table_s2.png")

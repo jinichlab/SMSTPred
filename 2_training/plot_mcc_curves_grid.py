@@ -29,9 +29,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
-LABELS = ["DNA", "RNA", "Protein", "Other"]
+LABELS = ["DNA", "RNA", "Protein", "Metabolite"]
 LOSSES = ["bce", "weighted_bce", "sqrt_weighted_bce", "focal"]
-LOSS_COLORS = dict(zip(LOSSES, ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"]))
+LOSS_COLORS = dict(zip(LOSSES, ["#4578aa", "#ed8c44", "#618d43", "#c14445"]))
 
 
 def render_grid(pl, embeddings, outpath, ylim=None):

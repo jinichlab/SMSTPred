@@ -1,0 +1,11 @@
+Rhea entries scored: 36,552; direction-collapsed reactions: 17,707 (17,471 with exactly two entries)
+SAM-methylation entries: forward-flagged 857; with the reverse twin 1,714 entries = 677 reactions
+Twin entries, embedding cosine: median 0.998, 5th percentile 0.993
+Twin entries, score difference (higher-ID entry minus lower-ID entry) over all protein-reaction pairs: mean -0.0002, mean absolute 0.0043, SD 0.0064; higher-ID twin scores higher in 45.5%, lower in 47.2%, exactly equal in 7.3% of pairs
+
+Dark proteins scored: 3,478
+Top-1 is a SAM-methylation reaction, forward direction only : 1,530/3,478 = 44.0%   (chance 2.3%)
+Top-1 is a SAM-methylation reaction, either direction       : 2,981/3,478 = 85.7%   (chance 4.7%)
+Top-100 contains at least one SAM-methylation reaction (forward only / either direction): 98.6% / 98.7% (chance 91% / 99%): uninformative, as the chance levels are near 100%
+
+Proteins missed (either direction): 497; clusters with the most misses: c200 (107), c543 (81), c536 (68), c542 (67), c57 (57), c635 (53)

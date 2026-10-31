@@ -45,7 +45,7 @@ tasks are parallelised), so agreement is within seed noise, not exact.
 Tasks (SLURM array, see run_train_val_loss.sh):  0-5 SAM full x 6 embeddings,
 6-11 SAM balanced x 6 embeddings, 12-15 UP ProstT5 x 4 losses.
 
-Env: classifier_env (GPU).
+Env: smstpred (`make env`) (GPU).
 Outputs (./train_val_loss_output/):
   <set>__<embedding>[__<loss>]__curves.csv.gz   dataset, embedding, loss_type, iteration, epoch, label, train_loss, val_loss
   <set>__<embedding>[__<loss>]__ckpt_mcc.csv.gz dataset, embedding, loss_type, iteration, epoch, label, mcc
@@ -102,7 +102,7 @@ SAM_GROUPS = {
 EMBEDDINGS = ["ProstT5", "SaProt", "ProtT5", "ESM-IF", "ProtT5+ESM-IF", "ProstT5+ESM-IF"]
 GROUP_OF = {c: g for g, cfg in SAM_GROUPS.items() for c in cfg["conditions"]}
 
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 LOSS_TYPES = ["bce", "weighted_bce", "sqrt_weighted_bce", "focal"]
 SPLIT_SEED = 42
 SEED = 42                   # base for per-(iteration, loss) torch seeds

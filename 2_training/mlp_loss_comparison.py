@@ -17,7 +17,7 @@ Under cluster-disjoint cross-validation (3 iterations), the MLP
   'bce', 'weighted_bce', 'sqrt_weighted_bce', 'focal'.
 
 The payoff is the PER-LABEL CSV: it shows which loss wins for each label
-(Other / Protein / RNA / DNA), which is what motivates the per-label loss
+(Metabolite / Protein / RNA / DNA), which is what motivates the per-label loss
 combination used by the deployment pipeline (e.g. SAMImbalancedLoss). The
 `best_*_model.pth` saved here is just the best uniform-loss checkpoint, NOT the
 deployed model.
@@ -92,7 +92,7 @@ DATASETS = {
     },
 }
 
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 LOSS_TYPES = ["bce", "weighted_bce", "sqrt_weighted_bce", "focal"]
 MAX_EPOCHS = 20000
 EPOCH_CHECKPOINTS = list(range(1000, 21000, 1000))

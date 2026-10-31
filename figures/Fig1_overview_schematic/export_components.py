@@ -63,7 +63,7 @@ def save_umap():
     df = pd.read_csv(F.COORDS)
     if len(df) > 40000:
         df = df.sample(40000, random_state=0)
-    order = ["Unassigned", "Mixed", "Other", "Protein", "DNA", "RNA"]
+    order = ["Unassigned", "Mixed", "Metabolite", "Protein", "DNA", "RNA"]
     palette = {**F.SUB, "Mixed": "#bbbbbb", "Unassigned": "#e2e2e2"}
     fig = plt.figure(figsize=(3.2, 3.2)); ax = fig.add_axes([0, 0, 1, 1]); ax.axis("off")
     for sub in order:

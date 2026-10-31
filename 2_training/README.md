@@ -25,8 +25,8 @@ training-set (SAM-vs-UP) comparison, and the final production model.
 ## The deployment model (`deployment_model/`)
 
 ProstT5 MLP `1024→512→256→4`, **6-seed ensemble**, 300 epochs, per-label loss
-`{Other: sqrt_weighted_bce; Protein/RNA/DNA: bce}`. Files: `ensemble_member_{0..5}.pt`,
-`thresholds.json` (OOF MCC-optimal cutoffs ≈ Other 0.63 / Protein 0.63 / RNA 0.83 /
+`{Metabolite: sqrt_weighted_bce; Protein/RNA/DNA: bce}`. Files: `ensemble_member_{0..5}.pt`,
+`thresholds.json` (OOF MCC-optimal cutoffs ≈ Metabolite 0.63 / Protein 0.63 / RNA 0.83 /
 DNA 0.11), `model_config.json` (incl. applicability-domain cosine cutoff ≈ 0.94),
 `oof_predictions.csv`. Consumed by Stage 3 `predict.py`.
 
@@ -35,7 +35,7 @@ DNA 0.11), `model_config.json` (incl. applicability-domain cosine cutoff ≈ 0.9
 - **Epochs and per-label losses.** Every full-set MLP trains for **300 epochs**; for each embedding and
   substrate label the loss (BCE, weighted BCE, sqrt-weighted BCE or focal) is the one with the highest mean
   MCC at epoch 300 in the embedding sweeps (Fig S2). An exact tie goes to the first loss in that order. The
-  one exception is MLP_ProstT5, which keeps the deployed loss map (Other: sqrt-weighted BCE) so that the
+  one exception is MLP_ProstT5, which keeps the deployed loss map (Metabolite: sqrt-weighted BCE) so that the
   benchmark scores the model that ships; the rule alone would pick weighted BCE there, a 0.001-MCC tie. The
   UP-trained ProstT5 in Fig 2B uses 400 epochs and the per-label best losses at epoch 400 in the UP sweep (Fig S5).
   All of this is in `MLP_VARIANTS` (`sam_classifier_comparison.py`) and `UP_CFG`
@@ -57,7 +57,8 @@ Cluster-disjoint CV, 16 iterations, full SAM training set; means over the iterat
   Sequence homology (MMseqs2 1-NN 0.882) and structural homology (Foldseek 1-NN 0.873) are not significantly
   separated from them either; the ESM-IF-only MLP (0.859) and the profile-HMM (0.582, the floor) are
   significantly worse. ProstT5 is deployed because it needs only sequence as input (SaProt − ProstT5:
-  Δ = +0.001 MCC, SaProt better in 8 of 16 iterations, Wilcoxon p = 0.90).
+  Δ = +0.001 MCC, SaProt better in 8 of 16 iterations, Wilcoxon p = 0.90; Holm-adjusted p = 1.00 across the
+  fifteen comparisons of Table S4, written by `benchmark_supplement_stats.py`).
 - **The representation, not the classifier head, drives performance.** On the same ProstT5 features the linear
   (0.925), RBF (0.921) and polynomial (0.916) SVMs are tied with the MLP (0.926); logistic regression,
   XGBoost and random forest are significantly worse, and the sigmoid-kernel SVM (0.876) is borderline (its
@@ -66,7 +67,7 @@ Cluster-disjoint CV, 16 iterations, full SAM training set; means over the iterat
   loss-insensitive (the MCC-curve grids show all losses converging).
 - **SAM-vs-UP**: focused SAM training is not worse than broad UP training on held-out SAM (overall MCC
   0.908 vs 0.862); no individual substrate class differs significantly under the Nadeau-Bengio corrected
-  paired test (two-sided p = 0.65 Other, 0.93 Protein, 0.75 RNA, 0.25 DNA, 0.30 overall), the largest gap
+  paired test (two-sided p = 0.65 Metabolite, 0.93 Protein, 0.75 RNA, 0.25 DNA, 0.30 overall), the largest gap
   being **DNA** (0.913 vs 0.770), which a few splits drive. The UP model even had a mild homology advantage
   (only exact test entries removed).
 

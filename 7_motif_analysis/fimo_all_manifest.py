@@ -8,7 +8,7 @@ motifs at p<1e-4 (fimo_all_C/fimo.tsv). A protein is "no-motif" if it matches NO
 of its own class's motifs.
 
 Inputs (this dir):
-  class_{DNA,RNA,Protein,Other}.fasta   all single-label members per class
+  class_{DNA,RNA,Protein,Metabolite}.fasta   all single-label members per class
   fimo_all_{cls}/fimo.tsv                FIMO hits of that class's 8 motifs vs members
 Outputs:
   motif_status_all.csv        every protein: Entry, class, length, n_hits,
@@ -19,7 +19,7 @@ from pathlib import Path
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
-CLASSES = ["DNA", "RNA", "Protein", "Other"]
+CLASSES = ["DNA", "RNA", "Protein", "Metabolite"]
 
 
 def read_fasta_lengths(path):

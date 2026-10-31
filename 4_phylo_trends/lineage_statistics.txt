@@ -1,0 +1,11 @@
+SAM-MTases per organism: Micrococcales (n=29) median 33.0 vs other Actinomycetota (n=88) median 107.5, p = 1.3e-14
+Metabolite fraction (%): Micrococcales (n=29) median 40.6 vs other Actinomycetota (n=88) median 73.1, p = 1.2e-14
+Metabolite count: Micrococcales (n=29) median 15.0 vs other Actinomycetota (n=88) median 79.0, p = 9.7e-15
+RNA count: Micrococcales (n=29) median 13.0 vs other Actinomycetota (n=88) median 15.0, p = 4.4e-04
+SAM-MTases per organism: Chlorophyta (n=19) median 170.0 vs vascular plants (n=43) median 396.0, p = 2.9e-09
+Metabolite fraction (%): Chlorophyta (n=19) median 36.0 vs vascular plants (n=43) median 39.8, p = 4.7e-04
+SAM-MTases, % of proteome: Chlorophyta (n=19) median 1.54 vs vascular plants (n=43) median 1.03, p = 1.2e-09
+SAM-MTases per organism: plants (n=63) median 342.0 vs other eukaryotes (n=281) median 129.0, p = 5.6e-23
+Metabolite count: plants (n=63) median 123.0 vs other eukaryotes (n=281) median 43.0, p = 2.3e-21
+Metabolite fraction (%): plants (n=63) median 38.4 vs other eukaryotes (n=281) median 31.1, p = 3.8e-03
+Metabolite fraction (%): Actinomycetota (n=117) median 71.0 vs other bacteria (n=792) median 29.2, p = 4.0e-57

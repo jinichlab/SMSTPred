@@ -1,0 +1,123 @@
+Cluster,"Nearest known enzyme
+(CLEAN)",MTase?,"Confidence
+(CLEAN)",Dominant reaction family (Horizyn),"Family share, noise
+(Horizyn)","Avg.
+Horizyn
+score"
+"c689
+(n=195)","benzoate
+O-methyltransferase",yes,"marginal
+(d=7.2)","Family 1324: Purine-alkaloid methylation (xanthine ->
+caffeine/theobromine) (19 rxns, 63% orphan)","98% of cluster, 0%
+noise",0.74
+"c714
+(n=171)","5-hydroxyfuranocoumarin
+5-O-methyltransferase  →
+furanocoumarins",yes,"marginal
+(d=7.5)","Family 1458: Serotonin/furocoumarin O- & N-methylation
+(melatonin pathway) (9 rxns, 67% orphan)","28% of cluster, 16%
+noise",0.80
+"c638
+(n=120)","indole-3-acetate
+O-methyltransferase  →
+auxin (IAA)",yes,"marginal
+(d=7.7)","Family 1324: Purine-alkaloid methylation (xanthine ->
+caffeine/theobromine) (19 rxns, 63% orphan)","98% of cluster, 1%
+noise",0.76
+"c644
+(n=113)","trans-aconitate
+3-methyltransferase",yes,"marginal
+(d=6.9)","Family 1610: Guanidino-ketone C-methylation (secondary
+metabolite) (11 rxns, 64% orphan)","42% of cluster, 32%
+noise",0.54
+"c172
+(n=108)",beta-selinene cyclase,No,"unreliable
+(d=9.2)","Family 1548: Tricetin di-O-methylation (flavonoid) (10
+rxns, 70% orphan)","76% of cluster, 14%
+noise",0.65
+"c758
+(n=107)",thiol S-methyltransferase,yes,"marginal
+(d=6.9)","Family 25: Demethylmenaquinol methylation (vitamin K2
+biosynthesis) (10 rxns, 100% orphan)","50% of cluster, 20%
+noise",0.60
+"c565
+(n=96)","desmethylxanthohumol
+6'-O-methyltransferase  →
+flavonoids / hops",yes,"reliable
+(d=5.7)","Family 1099: Benzylisoquinoline alkaloid O-methylation
+(reticuline-type) (42 rxns, 57% orphan)","94% of cluster, 1%
+noise",0.82
+"c536
+(n=96)","cyclopropane-fatty-acyl-
+phospholipid synthase",yes,"unreliable
+(d=8.2)","Family 1601: NOT methylation --
+oxidoreductase/monooxygenase chemistry (9 rxns, 100%
+orphan)","14% of cluster, 31%
+noise",0.64
+"c597
+(n=90)","norbelladine
+O-methyltransferase  →
+Amaryllidaceae alkaloids
+(galanthamine)",yes,"reliable
+(d=5.8)","Family 1548: Tricetin di-O-methylation (flavonoid) (10
+rxns, 70% orphan)","52% of cluster, 0%
+noise",0.74
+"c239
+(n=84)","trans-aconitate
+3-methyltransferase",yes,"marginal
+(d=6.0)","Family 1610: Guanidino-ketone C-methylation (secondary
+metabolite) (11 rxns, 64% orphan)","23% of cluster, 69%
+noise",0.54
+"c543
+(n=81)",alpha-onocerin synthase,No,"unreliable
+(d=8.7)","Family 1465: NOT methylation -- dTDP-sugar
+glycosyltransferase (macrolide biosynthesis) (14 rxns,
+100% orphan)","22% of cluster, 54%
+noise",0.71
+"c551
+(n=77)","tricin synthase  →
+flavonoid (tricin)",yes,"marginal
+(d=6.1)","Family 1548: Tricetin di-O-methylation (flavonoid) (10
+rxns, 70% orphan)","84% of cluster, 0%
+noise",0.78
+"c733
+(n=71)","5-pentadecatrienyl
+resorcinol
+O-methyltransferase",yes,"marginal
+(d=6.0)","Family 1488: Flavonoid/furocoumarin O-methylation (20
+rxns, 50% orphan)","28% of cluster, 13%
+noise",0.81
+"c542
+(n=68)",alpha-onocerin synthase,No,"unreliable
+(d=8.7)","Family 2008: NOT methylation -- NADPH-dependent
+oxidoreductase chemistry (20 rxns, 100% orphan)","71% of cluster, 12%
+noise",0.75
+"c662
+(n=63)",thiol S-methyltransferase,yes,"marginal
+(d=7.6)","Family 215: N-terminal protein methylation (Ala/Pro-Pro-
+Lys motif) (13 rxns, 69% orphan)","16% of cluster, 35%
+noise",0.59
+"c667
+(n=60)","caffeine synthase  →
+purine alkaloids
+(caffeine)",yes,"marginal
+(d=6.9)","Family 1324: Purine-alkaloid methylation (xanthine ->
+caffeine/theobromine) (19 rxns, 63% orphan)","100% of cluster, 0%
+noise",0.80
+"c181
+(n=59)","demethylspheroidene
+O-methyltransferase",yes,"unreliable
+(d=9.4)","Family 1756: Co-precorrin methylation (cobalamin/vitamin
+B12 biosynthesis) (7 rxns, 57% orphan)","98% of cluster, 0%
+noise",0.78
+"c635
+(n=53)",spermine synthase,No,"reliable
+(d=4.4)","Family 746: Spermidine/spermine synthase (NOT methylation
+-- aminopropyl transfer) (10 rxns, 100% orphan)","100% of cluster, 0%
+noise",0.78
+"c110
+(n=50)","guanidinoacetate
+N-methyltransferase",yes,"marginal
+(d=6.6)","Family 1241: Small-molecule N-methylation (glycine betaine
+/ creatine) (18 rxns, 50% orphan)","84% of cluster, 6%
+noise",0.55

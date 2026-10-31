@@ -9,7 +9,7 @@ class is the majority class of its members. Writes one FASTA of representatives
 per class -- so downstream STREME sees one sequence per family, not thousands of
 near-duplicate paralogs.
 
-Outputs: cluster_reps.csv, reps_{Other,Protein,RNA,DNA}.fasta
+Outputs: cluster_reps.csv, reps_{Metabolite,Protein,RNA,DNA}.fasta
 """
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -17,7 +17,7 @@ from pathlib import Path
 import pandas as pd
 
 IO = Path(__file__).resolve().parent
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 
 
 def read_fasta(path):

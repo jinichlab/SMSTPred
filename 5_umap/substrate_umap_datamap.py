@@ -35,10 +35,10 @@ OUTPUT_DIR = SCRIPT_DIR
 COORDS_CSV = OUTPUT_DIR / "sam_mtase_umap_prostt5_coords.csv"
 THRESHOLDS_JSON = SCRIPT_DIR.parent / "2_training" / "deployment_model" / "thresholds.json"
 
-LABELS = ["RNA", "DNA", "Protein", "Other"]
+LABELS = ["RNA", "DNA", "Protein", "Metabolite"]
 SUBSTRATE_COLORS = {
     "RNA": "#cb181d", "DNA": "#6a51a3", "Protein": "#238b45",
-    "Other": "#e6550d", "Mixed": "#636363", "None": "#cccccc",
+    "Metabolite": "#e6550d", "Mixed": "#636363", "None": "#cccccc",
 }
 
 
@@ -60,7 +60,7 @@ def create_hover_text(df):
             f"RNA: {float(r['score_RNA']):.3f}\n"
             f"DNA: {float(r['score_DNA']):.3f}\n"
             f"Protein: {float(r['score_Protein']):.3f}\n"
-            f"Other: {float(r['score_Other']):.3f}")
+            f"Metabolite: {float(r['score_Metabolite']):.3f}")
     return np.array(out)
 
 
@@ -162,7 +162,7 @@ def create_interactive_plot(df, output_path):
 
 def create_static_plot(df, output_path):
     fig, ax = plt.subplots(figsize=(14, 10))
-    draw_order = ["None", "Mixed", "Other", "Protein", "DNA", "RNA"]
+    draw_order = ["None", "Mixed", "Metabolite", "Protein", "DNA", "RNA"]
     dim = {"None": (0.25, 5), "Mixed": (0.40, 6)}
     handles = {}
     for k, substrate in enumerate(draw_order):

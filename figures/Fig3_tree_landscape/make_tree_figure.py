@@ -18,10 +18,10 @@ chain into cropped-raster pixel coordinates, match leaf label -> canon(Organism)
 draw an iTOL-style clade strip just outside the bar band with a label + a faint
 accent wedge. Add a lineage by name in HIGHLIGHTS; a polyphyletic pick simply
 yields multiple strips."""
-import os
-import sys
 from pathlib import Path
+import copy
 import io
+import os
 import re
 import math
 import numpy as np
@@ -41,17 +41,19 @@ BASE = Path(__file__).resolve().parent
 # native export's rings are only 25 local units thick -- hard to tell apart).
 SVG = BASE / "V4prbvTzDgPu09RO61xuyg_widened.svg"
 SVG_RAW = Path(os.environ.get("SMSTPRED_DATA", BASE.parents[1] / "data")) / "itol_tree_export_Fig3.svg"  # raw iTOL export (Zenodo)
-RENDER_W = 7000                                  # rasterize width (px)
+RENDER_W = 7000                                  # rasterize width (px) of the original 1512-unit canvas
+PX_PER_UNIT = RENDER_W / 1512.0                  # raster scale (px per SVG unit) kept for the enlarged canvas
+PROBE_MARGIN = 1500                              # SVG units added on every side to find the tree's true extent
 DROP_GROUPS = {"legendHolder", "scaleHolder", "timeScaleHolder", "wrapperHolder"}
 
 WHITE = "#f7fbff"          # iTOL gradient COLOR_MIN (low end)
 # Ordered inner -> outer to match the concentric ring stacking on the tree
-# (radii measured from this SVG export: Protein 129, DNA 132, RNA 135, Other 137,
+# (radii measured from this SVG export: Protein 129, DNA 132, RNA 135, Metabolite 137,
 # proteome 140). "% SAMs in proteome" is the outermost ring, then the outer bars.
 RINGS = [("% Protein-binding SAMs", "#238b45"),
          ("% DNA-binding SAMs", "#6a51a3"),
          ("% RNA-binding SAMs", "#cb181d"),
-         ("% Other (small-molecule) SAMs", "#e6550d"),
+         ("% Metabolite (small-molecule) SAMs", "#e6550d"),
          ("% SAMs in proteome", "#2171b5")]
 BAR_COLOR = "#2b8cbe"
 
@@ -124,13 +126,25 @@ def contiguous_arcs(angles, gap_deg=2.5):
     return arcs
 
 
+def _raster(root, vbox, width):
+    """Rasterize the (already stripped) SVG on white over the user-unit window vbox."""
+    r = copy.deepcopy(root)
+    r.set("viewBox", " ".join(f"{v:.4f}" for v in vbox))
+    r.set("width", f"{vbox[2]:.4f}"); r.set("height", f"{vbox[3]:.4f}")
+    png = cairosvg.svg2png(bytestring=etree.tostring(r), output_width=int(width),
+                           background_color="white")
+    return Image.open(io.BytesIO(png)).convert("RGB")
+
+
 def render_svg():
     """Strip legend/scale groups, rasterize on white, crop to content, and recover
     the tree geometry (center, leaf tip radius, per-leaf angle, bar-band radius) in
-    cropped-raster pixel coordinates for clade highlighting."""
-    if not SVG.exists():
-        sys.exit(f"{SVG.name} not found: run widen_rings.py first (it reads the raw iTOL export "
-                 f"{SVG_RAW.name} from the data directory).")
+    cropped-raster pixel coordinates for clade highlighting.
+
+    The iTOL canvas (1512 x 764 units) is smaller than the tree: the longest outer
+    bars run past its edges and used to be clipped flat. We first probe a much
+    larger canvas to find the tree's true extent, then rasterize exactly that region
+    at the original scale."""
     tree = etree.parse(str(SVG)); root = tree.getroot()
     vb = [float(x) for x in re.split(r"[,\s]+", root.get("viewBox"))]
     main = next((_parse_transform(e.get("transform")) for e in root.iter()
@@ -150,10 +164,19 @@ def render_svg():
     for el in [el for el in root.iter() if el.get("id") in DROP_GROUPS]:
         el.getparent().remove(el)
     print(f"  dropped groups: {DROP_GROUPS & {el.get('id') for el in tree.iter()} or 'all'}")
-    png = cairosvg.svg2png(bytestring=etree.tostring(root),
-                           output_width=RENDER_W, background_color="white")
-    im = Image.open(io.BytesIO(png)).convert("RGB")
-    scale = RENDER_W / vb[2]
+    probe_box = [vb[0] - PROBE_MARGIN, vb[1] - PROBE_MARGIN,
+                 vb[2] + 2 * PROBE_MARGIN, vb[3] + 2 * PROBE_MARGIN]
+    pw = 1800
+    pa = np.asarray(_raster(root, probe_box, pw))
+    pys, pxs = np.where(~((pa[:, :, 0] > 250) & (pa[:, :, 1] > 250) & (pa[:, :, 2] > 250)))
+    ps = pw / probe_box[2]; pad_u = 12.0
+    vb_old = vb
+    vb = [probe_box[0] + pxs.min() / ps - pad_u, probe_box[1] + pys.min() / ps - pad_u,
+          (pxs.max() - pxs.min()) / ps + 2 * pad_u, (pys.max() - pys.min()) / ps + 2 * pad_u]
+    print(f"  canvas {vb_old[2]:.0f}x{vb_old[3]:.0f} units -> tree extent {vb[2]:.0f}x{vb[3]:.0f} units "
+          f"(x {vb[0]:.0f}..{vb[0] + vb[2]:.0f}, y {vb[1]:.0f}..{vb[1] + vb[3]:.0f})")
+    im = _raster(root, vb, round(vb[2] * PX_PER_UNIT))
+    scale = im.size[0] / vb[2]
     a = np.asarray(im)
     content = ~((a[:, :, 0] > 244) & (a[:, :, 1] > 244) & (a[:, :, 2] > 244))
     ys, xs = np.where(content); pad = 24
@@ -164,7 +187,7 @@ def render_svg():
     print(f"  rasterized {im.size} -> tree crop {crop.size}")
 
     def to_px(vx, vy):
-        return vx * scale - box[0], vy * scale - box[1]
+        return (vx - vb[0]) * scale - box[0], (vy - vb[1]) * scale - box[1]
     cx, cy = to_px(*center_vb[:2])
     leaf_ang = []
     leaf_r = None
@@ -253,7 +276,7 @@ def swatch(fig, x, y, w, h, color, gradient=True):
     if gradient:
         cmap = LinearSegmentedColormap.from_list("", [WHITE, color])
         ax.imshow(np.linspace(0, 1, 256)[None, :], aspect="auto", cmap=cmap)
-        ax.add_patch(Rectangle((0, 0), 255, 1, fill=False, edgecolor="#888", lw=0.6,
+        ax.add_patch(Rectangle((-0.5, -0.5), 256, 1, fill=False, edgecolor="#888", lw=1.0,
                                transform=ax.transData))
     else:
         ax.add_patch(Rectangle((0, 0), 1, 1, facecolor=color, edgecolor="#888", lw=0.6))
@@ -263,41 +286,71 @@ def swatch(fig, x, y, w, h, color, gradient=True):
         s.set_visible(False)
 
 
+FIG_W = 22.0          # inches; the manuscript scales this to page width (~0.3x), so legend text is sized
+TREE_FRAC = 0.60      # share of the figure width given to the tree
+FS_HEAD, FS_LABEL, FS_TICK = 36, 31, 23   # legend fonts (pt at 22 in wide; ~10.6 / 9.1 / 6.8 pt at 6.5 in)
+
+
 def compose(tree, geom):
     W, H = tree.size
-    fig = plt.figure(figsize=(22, 22 * H / W * 0.62), facecolor="white")
-    LX = 0.605
-    SW, SLBL = 0.11, LX + 0.135
-    axt = fig.add_axes([0.003, 0.02, 0.58, 0.96])
+    fig_h = FIG_W * TREE_FRAC * H / W / 0.96
+    fig = plt.figure(figsize=(FIG_W, fig_h), facecolor="white")
+    axt = fig.add_axes([0.003, 0.02, TREE_FRAC, 0.96])
     axt.imshow(tree); axt.axis("off")
     draw_highlights(axt, geom, build_highlights(geom))
 
-    # No title / organism-info block here (Figure 3 caption in the manuscript
-    # text already covers both) -- the legend uses that freed vertical space,
-    # with larger text throughout for readability.
-    fig.text(LX, 0.955, "Gradient rings", color="#111111", fontsize=19, fontweight="bold", va="top")
-    y = 0.895
-    for name, color in RINGS:
-        swatch(fig, LX, y, SW, 0.032, color, gradient=True)
-        fig.text(LX, y - 0.020, "0", color="#888888", fontsize=11, ha="left", va="top")
-        fig.text(LX + SW, y - 0.020, "max", color="#888888", fontsize=11, ha="right", va="top")
-        fig.text(SLBL, y + 0.016, name, color="#222222", fontsize=15.5, va="center")
-        y -= 0.086
-
-    y -= 0.028
-    fig.text(LX, y + 0.058, "Outer bars", color="#111111", fontsize=19, fontweight="bold", va="top")
-    swatch(fig, LX, y, SW, 0.032, BAR_COLOR, gradient=False)
-    fig.text(SLBL, y + 0.016, "# SAM-MTases per proteome", color="#222222", fontsize=15.5, va="center")
-
+    # No title / organism-info block here (Figure 3 caption in the manuscript text already
+    # covers both). Legend layout is in inches from the top so the large text never collides.
+    LX, SW = TREE_FRAC + 0.015, 0.068            # legend left edge, swatch width (figure fraction)
+    SLBL = LX + SW + 0.014                       # label x
+    SWH = 0.58                                   # swatch height (in)
     clades = clade_order(geom)
+    labels = [n for n, _ in RINGS] + ["# SAM-MTases per proteome"] + [lb for lb, _, _ in clades]
+
+    # largest label font (<= FS_LABEL) at which the longest label still fits inside the figure
+    renderer = fig.canvas.get_renderer()
+    avail_pt = (0.985 - SLBL) * FIG_W * 72
+    fs_label = FS_LABEL
+    while fs_label > 16:
+        t = fig.text(0, 0, max(labels, key=len), fontsize=fs_label)
+        w_pt = t.get_window_extent(renderer).width * 72 / fig.dpi
+        t.remove()
+        if w_pt <= avail_pt:
+            break
+        fs_label -= 1
+    print(f"  legend fonts: heading {FS_HEAD}, label {fs_label}, tick {FS_TICK} pt; figure {FIG_W:.1f} x {fig_h:.1f} in")
+
+    Y = lambda inch: 1 - inch / fig_h           # inches from top -> figure fraction
+    cur = 0.35
+
+    def heading(txt):
+        nonlocal cur
+        fig.text(LX, Y(cur), txt, color="#111111", fontsize=FS_HEAD, fontweight="bold", va="top")
+        cur += 0.80
+
+    def row(name, color, gradient):
+        nonlocal cur
+        swatch(fig, LX, Y(cur + SWH), SW, SWH / fig_h, color, gradient=gradient)
+        fig.text(SLBL, Y(cur + SWH / 2), name, color="#222222", fontsize=fs_label, va="center")
+        if gradient:
+            fig.text(LX, Y(cur + SWH + 0.04), "0", color="#444444", fontsize=FS_TICK, ha="left", va="top")
+            fig.text(LX + SW, Y(cur + SWH + 0.04), "max", color="#444444", fontsize=FS_TICK, ha="right", va="top")
+            cur += SWH + 0.46 + 0.22
+        else:
+            cur += SWH + 0.32
+
+    heading("Gradient rings")
+    for name, color in RINGS:
+        row(name, color, True)
+    cur += 0.15
+    heading("Outer bars")
+    row("# SAM-MTases per proteome", BAR_COLOR, False)
+    cur += 0.20
     if clades:
-        y -= 0.105
-        fig.text(LX, y + 0.058, "Highlighted clades", color="#111111", fontsize=19,
-                 fontweight="bold", va="top")
+        heading("Highlighted clades")
         for label, color, _n in clades:
-            swatch(fig, LX, y, SW, 0.032, color, gradient=False)
-            fig.text(SLBL, y + 0.016, label, color="#222222", fontsize=15.5, va="center")
-            y -= 0.068
+            row(label, color, False)
+    print(f"  legend height used {cur:.1f} of {fig_h:.1f} in")
 
     out = BASE / "fig3_tree_landscape.png"
     fig.savefig(out, dpi=200, facecolor="white")

@@ -32,7 +32,7 @@ CIF = S / "_carrier_src"
 CIF.mkdir(exist_ok=True)
 PICKS = pd.read_csv(S / "motif_top_structures.csv")
 
-CLASS_HEX = {"DNA": "6a51a3", "RNA": "cb181d", "Protein": "238b45", "Other": "e6550d"}
+CLASS_HEX = {"DNA": "6a51a3", "RNA": "cb181d", "Protein": "238b45", "Metabolite": "e6550d"}
 COF = set(mc.COF_LIGS) | {"SAM", "SAH", "SFG"}
 NEAR = 4.0          # <= this to cofactor/substrate = "near" = direct vdW/H-bond
                     # contact; > this to BOTH cofactor and substrate = "distal"
@@ -141,7 +141,7 @@ def main():
             if ev is None:
                 continue
             # small-molecule substrate: use the real ligand code, re-measure
-            if cls == "Other":
+            if cls == "Metabolite":
                 sub_lig = str(r.sub_kind).split(";")[0]
                 ev["sub_lig"] = sub_lig
                 ev["sub_at"] = [(a.pos.x, a.pos.y, a.pos.z) for ch in ev["model"]

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """SAM-MTase count vs proteome size, Bacteria and Eukaryota separately, each
-with a total-SAM panel and an Other-substrate-SAM panel (4 panels total).
+with a total-SAM panel and an Metabolite-substrate-SAM panel (4 panels total).
 Actinomycetota highlighted in the Bacteria panels, Viridiplantae (plants) in
 the Eukaryota panels, each against an OLS line of best fit over all points in
 that domain -- to see whether the highlighted lineage sits on, above, or below
 the overall scaling trend.
 
 Input:  proteome_vs_sam_bylabel.csv (organism, domain, proteome_size, n_sam,
-        n_DNA, n_RNA, n_Protein, n_Other -- from the existing per-organism
+        n_DNA, n_RNA, n_Protein, n_Metabolite -- from the existing per-organism
         tree-of-life sweep), selected_1259_organisms.csv (Taxonomic lineage,
         joined by organism-name stem)
 Output: proteome_vs_sam_domain_highlight.png
@@ -24,8 +24,8 @@ IO = Path(__file__).resolve().parent
 META_CSV = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[2] / "data")) / "selected_1259_organisms.csv"
 
 BASE_COLOR = "#707070"
-ACTINO_COLOR = "#e6550d"
-PLANT_COLOR = "#33a02c"
+ACTINO_COLOR = "#ed8c44"
+PLANT_COLOR = "#618d43"
 FIT_COLOR = "#222222"
 
 
@@ -93,14 +93,14 @@ def main():
     panel(axes[0, 0], bact, "n_sam", bact["is_actino"], ACTINO_COLOR, "Actinomycetota",
           "Other bacteria", "Total SAM MTases")
 
-    panel(axes[0, 1], bact, "n_Other", bact["is_actino"], ACTINO_COLOR, "Actinomycetota",
-          "Other bacteria", "Other-substrate SAM MTases")
+    panel(axes[0, 1], bact, "n_Metabolite", bact["is_actino"], ACTINO_COLOR, "Actinomycetota",
+          "Other bacteria", "Metabolite-substrate SAM MTases")
 
     panel(axes[1, 0], euk, "n_sam", euk["is_plant"], PLANT_COLOR, "Viridiplantae",
           "Other eukaryotes", "Total SAM MTases")
 
-    panel(axes[1, 1], euk, "n_Other", euk["is_plant"], PLANT_COLOR, "Viridiplantae",
-          "Other eukaryotes", "Other-substrate SAM MTases")
+    panel(axes[1, 1], euk, "n_Metabolite", euk["is_plant"], PLANT_COLOR, "Viridiplantae",
+          "Other eukaryotes", "Metabolite-substrate SAM MTases")
 
     for letter, ax in zip("ABCD", axes.flat):
         ax.text(0.0, 1.02, letter, transform=ax.transAxes, fontsize=20,

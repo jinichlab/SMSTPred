@@ -2,7 +2,7 @@
 
 Analysis code and results for the manuscript. The project builds a classifier that
 predicts the **substrate type** of a SAM-dependent methyltransferase (MTase) —
-**DNA / RNA / Protein / Other (small-molecule)** — directly from a protein's sequence via
+**DNA / RNA / Protein / Metabolite (small-molecule)** — directly from a protein's sequence via
 a **structure-aware protein language model (ProstT5)**, validates it against
 homology and classical-ML baselines, deploys it across the tree of life, and interprets
 *what* the model reads to make each call.
@@ -47,8 +47,9 @@ organism metadata) are in [`data/`](data).
 - **Interpretation** (Stage 7): STREME recovers the canonical catalytic and cofactor
   signatures of each class (26 of 32 motifs class-specific; 22 of those 26 within 4 Å of the
   substrate or cofactor), yet about 12 % of enzymes carry no such motif and sit scattered
-  within motif-bearing families — the substrate signal is distributed rather than a short
-  linear motif.
+  within motif-bearing families; these enzymes are enriched for out-of-domain and fragment
+  sequences, so a short discriminative motif is not what carries their calls, but this
+  analysis does not show where their signal lies.
 
 ## Conventions used throughout
 
@@ -57,21 +58,40 @@ organism metadata) are in [`data/`](data).
   "to match the rest of the project". Embeddings are produced upstream by the model
   scripts (mean-pooled per protein); the precomputed embedding files are archived on Zenodo
   (see [`data/README.md`](data/README.md)), not shipped here.
-- **Labels.** Multi-label `[Other, Protein, RNA, DNA]`; single-substrate proteins are used
+- **Labels.** Multi-label `[Metabolite, Protein, RNA, DNA]`; single-substrate proteins are used
   for the headline analyses.
 - **Validation.** Homology-aware **cluster-disjoint** cross-validation everywhere
   (greedy cosine clustering; SAM @0.6, UP @0.5). Per-label decision thresholds are
   **MCC-optimal, tuned on TRAIN/out-of-fold** predictions — never a fixed 0.5.
-- **Compute.** Jobs run via SLURM `run_*.sh` drivers (conda env `classifier_env`, GPU).
+- **Compute.** GPU jobs have SLURM `run_*.sh` drivers (`sbatch run_x.sh`, or `bash run_x.sh` on any GPU machine); they use the active conda environment, else the `smstpred` environment that `make env` builds from `environment.yml`.
 
-## Reproduction note
+## Reproduction
 
-Step-by-step status of every analysis (what reruns from a clean clone, what needs extra inputs) is in
-[`REPRODUCING.md`](REPRODUCING.md).
+```bash
+git clone https://github.com/jinichlab/SMSTPred.git && cd SMSTPred
+make env && conda activate smstpred                    # conda environment from environment.yml
+make data DATA_SRC=zenodo:10.5281/zenodo.23655998      # the archived embeddings and tables, checksum-verified, into data/
+make verify                                            # re-runs every CPU analysis in a scratch copy and compares with the committed results
+make verify-gpu                                        # optional, on a GPU: re-trains the models and compares outcomes (stated tolerances)
+```
+
+`make help` lists the targets. [`REPRODUCING.md`](REPRODUCING.md) has the pass / fail table of the last run, the tolerances, and what is
+not covered (external installs, multi-hour sweeps). The `run_*.sh` GPU drivers run under SLURM or as plain `bash`, in the environment above.
 
 Large inputs (per-protein embedding `*.h5` files, the raw iTOL tree export) are archived on
-**Zenodo** (DOI to be added at publication) rather than in git; per-residue embeddings, the raw
+**Zenodo** (doi:10.5281/zenodo.23655998; reserved, resolves once the record is published) rather than in git; per-residue embeddings, the raw
 corpus/UniProt FASTAs and mmseqs temp dirs are regenerable and not shipped. Small data tables
 are in [`data/`](data). Models, result tables, figures, and the Stage-6 structures are
 included. Scripts resolve their inputs relative to the repository (data directory: `data/`, or
 `$SMSTPRED_DATA`); [`data/README.md`](data/README.md) lists what is archived and what is not.
+
+## License, citation and funding
+
+- **Code:** MIT ([`LICENSE`](LICENSE)).
+- **Data, result tables, figures and trained model weights** in this repository and in the Zenodo record:
+  CC BY 4.0. The label tables and structures derive from UniProtKB (with Rhea and ChEBI annotation) and the
+  AlphaFold Protein Structure Database, all CC BY 4.0, so please credit these sources as well when reusing them.
+- **Citation:** see [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repository"); the data record is
+  doi:10.5281/zenodo.23655998.
+- **Funding:** the authors thank the HHMI Hanna Gray Fellowship (GT16787) and the UC San Diego NIH FIRST Grant
+  (NCI 1UA54CA272220) for funding.

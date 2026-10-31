@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use this code or the data, please cite the manuscript (once published) and the Zenodo data record."
+title: "SMSTPred: substrate-type prediction for SAM-dependent methyltransferases across the tree of life"
+type: software
+authors:
+  - family-names: Roethler
+    given-names: Nathaniel
+    orcid: "https://orcid.org/0009-0001-0143-2791"
+    affiliation: "Department of Chemistry and Biochemistry, University of California San Diego"
+  - family-names: Jinich
+    given-names: Adrian
+    orcid: "https://orcid.org/0000-0001-8616-9250"
+    affiliation: "Department of Chemistry and Biochemistry and Skaggs School of Pharmacy and Pharmaceutical Sciences, University of California San Diego"
+repository-code: "https://github.com/jinichlab/SMSTPred"
+license: MIT
+abstract: >-
+  Multi-label classifier (DNA, RNA, Protein, Metabolite) of the substrate type of SAM-dependent methyltransferases from
+  structure-aware protein language-model embeddings (ProstT5), with the benchmark, tree-of-life predictions for
+  about 112,000 enzymes in 1,259 organisms, and the CLEAN / Horizyn and motif analyses of the manuscript.
+keywords:
+  - S-adenosylmethionine
+  - methyltransferase
+  - substrate specificity
+  - protein language model
+  - enzyme function prediction
+references:
+  - type: dataset
+    title: "SMSTPred data: protein language-model embeddings, substrate-type labels and tree-of-life resources for SAM-methyltransferase substrate prediction"
+    authors:
+      - family-names: Roethler
+        given-names: Nathaniel
+      - family-names: Jinich
+        given-names: Adrian
+    doi: 10.5281/zenodo.23655998
+    year: 2026
+# When the manuscript is published, add a preferred-citation block (type: article) with its journal and DOI.

@@ -31,8 +31,8 @@ Outputs (./deployment_model/)
   - ensemble_member_{0..5}.pt  final model weights (trained on all data)
   - model_config.json          architecture, label order, provenance
 
-Env: classifier_env (GPU). Config matches the CV-validated ProstT5 winner:
-MLP 1024->512->256->4, 300 epochs, per-label loss {Other: sqrt_weighted_bce;
+Env: smstpred (`make env`) (GPU). Config matches the CV-validated ProstT5 winner:
+MLP 1024->512->256->4, 300 epochs, per-label loss {Metabolite: sqrt_weighted_bce;
 Protein/RNA/DNA: bce}.
 """
 
@@ -67,14 +67,14 @@ PROTT5_H5 = FILES_DIR / "embeddings_SAM_ProtT5.h5"              # clustering onl
 
 OUT_DIR = Path(__file__).resolve().parent / "deployment_model"
 
-LABELS = ["Other", "Protein", "RNA", "DNA"]         # output index order
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]         # output index order
 CLUSTER_THRESHOLD = 0.6
 K_FOLDS = 5
 N_ENSEMBLE = 6
 EPOCHS = 300
 LEARNING_RATE = 0.001
 
-# ProstT5 full-set winner: per-label mixed loss (label idx [Other,Protein,RNA,DNA]).
+# ProstT5 full-set winner: per-label mixed loss (label idx [Metabolite,Protein,RNA,DNA]).
 _SQ, _BCE, _WB, _FOC = "sqrt_weighted_bce", "bce", "weighted_bce", "focal"
 LOSS_MAP = {0: _SQ, 1: _BCE, 2: _BCE, 3: _BCE}
 

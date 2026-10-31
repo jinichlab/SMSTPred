@@ -1,0 +1,21 @@
+# Environment for the ESM-IF1 embedders (embed_esm_if.py, embed_esm_if_local.py). fair-esm 2.0.0 needs torch-geometric and the torch-scatter /
+# torch-sparse extensions, which are built per torch release, hence the separate environment with torch 2.6.0 (CUDA 12.4 wheels).
+#   conda env create -f environment_esmif.yml                # creates "smstpred_esmif"
+name: smstpred_esmif
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - h5py
+  - numpy=1.26.4
+  - pandas
+  - requests
+  - pip:
+      - --find-links https://data.pyg.org/whl/torch-2.6.0+cu124.html
+      - torch==2.6.0
+      - fair-esm==2.0.0
+      - biotite==0.39.0
+      - torch-geometric==2.7.0
+      - torch-scatter==2.1.2+pt26cu124
+      - torch-sparse==0.6.18+pt26cu124

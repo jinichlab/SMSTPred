@@ -21,8 +21,8 @@ import matplotlib.pyplot as plt
 SRC = Path(__file__).resolve().parents[2] / "7_motif_analysis" / "domain_enrichment.csv"
 HERE = Path(__file__).resolve().parent
 
-CLASSES = ["DNA", "Protein", "RNA", "Other"]
-COLORS = {"DNA": "#6a51a3", "RNA": "#cb181d", "Protein": "#238b45", "Other": "#e6550d"}
+CLASSES = ["DNA", "Protein", "RNA", "Metabolite"]
+COLORS = {"DNA": "#6a51a3", "RNA": "#c14445", "Protein": "#618d43", "Metabolite": "#ed8c44"}
 TOP_N = 12
 PAN_MTASE_DOMAIN = "IPR029063"  # SAM-dependent MTase superfamily -- present in all classes
 
@@ -43,7 +43,8 @@ def main():
 
     out = []
     for cls in CLASSES:
-        sub = df[df["class"] == cls].sort_values("n_in", ascending=False).head(TOP_N)
+        sub = df[df["class"] == cls].sort_values(["n_in", "interpro"], ascending=[False, False], kind="stable").head(TOP_N)  # ties in protein count: InterPro accession, descending
+        # (three Protein-class domains tie at 807 proteins for the twelfth row: IPR050903, IPR000780, IPR022642; IPR050903 is listed)
         for _, r in sub.iterrows():
             out.append({
                 "Class": cls,

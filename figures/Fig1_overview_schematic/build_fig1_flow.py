@@ -23,13 +23,13 @@ BASE = Path(__file__).resolve().parent
 FIG = BASE.parent
 TREE = FIG / "Fig3_tree_landscape/tree_only.png"
 STRUCT_REP = BASE / "biorender_components/struct_1OR8_SAM.png"   # stage 2: plain grey PRMT1 + faint SAH
-STRUCT_INT = FIG / "Fig9_structures/Known/dna_motif1.png"        # stage 5: motif on structure
+STRUCT_INT = FIG / "Fig9_10_structures/Known/dna_motif1.png"        # stage 5: motif on structure
 REPO = Path(__file__).resolve().parents[2]
 COORDS = REPO / "5_umap" / "sam_mtase_umap_prostt5_coords.csv"
 SUMMARY = REPO / "2_training" / "sam_classifier_comparison_output" / "sam_classifier_comparison_summary.csv"
 Image.MAX_IMAGE_PIXELS = None
 
-SUB = {"RNA": "#cb181d", "DNA": "#6a51a3", "Protein": "#238b45", "Other": "#e6550d"}
+SUB = {"RNA": "#cb181d", "DNA": "#6a51a3", "Protein": "#238b45", "Metabolite": "#e6550d"}
 MLP_C, HOM_C = "#3b6fa0", "#c07033"       # muted embedding-MLP / homology-baseline
 INK, MUTE = "#242a30", "#5c6670"
 # muted, desaturated per-stage accents (chips + rules); restrained, not garish
@@ -44,7 +44,7 @@ XC = [x + W / 2 for x in XL]
 VIZ = [[XL[i] + 0.007, 0.395, W - 0.014, 0.33] for i in range(5)]
 CHIP_Y, RULE_Y, CAP_Y, ARROW_Y = 0.92, 0.865, 0.29, 0.56
 
-TRAIN = {"DNA": 108, "RNA": 5006, "Protein": 1015, "Other": 1290}
+TRAIN = {"DNA": 108, "RNA": 5006, "Protein": 1015, "Metabolite": 1290}
 STAGES = [
     ("1", "Curate", ["Reviewed SwissProt SAM-MTases", "4-way multi-label labels",
                      "n = 7,405 · strong class imbalance"]),
@@ -96,7 +96,7 @@ def _clean_axes(ax, title=None):
 
 # ---------------------------------------------------------------- viz drawers
 def viz_curate(ax):
-    labs = ["RNA", "Other", "Protein", "DNA"]
+    labs = ["RNA", "Metabolite", "Protein", "DNA"]
     vals = [TRAIN[l] for l in labs]
     y = np.arange(len(labs))[::-1]
     ax.barh(y, vals, color=[SUB[l] for l in labs], edgecolor="white", height=0.70)
@@ -168,7 +168,7 @@ def viz_interpret(ax):
     df = pd.read_csv(COORDS)
     if len(df) > 25000:
         df = df.sample(25000, random_state=0)
-    order = ["Unassigned", "Mixed", "Other", "Protein", "DNA", "RNA"]
+    order = ["Unassigned", "Mixed", "Metabolite", "Protein", "DNA", "RNA"]
     palette = {**SUB, "Mixed": "#bbbbbb", "Unassigned": "#e2e2e2"}
     for sub in order:
         m = df["Substrate"] == sub

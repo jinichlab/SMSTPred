@@ -1,0 +1,6 @@
+HDBSCAN clusters (noise excluded): 868
+clusters with no reviewed member: 510
+dark clusters (>= 80% of members in one lineage AND predicted Metabolite): 33 (14 Actinomycetota, 19 plant)
+proteins in the dark clusters: 3,478 of 96,527 clustered proteins (3.6%)
+same 33 clusters as 6_dark_cluster_annotation/dark33_members.csv: True
+(for comparison, requiring the lineage share and the 'Metabolite' share to be >= 80% separately instead of jointly gives 34 clusters)

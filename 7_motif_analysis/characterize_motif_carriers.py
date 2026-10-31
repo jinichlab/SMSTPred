@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""For the four motifs with no substrate-bound structure (Protein 2/3/8, Other 2):
+"""For the four motifs with no substrate-bound structure (Protein 2/3/8, Metabolite 2):
 
   (a) identify the protein whose structure we used for the figure, and
   (b) find the most-characterized protein that carries the motif -- i.e. reviewed
@@ -21,11 +21,11 @@ API = "https://rest.uniprot.org/uniprotkb/search"
 FIELDS = "accession,reviewed,protein_name,organism_name,length,xref_pdb"
 
 REPS = {"Protein motif 2": "Q6C4Y5", "Protein motif 3": "A7GSD9",
-        "Protein motif 8 (NPPY)": "Q9A9T7", "Other motif 2": "(PDB 3C3Y)"}
+        "Protein motif 8 (NPPY)": "Q9A9T7", "Metabolite motif 2": "(PDB 3C3Y)"}
 TARGETS = [("Protein", "2-GGTGLKVWEAAJVLA", "Protein motif 2"),
            ("Protein", "3-AADVVYDP", "Protein motif 3"),
            ("Protein", "8-SNPPYIPT", "Protein motif 8 (NPPY)"),
-           ("Other", "2-TGIDLSPEMJEVA", "Other motif 2")]
+           ("Metabolite", "2-TGIDLSPEMJEVA", "Metabolite motif 2")]
 
 
 def uniprot(accs):
@@ -47,7 +47,7 @@ def main():
     corpus = pd.read_csv(HERE / "corpus.csv", usecols=["Entry", "source"], low_memory=False)
     src = dict(zip(corpus.Entry, corpus.source))
     fimo = {c: pd.read_csv(HERE / f"fimo_all_{c}" / "fimo.tsv", sep="\t", comment="#")
-            .dropna(subset=["sequence_name"]) for c in ("Protein", "Other")}
+            .dropna(subset=["sequence_name"]) for c in ("Protein", "Metabolite")}
 
     # --- (a) the representative proteins we used ---
     reps = [a for a in REPS.values() if a.startswith(("Q", "A", "P", "O"))]

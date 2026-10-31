@@ -1,4 +1,4 @@
-Entry,cluster,fold,score_Other,true_Other,score_Protein,true_Protein,score_RNA,true_RNA,score_DNA,true_DNA
+Entry,cluster,fold,score_Metabolite,true_Metabolite,score_Protein,true_Protein,score_RNA,true_RNA,score_DNA,true_DNA
 A0A061FMF5,12,4,0.22312634,1,0.66462237,0,0.0002470088,0,0.0005786003,0
 A0A067Z9B6,12,4,0.9999981,1,1.3395616e-05,0,0.00012738974,0,0.00027629378,0
 A0A075D5I4,7,3,0.99980646,1,0.0016338675,0,1.9032983e-05,0,5.5961715e-05,0

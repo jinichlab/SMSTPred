@@ -24,7 +24,7 @@ from scipy import stats
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, os.environ.get("SAM_VS_UP_OUT", "sam_vs_up_prostt5_comparison_output"))
 SRC = os.path.join(OUT, "sam_vs_up_prostt5_comparison_detailed.csv")
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 N_ITER = 16
 TRAIN_RATIO = 0.9
 RHO = (1.0 - TRAIN_RATIO) / TRAIN_RATIO   # test/train ratio for repeated subsampling (Nadeau-Bengio)

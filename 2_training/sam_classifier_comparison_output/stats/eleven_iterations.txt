@@ -1,0 +1,18 @@
+Fig 2A methods, eleven iterations with ordinary test sets: N = 11 iterations, k = 9 methods
+Friedman chi-square(8) = 43.5, p = 7.1e-07
+Bonferroni-Dunn critical difference vs MLP_ProstT5 = 3.19 rank units
+
+mean rank (1 = best), mean MCC, rank difference vs control:
+  MLP_ProtT5+ESM-IF       3.00   MCC 0.923   -0.73
+  MLP_ProstT5             3.73   MCC 0.910   +0.00
+  MLP_ProtT5              3.73   MCC 0.914   +0.00
+  MLP_SaProt              3.91   MCC 0.915   +0.18
+  MMseqs2_1NN             4.45   MCC 0.867   +0.73
+  MLP_ProstT5+ESM-IF      4.45   MCC 0.902   +0.73
+  Foldseek_1NN            5.73   MCC 0.840   +2.00
+  MLP_ESM-IF              7.00   MCC 0.839   +3.27  significantly different
+  Profile_HMM             9.00   MCC 0.588   +5.27  significantly different
+
+significantly different from MLP_ProstT5: MLP_ESM-IF, Profile_HMM
+
+Wilcoxon signed-rank, MLP_SaProt vs MLP_ProstT5 on these iterations: p = 0.83

@@ -10,7 +10,12 @@
 # (every EC class) with the pretrained Horizyn INF checkpoint. No training.
 # Est. ~15 min reaction fingerprinting (CPU) + ~30-60 min protein embedding
 # (GPU, ProtT5-XL) + seconds for the score matmul.
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate horizyn
+# The python scripts of this folder import the `horizyn` package from the folder they sit in: copy them (here run_horizyn_predict_full.py and embed_prott5.py) into $HORIZYN_DIR first.
+# The Horizyn environment is not part of environment.yml: it comes with its own install (the versions used here are in horizyn/environment_horizyn.yml).
+# Uses the active environment if it is horizyn, else activates ${HORIZYN_ENV:-horizyn}.
+if [ "${CONDA_DEFAULT_ENV:-}" != "${HORIZYN_ENV:-horizyn}" ] && command -v conda > /dev/null; then
+    eval "$(conda shell.bash hook)"
+    conda activate "${HORIZYN_ENV:-horizyn}" || { echo "conda environment ${HORIZYN_ENV:-horizyn} not found: create it from horizyn/environment_horizyn.yml (see 6_dark_cluster_annotation/README.md)" >&2; exit 1; }
+fi
 cd "${HORIZYN_DIR:?set HORIZYN_DIR to your Horizyn checkout (the folder holding checkpoints/ and configs/)}"
 python run_horizyn_predict_full.py

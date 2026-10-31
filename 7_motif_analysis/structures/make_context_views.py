@@ -6,7 +6,7 @@ with the motif highlighted (colour + CPK sticks) and substrate/cofactor in place
 
 Someone can pull a single motif folder (the .pdb + a view file) and reproduce the
 context figure.  Replaces the earlier mix of trimmed (DNA, RNA-complex) and
-full-chain (Protein, Other, RNA-apo) motif PDBs with one consistent output.
+full-chain (Protein, Metabolite, RNA-apo) motif PDBs with one consistent output.
 
 Per motif we keep: the full MTase chain + substrate chains (DNA/RNA/partner
 protein) + substrate/cofactor ligands; waters, ions and unrelated chains dropped.
@@ -44,7 +44,7 @@ M = [
  ("Protein","protein_motif7_PrmA","2NXN","","A",["B"],"partner",None,False,"98-114","00868b","motif7 - PrmA region (+L11 substrate)"),
  ("Protein","protein_motif4_PRMT5","4GQB","","A",["B","C"],"partner",None,True,"429-445","cb181d","motif4 - PRMT5 region (+MEP50)"),
  ("Protein","protein_motif6_PRMT5","4GQB","","A",["B","C"],"partner",None,True,"45-53","ce1256","motif6 - PRMT5 region (+MEP50)"),
- # NOTE: Protein motif2/3/8 and Other motif2 moved to make_context_views_upgrades.py --
+ # NOTE: Protein motif2/3/8 and Metabolite motif2 moved to make_context_views_upgrades.py --
  # each now uses a substrate-BOUND experimental structure found by scanning all FIMO
  # carriers (8HL7 METTL21D+p97, 2B3T PrmC+RF1, 4KIC + phenylpyruvate). Do not re-add.
  ("RNA","rna_motif2_METTL16","9U48","","A",["B"],"nucleic",None,True,"135-142","cb181d","motif2 - METTL16 catalytic region"),
@@ -54,13 +54,13 @@ M = [
  # NOTE: RNA motif1/4/5/8 and Protein motif5 are built by make_context_views_upgrades.py
  # from substrate/cofactor-BOUND structures (NSUN6 5WWS, FtsJ 1EJ0, CARM1 7OKP) that the
  # cluster-member search found. Do not re-add them here (would overwrite with apo/AF).
- ("Other","other_motif1","1KYZ","homology","E",[],"ligand","FER",True,"285-295","2171b5","motif1 - caffeic-acid OMT homolog (SAH+ferulate)"),
- ("Other","other_motif3_SAMloop","1KYZ","homology","E",[],"ligand","FER",True,"204-215","ce1256","motif3 - SAM Motif I loop (homolog)"),
- ("Other","other_motif5","1KYZ","homology","E",[],"ligand","FER",True,"326-338","e6550d","motif5 - caffeic-acid OMT homolog"),
- ("Other","other_motif6","1KYZ","homology","E",[],"ligand","FER",True,"268-280","238b45","motif6 - caffeic-acid OMT homolog"),
- ("Other","other_motif7","1KYZ","homology","E",[],"ligand","FER",True,"250-265","00868b","motif7 - caffeic-acid OMT homolog"),
- ("Other","other_motif8","1KYZ","homology","E",[],"ligand","FER",True,"227-237","8c564b","motif8 - caffeic-acid OMT homolog"),
- ("Other","other_motif4","1M6E","homology","X",[],"ligand","SAL",True,"128-145","cb181d","motif4 - salicylate MTase homolog (SAH+salicylate)"),
+ ("Metabolite","metabolite_motif1","1KYZ","homology","E",[],"ligand","FER",True,"285-295","2171b5","motif1 - caffeic-acid OMT homolog (SAH+ferulate)"),
+ ("Metabolite","metabolite_motif3_SAMloop","1KYZ","homology","E",[],"ligand","FER",True,"204-215","ce1256","motif3 - SAM Motif I loop (homolog)"),
+ ("Metabolite","metabolite_motif5","1KYZ","homology","E",[],"ligand","FER",True,"326-338","e6550d","motif5 - caffeic-acid OMT homolog"),
+ ("Metabolite","metabolite_motif6","1KYZ","homology","E",[],"ligand","FER",True,"268-280","238b45","motif6 - caffeic-acid OMT homolog"),
+ ("Metabolite","metabolite_motif7","1KYZ","homology","E",[],"ligand","FER",True,"250-265","00868b","motif7 - caffeic-acid OMT homolog"),
+ ("Metabolite","metabolite_motif8","1KYZ","homology","E",[],"ligand","FER",True,"227-237","8c564b","motif8 - caffeic-acid OMT homolog"),
+ ("Metabolite","metabolite_motif4","1M6E","homology","X",[],"ligand","SAL",True,"128-145","cb181d","motif4 - salicylate MTase homolog (SAH+salicylate)"),
 ]
 
 

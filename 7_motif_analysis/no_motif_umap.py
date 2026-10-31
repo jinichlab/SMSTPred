@@ -32,9 +32,9 @@ MOTIF_STATUS = MA / "motif_status_all.csv"     # real per-protein FIMO status
 OUT_PNG = MA / "no_motif_umap.png"
 
 SUBSTRATE_COLORS = {"RNA": "#cb181d", "DNA": "#6a51a3", "Protein": "#238b45",
-                    "Other": "#e6550d", "Mixed": "#636363", "Unassigned": "#dddddd"}
+                    "Metabolite": "#e6550d", "Mixed": "#636363", "Unassigned": "#dddddd"}
 GREY = "#e2e2e2"          # motif / disqualified background
-SUB_ORDER = ["RNA", "DNA", "Protein", "Other"]
+SUB_ORDER = ["RNA", "DNA", "Protein", "Metabolite"]
 
 
 def load_labeled():

@@ -1,18 +1,18 @@
 {
   "labels": [
-    "Other",
+    "Metabolite",
     "Protein",
     "RNA",
     "DNA"
   ],
   "thresholds": {
-    "Other": 0.6337902656751498,
+    "Metabolite": 0.6337902656751498,
     "Protein": 0.6315260766139571,
     "RNA": 0.826076536621877,
     "DNA": 0.1089108448157243
   },
   "oof_metrics": {
-    "Other": {
+    "Metabolite": {
       "mcc": 0.9698010946549899,
       "f1": 0.974960876369327,
       "threshold": 0.6337902656751498,

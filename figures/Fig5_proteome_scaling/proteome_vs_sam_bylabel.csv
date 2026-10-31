@@ -1,4 +1,4 @@
-organism,domain,proteome_size,n_sam,n_DNA,n_RNA,n_Protein,n_Other
+organism,domain,proteome_size,n_sam,n_DNA,n_RNA,n_Protein,n_Metabolite
 Abrus_precatorius_(Indian_licorice)_(Glycine_abrus),Eukaryota,32457,387,16,145,60,138
 Absidia_repens,Eukaryota,13919,148,5,46,34,44
 Acetoanaerobium_sticklandii_(strain_ATCC_12662___DSM_519___JCM_1433___CCUG_9281___NCIMB_10654___HF)_(Clostridium_sticklandii),Bacteria,2540,43,10,17,3,10

@@ -1,0 +1,66 @@
+FIMO cross-scan: 32 motifs x 118,816 proteins (p<1e-4)
+  hits: 664,573 over 117,286 proteins
+
+SPECIFICITY  (rate = % of that class's proteins carrying the motif)
+  ratio_vs_bg  = own_pct / pooled-background_pct   <- primary
+  ratio_vs_max = own_pct / worst single off-class   (blind to diffuse motifs)
+  log2_or CI   = 95% Woolf CI; 'enriched' = CI entirely > 0 AND Bonferroni p < 0.05
+
+       motif          consensus  own_pct  background_pct  ratio_vs_bg  ratio_vs_max worst_offclass  log2_or  log2_or_lo  log2_or_hi  p_bonferroni  enriched
+       DNA-1      IGGPPCQGFSRAG    34.40            2.98        11.54         11.06            RNA    4.096       4.009       4.184  0.000000e+00      True
+       DNA-2           PFAGSGGT    65.77           12.44         5.29          3.41            RNA    3.757       3.680       3.833  0.000000e+00      True
+       DNA-3        YGVPQRRERVF    31.02            4.18         7.42          6.91        Protein    3.365       3.280       3.451  0.000000e+00      True
+       DNA-4 LTPREAARLQGFPDDYTF    34.64            4.65         7.45          7.10            RNA    3.441       3.359       3.524  0.000000e+00      True
+       DNA-5   KQIGNAVPPPVARAJA    30.49            4.18         7.29          6.98     Metabolite    3.330       3.244       3.415  0.000000e+00      True
+       DNA-6          FLLENVPGL    30.84            4.77         6.47          4.26        Protein    3.155       3.071       3.239  0.000000e+00      True
+       DNA-7           YTBPPYNT    49.71           14.39         3.45          1.71            RNA    2.556       2.484       2.629  0.000000e+00      True
+       DNA-8          GZFFTPREI    21.80            3.68         5.92          5.42     Metabolite    2.867       2.772       2.961  0.000000e+00      True
+Metabolite-1        RVLKPGGRLVL    70.34           50.49         1.39          1.29        Protein    1.218       1.181       1.254  0.000000e+00      True
+Metabolite-2      TGIDLSPEMJEVA    49.69           32.27         1.54          1.24        Protein    1.052       1.017       1.087  0.000000e+00      True
+Metabolite-3       LVDVGGGTGQLL    83.23           69.64         1.20          0.99        Protein    1.114       1.071       1.157  0.000000e+00      True
+Metabolite-4 GDAEALPFPDGSFDLVVS    40.15           22.91         1.75          1.77        Protein    1.175       1.138       1.212  0.000000e+00      True
+Metabolite-5      GGKERTEEEWRAL    13.94            4.43         3.15          2.78            DNA    1.805       1.742       1.869  0.000000e+00      True
+Metabolite-6      LHDWPDEDCVKIL    15.45            7.02         2.20          2.01            RNA    1.276       1.220       1.331  0.000000e+00      True
+Metabolite-7   HDFFTPQPVKGADVYL    12.71            5.33         2.38          1.82            DNA    1.370       1.309       1.432  0.000000e+00      True
+Metabolite-8        GIVQDLPEVIA    14.35            5.13         2.80          2.74        Protein    1.630       1.569       1.691  0.000000e+00      True
+   Protein-1   ELGAGTGJLGJAAAKL    82.46           58.62         1.41          1.20     Metabolite    1.731       1.674       1.788  0.000000e+00      True
+   Protein-2    GGTGLKVWEAAJVLA    22.51            3.95         5.70          6.08     Metabolite    2.819       2.752       2.887  0.000000e+00      True
+   Protein-3           AADVVYDP    18.09            4.13         4.38          3.53            DNA    2.359       2.289       2.429  0.000000e+00      True
+   Protein-4  VDIJVSEWMGYFLLNES    16.58            3.79         4.37          4.39            RNA    2.334       2.262       2.407  0.000000e+00      True
+   Protein-5         THWKQTVFYL    12.51            2.94         4.26          3.47            DNA    2.240       2.159       2.322  0.000000e+00      True
+   Protein-6          VLIPRPETE    10.83            2.72         3.98          2.26            DNA    2.118       2.032       2.204  0.000000e+00      True
+   Protein-7  AFGTGTHPTTRLCLEAL    16.84            7.12         2.37          1.90     Metabolite    1.402       1.337       1.467  0.000000e+00      True
+   Protein-8           SNPPYIPT    13.40            6.53         2.05          0.72            DNA    1.146       1.076       1.217 3.202258e-199      True
+       RNA-1     DRVLLDPPCSGLGT    26.56            6.05         4.39          2.72            DNA    2.491       2.438       2.544  0.000000e+00      True
+       RNA-2           RJVYSTCS    19.03            3.33         5.71          5.09     Metabolite    2.769       2.703       2.836  0.000000e+00      True
+       RNA-3    RVLDLCAAPGGKTQV    57.34           53.46         1.07          0.94        Protein    0.227       0.191       0.262  4.922405e-35      True
+       RNA-4  LQDASSMLPALALDPQP    12.91            4.73         2.73          2.55        Protein    1.577       1.514       1.641  0.000000e+00      True
+       RNA-5          TGGFFVAKL    18.27            4.18         4.37          4.47        Protein    2.357       2.295       2.419  0.000000e+00      True
+       RNA-6        ENEAVVAAALK    15.94            5.38         2.96          2.18            DNA    1.737       1.678       1.796  0.000000e+00      True
+       RNA-7           KKKKKKRK    19.28            3.60         5.36          2.08            DNA    2.676       2.612       2.741  0.000000e+00      True
+       RNA-8        RSRAAFKLJZL    12.51            3.22         3.89          3.42            DNA    2.102       2.030       2.173  0.000000e+00      True
+
+WEAK: <2x vs pooled background (6 of 32):
+       motif          consensus  own_pct  background_pct  ratio_vs_bg  log2_or_lo  log2_or_hi  enriched
+       RNA-3    RVLDLCAAPGGKTQV    57.34           53.46         1.07       0.191       0.262      True
+Metabolite-3       LVDVGGGTGQLL    83.23           69.64         1.20       1.071       1.157      True
+Metabolite-1        RVLKPGGRLVL    70.34           50.49         1.39       1.181       1.254      True
+   Protein-1   ELGAGTGJLGJAAAKL    82.46           58.62         1.41       1.674       1.788      True
+Metabolite-2      TGIDLSPEMJEVA    49.69           32.27         1.54       1.017       1.087      True
+Metabolite-4 GDAEALPFPDGSFDLVVS    40.15           22.91         1.75       1.138       1.212      True
+
+DEPLETED in own class (CI entirely below 1x) -- misassigned to this class: 0
+
+MIXED / UNASSIGNED (never scanned by the diagonal)
+  Mixed: 1,953 proteins | 1,859 carry >=1 motif (95.2%)
+      Metabolite-3    968
+      RNA-3           823
+      Metabolite-1    813
+      Protein-1       559
+      DNA-7           384
+  Unassigned: 10,255 proteins | 9,950 carry >=1 motif (97.0%)
+      Metabolite-3  6,996
+      Protein-1     5,552
+      Metabolite-1  5,425
+      RNA-3         4,177
+      Metabolite-2  3,494

@@ -62,7 +62,7 @@ def main():
         if is_best:
             cell.set_facecolor("#fff2a8")
         else:
-            cell.set_facecolor("#dbe9f6" if clf in EMBED_MLPS else "#fde0cf")
+            cell.set_facecolor("#d3e0ee" if clf in EMBED_MLPS else "#dce8d3")
         if clf == CONTROL:
             cell.set_text_props(fontweight="bold")
         if c == 0:

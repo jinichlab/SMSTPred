@@ -1,0 +1,102 @@
+Cluster,"Nearest known enzyme
+(CLEAN)",MTase?,"Confidence
+(CLEAN)",Dominant reaction family (Horizyn),"Family share, noise
+(Horizyn)","Avg.
+Horizyn
+score"
+"c470
+(n=255)","beta-ketoacyl-[acyl-
+carrier-protein] synthase
+III",No,"unreliable
+(d=9.5)","Family 1542: Aromatic/carboxylic-acid O-methylation (mixed
+scaffolds) (21 rxns, 52% orphan)","23% of cluster, 76%
+noise",0.62
+"c469
+(n=250)",alpha-onocerin synthase,No,"unreliable
+(d=9.7)","Family 1542: Aromatic/carboxylic-acid O-methylation (mixed
+scaffolds) (21 rxns, 52% orphan)","56% of cluster, 41%
+noise",0.65
+"c522
+(n=210)","dTDP-3-amino-3,4,6-
+trideoxy-alpha-D-glucopyra
+noseN,N-
+dimethyltransferase  →
+deoxysugar antibiotics",yes,"unreliable
+(d=9.4)","Family 1542: Aromatic/carboxylic-acid O-methylation (mixed
+scaffolds) (21 rxns, 52% orphan)","59% of cluster, 29%
+noise",0.65
+"c795
+(n=165)","2-heptyl-1-
+hydroxyquinolin-4(1H)-one
+methyltransferase  →
+quinolones",yes,"unreliable
+(d=8.9)","Family 1542: Aromatic/carboxylic-acid O-methylation (mixed
+scaffolds) (21 rxns, 52% orphan)","52% of cluster, 24%
+noise",0.51
+"c823
+(n=135)","aklanonic acid
+methyltransferase  →
+anthracyclines",yes,"unreliable
+(d=8.9)","Family 445: Arsenic triglutathione methylation (As
+detoxification) (6 rxns, 50% orphan)","53% of cluster, 19%
+noise",0.62
+"c451
+(n=109)","L-histidine
+N(alpha)-methyltransferase
+→ ergothioneine",yes,"unreliable
+(d=9.7)","Family 1542: Aromatic/carboxylic-acid O-methylation (mixed
+scaffolds) (21 rxns, 52% orphan)","52% of cluster, 43%
+noise",0.59
+"c200
+(n=107)",spermidine synthase,No,"unreliable
+(d=8.0)","Family 746: Spermidine/spermine synthase (NOT methylation
+-- aminopropyl transfer) (10 rxns, 100% orphan)","100% of cluster, 0%
+noise",0.73
+"c452
+(n=95)","malonyl-[acyl-carrier
+protein]
+O-methyltransferase  →
+polyketide priming",yes,"unreliable
+(d=9.3)","Family 445: Arsenic triglutathione methylation (As
+detoxification) (6 rxns, 50% orphan)","70% of cluster, 30%
+noise",0.59
+"c693
+(n=79)","aklanonic acid
+methyltransferase  →
+anthracyclines",yes,"marginal
+(d=7.7)","Family 445: Arsenic triglutathione methylation (As
+detoxification) (6 rxns, 50% orphan)","89% of cluster, 6%
+noise",0.62
+"c289
+(n=68)","L-histidine
+N(alpha)-methyltransferase
+→ ergothioneine",yes,"unreliable
+(d=9.3)","Family 1542: Aromatic/carboxylic-acid O-methylation (mixed
+scaffolds) (21 rxns, 52% orphan)","31% of cluster, 69%
+noise",0.57
+"c309
+(n=68)","trans-aconitate
+3-methyltransferase",yes,"unreliable
+(d=9.9)","Family 445: Arsenic triglutathione methylation (As
+detoxification) (6 rxns, 50% orphan)","6% of cluster, 91%
+noise",0.56
+"c17
+(n=64)","malonyl-[acyl-carrier
+protein]
+O-methyltransferase  →
+polyketide priming",yes,"unreliable
+(d=9.4)","Family 1395: Histidine N-methylation (ergothioneine) /
+arsenic methylation (67 rxns, 72% orphan)","77% of cluster, 0%
+noise",0.38
+"c57
+(n=57)",spermidine synthase,No,"marginal
+(d=6.0)","Family 746: Spermidine/spermine synthase (NOT methylation
+-- aminopropyl transfer) (10 rxns, 100% orphan)","100% of cluster, 0%
+noise",0.74
+"c692
+(n=54)","8-demethylnovobiocic acid
+C(8)-methyltransferase  →
+novobiocin",yes,"unreliable
+(d=9.3)","Family 445: Arsenic triglutathione methylation (As
+detoxification) (6 rxns, 50% orphan)","72% of cluster, 2%
+noise",0.62

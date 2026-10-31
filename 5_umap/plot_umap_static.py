@@ -17,8 +17,8 @@ COORDS = HERE / "sam_mtase_umap_prostt5_coords.csv"
 OUT = HERE / "sam_mtase_umap_prostt5_static_datamap.png"
 
 SUBSTRATE_COLORS = {"RNA": "#cb181d", "DNA": "#6a51a3", "Protein": "#238b45",
-                    "Other": "#e6550d", "Mixed": "#636363", "None": "#cccccc"}
-DRAW_ORDER = ["None", "Mixed", "Other", "Protein", "DNA", "RNA"]
+                    "Metabolite": "#e6550d", "Mixed": "#636363", "None": "#cccccc"}
+DRAW_ORDER = ["None", "Mixed", "Metabolite", "Protein", "DNA", "RNA"]
 DIM = {"None": (0.25, 5), "Mixed": (0.40, 6)}     # (alpha, size) for de-emphasized classes
 
 

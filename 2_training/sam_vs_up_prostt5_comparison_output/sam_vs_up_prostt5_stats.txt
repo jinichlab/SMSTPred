@@ -1,12 +1,12 @@
 SAM vs UP ProstT5 MLP -- paired comparison over N=16 cluster-disjoint splits
 Metric = MCC;  directional H1: SAM >= UP;  Nadeau-Bengio rho = n_test/n_train = 0.111
 
-  label    SAM     UP    diff t_naive p_naive_1sided p_wilcoxon_1sided t_corrected p_corrected_1sided p_corrected_2sided
-  Other 0.9036 0.8699  0.0337  0.7782         0.2243            0.3649      0.4669             0.3236             0.6473
-Protein 0.8714 0.8753 -0.0040 -0.1408         0.5551            0.1501     -0.0845             0.5331             0.9338
-    RNA 0.9444 0.9343  0.0100  0.5324         0.3011            0.2860      0.3195             0.3769             0.7538
-    DNA 0.9132 0.7698  0.1434  2.0102         0.0314            0.0096      1.2061             0.1232             0.2464
-Overall 0.9081 0.8623  0.0458  1.7781         0.0478            0.0559      1.0669             0.1515             0.3029
+     label    SAM     UP    diff t_naive p_naive_1sided p_wilcoxon_1sided t_corrected p_corrected_1sided p_corrected_2sided
+Metabolite 0.9036 0.8699  0.0337  0.7782         0.2243            0.3649      0.4669             0.3236             0.6473
+   Protein 0.8714 0.8753 -0.0040 -0.1408         0.5551            0.1501     -0.0845             0.5331             0.9338
+       RNA 0.9444 0.9343  0.0100  0.5324         0.3011            0.2860      0.3195             0.3769             0.7538
+       DNA 0.9132 0.7698  0.1434  2.0102         0.0314            0.0096      1.2061             0.1232             0.2464
+   Overall 0.9081 0.8623  0.0458  1.7781         0.0478            0.0559      1.0669             0.1515             0.3029
 
 Per-iteration MCC (to show the variance driving the DNA result):
 DNA per iteration:

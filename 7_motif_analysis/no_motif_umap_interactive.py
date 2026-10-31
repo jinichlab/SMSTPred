@@ -33,7 +33,7 @@ NOMOTIF = MA / "no_motif_manifest.csv"
 OUT_HTML = MA / "no_motif_umap_interactive.html"
 
 SUBSTRATE_COLORS = {"RNA": "#cb181d", "DNA": "#6a51a3", "Protein": "#238b45",
-                    "Other": "#e6550d", "Mixed": "#636363", "Unassigned": "#dddddd"}
+                    "Metabolite": "#e6550d", "Mixed": "#636363", "Unassigned": "#dddddd"}
 
 
 def load_labeled():
@@ -95,7 +95,7 @@ def custom_html():
          '<div class="viewnote">every STREME-negative protein</div></button>'
          '<button class="viewbtn" id="btnAll" data-view="ALL">Show all</button></div>')
     h += '<div id="leg"><b>Substrate</b><br>'
-    for s in ["RNA", "DNA", "Protein", "Other", "Mixed", "Unassigned"]:
+    for s in ["RNA", "DNA", "Protein", "Metabolite", "Mixed", "Unassigned"]:
         h += (f'<div class="row"><div class="box" style="background:{SUBSTRATE_COLORS[s]}"></div>{s}</div>')
     h += '</div>'
     return h

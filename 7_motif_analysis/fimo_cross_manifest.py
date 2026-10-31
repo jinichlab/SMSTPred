@@ -38,7 +38,7 @@ from scipy import stats
 
 HERE = Path(__file__).resolve().parent
 CROSS = HERE / "fimo_cross"
-CLASSES = ["DNA", "RNA", "Protein", "Other"]
+CLASSES = ["DNA", "RNA", "Protein", "Metabolite"]
 N_MOTIFS = 32          # Bonferroni family size
 
 
@@ -66,7 +66,7 @@ def main():
     corpus["class"] = corpus["class"].replace({"None": "Unassigned"})
     cls_of = dict(zip(corpus["Entry"], corpus["class"]))
     sizes = corpus["class"].value_counts().to_dict()
-    all_classes = ["DNA", "RNA", "Protein", "Other", "Mixed", "Unassigned"]
+    all_classes = ["DNA", "RNA", "Protein", "Metabolite", "Mixed", "Unassigned"]
 
     hits = load_hits()
     hits["prot_class"] = hits["sequence_name"].map(cls_of)

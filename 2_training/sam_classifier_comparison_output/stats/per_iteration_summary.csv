@@ -1,0 +1,17 @@
+iteration,split_mode,n_train,n_test,MLP_ProstT5_mcc,giant_cluster_in_test
+1,cluster,6849,556,0.886554,False
+2,cluster,7245,160,1,False
+3,cluster,1627,5778,0.973492,True
+4,cluster,1647,5758,0.894356,True
+5,cluster,7128,277,0.949906,False
+6,cluster,1726,5679,0.996358,True
+7,cluster,7255,150,0.917888,False
+8,cluster,7366,39,0.935198,False
+9,cluster,7172,233,0.963345,False
+10,cluster,7153,252,0.902631,False
+11,cluster,7338,67,0.883722,False
+12,cluster,1217,6188,0.987533,True
+13,cluster,1578,5827,0.963248,True
+14,cluster,7257,148,0.836012,False
+15,cluster,6699,706,0.898435,False
+16,cluster,7280,125,0.832697,False

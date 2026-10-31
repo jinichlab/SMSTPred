@@ -76,187 +76,187 @@ DNA,IPR007785,Anamorsin,36,0.0053,0.0015,3.58,1.5485463828758623e-09
 DNA,IPR029063,S-adenosyl-L-methionine-dependent methyltransferase superfamily,6822,1.0,1.0,1.0,1.0
 DNA,IPR013216,Methyltransferase type 11,125,0.0183,0.0965,0.19,1.0
 DNA,IPR019410,Lysine methyltransferase,39,0.0057,0.0409,0.14,1.0
-Other,IPR012967,"Caffeic acid 3-O-methyltransferase-like, dimerisation domain",3092,0.0737,0.0,inf,0.0
-Other,IPR003333,Cyclopropane mycolic acid synthase,1262,0.0301,0.0,inf,0.0
-Other,IPR030384,SAM-dependent methyltransferase SMT-type,572,0.0136,0.0,inf,1.6646779170713374e-233
-Other,IPR013705,Sterol methyltransferase C-terminal,542,0.0129,0.0,inf,3.0318209709441187e-221
-Other,IPR011610,S-adenosyl-L-methionine-dependent methyltransferase ML2640-like,484,0.0115,0.0,inf,1.474942437586624e-197
-Other,IPR023149,"Trans-aconitate 2-methyltransferase, C-terminal",441,0.0105,0.0,inf,5.20015221248819e-180
-Other,IPR005271,Carboxy-S-adenosyl-L-methionine synthase,409,0.0098,0.0,inf,5.844912751956098e-167
-Other,IPR030668,"Spermidine/spermine synthase, eukaryotes",307,0.0073,0.0,inf,2.1018491482828433e-125
-Other,IPR017804,4-dimethylallyltryptophan N-methyltransferase easF,291,0.0069,0.0,inf,6.84173230280004e-119
-Other,IPR025774,Picrinine-N-methytransferase-like,257,0.0061,0.0,inf,4.666334817767526e-105
-Other,IPR023506,Trans-aconitate 2-methyltransferase,251,0.006,0.0,inf,1.286696182567097e-102
-Other,IPR002937,Amine oxidase,234,0.0056,0.0,inf,1.0543583472550529e-95
-Other,IPR057206,Domain of unknown function DUF7884,225,0.0054,0.0,inf,4.8121843227584134e-92
-Other,IPR048711,"S-adenosylmethionine-dependent methyltransferase Rv2258c-like, winged HTH domain",209,0.005,0.0,inf,1.536720711352217e-85
-Other,IPR035094,Histidine N-alpha-methyltransferase,205,0.0049,0.0,inf,6.492397290489348e-84
-Other,IPR053173,Class I-like SAM-binding MTase,200,0.0048,0.0,inf,6.990777462177949e-82
-Other,IPR052290,Sphingolipid C9-methyltransferase,193,0.0046,0.0,inf,4.8890948533950426e-79
-Other,IPR010017,tRNA U34 carboxymethyltransferase,188,0.0045,0.0,inf,5.259803472298944e-77
-Other,IPR010743,Methionine biosynthesis MetW,169,0.004,0.0,inf,2.755146411890873e-69
-Other,IPR017805,"EasF-like, SAM-dependent methyltransferase domain",159,0.0038,0.0,inf,3.1765264481005763e-65
-Other,IPR025771,Phosphoethanolamine N-methyltransferase,151,0.0036,0.0,inf,5.635650684967186e-62
-Other,IPR004537,"Tellurite resistance methyltransferase, TehB",141,0.0034,0.0,inf,6.480603140097187e-58
-Other,IPR009902,Protein of unknown function DUF1442,133,0.0032,0.0,inf,1.1473558763343868e-54
-Other,IPR014369,Glycine/Sarcosine N-methyltransferase,115,0.0027,0.0,inf,2.324920691716985e-47
-Other,IPR010940,"Magnesium-protoporphyrin IX methyltransferase, C-terminal",107,0.0026,0.0,inf,4.1037321325104064e-44
-Other,IPR010251,Magnesium-protoporphyrin IX methyltransferase,107,0.0026,0.0,inf,4.1037321325104064e-44
-Other,IPR055487,Domain of unknown function DUF7059,104,0.0025,0.0,inf,6.770395915045579e-43
-Other,IPR020803,"Polyketide synthase-like, methyltransferase domain",101,0.0024,0.0,inf,1.1168437074353549e-41
-Other,IPR014122,Demethylmenaquinone methyltransferase,98,0.0023,0.0,inf,1.8421034584901463e-40
-Other,IPR022744,"Methyltransferase domain, putative",98,0.0023,0.0,inf,1.8421034584901463e-40
-Other,IPR006514,IRX15/GXM/AGM,96,0.0023,0.0,inf,1.193521520135364e-39
-Other,IPR022742,Alpha/beta hydrolase domain-containing protein 17C-like,92,0.0022,0.0,inf,5.009416185454734e-38
-Other,IPR032904,"2-phytyl-1,4-naphtoquinone methyltransferase MenG",92,0.0022,0.0,inf,5.009416185454734e-38
-Other,IPR051044,Monoacylglycerol and Diacylglycerol Lipase,88,0.0021,0.0,inf,2.1020506226429726e-36
-Other,IPR056684,Domain of unknown function DUF7782,86,0.0021,0.0,inf,1.3615493942154017e-35
-Other,IPR047057,MerR transcriptional regulator,85,0.002,0.0,inf,3.465126292993999e-35
-Other,IPR032888,"Histidine N-alpha-methyltransferase, Actinobacteria-type",80,0.0019,0.0,inf,3.698732497645402e-33
-Other,IPR022474,"Thiopurine S-methyltransferase, Se/Te detoxification",73,0.0017,0.0,inf,2.5553819340472322e-30
-Other,IPR049480,"BVU_1015-like, N-terminal dimerisation-like domain",70,0.0017,0.0,inf,4.209672664611688e-29
-Other,IPR007072,Rhamnosyl O-methyltransferase,68,0.0016,0.0,inf,2.725284545370943e-28
-Other,IPR014710,RmlC-like jelly roll fold,67,0.0016,0.0,inf,6.934005367317741e-28
-Other,IPR023553,"Uncharacterised methyltransferase, YrrT",67,0.0016,0.0,inf,6.934005367317741e-28
-Other,IPR053384,SAM-dependent methyltransferase,65,0.0015,0.0,inf,4.488589908411696e-27
-Other,IPR016584,Methyltransferase VrtF-like,62,0.0015,0.0,inf,7.3918194839688e-26
-Other,IPR014431,"Tellurite resistance methyltransferase, TehB type-2",61,0.0015,0.0,inf,1.880554418704304e-25
-Other,IPR015392,TehB/YeaR-like domain,61,0.0015,0.0,inf,1.880554418704304e-25
-Other,IPR047672,"Cyclopropane mycolic acid synthase, actinobacteria",60,0.0014,0.0,inf,4.784253293992592e-25
-Other,IPR032095,"Saccharopine dehydrogenase-like, C-terminal",56,0.0013,0.0,inf,2.003845656861871e-23
-Other,IPR025820,"Methyltransferase NNMT/PNMT/TEMT, conserved site",54,0.0013,0.0,inf,1.2967359820064212e-22
-Other,IPR005097,"Saccharopine dehydrogenase, NADP binding domain",54,0.0013,0.0,inf,1.2967359820064212e-22
-Other,IPR051168,Alpha-aminoadipic semialdehyde synthase,53,0.0013,0.0,inf,3.2986464515338723e-22
-Other,IPR017128,"Catechol O-methyltransferase, eukaryotic",46,0.0011,0.0,inf,2.2727363750204833e-19
-Other,IPR048027,Cyclopropane fatty acid synthase CfaB-like,44,0.001,0.0,inf,1.4703154725579284e-18
-Other,IPR049645,Geranyl diphosphate 2-C-methyltransferase,42,0.001,0.0,inf,9.511452232066207e-18
-Other,IPR016980,"S-adenosyl-L-methionine dependent methyltransferase, Alr7345, predicted",42,0.001,0.0,inf,9.511452232066207e-18
-Other,IPR029001,Inosine triphosphate pyrophosphatase-like,36,0.0009,0.0,inf,2.573977779909415e-15
-Other,IPR003697,Nucleoside triphosphate pyrophosphatase Maf-like protein,36,0.0009,0.0,inf,2.573977779909415e-15
-Other,IPR016550,Guanidinoacetate N-methyltransferase,35,0.0008,0.0,inf,6.545996609969668e-15
-Other,IPR017031,"Predicted S-adenosyl-L-methionine dependent methyltransferase, YjhP-type",34,0.0008,0.0,inf,1.6647172136302292e-14
-Other,IPR024078,Putative deacetylase LmbE-like domain superfamily,33,0.0008,0.0,inf,4.2334932958794964e-14
-Other,IPR003737,N-acetylglucosaminyl phosphatidylinositol deacetylase-related,32,0.0008,0.0,inf,1.0765916187400545e-13
-Other,IPR016067,"S-adenosylmethionine decarboxylase, core",31,0.0007,0.0,inf,2.7377691470085655e-13
-Other,IPR023475,Probable cobalt-precorrin-6B C(15)-methyltransferase (decarboxylating) CbiT,29,0.0007,0.0,inf,1.7703927543513199e-12
-Other,IPR056393,"AprA-like, MT2-like domain",26,0.0006,0.0,inf,2.910929374630821e-11
-Other,IPR040800,"Methyltransferase MycE, N-terminal",22,0.0005,0.0,inf,1.2168201308840738e-09
-Other,IPR041068,"Methyltransferase, fungal type, helix-turn-helix domain",21,0.0005,0.0,inf,3.0939219296411113e-09
-Other,IPR017716,S-adenosylmethionine decarboxylase proenzyme,20,0.0005,0.0,inf,7.866581203636225e-09
-Other,IPR022657,"Orn/DAP/Arg decarboxylase 2, conserved site",20,0.0005,0.0,inf,7.866581203636225e-09
-Other,IPR004033,UbiE/COQ5 methyltransferase,1723,0.0411,0.0,2656.62,0.0
-Other,IPR010233,Ubiquinone biosynthesis O-methyltransferase,1053,0.0251,0.0,1623.57,0.0
-Other,IPR006764,"S-adenosyl-L-methionine dependent methyltransferase, SAV2177 type",769,0.0183,0.0,592.84,4.106112084363805e-309
-Other,IPR050723,Cyclopropane Fatty Acid Synthase/Methyltransferase,1445,0.0345,0.0001,557.0,0.0
-Other,IPR042086,"Methyltransferase, alpha-helical capping domain",1366,0.0326,0.0001,526.54,0.0
-Other,IPR016461,O-methyltransferase-like,4445,0.106,0.0002,428.35,0.0
-Other,IPR010342,Protein of unknown function DUF938,265,0.0063,0.0,408.59,4.2123782521503374e-106
-Other,IPR001077,"O-methyltransferase, C-terminal domain",4433,0.1057,0.0003,341.75,0.0
-Other,IPR051654,Fungal Meroterpenoid Biosynthesis Methyltransferases,407,0.0097,0.0,313.77,1.1859339685467895e-161
-Other,IPR005299,SAM dependent carboxyl methyltransferase,1534,0.0366,0.0002,236.52,0.0
-Other,IPR050447,Erg6/SMT methyltransferase,1220,0.0291,0.0001,235.13,0.0
-Other,IPR030373,"Polyamine biosynthesis domain, conserved site",1020,0.0243,0.0001,224.67,0.0
-Other,IPR026480,Arginine N-methyltransferase 2-like domain,245,0.0058,0.0,188.88,4.00321059994148e-96
-Other,IPR037163,"Spermidine synthase, tetramerisation domain superfamily",1194,0.0285,0.0002,184.1,0.0
-Other,IPR036390,Winged helix DNA-binding domain superfamily,4160,0.0992,0.0005,183.26,0.0
-Other,IPR035246,"Spermidine synthase, tetramerisation domain",1160,0.0277,0.0002,178.86,0.0
-Other,IPR027555,tRNA (Mo5U34)-methyltransferase-like,200,0.0048,0.0,154.19,5.275291234447267e-78
-Other,IPR051128,EgtD Methyltransferase,470,0.0112,0.0001,144.93,1.27419429538097e-181
-Other,IPR036388,Winged helix-like DNA-binding domain superfamily,4301,0.1025,0.0007,144.16,0.0
-Other,IPR019257,"Histidine-specific methyltransferase, SAM-dependent methyltransferase domain",474,0.0113,0.0001,121.81,1.5119230745915765e-181
-Other,IPR017408,Arginine N-methyltransferase 2,152,0.0036,0.0,117.18,9.69874188977192e-59
-Other,IPR012901,Carnosine N-methyltransferase,442,0.0105,0.0001,113.58,1.136944614386719e-168
-Other,IPR008854,TPMT family,574,0.0137,0.0001,110.63,1.5217806544601989e-218
-Other,IPR025835,Thiopurine S-methyltransferase,139,0.0033,0.0,107.16,1.5449625368881485e-53
-Other,IPR051052,Diverse substrate methyltransferase,1142,0.0272,0.0003,103.58,0.0
-Other,IPR008884,Macrocin-O-methyltransferase,170,0.0041,0.0,87.37,2.079837486465588e-64
-Other,IPR016673,Histamine N-methyltransferase-like,51,0.0012,0.0,78.63,6.819713101436147e-20
-Other,IPR021829,Protein of unknown function DUF3419,200,0.0048,0.0001,77.09,6.767095433617155e-75
-Other,IPR051038,RMT2/GAMT Methyltransferase,273,0.0065,0.0001,70.15,4.6005039326222757e-101
-Other,IPR044649,"2-methyl-6-phytyl-1,4-hydroquinone methyltransferase",136,0.0032,0.0,69.9,6.913114252999168e-51
-Other,IPR031164,SAM-binding methyltransferase MPBQ/MBSQ,135,0.0032,0.0,69.38,1.7227887929876347e-50
-Other,IPR027625,"Putative 4-mercaptohistidine N1-methyltranferase, OvoA C-terminal domain",45,0.0011,0.0,69.38,1.6364059930919656e-17
-Other,IPR052356,Thiol S-methyltransferase,629,0.015,0.0002,69.27,1.682037968945197e-231
-Other,IPR023576,"UbiE/COQ5 methyltransferase, conserved site",1716,0.0409,0.0006,67.84,0.0
-Other,IPR000940,"Methyltransferase, NNMT/PNMT/TEMT",128,0.0031,0.0,65.79,1.0232467557065014e-47
-Other,IPR050444,Polyketide synthase,42,0.001,0.0,64.76,2.519268325844571e-16
-Other,IPR002935,Class I-like SAM-dependent O-methyltransferase,1907,0.0455,0.0007,61.26,0.0
-Other,IPR044689,Pectin methyltransferase CGR2/3,156,0.0037,0.0001,60.13,1.9121093965108748e-57
-Other,IPR029058,Alpha/Beta hydrolase fold,111,0.0026,0.0,57.05,5.351405748296567e-41
-Other,IPR050362,Cation-dependent O-methyltransferase,1431,0.0341,0.0007,51.31,0.0
-Other,IPR003826,"S-adenosylmethionine decarboxylase family, prokaryotic",33,0.0008,0.0,50.88,8.900310400980628e-13
-Other,IPR024775,"Hercynine oxygenase, DinB-like domain",86,0.0021,0.0,44.2,3.5377194021232205e-31
-Other,IPR030374,Polyamine biosynthesis domain,1468,0.035,0.0009,40.42,0.0
-Other,IPR001045,Spermidine/spermine synthases,1416,0.0338,0.0009,37.64,0.0
-Other,IPR004298,Nicotianamine synthase,274,0.0065,0.0002,35.21,7.374951366581784e-94
-Other,IPR015985,Tellurite resistance methyltransferase TehB-like domain,164,0.0039,0.0001,31.61,9.125720620826216e-56
-Other,IPR036259,MFS transporter superfamily,100,0.0024,0.0001,30.84,2.3393257346654277e-34
-Other,IPR002347,Short-chain dehydrogenase/reductase SDR,20,0.0005,0.0,30.84,1.0331976668421151e-07
-Other,IPR016187,C-type lectin fold,167,0.004,0.0001,28.61,7.575501767506928e-56
-Other,IPR042095,Sulfatase-modifying factor enzyme superfamily,165,0.0039,0.0001,28.27,4.427773088690583e-55
-Other,IPR005532,Sulfatase-modifying factor enzyme-like domain,163,0.0039,0.0001,27.92,2.5846233373033626e-54
-Other,IPR013630,Methyltransferase putative zinc binding domain,139,0.0033,0.0001,26.79,3.600748950353485e-46
-Other,IPR016181,Acyl-CoA N-acyltransferase,34,0.0008,0.0,26.21,4.006935374258664e-12
-Other,IPR000182,GNAT domain,34,0.0008,0.0,26.21,4.006935374258664e-12
-Other,IPR038576,Methyltransferase putative zinc binding domain superfamily,139,0.0033,0.0001,23.81,3.6134854112449885e-45
-Other,IPR013691,C-methyltransferase,143,0.0034,0.0002,15.75,3.4587233470562405e-42
-Other,IPR000551,MerR-type HTH domain,89,0.0021,0.0001,15.25,1.5555050400063546e-26
-Other,IPR050508,Methyltransferase Superfamily,1221,0.0291,0.0021,13.74,0.0
-Other,IPR015576,"Spermine synthase, animal",46,0.0011,0.0001,11.82,2.515395825710372e-13
-Other,IPR009061,Putative DNA-binding domain superfamily,89,0.0021,0.0002,9.8,5.829028134415053e-23
-Other,IPR016874,Methyltransferase TcmP-like,134,0.0032,0.0004,8.26,1.8755232090339866e-31
-Other,IPR051043,Sulfatase Modifying Factor and Kinase,25,0.0006,0.0001,7.71,9.8644101635274e-07
-Other,IPR027577,5-histidylcysteine sulfoxide synthase,25,0.0006,0.0001,7.71,9.8644101635274e-07
-Other,IPR007213,Methyltransferase Ppm1/Ppm2/Tcmp,970,0.0231,0.003,7.63,1.1709807611686847e-210
-Other,IPR036770,Ankyrin repeat-containing domain superfamily,199,0.0047,0.0007,6.97,3.4515794903163125e-42
-Other,IPR041698,Methyltransferase domain 25,6239,0.1488,0.0226,6.57,0.0
-Other,IPR014776,"Tetrapyrrole methylase, subdomain 2",80,0.0019,0.0004,4.25,5.641499229324511e-13
-Other,IPR002110,Ankyrin repeat,115,0.0027,0.0007,4.12,1.5382975331562186e-17
-Other,IPR013216,Methyltransferase type 11,6996,0.1668,0.0426,3.91,0.0
-Other,IPR008715,"SAM-dependent methyltransferase, NodS-like",65,0.0015,0.0005,3.13,3.2988660729725325e-08
-Other,IPR018773,"Methyltransferase regulatory domain, predicted",23,0.0005,0.0002,2.96,0.001435813597398872
-Other,IPR050714,Cobalamin biosynthesis methyltransferase,237,0.0057,0.002,2.85,4.355840523109683e-23
-Other,IPR014008,"Cobalamin biosynthesis, precorrin-6Y methyltransferase, CbiT subunit",221,0.0053,0.0019,2.7,4.24524852880478e-20
-Other,IPR013217,Methyltransferase type 12,774,0.0185,0.0084,2.21,6.92426138106381e-47
-Other,IPR026669,Arsenite methyltransferase-like,403,0.0096,0.0045,2.11,4.110657903933044e-23
-Other,IPR001763,Rhodanese-like domain,20,0.0005,0.0002,1.93,0.03565015086400448
-Other,IPR036291,NAD(P)-binding domain superfamily,123,0.0029,0.0017,1.71,2.8111565958390344e-05
-Other,IPR052190,Release factor glutamine methyltransferase Mtq2-like,224,0.0053,0.0033,1.64,1.8060701861040837e-07
-Other,IPR016651,Leucine carboxyl methyltransferase 1,166,0.004,0.0026,1.54,5.1478350902620414e-05
-Other,IPR014777,"Tetrapyrrole methylase, subdomain 1",108,0.0026,0.0019,1.39,0.008254909065308971
-Other,IPR000878,Tetrapyrrole methylase,109,0.0026,0.0019,1.36,0.012406684534792827
-Other,IPR012818,Precorrin-6Y methyltransferase,109,0.0026,0.002,1.32,0.01898348191745286
-Other,IPR035996,Tetrapyrrole methylase superfamily,109,0.0026,0.002,1.32,0.01898348191745286
-Other,IPR052939,23S rRNA Guanine-N(1)-Methyltransferase RlmA,64,0.0015,0.0012,1.28,0.08374731729032678
-Other,IPR025714,Methyltransferase domain,1642,0.0392,0.0317,1.24,4.923793277140632e-11
-Other,IPR008576,Alpha-N-methyltransferase NTM1,117,0.0028,0.0022,1.24,0.04525431224387701
-Other,IPR006365,"Cobalamin (vitamin B12) biosynthesis CobL/Precorrin-6Y C(5,15)-methyltransferase",89,0.0021,0.0019,1.12,0.23590973179669647
-Other,IPR038375,Protein arginine methyltransferase NDUFAF7 superfamily,100,0.0024,0.0022,1.07,0.3214399186078215
-Other,IPR036188,FAD/NAD(P)-binding domain superfamily,321,0.0077,0.0072,1.06,0.2209893543962592
-Other,IPR029063,S-adenosyl-L-methionine-dependent methyltransferase superfamily,41941,1.0,1.0,1.0,1.0
-Other,IPR019734,Tetratricopeptide repeat,73,0.0017,0.0018,0.96,0.629072072161164
-Other,IPR003788,Protein arginine methyltransferase NDUFAF7,88,0.0021,0.0023,0.93,0.7282723413457737
-Other,IPR043675,tRNA 5-hydroxyuridine methyltransferase,22,0.0005,0.0006,0.92,0.672957350722976
-Other,IPR011990,Tetratricopeptide-like helical domain superfamily,97,0.0023,0.0027,0.85,0.9048092755890509
-Other,IPR052514,S-adenosyl-L-methionine-dependent methyltransferase,84,0.002,0.0034,0.59,0.9999929060407363
-Other,IPR006342,Methyltransferase FkbM,125,0.003,0.0054,0.55,0.9999999993231525
-Other,IPR004557,Eukaryotic/archaeal PrmC-related,51,0.0012,0.0022,0.55,0.9999515197357135
-Other,IPR029044,Nucleotide-diphospho-sugar transferases,23,0.0005,0.0012,0.46,0.9998236031149755
-Other,IPR026170,N-lysine methyltransferase FAM173A/B,43,0.001,0.0039,0.27,1.0
-Other,IPR033664,tRNA 5-carboxymethoxyuridine methyltransferase,24,0.0006,0.0021,0.27,0.9999999999979664
-Other,IPR053223,Probable Methyltransferase,31,0.0007,0.003,0.25,1.0
-Other,IPR007848,Methyltransferase small domain,256,0.0061,0.0544,0.11,1.0
-Other,IPR051419,Lysine/N-terminal Methyltransferase Superfamily,50,0.0012,0.0106,0.11,1.0
-Other,IPR020598,"Ribosomal RNA adenine methylase transferase, N-terminal",107,0.0026,0.0369,0.07,1.0
-Other,IPR050078,Ribosomal protein L11 methyltransferase PrmA,61,0.0015,0.022,0.07,1.0
-Other,IPR025789,Histone-lysine N-methyltransferase DOT1 domain,20,0.0005,0.0069,0.07,1.0
-Other,IPR020596,"Ribosomal RNA adenine methylase transferase, conserved site",63,0.0015,0.0332,0.05,1.0
-Other,IPR002052,"DNA methylase, N-6 adenine-specific, conserved site",219,0.0052,0.1217,0.04,1.0
-Other,IPR001737,Ribosomal RNA adenine methyltransferase KsgA/Erm,65,0.0015,0.0393,0.04,1.0
-Other,IPR025799,Protein arginine N-methyltransferase,51,0.0012,0.0384,0.03,1.0
-Other,IPR050320,Protein N5-glutamine methyltransferase,31,0.0007,0.0219,0.03,1.0
-Other,IPR000682,Protein-L-isoaspartate(D-aspartate) O-methyltransferase,20,0.0005,0.0299,0.02,1.0
-Other,IPR019410,Lysine methyltransferase,29,0.0007,0.0633,0.01,1.0
+Metabolite,IPR012967,"Caffeic acid 3-O-methyltransferase-like, dimerisation domain",3092,0.0737,0.0,inf,0.0
+Metabolite,IPR003333,Cyclopropane mycolic acid synthase,1262,0.0301,0.0,inf,0.0
+Metabolite,IPR030384,SAM-dependent methyltransferase SMT-type,572,0.0136,0.0,inf,1.6646779170713374e-233
+Metabolite,IPR013705,Sterol methyltransferase C-terminal,542,0.0129,0.0,inf,3.0318209709441187e-221
+Metabolite,IPR011610,S-adenosyl-L-methionine-dependent methyltransferase ML2640-like,484,0.0115,0.0,inf,1.474942437586624e-197
+Metabolite,IPR023149,"Trans-aconitate 2-methyltransferase, C-terminal",441,0.0105,0.0,inf,5.20015221248819e-180
+Metabolite,IPR005271,Carboxy-S-adenosyl-L-methionine synthase,409,0.0098,0.0,inf,5.844912751956098e-167
+Metabolite,IPR030668,"Spermidine/spermine synthase, eukaryotes",307,0.0073,0.0,inf,2.1018491482828433e-125
+Metabolite,IPR017804,4-dimethylallyltryptophan N-methyltransferase easF,291,0.0069,0.0,inf,6.84173230280004e-119
+Metabolite,IPR025774,Picrinine-N-methytransferase-like,257,0.0061,0.0,inf,4.666334817767526e-105
+Metabolite,IPR023506,Trans-aconitate 2-methyltransferase,251,0.006,0.0,inf,1.286696182567097e-102
+Metabolite,IPR002937,Amine oxidase,234,0.0056,0.0,inf,1.0543583472550529e-95
+Metabolite,IPR057206,Domain of unknown function DUF7884,225,0.0054,0.0,inf,4.8121843227584134e-92
+Metabolite,IPR048711,"S-adenosylmethionine-dependent methyltransferase Rv2258c-like, winged HTH domain",209,0.005,0.0,inf,1.536720711352217e-85
+Metabolite,IPR035094,Histidine N-alpha-methyltransferase,205,0.0049,0.0,inf,6.492397290489348e-84
+Metabolite,IPR053173,Class I-like SAM-binding MTase,200,0.0048,0.0,inf,6.990777462177949e-82
+Metabolite,IPR052290,Sphingolipid C9-methyltransferase,193,0.0046,0.0,inf,4.8890948533950426e-79
+Metabolite,IPR010017,tRNA U34 carboxymethyltransferase,188,0.0045,0.0,inf,5.259803472298944e-77
+Metabolite,IPR010743,Methionine biosynthesis MetW,169,0.004,0.0,inf,2.755146411890873e-69
+Metabolite,IPR017805,"EasF-like, SAM-dependent methyltransferase domain",159,0.0038,0.0,inf,3.1765264481005763e-65
+Metabolite,IPR025771,Phosphoethanolamine N-methyltransferase,151,0.0036,0.0,inf,5.635650684967186e-62
+Metabolite,IPR004537,"Tellurite resistance methyltransferase, TehB",141,0.0034,0.0,inf,6.480603140097187e-58
+Metabolite,IPR009902,Protein of unknown function DUF1442,133,0.0032,0.0,inf,1.1473558763343868e-54
+Metabolite,IPR014369,Glycine/Sarcosine N-methyltransferase,115,0.0027,0.0,inf,2.324920691716985e-47
+Metabolite,IPR010940,"Magnesium-protoporphyrin IX methyltransferase, C-terminal",107,0.0026,0.0,inf,4.1037321325104064e-44
+Metabolite,IPR010251,Magnesium-protoporphyrin IX methyltransferase,107,0.0026,0.0,inf,4.1037321325104064e-44
+Metabolite,IPR055487,Domain of unknown function DUF7059,104,0.0025,0.0,inf,6.770395915045579e-43
+Metabolite,IPR020803,"Polyketide synthase-like, methyltransferase domain",101,0.0024,0.0,inf,1.1168437074353549e-41
+Metabolite,IPR022744,"Methyltransferase domain, putative",98,0.0023,0.0,inf,1.8421034584901463e-40
+Metabolite,IPR014122,Demethylmenaquinone methyltransferase,98,0.0023,0.0,inf,1.8421034584901463e-40
+Metabolite,IPR006514,IRX15/GXM/AGM,96,0.0023,0.0,inf,1.193521520135364e-39
+Metabolite,IPR032904,"2-phytyl-1,4-naphtoquinone methyltransferase MenG",92,0.0022,0.0,inf,5.009416185454734e-38
+Metabolite,IPR022742,Alpha/beta hydrolase domain-containing protein 17C-like,92,0.0022,0.0,inf,5.009416185454734e-38
+Metabolite,IPR051044,Monoacylglycerol and Diacylglycerol Lipase,88,0.0021,0.0,inf,2.1020506226429726e-36
+Metabolite,IPR056684,Domain of unknown function DUF7782,86,0.0021,0.0,inf,1.3615493942154017e-35
+Metabolite,IPR047057,MerR transcriptional regulator,85,0.002,0.0,inf,3.465126292993999e-35
+Metabolite,IPR032888,"Histidine N-alpha-methyltransferase, Actinobacteria-type",80,0.0019,0.0,inf,3.698732497645402e-33
+Metabolite,IPR022474,"Thiopurine S-methyltransferase, Se/Te detoxification",73,0.0017,0.0,inf,2.5553819340472322e-30
+Metabolite,IPR049480,"BVU_1015-like, N-terminal dimerisation-like domain",70,0.0017,0.0,inf,4.209672664611688e-29
+Metabolite,IPR007072,Rhamnosyl O-methyltransferase,68,0.0016,0.0,inf,2.725284545370943e-28
+Metabolite,IPR023553,"Uncharacterised methyltransferase, YrrT",67,0.0016,0.0,inf,6.934005367317741e-28
+Metabolite,IPR014710,RmlC-like jelly roll fold,67,0.0016,0.0,inf,6.934005367317741e-28
+Metabolite,IPR053384,SAM-dependent methyltransferase,65,0.0015,0.0,inf,4.488589908411696e-27
+Metabolite,IPR016584,Methyltransferase VrtF-like,62,0.0015,0.0,inf,7.3918194839688e-26
+Metabolite,IPR015392,TehB/YeaR-like domain,61,0.0015,0.0,inf,1.880554418704304e-25
+Metabolite,IPR014431,"Tellurite resistance methyltransferase, TehB type-2",61,0.0015,0.0,inf,1.880554418704304e-25
+Metabolite,IPR047672,"Cyclopropane mycolic acid synthase, actinobacteria",60,0.0014,0.0,inf,4.784253293992592e-25
+Metabolite,IPR032095,"Saccharopine dehydrogenase-like, C-terminal",56,0.0013,0.0,inf,2.003845656861871e-23
+Metabolite,IPR025820,"Methyltransferase NNMT/PNMT/TEMT, conserved site",54,0.0013,0.0,inf,1.2967359820064212e-22
+Metabolite,IPR005097,"Saccharopine dehydrogenase, NADP binding domain",54,0.0013,0.0,inf,1.2967359820064212e-22
+Metabolite,IPR051168,Alpha-aminoadipic semialdehyde synthase,53,0.0013,0.0,inf,3.2986464515338723e-22
+Metabolite,IPR017128,"Catechol O-methyltransferase, eukaryotic",46,0.0011,0.0,inf,2.2727363750204833e-19
+Metabolite,IPR048027,Cyclopropane fatty acid synthase CfaB-like,44,0.001,0.0,inf,1.4703154725579284e-18
+Metabolite,IPR049645,Geranyl diphosphate 2-C-methyltransferase,42,0.001,0.0,inf,9.511452232066207e-18
+Metabolite,IPR016980,"S-adenosyl-L-methionine dependent methyltransferase, Alr7345, predicted",42,0.001,0.0,inf,9.511452232066207e-18
+Metabolite,IPR029001,Inosine triphosphate pyrophosphatase-like,36,0.0009,0.0,inf,2.573977779909415e-15
+Metabolite,IPR003697,Nucleoside triphosphate pyrophosphatase Maf-like protein,36,0.0009,0.0,inf,2.573977779909415e-15
+Metabolite,IPR016550,Guanidinoacetate N-methyltransferase,35,0.0008,0.0,inf,6.545996609969668e-15
+Metabolite,IPR017031,"Predicted S-adenosyl-L-methionine dependent methyltransferase, YjhP-type",34,0.0008,0.0,inf,1.6647172136302292e-14
+Metabolite,IPR024078,Putative deacetylase LmbE-like domain superfamily,33,0.0008,0.0,inf,4.2334932958794964e-14
+Metabolite,IPR003737,N-acetylglucosaminyl phosphatidylinositol deacetylase-related,32,0.0008,0.0,inf,1.0765916187400545e-13
+Metabolite,IPR016067,"S-adenosylmethionine decarboxylase, core",31,0.0007,0.0,inf,2.7377691470085655e-13
+Metabolite,IPR023475,Probable cobalt-precorrin-6B C(15)-methyltransferase (decarboxylating) CbiT,29,0.0007,0.0,inf,1.7703927543513199e-12
+Metabolite,IPR056393,"AprA-like, MT2-like domain",26,0.0006,0.0,inf,2.910929374630821e-11
+Metabolite,IPR040800,"Methyltransferase MycE, N-terminal",22,0.0005,0.0,inf,1.2168201308840738e-09
+Metabolite,IPR041068,"Methyltransferase, fungal type, helix-turn-helix domain",21,0.0005,0.0,inf,3.0939219296411113e-09
+Metabolite,IPR022657,"Orn/DAP/Arg decarboxylase 2, conserved site",20,0.0005,0.0,inf,7.866581203636225e-09
+Metabolite,IPR017716,S-adenosylmethionine decarboxylase proenzyme,20,0.0005,0.0,inf,7.866581203636225e-09
+Metabolite,IPR004033,UbiE/COQ5 methyltransferase,1723,0.0411,0.0,2656.62,0.0
+Metabolite,IPR010233,Ubiquinone biosynthesis O-methyltransferase,1053,0.0251,0.0,1623.57,0.0
+Metabolite,IPR006764,"S-adenosyl-L-methionine dependent methyltransferase, SAV2177 type",769,0.0183,0.0,592.84,4.106112084363805e-309
+Metabolite,IPR050723,Cyclopropane Fatty Acid Synthase/Methyltransferase,1445,0.0345,0.0001,557.0,0.0
+Metabolite,IPR042086,"Methyltransferase, alpha-helical capping domain",1366,0.0326,0.0001,526.54,0.0
+Metabolite,IPR016461,O-methyltransferase-like,4445,0.106,0.0002,428.35,0.0
+Metabolite,IPR010342,Protein of unknown function DUF938,265,0.0063,0.0,408.59,4.2123782521503374e-106
+Metabolite,IPR001077,"O-methyltransferase, C-terminal domain",4433,0.1057,0.0003,341.75,0.0
+Metabolite,IPR051654,Fungal Meroterpenoid Biosynthesis Methyltransferases,407,0.0097,0.0,313.77,1.1859339685467895e-161
+Metabolite,IPR005299,SAM dependent carboxyl methyltransferase,1534,0.0366,0.0002,236.52,0.0
+Metabolite,IPR050447,Erg6/SMT methyltransferase,1220,0.0291,0.0001,235.13,0.0
+Metabolite,IPR030373,"Polyamine biosynthesis domain, conserved site",1020,0.0243,0.0001,224.67,0.0
+Metabolite,IPR026480,Arginine N-methyltransferase 2-like domain,245,0.0058,0.0,188.88,4.00321059994148e-96
+Metabolite,IPR037163,"Spermidine synthase, tetramerisation domain superfamily",1194,0.0285,0.0002,184.1,0.0
+Metabolite,IPR036390,Winged helix DNA-binding domain superfamily,4160,0.0992,0.0005,183.26,0.0
+Metabolite,IPR035246,"Spermidine synthase, tetramerisation domain",1160,0.0277,0.0002,178.86,0.0
+Metabolite,IPR027555,tRNA (Mo5U34)-methyltransferase-like,200,0.0048,0.0,154.19,5.275291234447267e-78
+Metabolite,IPR051128,EgtD Methyltransferase,470,0.0112,0.0001,144.93,1.27419429538097e-181
+Metabolite,IPR036388,Winged helix-like DNA-binding domain superfamily,4301,0.1025,0.0007,144.16,0.0
+Metabolite,IPR019257,"Histidine-specific methyltransferase, SAM-dependent methyltransferase domain",474,0.0113,0.0001,121.81,1.5119230745915765e-181
+Metabolite,IPR017408,Arginine N-methyltransferase 2,152,0.0036,0.0,117.18,9.69874188977192e-59
+Metabolite,IPR012901,Carnosine N-methyltransferase,442,0.0105,0.0001,113.58,1.136944614386719e-168
+Metabolite,IPR008854,TPMT family,574,0.0137,0.0001,110.63,1.5217806544601989e-218
+Metabolite,IPR025835,Thiopurine S-methyltransferase,139,0.0033,0.0,107.16,1.5449625368881485e-53
+Metabolite,IPR051052,Diverse substrate methyltransferase,1142,0.0272,0.0003,103.58,0.0
+Metabolite,IPR008884,Macrocin-O-methyltransferase,170,0.0041,0.0,87.37,2.079837486465588e-64
+Metabolite,IPR016673,Histamine N-methyltransferase-like,51,0.0012,0.0,78.63,6.819713101436147e-20
+Metabolite,IPR021829,Protein of unknown function DUF3419,200,0.0048,0.0001,77.09,6.767095433617155e-75
+Metabolite,IPR051038,RMT2/GAMT Methyltransferase,273,0.0065,0.0001,70.15,4.6005039326222757e-101
+Metabolite,IPR044649,"2-methyl-6-phytyl-1,4-hydroquinone methyltransferase",136,0.0032,0.0,69.9,6.913114252999168e-51
+Metabolite,IPR031164,SAM-binding methyltransferase MPBQ/MBSQ,135,0.0032,0.0,69.38,1.7227887929876347e-50
+Metabolite,IPR027625,"Putative 4-mercaptohistidine N1-methyltranferase, OvoA C-terminal domain",45,0.0011,0.0,69.38,1.6364059930919656e-17
+Metabolite,IPR052356,Thiol S-methyltransferase,629,0.015,0.0002,69.27,1.682037968945197e-231
+Metabolite,IPR023576,"UbiE/COQ5 methyltransferase, conserved site",1716,0.0409,0.0006,67.84,0.0
+Metabolite,IPR000940,"Methyltransferase, NNMT/PNMT/TEMT",128,0.0031,0.0,65.79,1.0232467557065014e-47
+Metabolite,IPR050444,Polyketide synthase,42,0.001,0.0,64.76,2.519268325844571e-16
+Metabolite,IPR002935,Class I-like SAM-dependent O-methyltransferase,1907,0.0455,0.0007,61.26,0.0
+Metabolite,IPR044689,Pectin methyltransferase CGR2/3,156,0.0037,0.0001,60.13,1.9121093965108748e-57
+Metabolite,IPR029058,Alpha/Beta hydrolase fold,111,0.0026,0.0,57.05,5.351405748296567e-41
+Metabolite,IPR050362,Cation-dependent O-methyltransferase,1431,0.0341,0.0007,51.31,0.0
+Metabolite,IPR003826,"S-adenosylmethionine decarboxylase family, prokaryotic",33,0.0008,0.0,50.88,8.900310400980628e-13
+Metabolite,IPR024775,"Hercynine oxygenase, DinB-like domain",86,0.0021,0.0,44.2,3.5377194021232205e-31
+Metabolite,IPR030374,Polyamine biosynthesis domain,1468,0.035,0.0009,40.42,0.0
+Metabolite,IPR001045,Spermidine/spermine synthases,1416,0.0338,0.0009,37.64,0.0
+Metabolite,IPR004298,Nicotianamine synthase,274,0.0065,0.0002,35.21,7.374951366581784e-94
+Metabolite,IPR015985,Tellurite resistance methyltransferase TehB-like domain,164,0.0039,0.0001,31.61,9.125720620826216e-56
+Metabolite,IPR036259,MFS transporter superfamily,100,0.0024,0.0001,30.84,2.3393257346654277e-34
+Metabolite,IPR002347,Short-chain dehydrogenase/reductase SDR,20,0.0005,0.0,30.84,1.0331976668421151e-07
+Metabolite,IPR016187,C-type lectin fold,167,0.004,0.0001,28.61,7.575501767506928e-56
+Metabolite,IPR042095,Sulfatase-modifying factor enzyme superfamily,165,0.0039,0.0001,28.27,4.427773088690583e-55
+Metabolite,IPR005532,Sulfatase-modifying factor enzyme-like domain,163,0.0039,0.0001,27.92,2.5846233373033626e-54
+Metabolite,IPR013630,Methyltransferase putative zinc binding domain,139,0.0033,0.0001,26.79,3.600748950353485e-46
+Metabolite,IPR016181,Acyl-CoA N-acyltransferase,34,0.0008,0.0,26.21,4.006935374258664e-12
+Metabolite,IPR000182,GNAT domain,34,0.0008,0.0,26.21,4.006935374258664e-12
+Metabolite,IPR038576,Methyltransferase putative zinc binding domain superfamily,139,0.0033,0.0001,23.81,3.6134854112449885e-45
+Metabolite,IPR013691,C-methyltransferase,143,0.0034,0.0002,15.75,3.4587233470562405e-42
+Metabolite,IPR000551,MerR-type HTH domain,89,0.0021,0.0001,15.25,1.5555050400063546e-26
+Metabolite,IPR050508,Methyltransferase Superfamily,1221,0.0291,0.0021,13.74,0.0
+Metabolite,IPR015576,"Spermine synthase, animal",46,0.0011,0.0001,11.82,2.515395825710372e-13
+Metabolite,IPR009061,Putative DNA-binding domain superfamily,89,0.0021,0.0002,9.8,5.829028134415053e-23
+Metabolite,IPR016874,Methyltransferase TcmP-like,134,0.0032,0.0004,8.26,1.8755232090339866e-31
+Metabolite,IPR051043,Sulfatase Modifying Factor and Kinase,25,0.0006,0.0001,7.71,9.8644101635274e-07
+Metabolite,IPR027577,5-histidylcysteine sulfoxide synthase,25,0.0006,0.0001,7.71,9.8644101635274e-07
+Metabolite,IPR007213,Methyltransferase Ppm1/Ppm2/Tcmp,970,0.0231,0.003,7.63,1.1709807611686847e-210
+Metabolite,IPR036770,Ankyrin repeat-containing domain superfamily,199,0.0047,0.0007,6.97,3.4515794903163125e-42
+Metabolite,IPR041698,Methyltransferase domain 25,6239,0.1488,0.0226,6.57,0.0
+Metabolite,IPR014776,"Tetrapyrrole methylase, subdomain 2",80,0.0019,0.0004,4.25,5.641499229324511e-13
+Metabolite,IPR002110,Ankyrin repeat,115,0.0027,0.0007,4.12,1.5382975331562186e-17
+Metabolite,IPR013216,Methyltransferase type 11,6996,0.1668,0.0426,3.91,0.0
+Metabolite,IPR008715,"SAM-dependent methyltransferase, NodS-like",65,0.0015,0.0005,3.13,3.2988660729725325e-08
+Metabolite,IPR018773,"Methyltransferase regulatory domain, predicted",23,0.0005,0.0002,2.96,0.001435813597398872
+Metabolite,IPR050714,Cobalamin biosynthesis methyltransferase,237,0.0057,0.002,2.85,4.355840523109683e-23
+Metabolite,IPR014008,"Cobalamin biosynthesis, precorrin-6Y methyltransferase, CbiT subunit",221,0.0053,0.0019,2.7,4.24524852880478e-20
+Metabolite,IPR013217,Methyltransferase type 12,774,0.0185,0.0084,2.21,6.92426138106381e-47
+Metabolite,IPR026669,Arsenite methyltransferase-like,403,0.0096,0.0045,2.11,4.110657903933044e-23
+Metabolite,IPR001763,Rhodanese-like domain,20,0.0005,0.0002,1.93,0.03565015086400448
+Metabolite,IPR036291,NAD(P)-binding domain superfamily,123,0.0029,0.0017,1.71,2.8111565958390344e-05
+Metabolite,IPR052190,Release factor glutamine methyltransferase Mtq2-like,224,0.0053,0.0033,1.64,1.8060701861040837e-07
+Metabolite,IPR016651,Leucine carboxyl methyltransferase 1,166,0.004,0.0026,1.54,5.1478350902620414e-05
+Metabolite,IPR014777,"Tetrapyrrole methylase, subdomain 1",108,0.0026,0.0019,1.39,0.008254909065308971
+Metabolite,IPR000878,Tetrapyrrole methylase,109,0.0026,0.0019,1.36,0.012406684534792827
+Metabolite,IPR035996,Tetrapyrrole methylase superfamily,109,0.0026,0.002,1.32,0.01898348191745286
+Metabolite,IPR012818,Precorrin-6Y methyltransferase,109,0.0026,0.002,1.32,0.01898348191745286
+Metabolite,IPR052939,23S rRNA Guanine-N(1)-Methyltransferase RlmA,64,0.0015,0.0012,1.28,0.08374731729032678
+Metabolite,IPR025714,Methyltransferase domain,1642,0.0392,0.0317,1.24,4.923793277140632e-11
+Metabolite,IPR008576,Alpha-N-methyltransferase NTM1,117,0.0028,0.0022,1.24,0.04525431224387701
+Metabolite,IPR006365,"Cobalamin (vitamin B12) biosynthesis CobL/Precorrin-6Y C(5,15)-methyltransferase",89,0.0021,0.0019,1.12,0.23590973179669647
+Metabolite,IPR038375,Protein arginine methyltransferase NDUFAF7 superfamily,100,0.0024,0.0022,1.07,0.3214399186078215
+Metabolite,IPR036188,FAD/NAD(P)-binding domain superfamily,321,0.0077,0.0072,1.06,0.2209893543962592
+Metabolite,IPR029063,S-adenosyl-L-methionine-dependent methyltransferase superfamily,41941,1.0,1.0,1.0,1.0
+Metabolite,IPR019734,Tetratricopeptide repeat,73,0.0017,0.0018,0.96,0.629072072161164
+Metabolite,IPR003788,Protein arginine methyltransferase NDUFAF7,88,0.0021,0.0023,0.93,0.7282723413457737
+Metabolite,IPR043675,tRNA 5-hydroxyuridine methyltransferase,22,0.0005,0.0006,0.92,0.672957350722976
+Metabolite,IPR011990,Tetratricopeptide-like helical domain superfamily,97,0.0023,0.0027,0.85,0.9048092755890509
+Metabolite,IPR052514,S-adenosyl-L-methionine-dependent methyltransferase,84,0.002,0.0034,0.59,0.9999929060407363
+Metabolite,IPR006342,Methyltransferase FkbM,125,0.003,0.0054,0.55,0.9999999993231525
+Metabolite,IPR004557,Eukaryotic/archaeal PrmC-related,51,0.0012,0.0022,0.55,0.9999515197357135
+Metabolite,IPR029044,Nucleotide-diphospho-sugar transferases,23,0.0005,0.0012,0.46,0.9998236031149755
+Metabolite,IPR026170,N-lysine methyltransferase FAM173A/B,43,0.001,0.0039,0.27,1.0
+Metabolite,IPR033664,tRNA 5-carboxymethoxyuridine methyltransferase,24,0.0006,0.0021,0.27,0.9999999999979664
+Metabolite,IPR053223,Probable Methyltransferase,31,0.0007,0.003,0.25,1.0
+Metabolite,IPR007848,Methyltransferase small domain,256,0.0061,0.0544,0.11,1.0
+Metabolite,IPR051419,Lysine/N-terminal Methyltransferase Superfamily,50,0.0012,0.0106,0.11,1.0
+Metabolite,IPR020598,"Ribosomal RNA adenine methylase transferase, N-terminal",107,0.0026,0.0369,0.07,1.0
+Metabolite,IPR050078,Ribosomal protein L11 methyltransferase PrmA,61,0.0015,0.022,0.07,1.0
+Metabolite,IPR025789,Histone-lysine N-methyltransferase DOT1 domain,20,0.0005,0.0069,0.07,1.0
+Metabolite,IPR020596,"Ribosomal RNA adenine methylase transferase, conserved site",63,0.0015,0.0332,0.05,1.0
+Metabolite,IPR002052,"DNA methylase, N-6 adenine-specific, conserved site",219,0.0052,0.1217,0.04,1.0
+Metabolite,IPR001737,Ribosomal RNA adenine methyltransferase KsgA/Erm,65,0.0015,0.0393,0.04,1.0
+Metabolite,IPR025799,Protein arginine N-methyltransferase,51,0.0012,0.0384,0.03,1.0
+Metabolite,IPR050320,Protein N5-glutamine methyltransferase,31,0.0007,0.0219,0.03,1.0
+Metabolite,IPR000682,Protein-L-isoaspartate(D-aspartate) O-methyltransferase,20,0.0005,0.0299,0.02,1.0
+Metabolite,IPR019410,Lysine methyltransferase,29,0.0007,0.0633,0.01,1.0
 Protein,IPR004498,Ribosomal protein L11 methyltransferase,1323,0.0705,0.0,inf,0.0
 Protein,IPR007857,Protein arginine N-methyltransferase PRMT5,393,0.0209,0.0,inf,1.0781566935117314e-298
 Protein,IPR026024,Chemotaxis protein methyltransferase CheR,385,0.0205,0.0,inf,1.3428406524940858e-292
@@ -281,9 +281,9 @@ Protein,IPR040758,"Release factor glutamine methyltransferase, N-terminal domain
 Protein,IPR022641,"Chemotaxis receptor methyltransferase CheR, N-terminal",782,0.0417,0.0,1830.24,0.0
 Protein,IPR036804,"Chemotaxis receptor methyltransferase CheR, N-terminal domain superfamily",635,0.0338,0.0,1486.19,0.0
 Protein,IPR035248,"PRMT5, oligomerisation domain",439,0.0234,0.0,1027.46,0.0
+Protein,IPR050903,Bacterial Chemotaxis Protein Methyltransferase,807,0.043,0.0,944.37,0.0
 Protein,IPR022642,"MCP methyltransferase, CheR-type, SAM-binding domain, C-terminal",807,0.043,0.0,944.37,0.0
 Protein,IPR000780,"MCP methyltransferase, CheR-type",807,0.043,0.0,944.37,0.0
-Protein,IPR050903,Bacterial Chemotaxis Protein Methyltransferase,807,0.043,0.0,944.37,0.0
 Protein,IPR050602,Malonyl-ACP O-Methyltransferase,639,0.0341,0.0001,598.22,0.0
 Protein,IPR055135,Protein arginine N-methyltransferase domain,1917,0.1022,0.0002,560.83,0.0
 Protein,IPR004556,Methyltransferase HemK-like,1677,0.0894,0.0002,523.33,0.0
@@ -339,8 +339,8 @@ Protein,IPR001045,Spermidine/spermine synthases,49,0.0026,0.0162,0.16,1.0
 Protein,IPR030374,Polyamine biosynthesis domain,44,0.0023,0.0168,0.14,1.0
 Protein,IPR013217,Methyltransferase type 12,28,0.0015,0.0147,0.1,1.0
 Protein,IPR050508,Methyltransferase Superfamily,20,0.0011,0.0152,0.07,1.0
-Protein,IPR036388,Winged helix-like DNA-binding domain superfamily,26,0.0014,0.0492,0.03,1.0
 Protein,IPR036390,Winged helix DNA-binding domain superfamily,26,0.0014,0.0475,0.03,1.0
+Protein,IPR036388,Winged helix-like DNA-binding domain superfamily,26,0.0014,0.0492,0.03,1.0
 RNA,IPR001678,SAM-dependent methyltransferase RsmB-F/NOP2-type domain,3615,0.0925,0.0,inf,0.0
 RNA,IPR023267,RNA (C5-cytosine) methyltransferase,3582,0.0917,0.0,inf,0.0
 RNA,IPR030390,"RNA methyltransferase TrmA, active site",2149,0.055,0.0,inf,0.0
@@ -383,10 +383,10 @@ RNA,IPR031341,"Ribosomal RNA small subunit methyltransferase F, N-terminal",418,
 RNA,IPR022882,tRNA1(Val) (adenine(37)-N6)-methyltransferase,412,0.0105,0.0,inf,6.798623214086449e-181
 RNA,IPR023273,"RNA (C5-cytosine) methyltransferase, NOP2",411,0.0105,0.0,inf,1.867159898273287e-180
 RNA,IPR017244,Ribosomal RNA large subunit methyltransferase K/L,404,0.0103,0.0,inf,2.19940559887711e-177
-RNA,IPR027391,"rRNA small subunit methyltransferase F, RNA-binding PUA-like domain",399,0.0102,0.0,inf,3.43361019886427e-175
 RNA,IPR049561,"NOL1/NOP2/NSUN 5/7, ferredoxin-like domain",399,0.0102,0.0,inf,3.43361019886427e-175
-RNA,IPR011224,Ribosomal RNA large subunit methyltransferase M,398,0.0102,0.0,inf,9.427981159326664e-175
+RNA,IPR027391,"rRNA small subunit methyltransferase F, RNA-binding PUA-like domain",399,0.0102,0.0,inf,3.43361019886427e-175
 RNA,IPR016691,tRNA (guanine(10)-N(2))-methyltransferase TRMT11,398,0.0102,0.0,inf,9.427981159326664e-175
+RNA,IPR011224,Ribosomal RNA large subunit methyltransferase M,398,0.0102,0.0,inf,9.427981159326664e-175
 RNA,IPR040739,RlmM ferredoxin-like domain,397,0.0102,0.0,inf,2.5886854529589665e-174
 RNA,IPR007473,Ribosomal RNA large subunit methyltransferase J,397,0.0102,0.0,inf,2.5886854529589665e-174
 RNA,IPR048646,"Ribosomal RNA large subunit methyltransferase M, THUMP-like domain",396,0.0101,0.0,inf,7.107759463604015e-174
@@ -433,26 +433,26 @@ RNA,IPR026274,tRNA wybutosine synthesizing protein 2,93,0.0024,0.0,inf,2.7298677
 RNA,IPR017423,tRNA (adenine(58)-N(1))-methyltransferase non-catalytic subunit TRM6,89,0.0023,0.0,inf,1.5208254357794945e-39
 RNA,IPR036020,WW domain superfamily,87,0.0022,0.0,inf,1.1350261688690556e-38
 RNA,IPR036043,Phosphoglycerate kinase superfamily,86,0.0022,0.0,inf,3.1006913435470166e-38
-RNA,IPR001576,Phosphoglycerate kinase,86,0.0022,0.0,inf,3.1006913435470166e-38
 RNA,IPR015824,"Phosphoglycerate kinase, N-terminal",86,0.0022,0.0,inf,3.1006913435470166e-38
+RNA,IPR001576,Phosphoglycerate kinase,86,0.0022,0.0,inf,3.1006913435470166e-38
 RNA,IPR025807,Adrift-type ribose 2-O-methyltransferase domain,77,0.002,0.0,inf,2.6255167878231575e-34
 RNA,IPR023268,"RNA (C5-cytosine) methyltransferase, putative Rsm-related, plant",69,0.0018,0.0,inf,8.129685130274244e-31
+RNA,IPR038546,"Hen1, N-terminal domain superfamily",57,0.0015,0.0,inf,1.3980264460500417e-25
 RNA,IPR025848,N6-adenosine-methyltransferase MT-A70-like,57,0.0015,0.0,inf,1.3980264460500417e-25
 RNA,IPR024740,"Hen1, N-terminal",57,0.0015,0.0,inf,1.3980264460500417e-25
 RNA,IPR022923,"tRNA (guanine(26)-N(2))-dimethyltransferase, archaeal and bacterial",57,0.0015,0.0,inf,1.3980264460500417e-25
-RNA,IPR038546,"Hen1, N-terminal domain superfamily",57,0.0015,0.0,inf,1.3980264460500417e-25
 RNA,IPR034262,"TRMT2A, RNA recognition motif",52,0.0013,0.0,inf,2.1215321502181016e-23
 RNA,IPR024026,"3'-RNA ribose 2'-O-methyltransferase, Hen1, bacterial",49,0.0013,0.0,inf,4.317631044425733e-22
 RNA,IPR034256,"ALKBH8, RNA recognition motif",43,0.0011,0.0,inf,1.787503766427652e-19
 RNA,IPR025823,"tRNA (uracil-5-)-methyltransferase homolog B, chordates",40,0.001,0.0,inf,3.636239721174452e-18
-RNA,IPR003827,tRNA wybutosine-synthesizing protein,35,0.0009,0.0,inf,5.510454580049034e-16
 RNA,IPR036602,tRNA wybutosine-synthesizing-like superfamily,35,0.0009,0.0,inf,5.510454580049034e-16
+RNA,IPR003827,tRNA wybutosine-synthesizing protein,35,0.0009,0.0,inf,5.510454580049034e-16
 RNA,IPR056745,"TYW2, N-terminal domain",34,0.0009,0.0,inf,1.5040880686575107e-15
 RNA,IPR054151,"TR61B, FKBP-like domain",33,0.0008,0.0,inf,4.105367666775815e-15
 RNA,IPR015095,"Alkylated DNA repair protein AlkB, homologue 8, N-terminal",29,0.0007,0.0,inf,2.278225720032728e-13
 RNA,IPR045864,Class II Aminoacyl-tRNA synthetase/Biotinyl protein ligase (BPL) and lipoyl protein ligase (LPL),26,0.0007,0.0,inf,4.631335904922496e-12
-RNA,IPR000176,mRNA methyltransferase-like,23,0.0006,0.0,inf,9.413527582023115e-11
 RNA,IPR025804,Poxvirus/kinetoplastid-type cap-specific nucleoside 2-O-methyltransferase,23,0.0006,0.0,inf,9.413527582023115e-11
+RNA,IPR000176,mRNA methyltransferase-like,23,0.0006,0.0,inf,9.413527582023115e-11
 RNA,IPR016522,"Ribosome assembly protein RSM22, mitochondrial, budding yeast",20,0.0005,0.0,inf,1.9130887270124023e-09
 RNA,IPR049560,"SAM-dependent methyltransferase RsmB-F/NOP2-type, catalytic core",3584,0.0917,0.0,6193.2,0.0
 RNA,IPR010280,(Uracil-5)-methyltransferase family,2722,0.0697,0.0,4703.65,0.0
@@ -527,8 +527,8 @@ RNA,IPR043675,tRNA 5-hydroxyuridine methyltransferase,37,0.0009,0.0003,2.91,4.28
 RNA,IPR045123,N6-adenosine-methyltransferase non-catalytic subunit METTL14-like,54,0.0014,0.0005,2.83,1.3117771284518429e-06
 RNA,IPR036188,FAD/NAD(P)-binding domain superfamily,467,0.012,0.0048,2.51,3.2232601502932336e-38
 RNA,IPR006365,"Cobalamin (vitamin B12) biosynthesis CobL/Precorrin-6Y C(5,15)-methyltransferase",123,0.0031,0.0013,2.39,2.1203721016167778e-10
-RNA,IPR012818,Precorrin-6Y methyltransferase,127,0.0032,0.0016,2.01,5.8580258188788386e-08
 RNA,IPR035996,Tetrapyrrole methylase superfamily,127,0.0032,0.0016,2.01,5.8580258188788386e-08
+RNA,IPR012818,Precorrin-6Y methyltransferase,127,0.0032,0.0016,2.01,5.8580258188788386e-08
 RNA,IPR007757,MT-A70-like,230,0.0059,0.0029,2.0,6.087982272647055e-13
 RNA,IPR000878,Tetrapyrrole methylase,124,0.0032,0.0016,1.97,1.8796284349729112e-07
 RNA,IPR013087,Zinc finger C2H2-type,76,0.0019,0.001,1.96,4.232022242584511e-05

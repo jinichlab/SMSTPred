@@ -4,7 +4,7 @@
 # Stage 4 of the SAM substrate-type pipeline. This script:
 # 1. Builds a taxonomic Newick tree over the 1,259 reference organisms
 # 2. Counts SAM MTases (IPR029063) per organism and aggregates the Stage-3
-#    ProstT5 deployment substrate-type CALLS (DNA/RNA/Protein/Other)
+#    ProstT5 deployment substrate-type CALLS (DNA/RNA/Protein/Metabolite)
 # 3. Filters to organisms with >= MIN_SAMS SAM MTases
 # 4. Prunes tree to matching organisms
 # 5. Writes iTOL annotation files: each leaf colored by % of its SAMs binding
@@ -12,7 +12,7 @@
 #
 # Consumes the new ProstT5 predictions in ../3_predictions/predictions_output/
 # (per-organism {stem}_embeddings_predictions.csv with call_{RNA,DNA,Protein,
-# Other} columns), NOT the old ProtT5 *_pred files.
+# Metabolite} columns), NOT the old ProtT5 *_pred files.
 # =============================================================
 
 import os
@@ -290,7 +290,7 @@ def main():
         "RNA": 0,
         "DNA": 0,
         "Protein": 0,
-        "Other": 0
+        "Metabolite": 0
     })
 
     # Count proteome size + SAM MTases per organism. We read only the proteome
@@ -336,13 +336,13 @@ def main():
         except Exception as e:
             print(f"    Could not read {f.name}: {e}")
             continue
-        if not {"call_RNA", "call_DNA", "call_Protein", "call_Other"}.issubset(d.columns):
+        if not {"call_RNA", "call_DNA", "call_Protein", "call_Metabolite"}.issubset(d.columns):
             continue
         stem = f.name[:-len(PRED_SUFFIX)]
         org = stem_to_canon.get(stem, canon(stem))
         matched += 1
         # Per-label binary calls (multi-label): count proteins called each type.
-        for col in ["RNA", "DNA", "Protein", "Other"]:
+        for col in ["RNA", "DNA", "Protein", "Metabolite"]:
             values = pd.to_numeric(d[f"call_{col}"], errors="coerce")
             stats[org][col] += (values == 1).sum()
     print(f"  Aggregated predictions for {matched} organisms")
@@ -356,7 +356,7 @@ def main():
     pct_RNA = {}
     pct_DNA = {}
     pct_PROT = {}
-    pct_OTHER = {}
+    pct_METABOLITE = {}
 
     for org, s in stats.items():
         if s["sams"] >= MIN_SAMS and s["total"] > 0:
@@ -370,7 +370,7 @@ def main():
             pct_RNA[org] = s["RNA"] / sam_count if sam_count > 0 else 0.0
             pct_DNA[org] = s["DNA"] / sam_count if sam_count > 0 else 0.0
             pct_PROT[org] = s["Protein"] / sam_count if sam_count > 0 else 0.0
-            pct_OTHER[org] = s["Other"] / sam_count if sam_count > 0 else 0.0
+            pct_METABOLITE[org] = s["Metabolite"] / sam_count if sam_count > 0 else 0.0
 
     print(f"  {len(valid_organisms)} organisms passed filter (of {len(stats)} total)")
 
@@ -425,7 +425,7 @@ def main():
     pct_RNA = {k: v for k, v in pct_RNA.items() if k in tree_leaf_set}
     pct_DNA = {k: v for k, v in pct_DNA.items() if k in tree_leaf_set}
     pct_PROT = {k: v for k, v in pct_PROT.items() if k in tree_leaf_set}
-    pct_OTHER = {k: v for k, v in pct_OTHER.items() if k in tree_leaf_set}
+    pct_METABOLITE = {k: v for k, v in pct_METABOLITE.items() if k in tree_leaf_set}
 
     # --- Write iTOL annotation files ---
     print("\nWriting iTOL annotation files...")
@@ -435,7 +435,7 @@ def main():
     write_gradient(OUTDIR / "itol_pct_rna.txt", "% RNA-binding SAMs", pct_RNA, "#cb181d")
     write_gradient(OUTDIR / "itol_pct_dna.txt", "% DNA-binding SAMs", pct_DNA, "#6a51a3")
     write_gradient(OUTDIR / "itol_pct_protein.txt", "% Protein-binding SAMs", pct_PROT, "#238b45")
-    write_gradient(OUTDIR / "itol_pct_other.txt", "% Other SAMs", pct_OTHER, "#e6550d")
+    write_gradient(OUTDIR / "itol_pct_metabolite.txt", "% Metabolite SAMs", pct_METABOLITE, "#e6550d")
     write_tree_colors(OUTDIR / "itol_clade_highlights.txt", pruned_root, CLADE_HIGHLIGHTS)
 
     # --- Final report ---
@@ -451,7 +451,7 @@ def main():
 
     # Show per-organism stats
     print("\nPer-organism statistics:")
-    print(f"{'Organism':<40} {'SAMs':>6} {'%RNA':>7} {'%DNA':>7} {'%Prot':>7} {'%Other':>7}")
+    print(f"{'Organism':<40} {'SAMs':>6} {'%RNA':>7} {'%DNA':>7} {'%Prot':>7} {'%Metabolite':>7}")
     print("-" * 80)
     for org in sorted(pruned_leaves):
         if org in n_sams:
@@ -459,7 +459,7 @@ def main():
                   f"{pct_RNA.get(org, 0)*100:>6.1f}% "
                   f"{pct_DNA.get(org, 0)*100:>6.1f}% "
                   f"{pct_PROT.get(org, 0)*100:>6.1f}% "
-                  f"{pct_OTHER.get(org, 0)*100:>6.1f}%")
+                  f"{pct_METABOLITE.get(org, 0)*100:>6.1f}%")
 
 
 if __name__ == "__main__":

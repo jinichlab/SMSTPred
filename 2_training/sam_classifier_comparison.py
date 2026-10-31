@@ -124,7 +124,7 @@ OUT_DIR = Path(__file__).resolve().parent / os.environ.get("BAKEOFF_OUT", "sam_c
 STRUCT_DIR = FILES_DIR / "sam_structures"      # AlphaFold DB models of the SAM set (not archived)
 FOLDSEEK = os.environ.get("FOLDSEEK_BIN", "foldseek")        # default: foldseek on PATH
 
-LABELS = ["Other", "Protein", "RNA", "DNA"]
+LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 SPLIT_MODES = ["cluster", "random"]
 N_ITERATIONS = 16
 THRESHOLD = 0.6          # clustering threshold (cluster split mode)
@@ -134,13 +134,13 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # MLP variants: one per embedding (singletons + structural concatenations).
 # Each carries a per-dataset epoch count and a per-label mixed-loss map (label
-# order [Other, Protein, RNA, DNA] = idx 0,1,2,3), read off the 6-split
+# order [Metabolite, Protein, RNA, DNA] = idx 0,1,2,3), read off the 6-split
 # embedding x loss x epoch sweeps (mlp_embedding_comparison*.py; Fig S2) by one rule:
 #   full      300 epochs for every embedding; per label, the loss with the highest mean MCC over the six
 #             sweep splits at epoch 300 (fixed 0.5 cutoff). An exact tie goes to the first of bce,
 #             weighted_bce, sqrt_weighted_bce, focal (one tie in the 48 cells: DNA of ProtT5+ESM-IF).
-#             Exception: MLP_ProstT5 keeps the DEPLOYED map (Other = sqrt_weighted_bce), so the benchmark scores
-#             the model that ships; the rule alone would pick weighted_bce for Other, a 0.001-MCC tie.
+#             Exception: MLP_ProstT5 keeps the DEPLOYED map (Metabolite = sqrt_weighted_bce), so the benchmark scores
+#             the model that ships; the rule alone would pick weighted_bce for Metabolite, a 0.001-MCC tie.
 #   balanced  (optional arm, not in the manuscript) 100 epochs, same rule on the balanced-set sweep.
 _SQ, _BCE, _WB, _FOC = "sqrt_weighted_bce", "bce", "weighted_bce", "focal"
 MLP_VARIANTS = {

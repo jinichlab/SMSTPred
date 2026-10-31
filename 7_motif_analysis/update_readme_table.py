@@ -14,7 +14,7 @@ import pandas as pd
 HERE = Path(__file__).resolve().parent
 PL = pd.read_csv(HERE / "structures" / "motif_placements.csv")
 README = HERE / "README.md"
-CLASSES = ["DNA", "RNA", "Protein", "Other"]
+CLASSES = ["DNA", "RNA", "Protein", "Metabolite"]
 
 # concise enzyme labels keyed by UniProt accession (PDB disambiguates further)
 SHORT = {
@@ -86,10 +86,10 @@ def build():
      f"{int(npl.get('near substrate/SAM',0))} sit at the substrate–cofactor junction (both ligands ≤ 4 Å), "
      f"{int(npl.get('near substrate',0))} contact only the substrate, {int(npl.get('near SAM',0))} only the SAM pocket,",
      f"and **{int(npl.get('distal',0))}** are **distal** — > 4 Å from *both* ligands: {dnames}.",
-     "Of these, Other-5, RNA-7 and RNA-6 sit well off the cofactor (> 9 Å from SAM) on the",
+     "Of these, Metabolite-5, RNA-7 and RNA-6 sit well off the cofactor (> 9 Å from SAM) on the",
      "substrate-recognition face, while DNA-4 lies ~5–6 Å from both in the active-site cleft",
      "(junction-adjacent, in second shell rather than direct contact). The 6 non-specific",
-     "motifs (RNA-3, Protein-1, Other-1/2/3/4) are excluded as pan-MTase SAM-binding / Rossmann-core",
+     "motifs (RNA-3, Protein-1, Metabolite-1/2/3/4) are excluded as pan-MTase SAM-binding / Rossmann-core",
      "elements shared across classes.", "",
     ]
     return "\n".join(L)
