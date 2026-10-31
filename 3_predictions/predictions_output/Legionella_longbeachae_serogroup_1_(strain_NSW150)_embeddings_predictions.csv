@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 D3HJ80,0.999,0.001,0.0015,0.0001,1,0,0,0,0.0005,0.9535,1
 D3HJB4,0.9991,0.0027,0.0,0.0004,1,0,0,0,0.0004,0.9852,1
 D3HK11,0.9922,0.0059,0.0006,0.0001,1,0,0,0,0.0012,0.9702,1

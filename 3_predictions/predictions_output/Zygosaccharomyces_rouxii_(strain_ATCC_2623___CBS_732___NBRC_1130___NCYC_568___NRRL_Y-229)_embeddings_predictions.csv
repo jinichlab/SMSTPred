@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 C5DP96,0.0004,0.9467,0.0683,0.0003,0,1,0,0,0.015,0.9759,1
 C5DP98,0.0,0.021,0.9987,0.0004,0,0,1,0,0.0022,0.998,1
 C5DPB2,0.0,0.0,1.0,0.0001,0,0,1,0,0.0,0.9851,1

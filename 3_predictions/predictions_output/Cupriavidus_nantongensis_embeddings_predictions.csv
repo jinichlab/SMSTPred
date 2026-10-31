@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A142JE60,0.0,0.0005,0.9998,0.0,0,0,1,0,0.0001,0.9981,1
 A0A142JEG2,1.0,0.0,0.0005,0.0,1,0,0,0,0.0001,0.9912,1
 A0A142JEH3,0.0087,0.0025,0.0001,0.9937,0,0,0,1,0.0022,0.9712,1

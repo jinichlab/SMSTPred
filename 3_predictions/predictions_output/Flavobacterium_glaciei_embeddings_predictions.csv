@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A562PIA4,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9503,1
 A0A562PIF8,0.0001,0.0003,0.032,0.9893,0,0,0,1,0.0026,0.987,1
 A0A562PIL0,0.0052,0.6889,0.0582,0.0002,0,1,0,0,0.022,0.9246,0

@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 B6Q1K3,0.0358,0.963,0.0003,0.0005,0,1,0,0,0.0061,0.9437,1
 B6Q1K4,0.0657,0.96,0.0002,0.0003,0,1,0,0,0.0082,0.9169,0
 B6Q1V3,0.0003,0.0194,0.001,0.9971,0,0,0,1,0.0022,0.919,0

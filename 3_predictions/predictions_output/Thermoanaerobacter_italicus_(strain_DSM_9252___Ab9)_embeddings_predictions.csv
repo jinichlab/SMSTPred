@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 D3T2V4,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9549,1
 D3T2W9,0.0,0.0004,0.9994,0.0001,0,0,1,0,0.0002,0.9837,1
 D3T2Z1,0.0,0.0005,1.0,0.0,0,0,1,0,0.0001,0.9918,1

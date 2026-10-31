@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A221JWU6,0.7092,0.0,0.9086,0.0033,1,0,1,0,0.0444,0.8786,0
 A0A221JWZ5,0.0636,0.0146,0.0301,0.0359,0,0,0,0,0.0167,0.9007,0
 A0A221JXU4,1.0,0.0,0.0005,0.0,1,0,0,0,0.0001,0.9633,1

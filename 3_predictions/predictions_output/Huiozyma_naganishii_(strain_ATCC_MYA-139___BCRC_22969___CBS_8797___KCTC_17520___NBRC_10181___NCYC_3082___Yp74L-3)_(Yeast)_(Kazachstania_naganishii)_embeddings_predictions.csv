@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 J7QZD6,0.0,0.0,1.0,0.0001,0,0,1,0,0.0,0.9949,1
 J7R1F4,0.0152,0.0018,0.8894,0.0004,0,0,1,0,0.018,0.9385,0
 J7R804,0.1468,0.948,0.0001,0.0039,0,1,0,0,0.0162,0.9651,1

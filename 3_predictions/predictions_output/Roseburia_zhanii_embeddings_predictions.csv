@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A923LKV3,0.0014,0.0001,0.0004,0.9996,0,0,0,1,0.0003,0.9777,1
 A0A923LL11,0.0009,0.0143,0.9591,0.0005,0,0,1,0,0.0093,0.9005,0
 A0A923LL34,0.2184,0.0091,0.0047,0.0079,0,0,0,0,0.0189,0.9237,0

@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A561SH77,1.0,0.0001,0.0,0.0002,1,0,0,0,0.0001,0.8995,0
 A0A561SH88,1.0,0.0001,0.0002,0.0001,1,0,0,0,0.0001,0.9526,1
 A0A561SHB5,0.6023,0.0001,0.823,0.0001,0,0,0,0,0.0341,0.9614,1

@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 F0JBC1,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9942,1
 F0JC38,1.0,0.0,0.0003,0.0006,1,0,0,0,0.0001,0.9794,1
 F0JC42,0.8952,0.005,0.0472,0.0003,1,0,0,0,0.0101,0.9364,0

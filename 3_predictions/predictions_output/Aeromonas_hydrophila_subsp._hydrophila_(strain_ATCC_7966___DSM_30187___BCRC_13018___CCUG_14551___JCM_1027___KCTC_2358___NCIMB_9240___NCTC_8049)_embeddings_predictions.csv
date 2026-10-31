@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0KEF6,1.0,0.0001,0.0,0.0,1,0,0,0,0.0,0.998,1
 A0KEG6,0.0,0.0,1.0,0.0,0,0,1,0,0.0,1.0,1
 A0KES3,0.961,0.0056,0.0002,0.1401,1,0,0,1,0.0181,0.9396,0

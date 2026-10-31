@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0ABM2EAT0,0.0001,0.0003,0.9983,0.0003,0,0,1,0,0.0003,0.9888,1
 A0ABM2EC12,0.0,0.0002,0.994,0.393,0,0,1,1,0.0208,0.9787,1
 A0ABM2EC31,0.0228,0.9233,0.0377,0.0001,0,1,0,0,0.0077,0.9725,1

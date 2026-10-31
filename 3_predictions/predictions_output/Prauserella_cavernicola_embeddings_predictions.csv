@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A934QMD3,0.6673,0.0292,0.0073,0.0018,1,0,0,0,0.0335,0.9191,0
 A0A934QMD9,0.9997,0.0,0.0036,0.0001,1,0,0,0,0.0004,0.9682,1
 A0A934QMG1,1.0,0.0001,0.0,0.0,1,0,0,0,0.0,0.9675,1

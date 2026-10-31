@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A327NWJ6,0.001,0.5276,0.3574,0.0012,0,0,0,0,0.0628,0.8951,0
 A0A327NXT0,0.969,0.0189,0.0002,0.0005,1,0,0,0,0.0028,0.9512,1
 A0A327NY60,0.0117,0.0025,0.0002,0.9881,0,0,0,1,0.0034,0.9627,1

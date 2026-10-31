@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A235EG68,0.0001,1.0,0.0,0.0005,0,1,0,0,0.0001,0.9893,1
 A0A235EGL2,0.891,0.0,0.0713,0.0085,1,0,0,0,0.0243,0.9238,0
 A0A235EGQ3,0.0351,0.0,0.997,0.0002,0,0,1,0,0.0047,0.9728,1

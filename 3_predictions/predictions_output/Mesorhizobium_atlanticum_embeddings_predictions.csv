@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A330GEV4,1.0,0.0,0.0008,0.0,1,0,0,0,0.0001,0.9986,1
 A0A330GFC6,0.2623,0.589,0.0029,0.0,0,0,0,0,0.0385,0.969,1
 A0A330GFI8,0.0508,0.9858,0.0002,0.0,0,1,0,0,0.0032,0.9959,1

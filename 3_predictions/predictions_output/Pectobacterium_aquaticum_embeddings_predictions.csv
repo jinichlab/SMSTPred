@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A3R8NPN2,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9996,1
 A0A3R8NQG5,0.0006,0.001,0.0006,0.9988,0,0,0,1,0.0004,0.9892,1
 A0A3R8NRE4,0.0024,0.0005,0.9981,0.002,0,0,1,0,0.0013,0.8742,0

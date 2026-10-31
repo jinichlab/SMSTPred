@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 S0KM67,0.9917,0.0038,0.0,0.0025,1,0,0,0,0.001,0.9723,1
 S0KNS6,0.0001,0.7565,0.4563,0.0,0,1,0,0,0.0416,0.9514,1
 S0KPC1,0.0,0.0003,0.9995,0.0,0,0,1,0,0.0002,0.9847,1

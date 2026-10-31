@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A3GEV2,0.0,0.0005,0.9999,0.0001,0,0,1,0,0.0001,1.0,1
 A3GEX4,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9877,1
 A3GEZ8,0.0,0.9116,0.9472,0.0,0,1,1,0,0.0182,0.9933,1

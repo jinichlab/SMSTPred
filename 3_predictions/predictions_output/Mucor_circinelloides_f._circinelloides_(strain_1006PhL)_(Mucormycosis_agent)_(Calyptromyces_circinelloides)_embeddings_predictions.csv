@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 S2IU45,0.0,0.8812,0.5367,0.0013,0,1,0,0,0.0322,0.9365,0
 S2IWB8,0.1962,0.5061,0.001,0.0003,0,0,0,0,0.0454,0.9573,1
 S2IWG4,1.0,0.0001,0.0001,0.0005,1,0,0,0,0.0001,0.9906,1

@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 I7LTA0,0.0,0.1475,0.9995,0.0,0,0,1,0,0.0269,0.9028,0
 I7LVP8,0.0,0.0001,0.9965,0.2042,0,0,1,1,0.0176,0.9241,0
 I7LWQ0,0.0004,0.068,0.7619,0.0,0,0,0,0,0.0293,0.9518,1

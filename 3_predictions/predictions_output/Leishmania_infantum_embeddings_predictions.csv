@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A4HRN5,0.0,0.0,1.0,0.0001,0,0,1,0,0.0,0.9174,0
 A4HS03,0.3506,0.7059,0.0001,0.0087,0,1,0,0,0.05,0.9212,0
 A4HS53,0.9979,0.0061,0.0026,0.0,1,0,0,0,0.001,0.9441,1

@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 H2BQQ2,0.5848,0.0538,0.0021,0.0002,0,0,0,0,0.0202,0.9526,1
 H2BR38,1.0,0.0001,0.0001,0.0,1,0,0,0,0.0,0.9657,1
 H2BR85,0.0,1.0,0.0001,0.0001,0,1,0,0,0.0,0.9918,1

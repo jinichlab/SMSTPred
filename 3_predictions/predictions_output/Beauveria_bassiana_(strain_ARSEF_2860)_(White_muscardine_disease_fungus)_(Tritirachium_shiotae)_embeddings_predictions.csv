@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 J4KKW8,1.0,0.0,0.0,0.0001,1,0,0,0,0.0,0.9914,1
 J4KL35,0.9999,0.0004,0.0,0.0004,1,0,0,0,0.0001,0.958,1
 J4KL43,0.8045,0.7376,0.0,0.0002,1,1,0,0,0.0263,0.9219,0

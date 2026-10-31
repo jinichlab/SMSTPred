@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 D0MQ54,0.0001,0.0002,0.9986,0.001,0,0,1,0,0.0007,0.9348,0
 D0MQA7,0.0427,0.997,0.0,0.0017,0,1,0,0,0.0062,0.929,0
 D0MQB5,0.9682,0.0005,0.0259,0.0009,1,0,0,0,0.0059,0.921,0

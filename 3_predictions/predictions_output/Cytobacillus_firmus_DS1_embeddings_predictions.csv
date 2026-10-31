@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 W7KMS7,0.0002,0.5777,0.01,0.7891,0,0,0,1,0.057,0.8718,0
 W7KMT3,0.0002,0.0001,0.0026,0.9997,0,0,0,1,0.0003,0.9698,1
 W7KMW2,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9966,1

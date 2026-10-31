@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 E4S490,0.0,0.9374,0.3037,0.0,0,1,0,0,0.0296,0.9703,1
 E4S4L8,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9994,1
 E4S4R3,0.0,0.0002,1.0,0.0,0,0,1,0,0.0,0.9836,1

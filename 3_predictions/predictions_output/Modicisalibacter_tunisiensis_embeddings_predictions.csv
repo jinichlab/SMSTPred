@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0ABS7WU44,0.1938,0.0675,0.0542,0.0026,0,0,0,0,0.0306,0.8735,0
 A0ABS7WU80,0.0,1.0,0.0001,0.0001,0,1,0,0,0.0,0.9945,1
 A0ABS7WUR4,0.7688,0.0001,0.4648,0.0,1,0,0,0,0.0449,0.9628,1

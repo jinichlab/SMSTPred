@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A370MVP5,0.0046,0.0,0.9998,0.0,0,0,1,0,0.0005,0.9919,1
 A0A370MWN8,0.8337,0.0006,0.073,0.0034,1,0,0,0,0.0289,0.9211,0
 A0A370MXQ9,0.9868,0.0007,0.0334,0.0002,1,0,0,0,0.0048,0.8975,0

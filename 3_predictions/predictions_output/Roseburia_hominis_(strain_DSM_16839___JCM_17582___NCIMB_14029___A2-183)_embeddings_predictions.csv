@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 G2SWM7,0.0,0.0,1.0,0.0002,0,0,1,0,0.0,0.9781,1
 G2SWR1,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9613,1
 G2SWZ8,0.2565,0.0016,0.1259,0.0003,0,0,0,0,0.0371,0.9453,1

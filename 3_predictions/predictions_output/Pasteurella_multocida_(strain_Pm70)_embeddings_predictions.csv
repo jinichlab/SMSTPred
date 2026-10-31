@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 P57946,0.0,0.0005,1.0,0.0,0,0,1,0,0.0001,1.0,1
 Q9CJT8,0.0001,0.9949,0.0078,0.0,0,1,0,0,0.002,0.986,1
 Q9CJX3,0.0,0.0,1.0,0.0,0,0,1,0,0.0,1.0,1

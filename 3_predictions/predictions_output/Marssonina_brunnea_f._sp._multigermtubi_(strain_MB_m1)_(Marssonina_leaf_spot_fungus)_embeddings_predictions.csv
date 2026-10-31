@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 K1W538,0.0326,0.3085,0.0486,0.0088,0,0,0,0,0.0785,0.7725,0
 K1W5S8,1.0,0.0001,0.0,0.0002,1,0,0,0,0.0001,0.9857,1
 K1W6T4,0.0222,0.9817,0.0001,0.0016,0,1,0,0,0.0033,0.9499,1

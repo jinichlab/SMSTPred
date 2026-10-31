@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 D3RWV2,0.3593,0.0033,0.1662,0.0,0,0,0,0,0.0364,0.9453,1
 D3RWY0,0.9712,0.005,0.0055,0.0005,1,0,0,0,0.0073,0.8987,0
 D3RX58,0.001,0.0001,0.9997,0.0,0,0,1,0,0.0002,0.9705,1

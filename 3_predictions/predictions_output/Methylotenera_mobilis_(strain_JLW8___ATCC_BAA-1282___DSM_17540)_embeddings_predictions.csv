@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 C6WSP7,0.0042,0.0669,0.0,0.9638,0,0,0,1,0.0102,0.9781,1
 C6WSQ3,0.0005,0.0009,0.0054,0.9888,0,0,0,1,0.0014,0.9131,0
 C6WSW0,0.2446,0.6354,0.0004,0.0009,0,1,0,0,0.0361,0.9534,1

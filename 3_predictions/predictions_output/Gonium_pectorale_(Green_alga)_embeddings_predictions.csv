@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A150FU64,0.8089,0.0024,0.044,0.0056,1,0,0,0,0.0113,0.9112,0
 A0A150FUR3,0.0088,0.9992,0.0,0.0008,0,1,0,0,0.0012,0.9172,0
 A0A150FV63,0.343,0.0003,0.7871,0.0003,0,0,0,0,0.0335,0.8619,0

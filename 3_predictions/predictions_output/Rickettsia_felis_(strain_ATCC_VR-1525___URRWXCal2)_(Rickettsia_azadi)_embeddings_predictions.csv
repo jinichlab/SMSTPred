@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 Q4UJD1,0.0002,0.0362,0.0118,0.9323,0,0,0,1,0.0127,0.8547,0
 Q4UJR1,0.0,0.0,0.9596,0.6352,0,0,1,1,0.0378,0.8566,0
 Q4UJU4,0.0,0.0105,0.9773,0.0001,0,0,1,0,0.0048,0.9591,1

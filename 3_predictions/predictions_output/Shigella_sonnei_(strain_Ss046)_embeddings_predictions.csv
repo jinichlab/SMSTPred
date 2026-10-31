@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 Q3YTB2,0.0021,0.7945,0.0043,0.0018,0,1,0,0,0.018,0.914,0
 Q3YU23,0.0,0.0002,0.9999,0.0,0,0,1,0,0.0,1.0,1
 Q3YV11,0.0,0.0,1.0,0.0,0,0,1,0,0.0,1.0,1

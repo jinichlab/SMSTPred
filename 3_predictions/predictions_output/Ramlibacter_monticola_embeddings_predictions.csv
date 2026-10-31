@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A936YUC8,0.9997,0.0035,0.0,0.0,1,0,0,0,0.0002,0.9603,1
 A0A936YV55,0.057,0.0001,0.9665,0.0,0,0,1,0,0.0114,0.9353,0
 A0A936YX32,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9964,1

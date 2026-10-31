@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 E3PR61,0.3377,0.0205,0.0907,0.0,0,0,0,0,0.0317,0.9445,1
 E3PRB3,0.9368,0.0308,0.004,0.0,1,0,0,0,0.007,0.9231,0
 E3PRE6,0.3053,0.0004,0.4666,0.0,0,0,0,0,0.0446,0.9782,1

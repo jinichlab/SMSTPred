@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 Q2STD8,0.0,0.0004,0.9999,0.0,0,0,1,0,0.0001,1.0,1
 Q2STP2,0.9673,0.0001,0.074,0.0004,1,0,0,0,0.0053,0.9171,0
 Q2STS6,0.0,0.9712,0.0366,0.0002,0,1,0,0,0.0038,0.9707,1

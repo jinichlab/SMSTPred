@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 F0Q050,0.0059,0.0295,0.0,0.9684,0,0,0,1,0.0067,0.9774,1
 F0Q052,0.0156,0.0343,0.0,0.9823,0,0,0,1,0.0052,0.9778,1
 F0Q0A6,0.0,0.0001,1.0,0.0,0,0,1,0,0.0,0.9963,1

@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 E0SAS2,0.3643,0.0,0.92,0.0,0,0,1,0,0.0145,0.9898,1
 E0SAV5,0.6775,0.0015,0.444,0.0,1,0,0,0,0.0387,0.9083,0
 E0SAV6,1.0,0.0,0.0,0.0,1,0,0,0,0.0,0.9978,1

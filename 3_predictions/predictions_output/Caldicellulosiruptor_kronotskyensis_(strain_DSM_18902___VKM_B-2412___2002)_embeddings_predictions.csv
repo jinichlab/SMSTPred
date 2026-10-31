@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 E4SBX0,0.7219,0.033,0.0565,0.0,1,0,0,0,0.0355,0.9239,0
 E4SBZ5,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9698,1
 E4SC95,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9612,1

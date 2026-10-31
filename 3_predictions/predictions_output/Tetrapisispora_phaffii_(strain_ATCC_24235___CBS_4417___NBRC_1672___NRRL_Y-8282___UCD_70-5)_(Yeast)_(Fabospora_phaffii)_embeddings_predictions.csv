@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 G8BMM4,0.7707,0.0003,0.1297,0.0003,1,0,0,0,0.0139,0.9868,1
 G8BMU7,0.8967,0.0459,0.0177,0.0,1,0,0,0,0.0164,0.9413,1
 G8BMV2,0.0001,0.8546,0.0212,0.0325,0,1,0,0,0.0238,0.9093,0

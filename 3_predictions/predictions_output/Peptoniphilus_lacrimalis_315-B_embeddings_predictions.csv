@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 D1VRI9,0.0074,0.0489,0.0,0.973,0,0,0,1,0.0077,0.9816,1
 D1VRL8,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9614,1
 D1VS23,0.0005,0.0167,0.0001,0.9982,0,0,0,1,0.0017,0.9667,1

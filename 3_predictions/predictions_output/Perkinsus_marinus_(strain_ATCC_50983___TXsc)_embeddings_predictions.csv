@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 C5K530,0.0003,0.9979,0.0004,0.0122,0,1,0,0,0.0014,0.9474,1
 C5K572,0.9998,0.0026,0.0002,0.0001,1,0,0,0,0.0003,0.9735,1
 C5K5B3,0.4625,0.8285,0.0001,0.0005,0,1,0,0,0.0308,0.9442,1

@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A165KNF9,0.0013,0.9763,0.0045,0.0024,0,1,0,0,0.0038,0.9532,1
 A0A165KQL2,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9556,1
 A0A165KVV2,0.9804,0.0032,0.0273,0.0001,1,0,0,0,0.0039,0.9581,1

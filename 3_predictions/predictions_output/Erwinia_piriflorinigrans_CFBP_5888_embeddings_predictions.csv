@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 V5Z2X7,1.0,0.0001,0.0,0.0,1,0,0,0,0.0,0.9998,1
 V5Z2Y1,0.9419,0.0116,0.0001,0.1643,1,0,0,1,0.0223,0.9364,0
 V5Z384,0.4698,0.006,0.0001,0.4526,0,0,0,1,0.0401,0.9455,1

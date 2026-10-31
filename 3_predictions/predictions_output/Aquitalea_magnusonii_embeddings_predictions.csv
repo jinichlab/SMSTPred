@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A318IPM9,0.0,0.9386,0.1095,0.0002,0,1,0,0,0.0117,0.9852,1
 A0A318ITS2,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9987,1
 A0A318IU95,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9979,1

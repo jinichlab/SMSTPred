@@ -1,4 +1,4 @@
-Entry,score_Other,score_Protein,score_RNA,score_DNA,call_Other,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
+Entry,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain
 A0A3S2TQV6,0.0,0.0,1.0,0.0,0,0,1,0,0.0,0.9972,1
 A0A3S2TR30,0.0,0.0,1.0,0.0001,0,0,1,0,0.0,0.9797,1
 A0A3S2TS30,0.843,0.2499,0.0018,0.0002,1,0,0,0,0.0421,0.9368,0
