@@ -97,6 +97,11 @@ STEPS = [
     S("b_loss_curves", "2", "2_training",
       "rm -rf train_val_loss_output && if command -v sbatch > /dev/null; then sbatch --wait run_train_val_loss.sh; else bash run_train_val_loss.sh; fi",
       "Train / validation loss curves behind Figs S3 and S6 (ten sweeps, SLURM array when sbatch exists)", tier="B", check="loss_curves", timeout=21600),
+
+    # ---------------------------------------------------------------- tier C: needs a download (never part of `make verify`)
+    S("c_uniprot_pull_smoke", "0", "0_uniprot_pull", "python pull_uniprot.py all --limit 3",
+      "Stage 0 smoke test: UniProt REST API reachable, 3 proteomes and a few hundred SAM / UP rows pulled (output under data/uniprot_pull/_smoke/)",
+      tier="C", timeout=900),
 ]
 
 BY_ID = {s["id"]: s for s in STEPS}

@@ -11,17 +11,39 @@ homology and classical-ML baselines, deploys it across the tree of life, and int
 
 | Stage | Folder | What it does |
 |---|---|---|
-| 1 | [`1_clustering/`](1_clustering) | Homology-aware **cluster-disjoint** partitioning of the training sets (greedy cosine clustering + threshold selection) so cross-validation never leaks homologues. |
-| 2 | [`2_training/`](2_training) | Loss/epoch tuning, the full **classifier bake-off** (embeddings vs homology baselines vs classical ML), the **SAM-vs-UP** training-set comparison, and the final **deployment model**. |
+| 0 | [`0_uniprot_pull/`](0_uniprot_pull) | **Data refresh** (optional, needs network): pulls the current Swiss-Prot SAM-methyltransferase set (InterPro IPR029063), the broad enzyme set (UP) and the 1,259 reference proteomes through the UniProt REST API, pins the UniProt release, and reports what changed against the archived data. The stages below run on the archived Zenodo data; Stage 0 produces the inputs for a re-run on newer UniProt. |
+| 1 | [`1_clustering/`](1_clustering) | Homology-aware **cluster-disjoint** partitioning of the training sets so cross-validation never leaks homologues: the archived paper used greedy cosine clustering; the refresh uses **MMseqs2 at 30 % identity** and draws 16 splits of random clusters (65 % train / 15 % validation / 20 % test). |
+| 2 | [`2_training/`](2_training) | The **classifier bake-off** (embedding MLPs trained with BCE and early stopping vs MMseqs2 / Foldseek / profile-HMM baselines, fixed 0.5 threshold; the archived paper's loss/epoch tuning and classical-ML arm are still there), the **SAM-vs-UP** training-set comparison, and the final **deployment model**. |
 | 3 | [`3_predictions/`](3_predictions) | Scores new proteins with the deployment model (per-label score, call, ensemble disagreement, applicability-domain flag). |
 | 4 | [`4_phylo_trends/`](4_phylo_trends) | Phylogenetic / taxonomic trends in the predicted substrate usage across the tree of life. |
 | 5 | [`5_umap/`](5_umap) | Global ProstT5 UMAP of all tree-of-life MTases + substrate-coloured maps and cluster-enrichment figures. |
 | 6 | [`6_dark_cluster_annotation/`](6_dark_cluster_annotation) | Cross-validates the 33 uncharacterized ("dark", zero-SwissProt-anchor) clusters surfaced in Stage 5 against two independent methods — **CLEAN** (EC-centroid nearest neighbor) and **Horizyn** (reaction-retrieval) — to flag genuine discovery leads vs clusters mis-swept in from other chemistry. |
 | 7 | [`7_motif_analysis/`](7_motif_analysis) | **Interpretability**: discriminative sequence motifs (STREME, FIMO) and their structural mapping onto experimental enzyme–cofactor–substrate complexes — *what* distinguishes the substrate classes. |
 
+## Two ways to use this repository
+
+* **Run the classifier on your own sequences:** [`ready_classifier/`](ready_classifier) is a small, separate tool: a FASTA in, the substrate type of each protein out, with a step-by-step walkthrough of the input
+  format and every output column. It always uses the newest trained model of this repository (`git pull` updates it).
+* **Reproduce or refresh the whole analysis:** `bash workflow/run_refresh.sh` (`make refresh`) runs the entire paper as one SLURM job chain, from the UniProt pull to every figure and table, for the newest
+  UniProt release; `bash workflow/setup_tools.sh` checks the external tools it needs ([`EXTERNAL_TOOLS.md`](EXTERNAL_TOOLS.md)). The outputs of a run are listed in `<release>/FIGURES.md` and the numbers
+  quoted in the Results in `<release>/key_numbers.md`. `make verify` re-runs the analyses of the archived paper from the Zenodo data.
+
 Each folder has its own `README.md` with scripts, inputs, outputs, and parameters. Composite-figure
 and rendered-table builders are in [`figures/`](figures); the small data tables (training labels,
 organism metadata) are in [`data/`](data).
+
+## Refreshing the analysis with a new UniProt release
+
+```bash
+conda activate smstpred                 # make env; Foldseek: make tools; the embedders: make embeddings-env
+make refresh-dry-run                    # prints the SLURM job chain and its dependencies, submits nothing
+make refresh                            # pull -> bin -> cluster (+ SAM and UP splits) -> structures -> embeddings -> bake-off, classical ML, SAM-vs-UP (16-task arrays) -> reports
+```
+
+Each stage is its own job and starts only if the jobs before it finished without error. The settings that shape the results (seed, split fractions, epochs, early-stopping patience, threshold) are in
+[`refresh_config.json`](refresh_config.json); the splits are drawn by the code from each release's clusters (same data and seed give the same splits). Not automatic: structures that AlphaFold DB cannot supply
+need ColabFold (`embeddings/README.md`). Results land in `<release>/benchmark/` (Fig 2A, Table 1, Fig S4, paired tests, train/validation loss figures) and `<release>/sam_vs_up/` (Fig 2B). The numbers in "Headline results" below are those of the archived
+Zenodo data (`make verify` reproduces them); the stages after the bake-off (3-7) are not part of the refresh chain yet. Details: [`workflow/run_refresh.sh`](workflow/run_refresh.sh), [`2_training/README.md`](2_training/README.md).
 
 ## Headline results
 

@@ -87,6 +87,9 @@ above.
 |---|---|---|
 | `reference_proteomes/` (per-organism UniProt proteome tables, about 30 GB) | `4_phylo_trends/reference_tree.py`, `7_motif_analysis/1_build_corpus.py` | UniProt reference proteomes of the organisms in `selected_1259_organisms.csv` |
 
+`reference_proteomes/` can be rebuilt (from the current UniProt, not the release the paper used) with `make pull`
+([`0_uniprot_pull/`](../0_uniprot_pull)); the per-organism files it writes have the same names and columns.
+
 External tools and installs: `foldseek` and `mmseqs` on `PATH` (override with `FOLDSEEK_BIN`); for Stage 6, a
 CLEAN checkout (`CLEAN_APP_DIR`, used by `6_dark_cluster_annotation/clean/run_clean_dark33*.sh`) and a
 Horizyn checkout (`HORIZYN_DIR`, used by the Horizyn scripts). The Rhea reaction tables Horizyn reads are

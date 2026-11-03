@@ -1,0 +1,40 @@
+{
+  "_readme": "The one place for the settings of the refresh pipeline (pull -> bin -> cluster -> splits -> bake-off). The scripts read it; an environment variable of the same purpose overrides it for one run (see each script's header). Changing a value changes the results: record it (the bake-off writes this file's content into its output folder).",
+  "control": "MLP_ProtT5",
+  "seed": 42,
+  "splits": {
+    "n_splits": 16,
+    "test_frac": 0.2,
+    "val_frac": 0.15
+  },
+  "mlp": {
+    "epochs": 2000,
+    "patience": 80,
+    "learning_rate": 0.001,
+    "batch_fraction": 0.9
+  },
+  "threshold": 0.5,
+  "hmm": {
+    "max_sequences_per_label": 500,
+    "mafft_threads": 1
+  },
+  "_control_note": "control = the deployed model: the reference of the Bonferroni-Dunn / Wilcoxon comparisons and of the classical-ML figure (ProtT5: the best embedding on the 2026_03 release, and it needs only sequence)",
+  "deployment": {
+    "embedding": "ProtT5",
+    "n_members": 6,
+    "ad_percentile": 1
+  },
+  "annotation": {
+    "clean_app_dir": "/home/nroethler/Code/abhiram/CLEAN/app",
+    "clean_env": "clean",
+    "horizyn_dir": "/home/nroethler/Code/horizyn/horizyn_local",
+    "horizyn_env": "horizyn"
+  },
+  "_annotation_note": "Stage 6 needs two external checkouts that are not part of environment.yml: CLEAN (its app/ folder) and Horizyn (the folder with checkpoints/, configs/, horizyn/). Paths here are this machine's; an environment variable CLEAN_APP_DIR / HORIZYN_DIR overrides them.",
+  "tools": {
+    "colabfold_batch": "/home/nroethler/Code/alphafold2/localcolabfold/colabfold-conda/bin/colabfold_batch",
+    "chimerax": "/home/nroethler/bin/chimerax",
+    "foldseek_bin": "/home/nroethler/Code/tools/foldseek/bin/foldseek"
+  },
+  "_tools_note": "Paths of tools that environment.yml does not install (see EXTERNAL_TOOLS.md and workflow/setup_tools.sh). An environment variable (COLABFOLD_BATCH, CHIMERAX, FOLDSEEK_BIN) overrides them. Empty foldseek_bin: <repo>/tools/foldseek/bin (make tools) or the PATH."
+}
