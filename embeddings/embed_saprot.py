@@ -8,7 +8,11 @@ residue tokens to a 1280-D vector. Unlike our ProstT5 embeddings (sequence in,
 via <AA2fold>), SaProt is *conditioned on the actual predicted fold*.
 
 Output mirrors the other embedding H5s: one float32 dataset per Entry. Needs the
-structures from fetch_structures.py and the foldseek binary. Resumable.
+structures from fetch_structures.py and the foldseek binary.
+
+Incremental (incremental.py): an existing --out file is appended to. Only structures that are not in it yet, or whose PDB file changed since their vector was made (a re-predicted
+structure, a new AlphaFold DB model), are embedded; every vector carries the md5 of its PDB file (attribute input_md5). For the archived file, which has no fingerprints, give --ledger
+<folder of the archived <Entry>.pdb files>: identical files are kept and stamped, the others embedded again. The model is not loaded when nothing is to be done.
 
 Env: environment_transformers.yml (transformers + CUDA torch). Example:
   python embed_saprot.py --struct-dir data/sam_structures --out embeddings_SAM_SaProt.h5
@@ -24,6 +28,8 @@ import h5py
 import numpy as np
 import torch
 from transformers import EsmTokenizer, EsmForMaskedLM
+
+import incremental as inc
 
 MAX_TOKENS = 1024  # ESM-2 position limit; SA token == 1 residue
 
@@ -57,26 +63,34 @@ def main():
                     or str(Path(__file__).resolve().parents[1] / "tools" / "foldseek" / "bin" / "foldseek"),
                     help="Foldseek binary ($FOLDSEEK_BIN, else foldseek on PATH, else tools/foldseek/bin/foldseek from `make tools`)")
     ap.add_argument("--pattern", default="*.pdb")
+    ap.add_argument("--ledger", nargs="+", help="folder(s) of the <Entry>.pdb files the unstamped vectors already in --out were made from")
+    ap.add_argument("--trust-existing", action="store_true", help="keep unstamped vectors by accession alone, without a ledger")
+    ap.add_argument("--overwrite", action="store_true", help="start --out again instead of appending")
     args = ap.parse_args()
+
+    pdbs = sorted(Path(args.struct_dir).glob(args.pattern))
+    by_entry = {pdb.stem: pdb for pdb in pdbs}
+    wanted = {e: inc.md5_file(f) for e, f in by_entry.items()}
+    if args.overwrite or not Path(args.out).exists():
+        pl = {"todo": {e: "new" for e in wanted}, "keep": [], "stamp": {}, "extra": []}
+    else:
+        pl = inc.plan(wanted, inc.stored_fingerprints(args.out), inc.read_ledger(args.ledger), args.trust_existing)
+    inc.report("SaProt", pl, len(wanted))
+    if not pl["todo"]:
+        inc.apply_stamps(args.out, pl["stamp"])
+        print("done: nothing to embed", flush=True)
+        return
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"device={device}; loading {args.model}", flush=True)
     tok = EsmTokenizer.from_pretrained(args.model)
     model = EsmForMaskedLM.from_pretrained(args.model).to(device).eval()
 
-    pdbs = sorted(Path(args.struct_dir).glob(args.pattern))
-    done = set()
-    if Path(args.out).exists():
-        with h5py.File(args.out, "r") as f:
-            done = set(f.keys())
-    print(f"{len(pdbs)} structures; {len(done)} already embedded", flush=True)
-
     n_ok = n_fail = 0
-    with h5py.File(args.out, "a") as h5:
-        for i, pdb in enumerate(pdbs, 1):
-            entry = pdb.stem
-            if entry in done:
-                continue
+    with h5py.File(args.out, "w" if args.overwrite else "a") as h5:
+        inc.check_config(h5, {"model": args.model})
+        for i, entry in enumerate(pl["todo"], 1):
+            pdb = by_entry[entry]
             try:
                 sa = get_sa_seq(args.foldseek, str(pdb))
                 if not sa:
@@ -86,15 +100,17 @@ def main():
                 with torch.no_grad():
                     h = model.esm(**ids).last_hidden_state[0, 1:-1]  # strip CLS/EOS
                 emb = h.mean(0).cpu().numpy().astype(np.float32)
-                h5.create_dataset(entry, data=emb, compression="gzip")
+                inc.replace_slot(h5, entry)
+                h5.create_dataset(entry, data=emb, compression="gzip").attrs[inc.ATTR] = wanted[entry]
                 n_ok += 1
             except Exception as e:
                 n_fail += 1
                 print(f"  ! {entry}: {e}", flush=True)
             if i % 500 == 0:
-                print(f"  {i}/{len(pdbs)} (ok={n_ok} fail={n_fail})", flush=True)
+                print(f"  {i}/{len(pl['todo'])} (ok={n_ok} fail={n_fail})", flush=True)
 
-    print(f"done: {n_ok} embedded, {n_fail} failed", flush=True)
+    inc.apply_stamps(args.out, pl["stamp"])
+    print(f"done: {n_ok} embedded, {n_fail} failed, {len(pl['keep'])} kept", flush=True)
     with h5py.File(args.out, "r") as f:
         ks = list(f.keys())
         dim = f[ks[0]].shape[0] if ks else 0

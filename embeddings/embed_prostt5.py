@@ -10,6 +10,11 @@ Output: HDF5 file with groups
     /<seq_id>/residue   (L, 1024) float16  per-residue embeddings
     /<seq_id>/mean      (1024,)  float16  mean-pooled per-protein embedding
 
+Incremental (incremental.py): an existing --out file is appended to, never rewritten. Only proteins that are not in it yet, or whose sequence changed since their vector was made,
+are embedded; every group carries the md5 of its sequence (attribute input_md5). For the archived files, which have no fingerprints, give --ledger (a FASTA / CSV of the sequences
+they were made from): matching vectors are kept and stamped, the others embedded again. --overwrite starts the file again. The model is not even loaded when nothing is to be done.
+    python embed_prostt5.py --fasta wanted.fasta --out embeddings_SAM_ProstT5.h5 --no-per-residue --ledger archived_sequences.csv
+
 Notes
 -----
 - ProstT5 is bidirectional; for encoding AA -> embedding we prepend "<AA2fold>"
@@ -29,6 +34,8 @@ import h5py
 import numpy as np
 import torch
 from transformers import T5EncoderModel, T5Tokenizer
+
+import incremental as inc
 
 MODEL_NAME = "Rostlab/ProstT5"
 
@@ -90,7 +97,22 @@ def main():
     ap.add_argument("--fp16", action="store_true", default=True,
                     help="Run model in fp16 on GPU (default: on).")
     ap.add_argument("--fp32", dest="fp16", action="store_false")
+    ap.add_argument("--ledger", nargs="+", help="what the unstamped vectors already in --out were made from (FASTA, or CSV / TSV with Entry and Sequence)")
+    ap.add_argument("--trust-existing", action="store_true", help="keep unstamped vectors by accession alone, without a ledger")
+    ap.add_argument("--overwrite", action="store_true", help="start --out again instead of appending")
     args = ap.parse_args()
+
+    seqs = read_fasta(args.fasta)
+    wanted = {sid: inc.md5_text(seq) for sid, seq in seqs.items()}
+    if args.overwrite or not args.out.exists():
+        pl = {"todo": {sid: "new" for sid in wanted}, "keep": [], "stamp": {}, "extra": []}
+    else:
+        pl = inc.plan(wanted, inc.stored_fingerprints(args.out), inc.read_ledger(args.ledger), args.trust_existing)
+    inc.report("ProstT5", pl, len(seqs))
+    if not pl["todo"]:
+        inc.apply_stamps(args.out, pl["stamp"])
+        print("[done] nothing to embed", flush=True)
+        return
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"[device] {device}")
@@ -102,14 +124,13 @@ def main():
         model = model.half()
     print(f"[load] params = {sum(p.numel() for p in model.parameters())/1e6:.1f} M")
 
-    seqs = read_fasta(args.fasta)
-    print(f"[data] {len(seqs)} sequences  (avg len = "
-          f"{np.mean([len(s) for s in seqs.values()]):.0f})")
+    items = [(sid, seqs[sid]) for sid in pl["todo"]]
+    print(f"[data] {len(items)} sequences to embed  (avg len = {np.mean([len(s) for _, s in items]):.0f})")
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    h5 = h5py.File(args.out, "w")
+    h5 = h5py.File(args.out, "w" if args.overwrite else "a")
+    inc.check_config(h5, {"model": MODEL_NAME, "precision": "fp16" if (args.fp16 and device.type == "cuda") else "fp32"})
 
-    items = list(seqs.items())
     done = 0
     t0 = time.time()
     for batch in batch_by_length(items, args.max_residues, args.max_seqs):
@@ -131,18 +152,21 @@ def main():
             # prefix occupies token index 0; residues are tokens [1 : 1+L]
             residue_emb = emb[i, 1 : 1 + L].astype(np.float16)
             mean_emb = residue_emb.mean(axis=0).astype(np.float16)
+            inc.replace_slot(h5, sid)
             grp = h5.create_group(sid)
+            grp.attrs[inc.ATTR] = wanted[sid]
             if args.per_residue:
                 grp.create_dataset("residue", data=residue_emb, compression="gzip")
             grp.create_dataset("mean", data=mean_emb)
             grp.attrs["length"] = L
 
         done += len(batch)
-        print(f"[progress] {done}/{len(seqs)}  "
+        print(f"[progress] {done}/{len(items)}  "
               f"({done / max(time.time() - t0, 1e-9):.1f} seq/s)")
 
     h5.close()
-    print(f"[done] wrote {args.out}")
+    inc.apply_stamps(args.out, pl["stamp"])
+    print(f"[done] {args.out}: embedded {len(items)}, kept {len(pl['keep'])}")
 
 
 if __name__ == "__main__":
