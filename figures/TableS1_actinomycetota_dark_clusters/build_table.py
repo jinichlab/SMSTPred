@@ -14,7 +14,10 @@ Two independent computational calls per cluster:
 
 Source: repo/6_dark_cluster_annotation/table2_dark_clusters.csv
 Outputs (this dir): table_s1.csv, table_s1.png
+
+  python build_table.py [--src <table_dark_clusters.csv>] [--out <folder>]    (a release: <release>/dark_annotation/table_dark_clusters.csv, from 6_dark_cluster_annotation/build_table2.py --release-dir)
 """
+import argparse
 import textwrap
 from pathlib import Path
 
@@ -54,7 +57,13 @@ def wrap(text, width):
 
 
 def main():
-    df = pd.read_csv(SRC)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", default=str(SRC))
+    ap.add_argument("--out", default=str(HERE))
+    a = ap.parse_args()
+    OUT = Path(a.out)
+    OUT.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(a.src)
     df = df[df.lineage == LINEAGE].sort_values("n", ascending=False).reset_index(drop=True)
 
     rows = []
@@ -76,7 +85,7 @@ def main():
         })
     tbl = pd.DataFrame(rows)
     tbl.drop(columns=["_conf_color", "_share_color", "_not_meth"]).to_csv(
-        HERE / "table_s1.csv", index=False)
+        OUT / "table_s1.csv", index=False)
     print(f"[wrote] table_s1.csv ({len(tbl)} rows)")
 
     # ---- rendered table ----
@@ -112,7 +121,7 @@ def main():
             cell.set_text_props(va="center")
             if col_name == "Dominant reaction family (Horizyn)" and row["_not_meth"]:
                 cell.set_text_props(color="#c14445", fontweight="bold", va="center")
-    fig.savefig(HERE / "table_s1.png", dpi=200, bbox_inches="tight")
+    fig.savefig(OUT / "table_s1.png", dpi=200, bbox_inches="tight")
     plt.close(fig)
     print("[wrote] table_s1.png")
 

@@ -26,7 +26,7 @@ def load_top_ec(path):
         for line in f:
             entry, rest = line.strip().split(",", 1)
             first_call = rest.split(",")[0]
-            m = re.match(r"(EC:[\d.]+)", first_call)
+            m = re.match(r"(EC:[\d.]+(?:n\d+)?)", first_call)     # preliminary numbers such as EC:2.1.1.n7 (the pattern used to stop at the n)
             top_ec[entry] = m.group(1) if m else first_call
     return top_ec
 

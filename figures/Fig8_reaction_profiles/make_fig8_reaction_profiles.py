@@ -6,7 +6,7 @@ the 36,552 Rhea reaction entries (mean over the cluster's members of the member-
 SAM-methylation reactions (both directional entries of the 677 reactions flagged as SAM methylation = 1,714 entries).
 Solid vertical line: the highest-scoring reaction. The substrate -> product reaction drawn in the panel is the reaction the
 largest share of members voted for as their single best match (c714: the furocoumarin reaction CLEAN names, which is its
-second most-voted reaction; its highest-scoring reaction, solid line, is an unclustered reaction, so both are marked).
+second most-voted reaction and third by score; the highest-scoring reaction, solid line, is a different reaction, so both are marked).
 Rhea numbers a reaction as master n with directional entries n+1 (left->right) and n+2 (right->left); Horizyn scores the two
 directions almost identically, so reactions are collapsed over direction and labelled by their master ID (as in the text).
 
@@ -14,7 +14,13 @@ Inputs: horizyn_dark_scores.npz (3,478 dark proteins x 36,552 reactions; Zenodo 
 regenerated with 6_dark_cluster_annotation/horizyn/run_horizyn_predict_full.py) and
 6_dark_cluster_annotation/horizyn/rhea_reaction_clusters.csv (in this repository).
 Output: Fig8_reaction_profiles.png
+
+  python make_fig8_reaction_profiles.py                    the archived figure (c551, c667, c110, c714)
+  python make_fig8_reaction_profiles.py --release <dir>    the refreshed figure: the clusters chosen by select_panels.py (CLEAN reliable + MTase and its EC inside Horizyn's dominant
+                                                           family; c317, c353, c512, c729 on release 2026_03; titles from panel_titles.csv), scores from
+                                                           <dir>/dark_annotation/horizyn_run/horizyn_full_scores.npz, output <dir>/fig8/Fig8_reaction_profiles.png
 """
+import argparse
 from pathlib import Path
 import io
 import os
@@ -38,7 +44,7 @@ PANELS = [(551, "A", "Tricetin → 3′,5′-di-O-methyltricetin", 32347),
           (667, "B", "7-methylxanthine → theobromine", 24604),
           (110, "C", "Guanidinoacetate → creatine", 10656),
           (714, "D", "5-hydroxy → 5-methoxyfurocoumarin", 18861)]
-COL = {551: "#4578aa", 667: "#618d43", 110: "#dbb92c", 714: "#c14445"}
+COL = {551: "#4578aa", 667: "#618d43", 110: "#dbb92c", 714: "#c14445"}      # release mode adds its own (select_panels)
 RUG = "#ed8c44"
 SAM = Chem.CanonSmiles("C[S+](CC[C@H]([NH3+])C(=O)[O-])C[C@H]1O[C@@H](N2C=NC3=C2N=CN=C3N)[C@H](O)[C@@H]1O")
 SAH = Chem.CanonSmiles("NC1=NC=NC2=C1N=CN2[C@@H]1O[C@H](CSCC[C@H]([NH3+])C(=O)[O-])[C@@H](O)[C@H]1O")
@@ -53,7 +59,37 @@ def canon(f):
 
 
 # ------------------------------------------------------------------ data
-z = np.load(DATA / "horizyn_dark_scores.npz", allow_pickle=True)
+ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+ap.add_argument("--release", default=None, help="release folder (e.g. uniprot_refresh/release_2026_03); default = the archived figure")
+args = ap.parse_args()
+if args.release:
+    REL = Path(args.release)
+    PANELS = None      # chosen below by select_panels.select (the rule), titles from panel_titles.csv
+    SCORES = REL / "dark_annotation/horizyn_run/horizyn_full_scores.npz"
+    OUTDIR = REL / "fig8"; OUTDIR.mkdir(exist_ok=True)
+else:
+    SCORES, OUTDIR = DATA / "horizyn_dark_scores.npz", HERE
+if args.release:
+    import sys; sys.path.insert(0, str(HERE))
+    from select_panels import select, master_map
+    MASTER = master_map(pd.read_csv(REL / "reference_tables/rhea-directions.tsv", sep="\t"))
+    ann = REL / "dark_annotation"
+    chosen = select(pd.read_csv(ann / "clean/clean_summary.csv"), pd.read_csv(ann / "horizyn/protein_clusters_family_final.csv"),
+                    pd.read_csv(ST6 / "horizyn/rhea_reaction_clusters.csv"), pd.read_csv(REL / "reference_tables/rhea2ec.tsv", sep="\t", dtype=str), MASTER)
+    if not chosen:
+        raise SystemExit("no dark cluster meets the Fig 8 rule (CLEAN reliable + MTase, EC inside Horizyn's dominant family): nothing to draw")
+    PANELS = [(c, "ABCDEF"[i], None, None) for i, c in enumerate(chosen)]
+    CLEAN_NAME = pd.read_csv(ann / "clean/clean_summary.csv").set_index("cluster")["enzyme"].to_dict()
+    TITLES = pd.read_csv(HERE / "panel_titles.csv").set_index("rhea_master")["title"].to_dict()      # optional hand-written overrides (empty by default)
+    sys.path.insert(0, str(ST6))
+    from rhea_text import load_equations, reaction_title
+    EQ = load_equations(REL / "reference_tables" / "rhea_equations.tsv")                          # the titles are written from Rhea's equation text
+    PALETTE = ["#4578aa", "#618d43", "#dbb92c", "#c14445", "#7b5ea7", "#3b9aa3"]
+    for i, c in enumerate(chosen):
+        COL[c] = PALETTE[i]
+    print("Fig 8 panels:", chosen, flush=True)
+    pd.DataFrame({"cluster": chosen}).to_csv(OUTDIR / "fig8_clusters.csv", index=False)      # Fig 7 outlines these (build_cluster_grids.py --release)
+z = np.load(SCORES, allow_pickle=True)
 S, clus, rid, is_sam = z["scores"], z["clusters"], z["rhea_ids"], z["is_sam_methylation"]
 N = S.shape[1]
 rc = pd.read_csv(ST6 / "horizyn/rhea_reaction_clusters.csv").set_index("rhea_lr_id").loc[rid]
@@ -96,7 +132,11 @@ def reaction_img(sub, prod, w=520, h=330, gap=200):
 
 # ------------------------------------------------------------------ figure
 plt.rcParams.update({"font.size": 12})
-fig, axes = plt.subplots(2, 2, figsize=(14, 9.8))
+nrow = (len(PANELS) + 1) // 2
+fig, axes = plt.subplots(nrow, 2, figsize=(14, 4.9 * nrow), squeeze=False)
+for ax in axes.ravel()[len(PANELS):]:
+    ax.axis("off")
+SHOWN = []
 for ax, (c, letter, title, master) in zip(axes.ravel(), PANELS):
     idx = np.where(clus == c)[0]; mu = S[idx].mean(0); top = int(mu.argmax())
     votes = pd.Series(rxn[top1[idx]]).value_counts()
@@ -106,9 +146,13 @@ for ax, (c, letter, title, master) in zip(axes.ravel(), PANELS):
     ax.vlines(mu[sam_rxn], ymin, ymin * 2.2, color=RUG, lw=0.5, alpha=0.7)
     ax.axvline(mu[top], color=COL[c], lw=2.6)
     # drawn reaction: the most-voted one (c714: the furocoumarin reaction, a lower vote rank)
-    g_show = votes.index[0] if c != 714 else rxn[np.where(rid == master + 1)[0][0]]
+    g_show = votes.index[0] if c != 714 or args.release else rxn[np.where(rid == master + 1)[0][0]]
     sub, prod, entry = forward_pair(g_show)
-    assert entry == master + 1, (c, entry, master)            # left->right entry of the master reaction quoted in the text
+    if master is None:                                        # release mode: the drawn reaction is whatever the members voted for
+        master = MASTER[entry]
+        title = TITLES.get(master) or reaction_title(EQ.get(master, "")) or f"{CLEAN_NAME.get(c, '')} (RHEA:{master})"
+    assert (MASTER[entry] if args.release else entry - 1) == master, (c, entry, master)   # the drawn entry belongs to the master reaction quoted in the text (archived figure: its left->right entry is master + 1)
+    SHOWN.append((c, master))
     ents = np.where(rxn == g_show)[0]; e_ = ents[np.argmax(mu[ents])]
     same = rxn[top] == g_show
     if not same:
@@ -121,7 +165,7 @@ for ax, (c, letter, title, master) in zip(axes.ravel(), PANELS):
     share = votes[g_show] / len(idx) * 100; z_e = (mu[e_] - mu.mean()) / mu.std()
     lines = [f"RHEA:{master} · voted by {share:.0f}% of members", f"score {mu[e_]:.2f}  (z = {z_e:.1f})"]
     if not same:
-        lines += ["solid line: top-scoring reaction", "(unclustered)"]
+        lines += ["solid line: top-scoring reaction"]
     ax.text(0.86, 0.655, "\n".join(lines), transform=ax.transAxes, ha="right", va="top", fontsize=12.5,
             color=COL[c], fontweight="bold", linespacing=1.25)
     ax.set_title(f"c{c} · {title}  (n = {len(idx)})", loc="left", fontweight="bold", fontsize=14, pad=10)
@@ -132,10 +176,10 @@ fig.legend(handles=[Patch(fc="#c8c8c8", label=f"all {N:,} Rhea reaction entries"
                     plt.Line2D([], [], color=RUG, lw=2.2, label="SAM-methylation reactions (rug)")],
            loc="lower center", ncol=2, frameon=False, fontsize=13.5)
 fig.tight_layout(rect=[0.0, 0.045, 1, 1])
-out = HERE / "Fig8_reaction_profiles.png"
+out = OUTDIR / "Fig8_reaction_profiles.png"
 fig.savefig(out, dpi=300, facecolor="white"); plt.close(fig)
 print("wrote", out)
-for c, _, _, m in PANELS:
+for c, m in SHOWN:
     v = pd.Series(rxn[top1[np.where(clus == c)[0]]]).value_counts()
     print(f"  c{c}: master RHEA:{m}; distinct top hits {len(v)}; top-voted share {v.iloc[0] / v.sum():.0%}")
 print(f"  SAM-methylation: {int(is_sam.sum())} flagged entries -> {len(np.unique(rxn[is_sam]))} reactions, {int(sam_rxn.sum())} directional entries")

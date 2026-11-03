@@ -135,3 +135,19 @@ puts them in `data/`. Fig 8 and `horizyn/validation_by_direction.py` read them. 
 - `horizyn/inputs/` holds the Rhea reaction table (`rhea-reaction-smiles.tsv`) and the SAM-methylation reaction
   list the Horizyn scripts read; point `SMSTPRED_HORIZYN_INPUTS` elsewhere to override.
 - `dark33.fasta` and `dark33_members.csv` are read from this folder (`SMSTPRED_STAGE6` overrides).
+
+## Running it on a release (no manual steps)
+
+`workflow/run_refresh.sh` runs this stage after the clusters of Stage 5, as five jobs (`--from dark_inputs --to annotate`):
+
+| Job | Script | What it does |
+|---|---|---|
+| `dark_inputs` | `run_dark_inputs.sh` -> `make_dark_inputs.py` | the release's dark clusters (`<release>/umap/dark_clusters.csv`) -> `<release>/dark_annotation/<name>.fasta`, `<name>_members.csv`, `dark_name.txt` (`<name>` = `dark<number of clusters>`) |
+| `clean` | `run_clean_release.sh` | CLEAN maxsep + p-value on that FASTA (`clean/`) |
+| `horizyn` | `run_horizyn_release.sh` | Horizyn against all 36,552 Rhea reactions; the run folder `<release>/dark_annotation/horizyn_run/` links the checkout's pieces, so the checkout is never written to |
+| `annotate` | `run_tables.sh` | CLEAN summary (tiers at d = 6 / 8, enzyme names from ExPASy ENZYME), Horizyn family table, `table_dark_clusters.csv`, Tables S1 and S2 (`tables/`), then Fig 8 and Fig 7 with Fig 8's clusters outlined |
+
+CLEAN and Horizyn are external checkouts: their paths and conda environments are the `annotation` block of `refresh_config.json` (`CLEAN_APP_DIR`, `HORIZYN_DIR` override them).
+`0_uniprot_pull/run_reference_tables.sh` (job `ref_tables`) downloads ExPASy ENZYME, `rhea2ec.tsv` and `rhea-directions.tsv` into `<release>/reference_tables/`.
+What stays manual: the biological-context notes of the archived Table 2 ("-> anthracyclines") and the plain-language chemistry of reaction families beyond the 17 in `family_descriptions.csv` (new families carry a `[draft]` label made from their SAM-methylation flags).
+Tests: `make annotation-test`.

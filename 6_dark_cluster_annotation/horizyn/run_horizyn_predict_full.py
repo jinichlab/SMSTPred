@@ -43,8 +43,9 @@ CONFIG = join(HERE, "configs", "sota.yaml")
 
 # STAGE6 = the 6_dark_cluster_annotation/ folder of the repository
 STAGE6 = os.environ.get("SMSTPRED_STAGE6", dirname(HERE))
-DARK33_FASTA = join(STAGE6, "clean", "dark33.fasta")
-DARK33_MEMBERS = join(STAGE6, "dark33_members.csv")
+# the dark proteins: the 33 clusters of the archived map by default; SMSTPRED_DARK_FASTA / SMSTPRED_DARK_MEMBERS point to another set (a release: <release>/dark_annotation/dark53.fasta, dark53_members.csv)
+DARK33_FASTA = os.environ.get("SMSTPRED_DARK_FASTA", join(STAGE6, "clean", "dark33.fasta"))
+DARK33_MEMBERS = os.environ.get("SMSTPRED_DARK_MEMBERS", join(STAGE6, "dark33_members.csv"))
 INPUTS = os.environ.get("SMSTPRED_HORIZYN_INPUTS", join(HERE, "inputs"))     # rhea-reaction-smiles.tsv and sam_methylation_reactions_smiles.csv
 RHEA_MASTER_TSV = join(INPUTS, "rhea-reaction-smiles.tsv")
 SAM_METHYLATION_CSV = join(INPUTS, "sam_methylation_reactions_smiles.csv")
