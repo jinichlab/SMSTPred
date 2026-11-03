@@ -10,7 +10,10 @@ per class -- so downstream STREME sees one sequence per family, not thousands of
 near-duplicate paralogs.
 
 Outputs: cluster_reps.csv, reps_{Metabolite,Protein,RNA,DNA}.fasta
+
+  python 2_make_reps.py [--dir <folder>]    the folder with clust_cluster.tsv / clust_rep_seq.fasta (default: this folder; a release: <release>/motif_analysis)
 """
+import argparse
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -37,6 +40,10 @@ def read_fasta(path):
 
 
 def main():
+    global IO
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--dir", default=str(IO))
+    IO = Path(ap.parse_args().dir)
     members = defaultdict(list)
     with open(IO / "clust_cluster.tsv") as fh:
         for line in fh:

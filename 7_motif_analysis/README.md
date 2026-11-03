@@ -70,6 +70,11 @@ families: **DNA** → C5-cytosine/DNMT + N6-adenine/N4 MTases; **Protein** → P
 HemK; **RNA** → RsmB/NOP2/FtsJ; **Metabolite** → O-MTase / SABATH. This is independent of the
 classifier and validates the labels.
 
+
+**Refresh release (Table S3 rebuilt on the ProtT5 ensemble).** `RELEASE_DIR=<release> sbatch run_domain_table.sh` runs `1_build_corpus.py --release` (labelled SAM enzymes of the
+deployment set + the single-label calls of `predictions_all_proteomes.csv.gz`), `3_domain_enrichment.py --dir <release>/motif_analysis` and
+`figures/TableS3_domain_enrichment/build_domain_enrichment_table.py --src ... --out ...`; everything lands in `<release>/motif_analysis/`. The archived table is untouched.
+
 ---
 
 ## 3. Discriminative motif discovery (STREME)
@@ -268,3 +273,12 @@ no_motif_umap.py / _interactive.py   motif coverage on the embedding UMAP (§5)
 Reproduction note: large intermediates (`corpus.csv`, `corpus_all.fasta`, `clust_*`,
 `tmp_mmseqs/`, `*_prostt5.h5` per-residue embeddings) are regenerable from the scripts and
 are *not* shipped in the journal_article copy; structures, motif outputs, and figures are.
+
+## Picking the structure of every motif automatically (release)
+
+Two steps after the FIMO cross-scan (`run_fimo_cross.sh`), both in `workflow/run_refresh.sh` (stage `motif_structures`); they replace the hand-picked panels of Figs 9/10:
+
+1. `motif_structure_search.py` (`run_motif_structure_search.sh`): every FIMO carrier of each motif of at least 2-fold specificity that has a PDB entry, with the entry's ligands read from RCSB (UniProt and RCSB metadata only): SAM-like cofactor, substrate (nucleic acid / peptide of at most 30 residues / small-molecule ligand of at least 100 Da that is not an iron-sulfur cluster, nucleotide cofactor, buffer or ion), tier `sam_substrate_on_chain` > `sam_substrate` > `sam_only` > `substrate_only` > `apo`. Output `structure_search/motif_structure_candidates.csv`, `motif_structure_summary.csv`.
+2. `motif_structure_pick.py` (`run_motif_structure_pick.sh`): tries the carriers in a fixed order (own class, reviewed, best FIMO p-value, resolution), downloads the mmCIF, locates the motif by its matched sequence, measures motif to SAM and motif to substrate, requires both ligands on this enzyme and the substrate at the active site, and classes the placement (near substrate/SAM, near SAM, near substrate, distal; 4 A). Output `structure_search/motif_placements.csv` (the columns of the archived `structures/motif_placements.csv`), `motif_pick_log.csv`, and per motif a subset PDB with ChimeraX and PyMOL scripts.
+A motif whose carriers have no entry with its class's substrate kind that passes falls back to other kinds (`substrate_kind_fallback`); such picks, and picks from another class (`in_class` = False), are the ones to look at before they go into a figure.
+Tests: `make annotation-test`.

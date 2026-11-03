@@ -6,9 +6,14 @@ For each single-label substrate class, find InterPro domains over-represented
 vs all other classes (one-sided Fisher exact on presence/absence, plus
 fold-enrichment). Grounds "what distinguishes the classes" at the domain level.
 
+  python 3_domain_enrichment.py                 reads/writes this folder (the archived corpus.csv)
+  python 3_domain_enrichment.py --dir <folder>  reads <folder>/corpus.csv, writes <folder>/domain_enrichment.csv (a release: <release>/motif_analysis,
+                                                made by 1_build_corpus.py --release)
+
 Output: domain_enrichment.csv  (class, interpro, name, n_in, pct_in, pct_out,
                                  fold, p), and a printed top-12 per class.
 """
+import argparse
 import re
 from collections import Counter
 from pathlib import Path
@@ -34,13 +39,18 @@ def parse_interpro(field):
 
 
 def main():
-    d = pd.read_csv(IO / "corpus.csv", low_memory=False)
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--dir", default=str(IO), help="folder with corpus.csv; domain_enrichment.csv is written there")
+    ap.add_argument("--entry-list", default=str(IO / "interpro_entry.list"), help="InterPro entry.list (accession, type, name)")
+    a = ap.parse_args()
+    out = Path(a.dir)
+    d = pd.read_csv(out / "corpus.csv", low_memory=False)
     d = d[d["class"].isin(LABELS)].copy()
     d["ipr"] = d["InterPro"].fillna("").apply(parse_interpro)
     print("sample InterPro:", d["InterPro"].dropna().iloc[0][:90], flush=True)
 
     name_map = {}
-    with open(IO / "interpro_entry.list") as fh:
+    with open(a.entry_list) as fh:
         next(fh, None)
         for line in fh:
             p = line.rstrip("\n").split("\t")
@@ -67,7 +77,7 @@ def main():
                          "n_in": a, "pct_in": round(fin, 4), "pct_out": round(fout, 4),
                          "fold": round(fold, 2), "p": p})
     m = pd.DataFrame(rows).sort_values(["class", "fold", "n_in", "interpro"], ascending=[True, False, False, False], kind="stable")  # ties: InterPro accession, descending
-    m.to_csv(IO / "domain_enrichment.csv", index=False)
+    m.to_csv(out / "domain_enrichment.csv", index=False)
 
     for lab in LABELS:
         print(f"\n=== {lab}: most prevalent class-specific InterPro domains ===", flush=True)

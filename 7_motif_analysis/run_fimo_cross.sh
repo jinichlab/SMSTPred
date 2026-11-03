@@ -45,6 +45,10 @@ fi
 here="$(dirname "$0")"
 [ "$(basename "$0")" = slurm_script ] && here="$(dirname "$(scontrol show job "$SLURM_JOB_ID" | sed -n 's/^ *Command=\([^ ]*\).*/\1/p' | head -n 1)")"
 cd "$here" || exit 1
+scripts="$PWD"
+# MOTIF_DIR=<release>/motif_analysis runs on a refresh release (needs its corpus.csv and streme_<class>/ from run_streme.sh); unset: this folder.
+[ "${MOTIF_DIR:-}" = auto ] && MOTIF_DIR="$(python "$PWD/../workflow/release_dir.py")/motif_analysis"      # auto: the newest release (the refresh chain)
+[ -n "${MOTIF_DIR:-}" ] && cd "$MOTIF_DIR"
 for need in corpus.csv streme_DNA/streme.txt streme_RNA/streme.txt \
             streme_Protein/streme.txt streme_Metabolite/streme.txt; do
     [ -e "$need" ] || { echo "ERROR: $need not found in $PWD -- run the earlier Stage 7 steps first (see REPRODUCING.md)"; exit 1; }
@@ -67,14 +71,20 @@ PY
 
 # 2) each class's 8 motifs vs ALL sequences
 mkdir -p fimo_cross
+# (the four classes are independent single-threaded FIMO runs: run them side by side)
+pids=()
 for cls in DNA RNA Protein Metabolite; do
     echo "=== FIMO cross ${cls}: 8 motifs vs $(grep -c '^>' corpus_every.clean.fasta) sequences ==="
     fimo --text --thresh 1e-4 --verbosity 1 \
-        "streme_${cls}/streme.txt" corpus_every.clean.fasta > "fimo_cross/${cls}.tsv"
+        "streme_${cls}/streme.txt" corpus_every.clean.fasta > "fimo_cross/${cls}.tsv" &
+    pids+=($!)
+done
+for p in "${pids[@]}"; do wait "$p" || { echo "a FIMO run failed" >&2; exit 1; }; done
+for cls in DNA RNA Protein Metabolite; do
     echo "    $(( $(wc -l < "fimo_cross/${cls}.tsv") - 1 )) hits -> fimo_cross/${cls}.tsv"
 done
 
 # 3) specificity matrix + per-protein cross-class motif status
-python fimo_cross_manifest.py
+python "$scripts/fimo_cross_manifest.py" --dir "$PWD"
 
 echo "fimo_cross done"

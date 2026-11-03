@@ -15,6 +15,7 @@ Outputs:
                               n_distinct_motifs, has_motif
   no_motif_real.csv           the no-motif subset only: Entry, class, length
 """
+import argparse
 from pathlib import Path
 import pandas as pd
 
@@ -37,6 +38,10 @@ def read_fasta_lengths(path):
 
 
 def main():
+    global HERE
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--dir", default=str(HERE), help="folder with class_<class>.fasta and fimo_all_<class>/ (a release: <release>/motif_analysis); outputs are written there")
+    HERE = Path(ap.parse_args().dir).resolve()
     rows = []
     for cls in CLASSES:
         lens = read_fasta_lengths(HERE / f"class_{cls}.fasta")

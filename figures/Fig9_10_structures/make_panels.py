@@ -2,6 +2,7 @@
 """Assemble each category folder's 4 structure snapshots into a labelled A/B/C/D
 figure. Crops the PyMOL 'License expired' watermark (top strip) and the surrounding
 whitespace, then lays the panels out 2x2 with per-panel captions."""
+import argparse
 import glob
 import os
 import numpy as np
@@ -71,27 +72,48 @@ def cell(path, letter, caption):
     d.text((14, 6), letter, font=F_LETTER, fill="black")
     # caption bar
     d.line([(0, CH), (CW, CH)], fill="#dddddd", width=1)
-    tb = d.textbbox((0, 0), caption, font=F_CAP)
+    font = F_CAP
+    for size in range(30, 17, -1):            # shrink a long caption until it fits the cell
+        font = ImageFont.truetype(os.path.join(FDIR, "DejaVuSans.ttf"), size)
+        if d.textbbox((0, 0), caption, font=font)[2] <= CW - 20:
+            break
+    tb = d.textbbox((0, 0), caption, font=font)
     d.text(((CW - (tb[2] - tb[0])) // 2, CH + (CAP_H - (tb[3] - tb[1])) // 2 - 4),
-           caption, font=F_CAP, fill="#222222")
+           caption, font=font, fill="#222222")
     return canvas
 
 
+def release_figs(rel):
+    """The panels of a release: <release>/fig9_10/selection.csv (select_structures.py) + panels/<motif>.png (render_panels.py); returns ({category: [(png, caption)]}, folder)."""
+    import sys
+    sys.path.insert(0, BASE)
+    from select_structures import caption
+    import pandas as pd
+    d = os.path.join(rel, "fig9_10")
+    sel = pd.read_csv(os.path.join(d, "selection.csv"))
+    figs = {cat: [(os.path.join(d, "panels", f"{r['motif']}.png"), caption(r)) for _, r in g.iterrows()] for cat, g in sel.groupby("panel_set", sort=False)}
+    return figs, d
+
+
 def main():
-    for cat, panels in FIGS.items():
+    ap = argparse.ArgumentParser(description="Fig 9 / Fig 10 layout: the archived panels (default) or a release's (--release <release>)")
+    ap.add_argument("--release", default=None)
+    a = ap.parse_args()
+    figs, outdir = (release_figs(a.release) if a.release else (None, BASE))
+    for cat, panels in (figs or FIGS).items():
         ch = CH + CAP_H
         W = 2 * CW + GAP + 2 * MARGIN
         H = 2 * ch + GAP + 2 * MARGIN
         fig = Image.new("RGB", (W, H), "white")
         for i, (fname, cap) in enumerate(panels):
             letter = chr(ord("A") + i)
-            c = cell(os.path.join(BASE, cat, fname), letter, cap)
+            c = cell(fname if figs else os.path.join(BASE, cat, fname), letter, cap)
             col, row = i % 2, i // 2
             x = MARGIN + col * (CW + GAP)
             y = MARGIN + row * (ch + GAP)
             fig.paste(c, (x, y))
         num = 9 if cat == "Known" else 10          # Fig 9 = known sites, Fig 10 = distal sites
-        out = os.path.join(BASE, f"Fig{num}_{cat}.png")
+        out = os.path.join(outdir, f"Fig{num}_{cat}.png")
         fig.save(out, dpi=(300, 300))
         print(f"  wrote {out}  ({W}x{H})")
 

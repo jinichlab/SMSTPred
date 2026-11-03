@@ -21,7 +21,12 @@ if [ -z "${CONDA_DEFAULT_ENV:-}" ] || [ "$CONDA_DEFAULT_ENV" = base ]; then
     fi
 fi
 
+# MOTIF_DIR=<release>/motif_analysis runs on a refresh release's corpus (made by 1_build_corpus.py --release) and writes there; unset: this folder
+HERE="$PWD"
+[ "${MOTIF_DIR:-}" = auto ] && MOTIF_DIR="$(python "$PWD/../workflow/release_dir.py")/motif_analysis"      # auto: the newest release (the refresh chain)
+[ -n "${MOTIF_DIR:-}" ] && cd "$MOTIF_DIR"
+
 rm -rf tmp_mmseqs
 mmseqs easy-cluster corpus_all.fasta clust tmp_mmseqs \
     --min-seq-id 0.5 -c 0.8 --cov-mode 0 --threads 16
-python 2_make_reps.py
+python "$HERE/2_make_reps.py" --dir "$PWD"

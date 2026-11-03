@@ -17,7 +17,12 @@ Two panels (UMAP HDBSCAN cluster -> color):
 
 Reuses the existing UMAP coordinates (no recompute).
 Outputs: no_motif_umap.png + no_motif_umap_clusters.csv
+
+  python no_motif_umap.py                         the archived figure (this folder, 5_umap/sam_mtase_umap_prostt5_coords.csv)
+  python no_motif_umap.py --dir <release>/motif_analysis    a refresh release: <dir>/motif_status_all.csv (run_fimo_all.sh) on <release>/umap/sam_mtase_umap_prott5_coords.csv (5_umap/run_umap.sh),
+                                                  output into <dir>
 """
+import argparse
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -73,6 +78,15 @@ def scatter(ax, umap, colored_mask, letter, fg_s=3.0):
 
 
 def main():
+    global COORDS, MOTIF_STATUS, OUT_PNG, MA
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--dir", default=None, help="<release>/motif_analysis (default: the archived figure)")
+    a = ap.parse_args()
+    if a.dir:
+        MA = Path(a.dir).resolve()
+        COORDS = MA.parent / "umap" / "sam_mtase_umap_prott5_coords.csv"
+        MOTIF_STATUS = MA / "motif_status_all.csv"
+        OUT_PNG = MA / "no_motif_umap.png"
     umap = load_labeled()
     near = near_motif_dark_clusters(umap)
 

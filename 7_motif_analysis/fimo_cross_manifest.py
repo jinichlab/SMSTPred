@@ -31,6 +31,7 @@ SIGNIFICANCE
   not the p-value -- is what should drive any cutoff. The p-value only guards against
   calling a small-n class (DNA, n=6,822) specific on noise.
 """
+import argparse
 import math
 from pathlib import Path
 import pandas as pd
@@ -61,6 +62,11 @@ def load_hits():
 
 
 def main():
+    global HERE, CROSS
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--dir", default=str(HERE), help="folder with corpus.csv and fimo_cross/ (a release: <release>/motif_analysis); outputs are written there")
+    HERE = Path(ap.parse_args().dir).resolve()
+    CROSS = HERE / "fimo_cross"
     corpus = pd.read_csv(HERE / "corpus.csv", usecols=["Entry", "class"],
                          keep_default_na=False, low_memory=False)
     corpus["class"] = corpus["class"].replace({"None": "Unassigned"})

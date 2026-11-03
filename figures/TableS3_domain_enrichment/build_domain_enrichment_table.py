@@ -9,7 +9,10 @@ count per class, excluding the pan-methyltransferase SAM-binding superfamily
 domain (IPR029063, fold = 1.0 by construction -- present in every class).
 
 Outputs (this dir): domain_enrichment_table.csv, domain_enrichment_table.png
+
+  python build_domain_enrichment_table.py [--src <domain_enrichment.csv>] [--out <folder>]    (a refresh release: <release>/motif_analysis/domain_enrichment.csv, written beside it)
 """
+import argparse
 from pathlib import Path
 
 import numpy as np
@@ -36,7 +39,12 @@ def fmt_fold(f):
 
 
 def main():
-    df = pd.read_csv(SRC)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", default=str(SRC))
+    ap.add_argument("--out", default=str(HERE))
+    a = ap.parse_args()
+    HERE_OUT = Path(a.out)
+    df = pd.read_csv(a.src)
     df = df[df["interpro"] != PAN_MTASE_DOMAIN]
     df = df[df["fold"] >= 2]
     df = df[df["name"].notna() & (df["name"].str.strip() != "")]
@@ -56,7 +64,7 @@ def main():
                 "p-value": fmt_p(r["p"]),
             })
     tbl = pd.DataFrame(out)
-    tbl.to_csv(HERE / "domain_enrichment_table.csv", index=False)
+    tbl.to_csv(HERE_OUT / "domain_enrichment_table.csv", index=False)
     print(tbl.to_string(index=False))
     print(f"\n[wrote] domain_enrichment_table.csv ({len(tbl)} rows)")
 
@@ -81,7 +89,7 @@ def main():
             else:
                 cell.set_facecolor("#ffffff" if (r % 2) else "#f4f4f4")
     fig.tight_layout()
-    fig.savefig(HERE / "domain_enrichment_table.png", dpi=200, bbox_inches="tight")
+    fig.savefig(HERE_OUT / "domain_enrichment_table.png", dpi=200, bbox_inches="tight")
     plt.close(fig)
     print("[wrote] domain_enrichment_table.png")
 

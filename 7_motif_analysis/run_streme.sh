@@ -25,12 +25,23 @@ if [ -z "${CONDA_DEFAULT_ENV:-}" ] || [ "$CONDA_DEFAULT_ENV" = base ]; then
     fi
 fi
 
+# MOTIF_DIR=<release>/motif_analysis runs on a refresh release (after run_dedup.sh made its reps_*.fasta); unset: this folder.
+# STREME_PREP=0 skips steps 1-2 and STREME_CLASSES="Protein" (a subset) runs only those classes, so that the four classes can run as parallel jobs
+# (STREME is single-threaded): one job with STREME_PREP=1 STREME_CLASSES="" first, then one per class. Unset: everything, one class after the other.
+[ "${MOTIF_DIR:-}" = auto ] && MOTIF_DIR="$(python "$PWD/../workflow/release_dir.py")/motif_analysis"      # auto: the newest release (the refresh chain)
+[ -n "${MOTIF_DIR:-}" ] && cd "$MOTIF_DIR"
+PREP="${STREME_PREP:-1}"
+CLASSES="${STREME_CLASSES-Metabolite Protein RNA DNA}"
+
 # 1) sanitize reps to the 20 standard AAs (STREME rejects U/O/etc)
+if [ "$PREP" = 1 ]; then
 for cls in Metabolite Protein RNA DNA; do
     sed '/^>/! s/[^ACDEFGHIKLMNPQRSTVWY]/X/g' "reps_${cls}.fasta" > "reps_${cls}.clean.fasta"
 done
+fi
 
 # 2) build each class's control = concatenation of the other three classes' reps
+if [ "$PREP" = 1 ]; then
 for cls in Metabolite Protein RNA DNA; do
     : > "ctrl_${cls}.fasta"
     for o in Metabolite Protein RNA DNA; do
@@ -38,9 +49,10 @@ for cls in Metabolite Protein RNA DNA; do
         cat "reps_${o}.clean.fasta" >> "ctrl_${cls}.fasta"
     done
 done
+fi
 
 # 3) STREME per class -- full positives, full control, width capped 8-18
-for cls in Metabolite Protein RNA DNA; do
+for cls in $CLASSES; do
     echo "=== STREME $cls: $(grep -c '>' reps_${cls}.clean.fasta) pos vs $(grep -c '>' ctrl_${cls}.fasta) ctrl ==="
     streme --p "reps_${cls}.clean.fasta" --n "ctrl_${cls}.fasta" --protein \
         --minw 8 --maxw 18 --nmotifs 8 --oc "streme_${cls}"

@@ -4,7 +4,7 @@
 #SBATCH --output=fimo_all_output.log
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=8G
-#SBATCH --time=04:00:00
+#SBATCH --time=06:00:00
 
 # Real per-protein motif status: scan EVERY class member (not just the 50%-id
 # representatives, and not homology-propagated) against its class's 8 STREME
@@ -18,6 +18,7 @@
 here="$(dirname "$0")"
 [ "$(basename "$0")" = slurm_script ] && here="$(dirname "$(scontrol show job "$SLURM_JOB_ID" | sed -n 's/^ *Command=\([^ ]*\).*/\1/p' | head -n 1)")"
 cd "$here" || exit 1
+scripts="$PWD"
 if [ -z "${CONDA_DEFAULT_ENV:-}" ] || [ "$CONDA_DEFAULT_ENV" = base ]; then
     if command -v conda > /dev/null; then
         eval "$(conda shell.bash hook)"
@@ -25,19 +26,27 @@ if [ -z "${CONDA_DEFAULT_ENV:-}" ] || [ "$CONDA_DEFAULT_ENV" = base ]; then
     fi
 fi
 
+# MOTIF_DIR=<release>/motif_analysis (or auto = the newest release) runs on a refresh release (needs its class_<class>.fasta and streme_<class>/); unset: this folder.
+[ "${MOTIF_DIR:-}" = auto ] && MOTIF_DIR="$(python "$scripts/../workflow/release_dir.py")/motif_analysis"
+[ -n "${MOTIF_DIR:-}" ] && cd "$MOTIF_DIR"
+set -e
+
 # 1) sanitize members to the 20 standard AAs (FIMO/STREME reject U/O/B/Z/X-source)
 for cls in DNA RNA Protein Metabolite; do
     sed '/^>/! s/[^ACDEFGHIKLMNPQRSTVWY]/X/g' "class_${cls}.fasta" > "class_${cls}.clean.fasta"
 done
 
 # 2) FIMO per class: that class's 8 motifs vs ALL its members, p<1e-4
+pids=()
 for cls in DNA RNA Protein Metabolite; do
     echo "=== FIMO $cls: $(grep -c '>' class_${cls}.clean.fasta) members vs 8 motifs ==="
     fimo --oc "fimo_all_${cls}" --thresh 1e-4 --verbosity 1 \
-        "streme_${cls}/streme.txt" "class_${cls}.clean.fasta"
+        "streme_${cls}/streme.txt" "class_${cls}.clean.fasta" &      # the four classes are independent single-threaded runs
+    pids+=($!)
 done
+for p in "${pids[@]}"; do wait "$p" || { echo "a FIMO run failed" >&2; exit 1; }; done
 
 # 3) assemble the real per-protein motif-status dataset
-python fimo_all_manifest.py
+python "$scripts/fimo_all_manifest.py" --dir "$PWD"
 
 echo "fimo_all done"
