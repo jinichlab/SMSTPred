@@ -10,12 +10,21 @@
 # 5. Writes iTOL annotation files: each leaf colored by % of its SAMs binding
 #    each substrate type.
 #
-# Consumes the new ProstT5 predictions in ../3_predictions/predictions_output/
-# (per-organism {stem}_embeddings_predictions.csv with call_{RNA,DNA,Protein,
-# Metabolite} columns), NOT the old ProtT5 *_pred files.
+# Two input modes:
+#   python reference_tree.py                      the archived ProstT5 predictions in ../3_predictions/predictions_output/
+#                                                 (per-organism {stem}_embeddings_predictions.csv with call_{RNA,DNA,Protein,Metabolite}),
+#                                                 writes ./itol_output_reference/
+#   python reference_tree.py --release [<folder>] a refresh release: <release>/predictions_all_proteomes.csv.gz (the ProtT5 ensemble's calls,
+#                                                 ALL calls, in domain or not) + <release>/proteome_summary.csv (proteome sizes, SAM counts);
+#                                                 writes <release>/tree/ (the same iTOL files + tree_stats.csv). In this mode the substrate
+#                                                 percentages are calls / PREDICTED SAM-MTases (<= 2,000 aa); the bar and "% SAMs in proteome"
+#                                                 count every IPR029063 protein. Default release: $RELEASE_DIR, else the newest in $UNIPROT_PULL_DIR.
+# ../figures/Fig3_tree_landscape/draw_tree.py draws the figure from either folder.
 # =============================================================
 
+import argparse
 import os
+import sys
 import pandas as pd
 import re
 from pathlib import Path
@@ -243,14 +252,51 @@ def write_tree_colors(fname: Path, root: Node, highlights):
 
 
 # ================= MAIN PIPELINE =================
+def collect_release(df, rel, stats):
+    """Release mode: fill stats from <release>/proteome_summary.csv + predictions_all_proteomes.csv.gz (df: the selected organisms, with Proteome Id and tree_id)."""
+    summ = pd.read_csv(rel / "proteome_summary.csv")
+    summ = summ[summ.status == "ok"].set_index("proteome_id")
+    pred = pd.read_csv(rel / "predictions_all_proteomes.csv.gz", usecols=["proteome", "call_Metabolite", "call_Protein", "call_RNA", "call_DNA"])
+    calls = pred.groupby("proteome").agg(predicted=("call_RNA", "size"), RNA=("call_RNA", "sum"), DNA=("call_DNA", "sum"),
+                                         Protein=("call_Protein", "sum"), Metabolite=("call_Metabolite", "sum"))
+    n = 0
+    for _, row in df.iterrows():
+        pid = row.get("Proteome Id")
+        if pid not in summ.index:
+            continue
+        srow = summ.loc[pid]
+        org = row["tree_id"]
+        stats[org]["total"] += int(srow.n_all)
+        stats[org]["sams"] += int(srow.n_ipr_all)
+        if srow.stem in calls.index:
+            c = calls.loc[srow.stem]
+            stats[org]["predicted"] += int(c.predicted)
+            for col in ["RNA", "DNA", "Protein", "Metabolite"]:
+                stats[org][col] += int(c[col])
+        n += 1
+    print(f"  {n} of {len(df)} selected organisms have a proteome in the release; {sum(1 for s in stats.values() if s['predicted'] > 0)} with predictions")
+
+
 def main():
+    global OUTDIR
+    ap = argparse.ArgumentParser(description="Taxonomic tree of the reference organisms + iTOL annotation files (see the header of this file).")
+    ap.add_argument("--release", nargs="?", const="", default=None, help="a refresh release folder (default: $RELEASE_DIR, else the newest release)")
+    args = ap.parse_args()
+    rel = None
+    if args.release is not None:
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "1_clustering"))
+        from mmseqs_clusters import newest_release
+        rel = Path(args.release or os.environ.get("RELEASE_DIR") or newest_release(
+            Path(os.environ.get("UNIPROT_PULL_DIR", Path(__file__).resolve().parents[1] / "data" / "uniprot_pull")), os.environ.get("RELEASE")))
+        OUTDIR = rel / "tree"
     # --- Validate inputs ---
     if not PROTEOME_CSV.exists():
         raise FileNotFoundError(f"Proteome CSV not found: {PROTEOME_CSV}")
-    if not SAM_DIR.exists():
-        raise FileNotFoundError(f"SAM data directory not found: {SAM_DIR}")
-    if not PRED_DIR.exists():
-        raise FileNotFoundError(f"Prediction directory not found: {PRED_DIR}")
+    if rel is None:
+        if not SAM_DIR.exists():
+            raise FileNotFoundError(f"SAM data directory not found: {SAM_DIR}")
+        if not PRED_DIR.exists():
+            raise FileNotFoundError(f"Prediction directory not found: {PRED_DIR}")
 
     OUTDIR.mkdir(exist_ok=True)
 
@@ -287,65 +333,70 @@ def main():
     stats = defaultdict(lambda: {
         "total": 0,
         "sams": 0,
+        "predicted": 0,
         "RNA": 0,
         "DNA": 0,
         "Protein": 0,
         "Metabolite": 0
     })
 
-    # Count proteome size + SAM MTases per organism. We read only the proteome
-    # CSV of each selected organism (resolved by filename stem), keying stats by
-    # canon(selected Organism) so SAM counts, predictions, and tree leaves all
-    # share one key. (Directory listing is fast; only ~1,259 CSVs are read.)
-    csv_lookup = {f.stem: f for f in SAM_DIR.glob("*.csv")}
-    print(f"  {len(csv_lookup)} proteome CSVs available in {SAM_DIR}")
-    read = 0
-    for _, row in df.iterrows():
-        o = row["Organism"]
-        if pd.isna(o):
-            continue
-        org = canon(str(o))
-        csv = csv_lookup.get(organism_to_stem(o)) or csv_lookup.get(str(o).replace(" ", "_"))
-        if csv is None:
-            continue
-        try:
-            d = pd.read_csv(csv, low_memory=False)
-        except Exception as e:
-            print(f"    Could not read {csv.name}: {e}")
-            continue
-        stats[org]["total"] += len(d)
-        if "InterPro" in d.columns:
-            stats[org]["sams"] += d["InterPro"].fillna("").str.contains("IPR029063", regex=False).sum()
-        read += 1
-    print(f"  Collected SAM stats for {read} organisms")
+    if rel is not None:
+        print(f"  release: {rel}")
+        collect_release(df, rel, stats)
+    else:
+        # Count proteome size + SAM MTases per organism. We read only the proteome
+        # CSV of each selected organism (resolved by filename stem), keying stats by
+        # canon(selected Organism) so SAM counts, predictions, and tree leaves all
+        # share one key. (Directory listing is fast; only ~1,259 CSVs are read.)
+        csv_lookup = {f.stem: f for f in SAM_DIR.glob("*.csv")}
+        print(f"  {len(csv_lookup)} proteome CSVs available in {SAM_DIR}")
+        read = 0
+        for _, row in df.iterrows():
+            o = row["Organism"]
+            if pd.isna(o):
+                continue
+            org = canon(str(o))
+            csv = csv_lookup.get(organism_to_stem(o)) or csv_lookup.get(str(o).replace(" ", "_"))
+            if csv is None:
+                continue
+            try:
+                d = pd.read_csv(csv, low_memory=False)
+            except Exception as e:
+                print(f"    Could not read {csv.name}: {e}")
+                continue
+            stats[org]["total"] += len(d)
+            if "InterPro" in d.columns:
+                stats[org]["sams"] += d["InterPro"].fillna("").str.contains("IPR029063", regex=False).sum()
+            read += 1
+        print(f"  Collected SAM stats for {read} organisms")
 
-    # Aggregate Stage-3 ProstT5 substrate-type CALLS. The organism is the file
-    # stem (no Organism column); map it back to canon() via the metadata table.
-    print("\nCollecting binding predictions...")
-    stem_to_canon = {}
-    for o in df["Organism"].dropna():
-        stem_to_canon[organism_to_stem(o)] = canon(o)
-        stem_to_canon.setdefault(str(o).replace(" ", "_"), canon(o))
-    pred_files = list(PRED_DIR.glob(f"*{PRED_SUFFIX}"))
-    print(f"  Found {len(pred_files)} prediction CSVs in {PRED_DIR}")
+        # Aggregate Stage-3 ProstT5 substrate-type CALLS. The organism is the file
+        # stem (no Organism column); map it back to canon() via the metadata table.
+        print("\nCollecting binding predictions...")
+        stem_to_canon = {}
+        for o in df["Organism"].dropna():
+            stem_to_canon[organism_to_stem(o)] = canon(o)
+            stem_to_canon.setdefault(str(o).replace(" ", "_"), canon(o))
+        pred_files = list(PRED_DIR.glob(f"*{PRED_SUFFIX}"))
+        print(f"  Found {len(pred_files)} prediction CSVs in {PRED_DIR}")
 
-    matched = 0
-    for f in pred_files:
-        try:
-            d = pd.read_csv(f, low_memory=False)
-        except Exception as e:
-            print(f"    Could not read {f.name}: {e}")
-            continue
-        if not {"call_RNA", "call_DNA", "call_Protein", "call_Metabolite"}.issubset(d.columns):
-            continue
-        stem = f.name[:-len(PRED_SUFFIX)]
-        org = stem_to_canon.get(stem, canon(stem))
-        matched += 1
-        # Per-label binary calls (multi-label): count proteins called each type.
-        for col in ["RNA", "DNA", "Protein", "Metabolite"]:
-            values = pd.to_numeric(d[f"call_{col}"], errors="coerce")
-            stats[org][col] += (values == 1).sum()
-    print(f"  Aggregated predictions for {matched} organisms")
+        matched = 0
+        for f in pred_files:
+            try:
+                d = pd.read_csv(f, low_memory=False)
+            except Exception as e:
+                print(f"    Could not read {f.name}: {e}")
+                continue
+            if not {"call_RNA", "call_DNA", "call_Protein", "call_Metabolite"}.issubset(d.columns):
+                continue
+            stem = f.name[:-len(PRED_SUFFIX)]
+            org = stem_to_canon.get(stem, canon(stem))
+            matched += 1
+            # Per-label binary calls (multi-label): count proteins called each type.
+            for col in ["RNA", "DNA", "Protein", "Metabolite"]:
+                values = pd.to_numeric(d[f"call_{col}"], errors="coerce")
+                stats[org][col] += (values == 1).sum()
+        print(f"  Aggregated predictions for {matched} organisms")
 
     # --- Filter organisms by minimum SAM count ---
     print(f"\nFiltering organisms (minimum {MIN_SAMS} SAMs)...")
@@ -359,14 +410,14 @@ def main():
     pct_METABOLITE = {}
 
     for org, s in stats.items():
-        if s["sams"] >= MIN_SAMS and s["total"] > 0:
+        if s["sams"] >= MIN_SAMS and s["total"] > 0 and (rel is None or s["predicted"] > 0):
             valid_organisms.add(org)
 
             pct_sams[org] = s["sams"] / s["total"]
             n_sams[org] = s["sams"]
 
             # Calculate binding percentages (relative to SAM count)
-            sam_count = s["sams"]
+            sam_count = s["predicted"] if rel is not None else s["sams"]
             pct_RNA[org] = s["RNA"] / sam_count if sam_count > 0 else 0.0
             pct_DNA[org] = s["DNA"] / sam_count if sam_count > 0 else 0.0
             pct_PROT[org] = s["Protein"] / sam_count if sam_count > 0 else 0.0
@@ -437,6 +488,12 @@ def main():
     write_gradient(OUTDIR / "itol_pct_protein.txt", "% Protein-binding SAMs", pct_PROT, "#238b45")
     write_gradient(OUTDIR / "itol_pct_metabolite.txt", "% Metabolite SAMs", pct_METABOLITE, "#e6550d")
     write_tree_colors(OUTDIR / "itol_clade_highlights.txt", pruned_root, CLADE_HIGHLIGHTS)
+
+    if rel is not None:
+        rows = [{"tree_id": o, **stats[o], "pct_RNA": pct_RNA.get(o), "pct_DNA": pct_DNA.get(o), "pct_Protein": pct_PROT.get(o),
+                 "pct_Metabolite": pct_METABOLITE.get(o)} for o in pruned_leaves if o in stats]
+        pd.DataFrame(rows).to_csv(OUTDIR / "tree_stats.csv", index=False)
+        print("  Wrote tree_stats.csv")
 
     # --- Final report ---
     print("\n" + "=" * 50)

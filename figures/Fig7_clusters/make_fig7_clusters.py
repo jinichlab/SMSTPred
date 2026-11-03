@@ -4,7 +4,11 @@ Row 1 (A/B) = characterized families recovered de novo and anchored to
 reviewed SwissProt members (PRMT/CARM; DNMT3A/3B). Row 2 (C/D) = uncharacterized
 'dark-matter' families with no reviewed members (plant and actinomycete
 small-molecule enzymes); the four outlined clusters in panel C (c110, c551, c667,
-c714) are the ones examined in Figure 8 (CLEAN / Horizyn reaction profiles)."""
+c714) are the ones examined in Figure 8 (CLEAN / Horizyn reaction profiles).
+
+  python make_fig7_clusters.py [--dir <folder>]   the folder with the four panel PNGs (default: here; a release: <release>/umap/fig7, from build_cluster_grids.py --release);
+                                                  the composite is written there. On a release the outlined clusters are those with a counterpart of the Fig 8 clusters."""
+import argparse
 import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -55,6 +59,10 @@ def cell(path, letter, cw, ch):
 
 
 def main():
+    global BASE
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dir", default=BASE)
+    BASE = ap.parse_args().dir
     W = 2 * CW + GAP + 2 * MARGIN
     H = TITLE_H + 2 * CH + GAP + 2 * MARGIN
     fig = Image.new("RGB", (W, H), "white")

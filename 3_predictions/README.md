@@ -28,3 +28,15 @@ trust a call.
 `predictions_output/` — one CSV per input proteome (~1,259 reference proteomes,
 ~112k proteins scored). These feed the phylogenetic-trend (Stage 4) and UMAP (Stage 5)
 analyses, and define the deployment corpus for the Stage-6 interpretability work.
+
+## Using the refreshed deployment ensemble
+
+`predict.py` reads the deployment model from `2_training/deployment_model/` (the archived ProstT5 ensemble). `DEPLOY_DIR=<release>/deployment python predict.py --input <ProtT5 embeddings> ...` uses the ProtT5
+ensemble of `2_training/deploy_ensemble.py` instead (same file formats; the applicability-domain reference is read from the model folder). The input must then be **ProtT5** vectors: the archived tree-of-life
+ProtT5 files (`embeddings_tree_of_life_ProtT5.tar`) give the same calls as the training pipeline's vectors (2_training/README.md, "ProtT5 vectors of the proteomes"). The predictions of Stages 4-7 are not recomputed.
+
+Release 2026_03 with the ProtT5 ensemble (`DEPLOY_DIR=<release>/deployment OUT_DIR=<release>/predictions sbatch run_predict.sh <release>/embeddings/proteomes_ProtT5`, 17 seconds): 115,850 proteins, 56.3 % inside the
+applicability domain; calls Metabolite 40.9 %, Protein 17.9 %, RNA 31.7 %, DNA 6.3 %; no label called for 5.0 %, more than one for 1.8 %. By length the DNA call rate rises (2.8 % up to 300 aa, 6.2 %, 13.9 %, 35.8 % at 1,001-2,000 aa)
+and the inside-the-domain share falls (54.5 %, 61.1 %, 47.4 %, 38.0 %); 86 % of the long proteins called DNA have DNA-methyltransferase or restriction-modification names (against 1.4 % of the long proteins not called DNA),
+so the rise is largely real biology, not a length shortcut; the long proteins are the least certain (median member disagreement 0.030 against 0.005). Against the archived ProstT5 calls (111,087 proteins in both) all four calls
+agree for 82.3 %; the ProtT5 ensemble calls more Metabolite (+4,899) and fewer DNA (6,082 against 7,808).

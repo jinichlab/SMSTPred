@@ -10,15 +10,21 @@ Panel B: DNA- and Protein-substrate load, Vertebrata vs invertebrate Metazoa.
 Panel C: Metabolite-substrate load, Plants (Viridiplantae) vs non-plant eukaryotes.
 Panel D: Metabolite-substrate load, Actinomycetota vs other Bacteria.
 
-Source: Stage-3 ProstT5 deployment predictions (repo/3_predictions/predictions_output/
-*_embeddings_predictions.csv, multi-label call_* columns) joined to
-data/selected_1259_organisms.csv
-(Taxonomic lineage, is_metazoa, is_vertebrate).
+Source: Stage-3 deployment predictions (multi-label call_* columns) joined to
+data/selected_1259_organisms.csv (Taxonomic lineage, is_metazoa, is_vertebrate).
 
-Outputs (this dir): A_protein_3group_violin.png, B_vertebrate_invertebrate_violins.png,
-C_plant_metabolite_violin.png, D_actino_metabolite_violin.png
+  python build_fig4_panels.py                       the archived ProstT5 predictions (repo/3_predictions/predictions_output/*_embeddings_predictions.csv); writes here
+  python build_fig4_panels.py --release [<folder>]  a refresh release: <release>/predictions_all_proteomes.csv.gz (the ProtT5 ensemble, ALL calls) + proteome_summary.csv;
+                                                    writes <release>/fig4/ (default release: $RELEASE_DIR, else the newest in $UNIPROT_PULL_DIR)
+A protein with two calls counts in both classes; "% of organism's SAM-MTases" = calls / the organism's predicted SAM-MTases.
+
+Outputs (the output folder): A_protein_3group_violin.png, B_vertebrate_invertebrate_violins.png, C_plant_metabolite_violin.png,
+D_actino_metabolite_violin.png, fig4_statistics.csv (every test of every panel: groups, n, medians, U or H, p), fig4_organism_table.csv (the per-organism numbers
+behind the violins). The tests treat organisms as independent, which related organisms are not; they describe the sample, they are not phylogenetically corrected.
 """
+import argparse
 import os
+import sys
 from itertools import combinations
 from pathlib import Path
 
@@ -34,6 +40,7 @@ PRED_DIR = REPO / "3_predictions" / "predictions_output"
 META_CSV = Path(os.environ.get("SMSTPRED_DATA", Path(__file__).resolve().parents[2] / "data")) / "selected_1259_organisms.csv"
 PRED_SUFFIX = "_embeddings_predictions.csv"
 OUT_DIR = Path(__file__).resolve().parent
+STATS = []          # one row per test, filled by the panels
 MIN_N = 5
 YEASTS = ("Saccharomycotina", "Schizosaccharomyces", "Taphrinomycotina")
 
@@ -106,6 +113,26 @@ def build_org_table(meta):
     return pd.DataFrame(rows)
 
 
+def record(panel, measure, ga, gb, a, b, p, stat_name="U", stat=np.nan):
+    STATS.append({"panel": panel, "measure": measure, "group_a": str(ga).replace("\n", " "), "n_a": len(a), "median_a": float(np.median(a)) if len(a) else np.nan,
+                  "group_b": str(gb).replace("\n", " "), "n_b": len(b), "median_b": float(np.median(b)) if len(b) else np.nan, "test": stat_name, "statistic": stat, "p": p})
+
+
+def build_org_table_release(meta, rel):
+    """The same per-organism table from a release: proteome_summary.csv (stem of each selected proteome) + predictions_all_proteomes.csv.gz."""
+    summ = pd.read_csv(rel / "proteome_summary.csv")
+    summ = summ[summ.status == "ok"][["proteome_id", "stem"]]
+    m = meta.merge(summ, left_on="Proteome Id", right_on="proteome_id", how="inner")
+    pred = pd.read_csv(rel / "predictions_all_proteomes.csv.gz", usecols=["proteome", "call_Protein", "call_DNA", "call_Metabolite"])
+    g = pred.groupby("proteome").agg(n_total=("call_DNA", "size"), Protein=("call_Protein", "sum"), DNA=("call_DNA", "sum"), Metabolite=("call_Metabolite", "sum"))
+    d = m.merge(g, left_on="stem", right_index=True, how="inner")
+    out = pd.DataFrame({"Organism": d["Organism"], "lineage": d["Taxonomic lineage"], "is_vertebrate": d["is_vertebrate"], "is_metazoa": d["is_metazoa"],
+                        "n_total": d["n_total"], "Protein": d["Protein"], "DNA": d["DNA"], "Metabolite": d["Metabolite"]})
+    for cls in ["Protein", "DNA", "Metabolite"]:
+        out[f"pct_{cls}"] = out[cls] / out["n_total"] * 100
+    return out.reset_index(drop=True)
+
+
 def violin(ax, data_by_group, groups, palette, ylab):
     arrays = [data_by_group[g] for g in groups]
     parts = ax.violinplot(arrays, positions=range(len(groups)), showmedians=True, showextrema=False, widths=0.85)
@@ -129,13 +156,15 @@ def violin(ax, data_by_group, groups, palette, ylab):
     return ymax
 
 
-def pairwise_brackets(ax, data_by_group, groups, ymax, kruskal_box=True):
+def pairwise_brackets(ax, data_by_group, groups, ymax, kruskal_box=True, tag=None):
     pairs = []
     for (i, gi), (j, gj) in combinations(enumerate(groups), 2):
         a, b = data_by_group[gi], data_by_group[gj]
         if len(a) >= 3 and len(b) >= 3:
             U, p = mannwhitneyu(a, b, alternative="two-sided")
             pairs.append((i, j, p))
+            if tag:
+                record(*tag, gi, gj, a, b, p, "Mann-Whitney U", U)
     y0, dy = ymax * 1.08, ymax * 0.16
     for k, (i, j, p) in enumerate(pairs):
         y = y0 + k * dy
@@ -145,6 +174,9 @@ def pairwise_brackets(ax, data_by_group, groups, ymax, kruskal_box=True):
     top = y0 + max(len(pairs), 1) * dy
     if len(groups) > 2 and kruskal_box:
         H, p_kw = kruskal(*[data_by_group[g] for g in groups])
+        if tag:
+            STATS.append({"panel": tag[0], "measure": tag[1], "group_a": " / ".join(g.replace("\n", " ") for g in groups), "n_a": sum(len(data_by_group[g]) for g in groups),
+                          "test": "Kruskal-Wallis H", "statistic": H, "p": p_kw})
         kruskal_y = y0 + len(pairs) * dy + ymax * 0.05
         ax.text((len(groups) - 1) / 2, kruskal_y, f"Kruskal H={H:.1f}, p={p_kw:.1e}",
                 ha="center", va="bottom", fontsize=19, color="#444",
@@ -166,10 +198,10 @@ def panel_A(org):
     fig, axes = plt.subplots(1, 2, figsize=(16, 8.5), constrained_layout=True)
     data_count = {g: sub.loc[sub["grp"] == g, "Protein"].to_numpy() for g in groups}
     yc = violin(axes[0], data_count, groups, palette, "Protein SAM-MTases per organism")
-    pairwise_brackets(axes[0], data_count, groups, yc)
+    pairwise_brackets(axes[0], data_count, groups, yc, tag=("A", "Protein count"))
     data_pct = {g: sub.loc[sub["grp"] == g, "pct_Protein"].to_numpy() for g in groups}
     yp = violin(axes[1], data_pct, groups, palette, "% of organism's SAM-MTases")
-    pairwise_brackets(axes[1], data_pct, groups, yp)
+    pairwise_brackets(axes[1], data_pct, groups, yp, tag=("A", "Protein % of SAM-MTases"))
     fig.savefig(OUT_DIR / "A_protein_3group_violin.png", dpi=200)
     plt.close(fig)
     print("[wrote] A_protein_3group_violin.png")
@@ -192,7 +224,8 @@ def panel_B(org):
             data = {g: met.loc[met["grp"] == g, key].to_numpy() for g in groups}
             ylab = f"{cls} SAM-MTases" if metric == "count" else "% of organism's SAM-MTases"
             ymax = violin(ax, data, groups, palette, ylab)
-            _, p = mannwhitneyu(data[groups[0]], data[groups[1]])
+            U, p = mannwhitneyu(data[groups[0]], data[groups[1]])
+            record("B", f"{cls} {'count' if metric == 'count' else '% of SAM-MTases'}", groups[0], groups[1], data[groups[0]], data[groups[1]], p, "Mann-Whitney U", U)
             ax.plot([0, 0, 1, 1], [ymax * 1.07, ymax * 1.09, ymax * 1.09, ymax * 1.07], color="black", lw=1.6)
             ax.text(0.5, ymax * 1.12, f"{stars(p)}  (p={p:.1e})", ha="center", va="bottom", fontsize=26, fontweight="bold")
             ax.set_ylim(top=ymax * 1.34)
@@ -215,7 +248,8 @@ def panel_C(org):
                            (axes[1], "pct_Metabolite", "% of organism's SAM-MTases that are 'Metabolite'")]:
         data = {g: sub.loc[sub["grp"] == g, key].to_numpy() for g in groups}
         ymax = violin(ax, data, groups, palette, ylab)
-        _, p = mannwhitneyu(data[groups[0]], data[groups[1]])
+        U, p = mannwhitneyu(data[groups[0]], data[groups[1]])
+        record("C", "Metabolite count" if key == "Metabolite" else "Metabolite % of SAM-MTases", groups[0], groups[1], data[groups[0]], data[groups[1]], p, "Mann-Whitney U", U)
         ax.plot([0, 0, 1, 1], [ymax * 1.07, ymax * 1.09, ymax * 1.09, ymax * 1.07], color="black", lw=1.6)
         ax.text(0.5, ymax * 1.12, f"{stars(p)}  (p={p:.1e})", ha="center", va="bottom", fontsize=26, fontweight="bold")
         ax.set_ylim(top=ymax * 1.34)
@@ -238,7 +272,8 @@ def panel_D(org):
                            (axes[1], "pct_Metabolite", "% of organism's SAM-MTases that are 'Metabolite'")]:
         data = {g: sub.loc[sub["grp"] == g, key].to_numpy() for g in groups}
         ymax = violin(ax, data, groups, palette, ylab)
-        _, p = mannwhitneyu(data[groups[0]], data[groups[1]])
+        U, p = mannwhitneyu(data[groups[0]], data[groups[1]])
+        record("D", "Metabolite count" if key == "Metabolite" else "Metabolite % of SAM-MTases", groups[0], groups[1], data[groups[0]], data[groups[1]], p, "Mann-Whitney U", U)
         ax.plot([0, 0, 1, 1], [ymax * 1.07, ymax * 1.09, ymax * 1.09, ymax * 1.07], color="black", lw=1.6)
         ax.text(0.5, ymax * 1.12, f"{stars(p)}  (p={p:.1e})", ha="center", va="bottom", fontsize=26, fontweight="bold")
         ax.set_ylim(top=ymax * 1.34)
@@ -248,12 +283,28 @@ def panel_D(org):
 
 
 def main():
+    global OUT_DIR
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--release", nargs="?", const="", default=None)
+    args = ap.parse_args()
     meta = pd.read_csv(META_CSV)
-    org = build_org_table(meta)
+    if args.release is not None:
+        sys.path.insert(0, str(REPO / "1_clustering"))
+        from mmseqs_clusters import newest_release
+        rel = Path(args.release or os.environ.get("RELEASE_DIR") or newest_release(Path(os.environ.get("UNIPROT_PULL_DIR", REPO / "data" / "uniprot_pull")), os.environ.get("RELEASE")))
+        OUT_DIR = rel / "fig4"
+        OUT_DIR.mkdir(exist_ok=True)
+        org = build_org_table_release(meta, rel)
+        print(f"release {rel}: {len(org)} organisms")
+    else:
+        org = build_org_table(meta)
+    org.to_csv(OUT_DIR / "fig4_organism_table.csv", index=False)
     panel_A(org)
     panel_B(org)
     panel_C(org)
     panel_D(org)
+    pd.DataFrame(STATS).to_csv(OUT_DIR / "fig4_statistics.csv", index=False, float_format="%.6g")
+    print(f"[wrote] fig4_statistics.csv ({len(STATS)} tests), fig4_organism_table.csv")
 
 
 if __name__ == "__main__":

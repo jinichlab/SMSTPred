@@ -32,7 +32,7 @@ import torch
 import torch.nn as nn
 
 REPO = Path(__file__).resolve().parent.parent
-MODEL_DIR = REPO / "2_training" / "deployment_model"
+MODEL_DIR = Path(os.environ.get("DEPLOY_DIR", REPO / "2_training" / "deployment_model"))   # DEPLOY_DIR=<release>/deployment: the ensemble of 2_training/deploy_ensemble.py
 FILES_DIR = Path(os.environ.get("SMSTPRED_DATA", REPO / "data"))
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 BATCH = 4096
@@ -76,7 +76,8 @@ def load_model():
 
 
 def load_ad_reference(cfg):
-    ref = load_embeddings(FILES_DIR / cfg["ad_reference_h5"])
+    path = MODEL_DIR / cfg["ad_reference_path"] if cfg.get("ad_reference_path") else FILES_DIR / cfg["ad_reference_h5"]   # the refresh's reference sits in the model folder
+    ref = load_embeddings(path)
     X = np.vstack(list(ref.values())).astype(np.float32)
     Xn = X / (np.linalg.norm(X, axis=1, keepdims=True) + 1e-8)
     return torch.tensor(Xn, device=DEVICE)

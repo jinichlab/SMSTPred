@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
 
-# Usage: sbatch run_predict.sh [ProstT5 embeddings .h5 file or folder of them]
+# Usage: sbatch run_predict.sh [embeddings .h5 file or folder of them]   (DEPLOY_DIR=<release>/deployment uses the refreshed ProtT5 ensemble; OUT_DIR=<folder> for the predictions)
 # Default: the archived tree-of-life ProstT5 embeddings (data/tree_of_life_ProstT5 after `make data`, or $SMSTPRED_DATA).
 # Environment: the conda environment that is already active, else the one `make env` builds (SMSTPRED_ENV renames it).
 # Runs as `sbatch run_*.sh` (the job inherits the submitting shell's environment) or as plain `bash run_*.sh`.
@@ -21,4 +21,4 @@ if [ -z "${CONDA_DEFAULT_ENV:-}" ] || [ "$CONDA_DEFAULT_ENV" = base ]; then
     fi
 fi
 
-python predict.py --input "${1:-${SMSTPRED_DATA:-../data}/tree_of_life_ProstT5}" --out-dir predictions_output
+python predict.py --input "${1:-${SMSTPRED_DATA:-../data}/tree_of_life_ProstT5}" --out-dir "${OUT_DIR:-predictions_output}"

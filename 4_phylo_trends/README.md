@@ -10,6 +10,12 @@ how predicted MTase substrate usage varies across the tree and with host lifesty
 | `reference_tree.py` | Builds a taxonomic **Newick tree** over the ~1,259 reference organisms and annotates each leaf with its per-substrate call composition for **iTOL** rendering (ring/bar tracks of DNA/RNA/Protein/Metabolite usage). |
 | `protein_cellularity_violin.py` | Per-organism **Protein-substrate** MTase load (count or fraction) split across eukaryotic **cellularity groups** (e.g. metazoa / unicellular / plant), on the ProstT5 deployment predictions — testing whether protein-methylation capacity tracks multicellular complexity. |
 | `run_reference_tree.sh` | SLURM driver. |
+| `run_tree.sh` | **Refresh release, no iTOL:** `3_predictions/combine_predictions.py` -> `reference_tree.py --release` -> `figures/Fig3_tree_landscape/draw_tree.py`; writes `<release>/tree/` (iTOL files, `tree_stats.csv`, `fig3_tree.png/.svg/.pdf`). `make tree`. |
+| `test_tree.py` | tests of the release-mode steps on synthetic data. |
+
+In release mode every call of the ProtT5 ensemble counts (in the applicability domain or not); a ring value is the share of the organism's *predicted* SAM-MTases (<= 2,000 aa)
+called a substrate type (a protein with two calls counts in both), while the bar and "% SAMs in proteome" use every IPR029063 protein. The tree is the NCBI taxonomy with unit branch lengths
+(a taxonomic tree, not a sequence phylogeny).
 
 ## Outputs
 

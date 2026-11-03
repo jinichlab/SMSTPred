@@ -3,6 +3,7 @@
 2x2, labelled A/B/C/D). Row 1 = animal expansions (protein/DNA); row 2 = plant
 and actinomycete small-molecule ('Metabolite') expansions. These are the statistical
 trends that the UMAP (Figure 6) and family clusters (Figure 7) then dissect."""
+import argparse
 import os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -47,6 +48,10 @@ def cell(path, letter):
 
 
 def main():
+    global BASE
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dir", default=BASE, help="folder with the four panel PNGs (a release: <release>/fig4); the composite is written there")
+    BASE = ap.parse_args().dir
     W = 2 * CW + GAP + 2 * MARGIN
     H = TITLE_H + 2 * CH + GAP + 2 * MARGIN
     fig = Image.new("RGB", (W, H), "white")

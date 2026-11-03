@@ -134,7 +134,8 @@ def build_legend_toggle_js(df):
     return js.replace("__CATEGORY_INDICES__", json.dumps(category_indices))
 
 
-def create_interactive_plot(df, output_path):
+def create_interactive_plot(df, output_path, title="SAM Methyltransferases by Predicted Substrate Type (ProstT5)",
+                            sub_title=None):
     data_map = df[["UMAP_1", "UMAP_2"]].to_numpy().astype("float32")
     hover_data = create_hover_text(df)
     labels = np.where(df["cluster"].to_numpy() == -1, "Unlabelled",
@@ -146,8 +147,8 @@ def create_interactive_plot(df, output_path):
     plot = datamapplot.create_interactive_plot(
         data_map, labels,
         font_family="Arial",
-        title="SAM Methyltransferases by Predicted Substrate Type (ProstT5)",
-        sub_title=f"UMAP projection of {len(df):,} tree-of-life SAM MTases (structure-aware embeddings)",
+        title=title,
+        sub_title=sub_title or f"UMAP projection of {len(df):,} tree-of-life SAM MTases (structure-aware embeddings)",
         hover_text=hover_data,
         enable_search=True,
         marker_color_array=color_array,
