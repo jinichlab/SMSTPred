@@ -2,8 +2,8 @@
 """Table 1 -- cluster-disjoint benchmark, all metrics (MCC/AUPRC/AUROC/F1/accuracy)
 for the nine representation and search-tool methods (Fig 2A's method set),
 full training set, mean +/- SD over sixteen iterations. No embedded title (the
-manuscript caption carries the description); family-shaded rows, bold deployed
-row, best-per-metric highlighted.
+manuscript caption carries the description); family-shaded rows (embedding MLPs blue,
+search tools green), the best value of each metric highlighted, no bold row.
 
 Source: sam_classifier_comparison_output/sam_classifier_comparison_summary.csv
         (written by sam_classifier_comparison.py)
@@ -59,12 +59,7 @@ def main():
             continue
         clf = sub.iloc[r - 1]["classifier"]
         is_best = c >= 1 and (r - 1) == best_col[METRICS[c - 1]]
-        if is_best:
-            cell.set_facecolor("#fff2a8")
-        else:
-            cell.set_facecolor("#d3e0ee" if clf in EMBED_MLPS else "#dce8d3")
-        if clf == CONTROL:
-            cell.set_text_props(fontweight="bold")
+        cell.set_facecolor("#fff2a8" if is_best else "#d3e0ee" if clf in EMBED_MLPS else "#dce8d3")
         if c == 0:
             cell.set_text_props(ha="left")
             cell.PAD = 0.02

@@ -27,7 +27,7 @@ BASE = os.path.join(HERE, os.environ.get("BAKEOFF_OUT", "sam_classifier_comparis
 SRC = os.path.join(BASE, "sam_classifier_comparison_detailed.csv")
 OUT = os.path.join(BASE, "stats")
 os.makedirs(OUT, exist_ok=True)
-CONTROL = "MLP_ProstT5"
+CONTROL = os.environ.get("BAKEOFF_CONTROL", "MLP_ProstT5")   # the method every other is compared with (the deployed model); BAKEOFF_CONTROL overrides it
 ALPHA = 0.05
 
 

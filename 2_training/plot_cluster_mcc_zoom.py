@@ -21,9 +21,12 @@ Statistics (Demsar 2006, from sam_classifier_comparison_detailed.csv), recompute
 WITHIN each figure's method set (so the critical difference matches k = methods
 shown, not the full 16):
   - Friedman omnibus across the shown methods over the CV iterations.
-  - Bonferroni-Dunn post-hoc vs control = MLP_ProstT5 (our deployment model):
-    bars significantly WORSE than control (a=0.05) are starred/red; the leading
-    run that is NOT significantly worse is bracketed as the "top tier".
+  - Post-hoc vs the control (the deployed MLP_ProtT5): paired Wilcoxon signed-rank test over
+    the CV iterations, Holm-corrected across the k-1 comparisons. Methods significantly WORSE
+    than the control (Holm p < 0.05) are starred/red; the leading run that is NOT significantly
+    different from it is bracketed. (Used to be Bonferroni-Dunn on the Friedman mean ranks, which
+    is more conservative and whose cut-off depends on the other methods shown; the repeated
+    splits share data, so either set of p-values is indicative, not exact.)
 """
 import os
 from pathlib import Path
@@ -39,7 +42,7 @@ OUT = Path(__file__).resolve().parent / os.environ.get("BAKEOFF_OUT", "sam_class
 s = pd.read_csv(OUT / "sam_classifier_comparison_summary.csv")
 d = pd.read_csv(OUT / "sam_classifier_comparison_detailed.csv")
 
-CONTROL = "MLP_ProstT5"
+CONTROL = os.environ.get("BAKEOFF_CONTROL", "MLP_ProstT5")   # the deployed model; BAKEOFF_CONTROL overrides it (the archived paper: ProstT5)
 ALPHA = 0.05
 YMIN, YMAX = 0.50, 1.10
 NITERS = int(d[d.split_mode == "cluster"].iteration.nunique())
@@ -56,21 +59,31 @@ REPRO_TOOLS = EMBED_MLPS | SEARCH_TOOLS                 # Fig 2A method set
 CLASSICAL_SET = CLASSICAL_ML | {CONTROL}               # supplementary method set
 
 
+def holm(p):
+    """Holm step-down adjusted p-values, in the order of the input."""
+    p = np.asarray(p, float)
+    adj, run = np.empty_like(p), 0.0
+    for rank, i in enumerate(np.argsort(p)):
+        run = max(run, min(1.0, (len(p) - rank) * p[i]))
+        adj[i] = run
+    return adj
+
+
 def posthoc(split_mode, dataset, methods):
-    """Friedman p + set of methods significantly worse than CONTROL
-    (Bonferroni-Dunn), from the paired iteration x method MCC matrix, restricted
-    to `methods`."""
+    """Friedman omnibus p, and the set of methods significantly worse than CONTROL: paired Wilcoxon signed-rank over the
+    iterations (the control better on average), Holm-corrected across the comparisons, from the iteration x method MCC matrix
+    restricted to `methods`. `padj` holds the adjusted p of every method."""
     sub = d[(d.split_mode == split_mode) & (d.dataset == dataset)
             & (d.classifier.isin(methods))]
     piv = sub.pivot_table(index="iteration", columns="classifier", values="mcc")
     N, k = piv.shape
     chi2, p = stats.friedmanchisquare(*[piv[c].values for c in piv.columns])
     ranks = piv.rank(axis=1, ascending=False).mean(axis=0)   # low = better
-    z = stats.norm.ppf(1 - ALPHA / (2 * (k - 1)))
-    cd = z * np.sqrt(k * (k + 1) / (6.0 * N))
-    worse = {m for m in ranks.index
-             if m != CONTROL and (ranks[m] - ranks[CONTROL]) > cd}
-    return dict(chi2=chi2, p=p, df=k - 1, N=N, cd=cd, worse=worse)
+    others = [m for m in piv.columns if m != CONTROL]
+    pw = [stats.wilcoxon(piv[CONTROL] - piv[m]).pvalue for m in others]
+    padj = dict(zip(others, holm(pw)))
+    worse = {m for m in others if padj[m] < ALPHA and piv[CONTROL].mean() > piv[m].mean()}
+    return dict(chi2=chi2, p=p, df=k - 1, N=N, worse=worse, padj=padj, ranks=ranks)
 
 
 # Style knobs. The defaults are the look of the supplementary figures (Fig S4 and the standalone Fig 2A); plot_fig2_main passes its own
@@ -88,7 +101,7 @@ def color(clf, style=STYLE):
     return style["other"]             # classical ML
 
 
-def draw_panel(ax, ds, methods, bracket_label=f"top tier — n.s. vs {CONTROL}", style=STYLE):
+def draw_panel(ax, ds, methods, bracket_label=f"not significantly different from {CONTROL}", style=STYLE):
     sub = (s[(s.split_mode == "cluster") & (s.dataset == ds)
              & (s.classifier.isin(methods))]
            .sort_values("mcc_mean", ascending=False).reset_index(drop=True))
@@ -149,22 +162,20 @@ LEGEND = [mpatches.Patch(color="#4578aa", label="Embedding MLP"),
           mpatches.Patch(color="#ed8c44", label="Homology / structure-search baseline")]
 
 LEGEND_CLASSICAL = [mpatches.Patch(color="#4578aa", label="Embedding MLP (deployed)"),
-                    mpatches.Patch(color="#969696", label="Classical ML (on ProstT5)")]
+                    mpatches.Patch(color="#969696", label=f"Classical ML (on {CONTROL[len('MLP_'):]})")]
 
 
-def _saprot_prostt5_note(fig, ds):
-    """Bottom caption line: deployed ProstT5 (sequence only) vs SaProt (needs structure)."""
+def _saprot_prostt5_note(ds):
+    """The caption sentence (written to a text file, not onto the figure): the deployed model (sequence only) vs SaProt (needs structure)."""
     pv = (d[(d.split_mode == "cluster") & (d.dataset == ds)]
           .pivot_table(index="iteration", columns="classifier", values="mcc"))
-    dd = pv["MLP_SaProt"] - pv["MLP_ProstT5"]
-    wp = stats.wilcoxon(pv["MLP_SaProt"], pv["MLP_ProstT5"]).pvalue
+    dd = pv["MLP_SaProt"] - pv[CONTROL]
+    wp = stats.wilcoxon(pv["MLP_SaProt"], pv[CONTROL]).pvalue
     verdict = "statistically tied" if wp >= ALPHA else "significantly different"
-    fig.text(0.5, 0.060,
-             f"MLP_ProstT5 (deployed; needs only sequence) and MLP_SaProt (needs a structure) are {verdict}",
-             ha="center", va="bottom", fontsize=8.5, color="#333")
-    fig.text(0.5, 0.035,
-             f"(SaProt minus ProstT5: Δ={dd.mean():+.3f} MCC, SaProt wins {int((dd > 0).sum())}/{len(dd)} iters, Wilcoxon p={wp:.2f}).",
-             ha="center", va="bottom", fontsize=8.5, color="#333")
+    return (f"{CONTROL} (deployed; needs only sequence) and MLP_SaProt (needs a structure) are {verdict} "
+            f"(SaProt minus {CONTROL[len('MLP_'):]}: Δ={dd.mean():+.3f} MCC, SaProt wins {int((dd > 0).sum())}/{len(dd)} iters, Wilcoxon p={wp:.2f}). "
+            f"Stars: methods significantly worse than {CONTROL} (paired Wilcoxon signed-rank test over the {len(dd)} cluster-disjoint splits, Holm-corrected across the comparisons, p < 0.05); "
+            f"the Friedman test is the overall test. The splits share data, so the p-values are indicative.")
 
 
 def make_fig(ds, methods, fname, legend, bracket_label, saprot_note):
@@ -172,9 +183,9 @@ def make_fig(ds, methods, fname, legend, bracket_label, saprot_note):
     draw_panel(ax, ds, methods, bracket_label=bracket_label)
     fig.legend(handles=legend, fontsize=9.5, loc="upper center", ncol=len(legend),
                bbox_to_anchor=(0.5, 0.985), frameon=True)
-    if saprot_note:
-        _saprot_prostt5_note(fig, ds)
-    fig.tight_layout(rect=[0, 0.10 if saprot_note else 0.03, 1, 0.95])
+    if saprot_note:       # no text under the figure: the sentence goes to <figure>_caption.txt
+        (OUT / (Path(fname).stem + "_caption.txt")).write_text(_saprot_prostt5_note(ds) + "\n")
+    fig.tight_layout(rect=[0, 0.03, 1, 0.95])
     p = OUT / fname
     fig.savefig(p, dpi=150)
     plt.close(fig)
@@ -184,13 +195,18 @@ def make_fig(ds, methods, fname, legend, bracket_label, saprot_note):
 if __name__ == "__main__":
     # --- Fig 2A: representations & tools ---
     make_fig("full", REPRO_TOOLS, "sam_classifier_cluster_mcc_zoom.png",
-             LEGEND, f"top tier — n.s. vs {CONTROL}", saprot_note=True)
+             LEGEND, f"not significantly different from {CONTROL}", saprot_note=True)
 
-    # --- Fig S4: MLP vs classical ML, all on ProstT5 ---
-    make_fig("full", CLASSICAL_SET, "sam_classifier_classical_ml_comparison.png",
-             LEGEND_CLASSICAL, f"top tier — n.s. vs {CONTROL}", saprot_note=False)
+    # --- Fig S4: MLP vs classical ML, all on ProstT5 (only if the classical classifiers are in this bake-off) ---
+    sets = [("representations+tools", REPRO_TOOLS)]
+    if os.environ.get("BAKEOFF_CLASSICAL") == "1" and (CLASSICAL_ML - {CONTROL}) <= set(d["classifier"]):      # the classical-ML comparison is not in the paper: only on request
+        make_fig("full", CLASSICAL_SET, "sam_classifier_classical_ml_comparison.png",
+                 LEGEND_CLASSICAL, f"not significantly different from {CONTROL}", saprot_note=False)
+        sets.append(("classical-ML", CLASSICAL_SET))
+    else:
+        print("  (classical-ML comparison not drawn: set BAKEOFF_CLASSICAL=1 to draw it)")
 
-    for name, methods in [("representations+tools", REPRO_TOOLS), ("classical-ML", CLASSICAL_SET)]:
+    for name, methods in sets:
         st = posthoc("cluster", "full", methods)
         print(f"  {name} cluster/full: Friedman chi2({st['df']})={st['chi2']:.1f}, p={st['p']:.2e}; "
               f"worse-than-{CONTROL} = {sorted(st['worse'])}")

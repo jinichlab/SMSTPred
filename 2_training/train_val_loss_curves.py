@@ -33,8 +33,10 @@ Protocol reproduced exactly from the sweep scripts
                objective (checked equal to the original class).
 
 Losses are evaluated with the same criterion and the same TRAIN-pool pos_weight
-on both sets, so train and validation numbers share a scale. Validation loss is
-NOT used to pick anything here.
+on both sets, so train and validation numbers share a scale. This script only RECORDS the
+curves and the MCC checkpoints (every 50 epochs); archive_epoch_loss_selection/select_epoch_and_loss.py (archived) reads them and
+chooses the epoch (from where the validation loss bottoms out, before overfitting sets in)
+and the loss (from the MCC at the nearest checkpoint).
 
 Sanity check built in: at the original checkpoint epochs the script also records
 val per-label MCC (SAM: MCC-optimal thresholds tuned on TRAIN, as in the sweep;
@@ -112,8 +114,10 @@ LEARNING_RATE = 0.001
 MAX_EPOCHS = 20000
 # Dense logging: every epoch to 1k (resolves the fast early dynamics), every 10 after.
 LOG_EPOCHS = list(range(1, 1001)) + list(range(1010, MAX_EPOCHS + 1, 10))
-# Original checkpoint grid of the S2/S5 sweeps (all members of LOG_EPOCHS).
-EPOCH_CHECKPOINTS = list(range(100, 1000, 100)) + list(range(1000, 21000, 1000))
+# MCC checkpoints: every 50 epochs (all members of LOG_EPOCHS). archive_epoch_loss_selection/select_epoch_and_loss.py (archived) picks the epoch from the validation-loss curves and the loss from the MCC at the checkpoint
+# nearest to it, so the grid has to be fine where the optimum lies (a few hundred epochs: 100 apart was too coarse, MCC moves about 0.01 between epochs 200 and 300).
+# The original S2/S5 grid (100..900 by 100, then every 1000) is a subset of it, so the old comparisons still work.
+EPOCH_CHECKPOINTS = list(range(50, MAX_EPOCHS + 1, 50))
 
 TASKS = ([("sam_full", e, None) for e in EMBEDDINGS] +
          [("sam_balanced", e, None) for e in EMBEDDINGS] +
@@ -264,17 +268,34 @@ class PerLabelLoss(nn.Module):
         return torch.stack(terms)
 
 
+def _mcc_over_thresholds(y, p, cand):
+    """MCC of (p >= t) against y for every threshold t of cand at once (float64; a zero denominator gives 0, as in scikit-learn)."""
+    pred = p[:, None] >= cand[None, :]
+    pos = (y > 0.5)[:, None]
+    tp, fp = (pred & pos).sum(0).astype(np.float64), (pred & ~pos).sum(0).astype(np.float64)
+    fn, tn = (~pred & pos).sum(0).astype(np.float64), (~pred & ~pos).sum(0).astype(np.float64)
+    den = np.sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+    return np.where(den > 0, (tp * tn - fp * fn) / np.where(den > 0, den, 1.0), 0.0)
+
+
 def find_mcc_optimal_thresholds(y_true, probs):
-    """Per-label MCC-optimal thresholds tuned on TRAIN predictions (as in the sweep)."""
+    """Per-label MCC-optimal thresholds tuned on TRAIN predictions (as in the sweep).
+
+    Same result as the original loop (every candidate threshold scored with sklearn's matthews_corrcoef, the first maximum kept), about 25x faster: all candidates are
+    scored at once with array arithmetic, and sklearn is then called only on the candidates that are within 1e-9 of the best, in the original ascending order with the
+    original strict '>' rule. A candidate outside that set cannot tie the maximum, so the choice is identical (checked on 300 hard cases in test_threshold_search.py).
+    Needed because the MCC is now scored every 50 epochs (400 checkpoints per run instead of 29)."""
     thr = np.full(len(LABELS), 0.5)
     for i in range(len(LABELS)):
         if len(np.unique(y_true[:, i])) < 2:
             continue
+        cand = np.unique(np.percentile(probs[:, i], np.linspace(0, 100, 200)))
+        approx = _mcc_over_thresholds(y_true[:, i], probs[:, i], cand)
         best_mcc, best_t = -2.0, 0.5
-        for t in np.unique(np.percentile(probs[:, i], np.linspace(0, 100, 200))):
-            m = matthews_corrcoef(y_true[:, i], (probs[:, i] >= t).astype(int))
+        for k in np.flatnonzero(approx >= approx.max() - 1e-9):
+            m = matthews_corrcoef(y_true[:, i], (probs[:, i] >= cand[k]).astype(int))
             if m > best_mcc:
-                best_mcc, best_t = m, t
+                best_mcc, best_t = m, cand[k]
         thr[i] = best_t
     return thr
 
