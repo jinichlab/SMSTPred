@@ -1,0 +1,12 @@
+{
+  "endpoint": "https://sparql.rhea-db.org/sparql",
+  "downloaded": "2026-11-03T00:16:08+00:00",
+  "compounds": 15203,
+  "families": {
+    "SmallMolecule": 12959,
+    "Polypeptide": 1268,
+    "Polymer": 264,
+    "Polynucleotide": 712
+  },
+  "sha256": "4bf84e19c5a1600d12397c8f727359351440337ecf80fd5cecc63296dc9817a3"
+}

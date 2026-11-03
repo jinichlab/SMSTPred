@@ -1,0 +1,88 @@
+{
+ "uniprot_release": "2026_03",
+ "uniprot_release_date": "02-September-2026",
+ "api": "https://rest.uniprot.org",
+ "length_view": 2000,
+ "datasets": {
+  "sam_mtases": {
+   "query": "(reviewed:true) AND (xref:interpro-IPR029063)",
+   "fields": "accession,reviewed,id,protein_name,organism_name,organism_id,length,sequence,annotation_score,xref_interpro,xref_pfam,cc_function,cc_catalytic_activity,rhea,ec,ft_dna_bind,xref_chembl,xref_string,date_modified,date_sequence_modified,version,sequence_version,xref_proteomes",
+   "rows": 10732,
+   "rows_announced_by_api": 10732,
+   "rows_le_length_view": 10325,
+   "rows_gt_length_view": 407,
+   "seconds": 4.0,
+   "release_of_download": "2026_03",
+   "files": {
+    "sam_mtases.tsv.gz": {
+     "bytes": 4438766,
+     "sha256": "d84763f28d5fe8551dee5b5f1456b43a6461d442282083b46b5be11d0b86d077"
+    },
+    "sam_mtases_le2000.fasta": {
+     "bytes": 3509615,
+     "sha256": "237a0f8b67a3cbe0a83f5283144d233951d434c47c190cb9b63949c04c365221"
+    }
+   },
+   "pulled_at": "2026-11-02T22:53:32Z",
+   "command": "pull_uniprot.py all --expect-release 2026_03"
+  },
+  "up_enzymes": {
+   "query": "(reviewed:true) AND (cc_catalytic_activity:*)",
+   "fields": "accession,reviewed,id,protein_name,organism_name,organism_id,length,sequence,annotation_score,xref_interpro,xref_pfam,cc_function,cc_catalytic_activity,rhea,ec,ft_dna_bind,xref_chembl,xref_string,date_modified,date_sequence_modified,version,sequence_version,xref_proteomes",
+   "rows": 260567,
+   "rows_announced_by_api": 260567,
+   "rows_le_length_view": 259357,
+   "rows_gt_length_view": 1210,
+   "seconds": 85.8,
+   "release_of_download": "2026_03",
+   "files": {
+    "up_enzymes.tsv.gz": {
+     "bytes": 136442534,
+     "sha256": "05daa9336c770544c0701d815791f89c73d36b7268e9cef4b34246c3924453a2"
+    },
+    "up_enzymes_le2000.fasta": {
+     "bytes": 106807506,
+     "sha256": "4c6a7be308a39c13bb812b4e39b74ded2c4cf715894c0a5b2c357dc2c8af9223"
+    }
+   },
+   "pulled_at": "2026-11-02T22:55:01Z",
+   "command": "pull_uniprot.py all --expect-release 2026_03"
+  },
+  "proteomes": {
+   "query": "(proteome:<Proteome Id>) for every Proteome Id of the organism table",
+   "fields": "accession,reviewed,protein_name,organism_name,length,sequence,xref_interpro,xref_pfam",
+   "organism_table": "selected_1259_organisms.csv",
+   "proteomes_requested": 1259,
+   "proteomes_ok": 1249,
+   "proteomes_empty": 10,
+   "proteomes_error": 0,
+   "proteins_all": 11442292,
+   "proteins_le_length_view": 11319582,
+   "proteins_gt_length_view": 122710,
+   "ipr029063_all": 117553,
+   "ipr029063_le_length_view": 115850,
+   "releases_of_downloads": [
+    "2026_03"
+   ],
+   "files": {
+    "proteome_summary.csv": {
+     "bytes": 210238,
+     "sha256": "d99ed0251f4bbbd25cf356fd0bafc4de4f8887ff237ba03efe953e2b5de74159"
+    }
+   },
+   "pulled_at": "2026-11-02T23:25:44Z",
+   "command": "pull_uniprot.py all --expect-release 2026_03"
+  }
+ },
+ "releases_seen_in_this_session": [
+  "2026_03"
+ ],
+ "repo_commit": "a19237ac8377cdf11e3754c10ab986b71b5a75bc",
+ "resplit_history": [
+  {
+   "from": 1000,
+   "to": 2000,
+   "at": "2026-11-02T23:39:11Z"
+  }
+ ]
+}
