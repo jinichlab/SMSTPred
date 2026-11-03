@@ -1,0 +1,15 @@
+# The small environment of the ready classifier (not the full pipeline environment): conda env create -f environment.yml && conda activate smstpred-classify
+name: smstpred-classify
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.11
+  - pytorch>=2.1
+  - numpy
+  - pandas
+  - h5py
+  - pip
+  - pip:
+      - transformers>=4.36
+      - sentencepiece

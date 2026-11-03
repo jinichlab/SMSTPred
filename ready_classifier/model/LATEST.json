@@ -1,0 +1,45 @@
+{
+  "release": "2026_03",
+  "uniprot_release": "2026_03",
+  "uniprot_release_date": "02-September-2026",
+  "path": "2026_03",
+  "created": "2026-11-03",
+  "embedding": "ProtT5",
+  "embedding_model": "Rostlab/prot_t5_xl_half_uniref50-enc (mean over residues)",
+  "labels": [
+    "Metabolite",
+    "Protein",
+    "RNA",
+    "DNA"
+  ],
+  "n_members": 6,
+  "trained_on": 7582,
+  "ad_cutoff": 0.8129861438274384,
+  "out_of_fold_metrics": {
+    "note": "honest: audit members whose test fold was never used for training or epoch selection",
+    "mcc": 0.9551333015873235,
+    "mcc_mean_over_folds": 0.9548718308709545,
+    "auprc": 0.9835655067860818,
+    "auroc": 0.9956935102536187,
+    "per_label_mcc": {
+      "Metabolite": 0.962272398992454,
+      "Protein": 0.9128619536962891,
+      "RNA": 0.969026804409876,
+      "DNA": 0.9763720492506747
+    },
+    "optimistic_validation_fold_mcc": 0.9738239545769718
+  },
+  "download": null,
+  "files": {
+    "ensemble_member_0.pt": "f96f6290ddab84ba6b0eeab612e59c0f5d211062da42a850874cc73270459009",
+    "ensemble_member_1.pt": "4f6bab1abac8439303546e1555357ba7f2802ea88caa8bf5a064f3df0b8912fc",
+    "ensemble_member_2.pt": "b3d2b80faee6f0b2ecdd998a30e7e2407f47371f95e82a926eac81c954b1c7fb",
+    "ensemble_member_3.pt": "f91af622f74b4b619ec1db45bd7b03f43a1a4f066cf14a0ee33f7065a5299d59",
+    "ensemble_member_4.pt": "376c426f3b40b253621b83226d6f068e185be0c789cdde89e3973167c096c78b",
+    "ensemble_member_5.pt": "9e2b7ca539eba14507775ad1731044d42de978a813eabe29cc13fbf5c19f8540",
+    "model_config.json": "ab54c00a7bd7c1d6edc5d17ec39be579096ae157ad92a1be5e311d53eae781bf",
+    "thresholds.json": "82ce398605abca6719e96fc74ed4187ea182b785537bd4f6df4235412a7d41d2",
+    "ad_reference.h5": "a50190c82e4ab1f735ec24957dec5cc2b9e004beb9844f2b94ce760cb45430b9",
+    "report.txt": "16980eaa9cfebaf9ee9c7cd812b671d799c7296c5f6c78366662ff659ffa8837"
+  }
+}

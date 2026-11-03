@@ -1,0 +1,19 @@
+deployment set: 7582 proteins in 492 clusters, ProtT5 1024-D | 6 members, one per fold | epochs 2000, patience 80 | device cuda
+folds (balanced by size and labels; worst deviation from the ideal load 60.2%):  proteins (Metabolite / Protein / RNA / DNA positives) of the validation fold of each member
+   member 0:  1453 (211 / 120 / 1102 / 20)
+   member 1:  1397 (210 / 141 / 1025 / 22)
+   member 2:  1261 (197 / 207 / 836 / 22)
+   member 3:  1139 (347 / 145 / 631 / 21)
+   member 4:   968 (197 / 272 / 477 / 22)
+   member 5:  1364 (260 / 134 / 949 / 21)
+member 0: trained on 6129, validated on 1453; kept epoch 194, early stopping fired at 274
+member 1: trained on 6185, validated on 1397; kept epoch 387, early stopping fired at 467
+member 2: trained on 6321, validated on 1261; kept epoch 182, early stopping fired at 262
+member 3: trained on 6443, validated on 1139; kept epoch 130, early stopping fired at 210
+member 4: trained on 6614, validated on 968; kept epoch 285, early stopping fired at 365
+member 5: trained on 6218, validated on 1364; kept epoch 265, early stopping fired at 345
+
+validation-fold predictions of the deployed members (OPTIMISTIC: the stopping epoch was chosen on these very proteins): MCC 0.9738
+HONEST out-of-fold (audit members: fold j never used for training or for the epoch; fixed 0.5): pooled MCC 0.9551, mean over folds 0.9549 (SD 0.029), AUPRC 0.9836, AUROC 0.9957, F1 0.9643; the optimism of the validation-fold numbers: +0.0187
+   per label MCC: Metabolite 0.962, Protein 0.913, RNA 0.969, DNA 0.976 | audit members' kept epochs [230, 176, 119, 270, 256, 174]
+applicability domain: nearest-neighbour cosine among the training proteins, 1th percentile = 0.8130 (median 0.9958)

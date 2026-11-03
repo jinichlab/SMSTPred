@@ -1,0 +1,23 @@
+{
+ "thresholds": {
+  "Metabolite": 0.5,
+  "Protein": 0.5,
+  "RNA": 0.5,
+  "DNA": 0.5
+ },
+ "rule": "fixed 0.5 on the mean probability of the members (the benchmark's protocol)",
+ "oof_metrics": {
+  "note": "honest: audit members whose test fold was never used for training or epoch selection",
+  "mcc": 0.9551333015873235,
+  "mcc_mean_over_folds": 0.9548718308709545,
+  "auprc": 0.9835655067860818,
+  "auroc": 0.9956935102536187,
+  "per_label_mcc": {
+   "Metabolite": 0.962272398992454,
+   "Protein": 0.9128619536962891,
+   "RNA": 0.969026804409876,
+   "DNA": 0.9763720492506747
+  },
+  "optimistic_validation_fold_mcc": 0.9738239545769718
+ }
+}

@@ -1,0 +1,7 @@
+Entry,length,status,score_Metabolite,score_Protein,score_RNA,score_DNA,call_Metabolite,call_Protein,call_RNA,call_DNA,disagreement,ad_maxsim,in_domain,predicted_substrate
+P05102,327,scored,0.0005,0.0004,0.0006,0.9995,0.0,0.0,0.0,1.0,0.0007,1.0,1.0,DNA
+Q8TEA1,469,scored,0.0,0.0006,0.9999,0.0003,0.0,0.0,1.0,0.0,0.0003,1.0,1.0,RNA
+Q99873,371,scored,0.0131,0.9981,0.0002,0.001,0.0,1.0,0.0,0.0,0.0047,1.0,1.0,Protein
+P46597,345,scored,0.9991,0.008,1e-04,0.0004,1.0,0.0,0.0,0.0,0.0021,1.0,1.0,Metabolite
+Q9FR44,491,scored,0.9967,0.0037,0.0009,0.0008,1.0,0.0,0.0,0.0,0.0019,1.0,1.0,Metabolite
+too_short_example_not_a_real_protein,3,not scored: 3 aa is shorter than 30 aa,,,,,,,,,,,,
