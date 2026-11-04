@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-04T13:13:34",
+ "generated": "2026-11-04T13:17:14",
  "release": "release_2026_03",
  "versions": {
   "python": "3.12.15",
@@ -8372,7 +8372,7 @@
    "cmd": "CLUSTER_WHAT=sam bash 1_clustering/run_mmseqs_clusters.sh && bash 2_training/run_deploy_ensemble.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 52.8,
+   "seconds": 53.5,
    "files": [
     {
      "path": "same proteins, clusters and folds",
@@ -8388,6 +8388,16 @@
      "path": "every label called at the same fixed threshold as archived",
      "status": "numeric-match",
      "detail": "{'Metabolite': 0.5, 'Protein': 0.5, 'RNA': 0.5, 'DNA': 0.5}"
+    },
+    {
+     "path": "overall out-of-fold MCC within 0.01",
+     "status": "numeric-match",
+     "detail": "0.9551 vs 0.9551"
+    },
+    {
+     "path": "per-label out-of-fold MCC within 0.02",
+     "status": "numeric-match",
+     "detail": "Metabolite 0.962 vs 0.962, Protein 0.913 vs 0.913, RNA 0.969 vs 0.969, DNA 0.976 vs 0.976"
     },
     {
      "path": "out-of-fold scores within 0.1 (max over proteins)",

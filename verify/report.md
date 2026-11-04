@@ -1,4 +1,4 @@
-Last verification: 2026-11-04T13:13:34 (Python 3.12.15, numpy 2.1.3, pandas 2.2.3, scipy 1.15.2, torch 2.8.0, matplotlib 3.10.9). 13 of 17 steps reproduce a committed result, 4 build their output without a committed reference to compare, 0 fail.
+Last verification: 2026-11-04T13:17:14 (Python 3.12.15, numpy 2.1.3, pandas 2.2.3, scipy 1.15.2, torch 2.8.0, matplotlib 3.10.9). 13 of 17 steps reproduce a committed result, 4 build their output without a committed reference to compare, 0 fail.
 
 | Step | Reproduces | Result | Files compared | Time |
 |---|---|---|---|---|
@@ -20,14 +20,16 @@ Last verification: 2026-11-04T13:13:34 (Python 3.12.15, numpy 2.1.3, pandas 2.2.
 | `s7_motif_pick` | Motif structure pick by rule, Table 2 | PASS | 77 identical, 185 new-file | 68 s |
 | `s9_key_numbers` | key_numbers.md (every number quoted in the text) and the figure index | PASS | 1 identical, 23 new-file | 4 s |
 
-Last verification: 2026-11-04T13:13:34 (Python 3.12.15, numpy 2.1.3, pandas 2.2.3, scipy 1.15.2, torch 2.8.0, matplotlib 3.10.9). 1 of 1 steps reproduce a committed result, 0 build their output without a committed reference to compare, 0 fail.
+Last verification: 2026-11-04T13:17:14 (Python 3.12.15, numpy 2.1.3, pandas 2.2.3, scipy 1.15.2, torch 2.8.0, matplotlib 3.10.9). 1 of 1 steps reproduce a committed result, 0 build their output without a committed reference to compare, 0 fail.
 
 | Step | Reproduces | Result | Checks | Time |
 |---|---|---|---|---|
-| `b_deploy` | Deployment ensemble re-trained from the labels: thresholds, out-of-fold MCC, out-of-fold scores | PASS | 6 of 6 passed | 53 s |
+| `b_deploy` | Deployment ensemble re-trained from the labels: thresholds, out-of-fold MCC, out-of-fold scores | PASS | 8 of 8 passed | 54 s |
 | &nbsp;&nbsp;`b_deploy` check | same proteins, clusters and folds | PASS | 7582 proteins | |
 | &nbsp;&nbsp;`b_deploy` check | six ensemble members written | PASS |  | |
 | &nbsp;&nbsp;`b_deploy` check | every label called at the same fixed threshold as archived | PASS | {'Metabolite': 0.5, 'Protein': 0.5, 'RNA': 0.5, 'DNA': 0.5} | |
+| &nbsp;&nbsp;`b_deploy` check | overall out-of-fold MCC within 0.01 | PASS | 0.9551 vs 0.9551 | |
+| &nbsp;&nbsp;`b_deploy` check | per-label out-of-fold MCC within 0.02 | PASS | Metabolite 0.962 vs 0.962, Protein 0.913 vs 0.913, RNA 0.969 vs 0.969, DNA 0.976 vs 0.976 | |
 | &nbsp;&nbsp;`b_deploy` check | out-of-fold scores within 0.1 (max over proteins) | PASS | max difference 0.0000 | |
 | &nbsp;&nbsp;`b_deploy` check | mean out-of-fold score difference within 0.01 | PASS | mean difference 0.0000 | |
 | &nbsp;&nbsp;`b_deploy` check | applicability-domain cutoff within 0.01 | PASS | 0.8130 vs 0.8130 | |

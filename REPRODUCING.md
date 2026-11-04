@@ -49,7 +49,7 @@ there with `RELEASE_DIR` set to the copy, and compares every file a step wrote o
 ### CPU steps (`make verify`)
 
 <!-- VERIFY-TABLE-START -->
-Last verification: 2026-11-04T13:13:34 (Python 3.12.15, numpy 2.1.3, pandas 2.2.3, scipy 1.15.2, torch 2.8.0, matplotlib 3.10.9). 13 of 17 steps reproduce a committed result, 4 build their output without a committed reference to compare, 0 fail.
+Last verification: 2026-11-04T13:17:14 (Python 3.12.15, numpy 2.1.3, pandas 2.2.3, scipy 1.15.2, torch 2.8.0, matplotlib 3.10.9). 13 of 17 steps reproduce a committed result, 4 build their output without a committed reference to compare, 0 fail.
 
 | Step | Reproduces | Result | Files compared | Time |
 |---|---|---|---|---|
@@ -77,14 +77,16 @@ Last verification: 2026-11-04T13:13:34 (Python 3.12.15, numpy 2.1.3, pandas 2.2.
 A retrained network does not reproduce to the last digit across PyTorch / CUDA / GPU generations, so the deployment step compares outcomes: the same proteins, clusters and folds, the fixed thresholds, per-label out-of-fold MCC (within 0.02), out-of-fold scores (max 0.1, mean 0.01) and the applicability-domain cutoff (0.01) of the six-member ensemble. The tolerances are provisional (`workflow/gpu_checks.py`) until more GPU generations have been compared; the manuscript's numbers are those of the archived ensemble.
 
 <!-- VERIFY-GPU-TABLE-START -->
-Last verification: 2026-11-04T13:13:34 (Python 3.12.15, numpy 2.1.3, pandas 2.2.3, scipy 1.15.2, torch 2.8.0, matplotlib 3.10.9). 1 of 1 steps reproduce a committed result, 0 build their output without a committed reference to compare, 0 fail.
+Last verification: 2026-11-04T13:17:14 (Python 3.12.15, numpy 2.1.3, pandas 2.2.3, scipy 1.15.2, torch 2.8.0, matplotlib 3.10.9). 1 of 1 steps reproduce a committed result, 0 build their output without a committed reference to compare, 0 fail.
 
 | Step | Reproduces | Result | Checks | Time |
 |---|---|---|---|---|
-| `b_deploy` | Deployment ensemble re-trained from the labels: thresholds, out-of-fold MCC, out-of-fold scores | PASS | 6 of 6 passed | 53 s |
+| `b_deploy` | Deployment ensemble re-trained from the labels: thresholds, out-of-fold MCC, out-of-fold scores | PASS | 8 of 8 passed | 54 s |
 | &nbsp;&nbsp;`b_deploy` check | same proteins, clusters and folds | PASS | 7582 proteins | |
 | &nbsp;&nbsp;`b_deploy` check | six ensemble members written | PASS |  | |
 | &nbsp;&nbsp;`b_deploy` check | every label called at the same fixed threshold as archived | PASS | {'Metabolite': 0.5, 'Protein': 0.5, 'RNA': 0.5, 'DNA': 0.5} | |
+| &nbsp;&nbsp;`b_deploy` check | overall out-of-fold MCC within 0.01 | PASS | 0.9551 vs 0.9551 | |
+| &nbsp;&nbsp;`b_deploy` check | per-label out-of-fold MCC within 0.02 | PASS | Metabolite 0.962 vs 0.962, Protein 0.913 vs 0.913, RNA 0.969 vs 0.969, DNA 0.976 vs 0.976 | |
 | &nbsp;&nbsp;`b_deploy` check | out-of-fold scores within 0.1 (max over proteins) | PASS | max difference 0.0000 | |
 | &nbsp;&nbsp;`b_deploy` check | mean out-of-fold score difference within 0.01 | PASS | mean difference 0.0000 | |
 | &nbsp;&nbsp;`b_deploy` check | applicability-domain cutoff within 0.01 | PASS | 0.8130 vs 0.8130 | |
