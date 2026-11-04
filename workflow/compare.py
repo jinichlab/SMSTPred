@@ -47,6 +47,14 @@ def compare(new: Path, ref: Path, rtol=1e-6, atol=1e-9, png_tol=12.0):
     if filecmp.cmp(new, ref, shallow=False):
         return "identical", ""
     suf = new.suffix.lower()
+    if new.name.lower().endswith(".csv.gz"):          # compressed tables are compared as text (the compressed bytes differ with the gzip level and time stamp)
+        import gzip
+        ta = gzip.open(new, "rt", errors="replace").read().replace("\r\n", "\n").rstrip()
+        tb = gzip.open(ref, "rt", errors="replace").read().replace("\r\n", "\n").rstrip()
+        if ta == tb:
+            return "identical", "same text, different compression"
+        ok, d = _numbers_close(ta, tb, rtol, atol)
+        return ("numeric-match", f"max relative diff {d:.1e}") if ok else ("DIFFERENT", d)
     if suf in SKIP_SUFFIX:
         return "skipped", f"{suf} files are not compared"
     if suf in {".png", ".jpg", ".jpeg"}:

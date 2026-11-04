@@ -41,11 +41,18 @@ FILES = [
     ("umap_RELEASE.tar", "tar", ["umap"], "the ProtT5 map (coordinates, HDBSCAN clusters, dark / metazoan-protein / vertebrate-DNA cluster tables)"),
     ("tree_RELEASE.tar", "tar", ["tree"], "the taxonomy tree (Newick) and the per-organism annotation tables of Fig 3"),
     ("reference_tables_RELEASE.tar", "tar", ["reference_tables"], "ExPASy ENZYME, Rhea EC links, Rhea direction table and Rhea equation text used to name enzymes and reactions"),
+    ("pull_tables_RELEASE.tar", "tar", ["sam_mtases.tsv.gz", "sam_mtases_le2000.fasta", "proteome_summary.csv", "binning_manifest.json", "binning_report.txt", "binning_rules_used_sam.csv", "binning_rules_used_up.csv", "binning_text_fallback_names_sam.csv", "binning_text_fallback_names_up.csv"],
+     "the UniProt pull behind the SAM set (sam_mtases.tsv.gz, its <= 2,000 aa FASTA), the per-proteome summary and the substrate-typing reports; what the clustering, the unit tests and the tree stage read (the UP table is not archived: it is 136 MB and only the UP clustering reads it)"),
+    ("protein_annotations.csv.gz", "annot", "embedding_inputs/protein_annotations.csv.gz",
+     "UniProt Entry, Reviewed (Swiss-Prot) status, protein names and InterPro annotation of every protein on the map and in the proteome embeddings (read by the cluster selection, Fig 7 and the domain enrichment; replaces the 3 GB of per-proteome UniProt tables)"),
+    ("results_RELEASE.tar", "tar", ["fig4", "fig5", "fig8", "fig9_10", "key_numbers.md"],
+     "the figure builders' own tables and images (Figs 4, 5, 8, 9-10) and key_numbers.md: the reference `make verify` compares the regenerated figures and statistics with"),
+    ("horizyn_predict_full.log", "copy", "dark_annotation/horizyn_run/horizyn_predict_full.log", "the log of the Horizyn run over the dark-cluster proteins (the validation numbers key_numbers.md quotes: rank of the best SAM-methylation reaction)"),
     ("pull_manifest.json", "copy", "pull_manifest.json", "what was pulled from UniProt and when"),
 ]
 SKIP_DIRS = {"horizyn_run", "cif", "__pycache__", "tmp_mmseqs"}
 SKIP_SUFFIX = (".part",)
-SKIP_NAMES = {"context_cache.json"}
+SKIP_NAMES = set()      # context_cache.json is kept: with it the pathway notes are rebuilt offline and identically
 
 
 def sha256(p):
@@ -58,6 +65,9 @@ def sha256(p):
 
 def add_tree(tar, rel, src):
     """Add folder `src` (relative to the release) without symlinks, caches and the big regenerable files."""
+    if (rel / src).is_file():
+        tar.add(rel / src, arcname=str(src))
+        return
     for root, dirs, files in os.walk(rel / src):
         dirs[:] = sorted(d for d in dirs if d not in SKIP_DIRS and not (Path(root) / d).is_symlink())
         for f in sorted(files):
@@ -95,6 +105,14 @@ def main():
                 os.link(s, dst)                  # no copy when it is the same file system
             except OSError:
                 shutil.copyfile(s, dst)
+        elif kind == "annot":
+            import pandas as pd
+            keep = set(pd.read_csv(rel / "embedding_inputs" / "proteome_members.csv", usecols=["Entry"]).Entry)
+            for f in (rel / "umap").glob("sam_mtase_umap_*_coords.csv"):
+                keep |= set(pd.read_csv(f, usecols=["Entry"]).Entry)
+            parts = [x[x.Entry.isin(keep)] for x in (pd.read_csv(f, usecols=["Entry", "Reviewed", "Protein names", "InterPro"], low_memory=False)
+                                                      for f in sorted((rel / "reference_proteomes").glob("*.csv")))]
+            pd.concat(parts).drop_duplicates("Entry").to_csv(dst, index=False)
         elif kind in ("tar", "targz"):
             srcs = src if isinstance(src, list) else [src]
             if not all((rel / x).exists() for x in srcs):

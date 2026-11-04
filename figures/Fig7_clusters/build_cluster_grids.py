@@ -110,7 +110,11 @@ def main_release(release_arg):
     out.mkdir(exist_ok=True)
     coords = pd.read_csv(u / "sam_mtase_umap_prott5_coords.csv", low_memory=False)
     keep = set(coords.Entry)
-    rev = pd.concat([pd.read_csv(f, usecols=["Entry", "Reviewed"], low_memory=False) for f in sorted((rel / "reference_proteomes").glob("*.csv"))]).drop_duplicates("Entry")
+    files = sorted((rel / "reference_proteomes").glob("*.csv")) if (rel / "reference_proteomes").is_dir() else []
+    if files:
+        rev = pd.concat([pd.read_csv(f, usecols=["Entry", "Reviewed"], low_memory=False) for f in files]).drop_duplicates("Entry")
+    else:      # the archived record ships a slim table instead of the per-proteome tables
+        rev = pd.read_csv(rel / "embedding_inputs" / "protein_annotations.csv.gz", usecols=["Entry", "Reviewed"], low_memory=False).drop_duplicates("Entry")
     rev = rev[rev.Entry.isin(keep)]
     mp = pd.read_csv(u / "metazoa_protein_clusters.csv").sort_values("n", ascending=False).cluster.tolist()
     vd = pd.read_csv(u / "vertebrate_dna_clusters.csv").sort_values("n", ascending=False).cluster.tolist()

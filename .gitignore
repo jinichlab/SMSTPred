@@ -47,3 +47,9 @@ data/uniprot_pull/
 # files the code needs that the patterns above would drop
 !ready_classifier/model/**/*.h5
 !0_uniprot_pull/rhea_compounds.tsv.gz
+
+# archived Zenodo record placed by `make data` (and the release folder assembled from it)
+data/*
+!data/README.md
+.verify_work_release/
+verify_cpu_*.log

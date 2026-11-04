@@ -120,8 +120,13 @@ def load_release(rel, emb):
     coords = pd.read_csv(rel / "umap" / f"sam_mtase_umap_{emb}_coords.csv", low_memory=False)
     keep = set(coords.Entry)
     parts = []
-    for f in sorted((rel / "reference_proteomes").glob("*.csv")):
-        x = pd.read_csv(f, usecols=["Entry", "Reviewed", "Protein names"], low_memory=False)
+    slim = rel / "embedding_inputs" / "protein_annotations.csv.gz"      # the archived record ships this slim table instead of the 3 GB of proteome tables
+    if (rel / "reference_proteomes").is_dir() and any((rel / "reference_proteomes").glob("*.csv")):
+        for f in sorted((rel / "reference_proteomes").glob("*.csv")):
+            x = pd.read_csv(f, usecols=["Entry", "Reviewed", "Protein names"], low_memory=False)
+            parts.append(x[x.Entry.isin(keep)])
+    else:
+        x = pd.read_csv(slim, usecols=["Entry", "Reviewed", "Protein names"], low_memory=False)
         parts.append(x[x.Entry.isin(keep)])
     return coords, pd.concat(parts, ignore_index=True), pd.read_csv(META_CSV)
 

@@ -178,7 +178,11 @@ def main():
     a = ap.parse_args()
     from mmseqs_clusters import newest_release
     rel = Path(a.release or os.environ.get("RELEASE_DIR") or newest_release(Path(os.environ.get("UNIPROT_PULL_DIR", REPO / "data" / "uniprot_pull")), os.environ.get("RELEASE")))
-    md = [f"# Key numbers of {rel.name}", "", "Read from the outputs of the stages (the file of each section is named in its heading); regenerate with `python workflow/key_numbers.py`.", ""]
+    try:
+        tag = "UniProt release " + json.load(open(rel / "pull_manifest.json"))["uniprot_release"]
+    except Exception:
+        tag = rel.name
+    md = [f"# Key numbers of {tag}", "", "Read from the outputs of the stages (the file of each section is named in its heading); regenerate with `python workflow/key_numbers.py`.", ""]
     for title, fn in SECTIONS:
         md.append(f"## {title}")
         try:
