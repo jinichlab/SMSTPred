@@ -30,7 +30,7 @@ ITEMS = [
     ("(not numbered)  per-label loss, benchmark MLPs", "benchmark/train_val_loss_by_label.png", "report", "per-label version of Fig S1; not cited in the draft"),
     ("Fig 3  tree of life", "tree/fig3_tree.png", "tree", "rings, bars, legend; also .svg / .pdf"),
     ("Fig 4  trends (composite)", "fig4/Fig4_trends_combined.png", "fig4", "A: Protein share by cellularity (the difference vanished on the ProtT5 calls); B-D: violins; statistics in fig4/fig4_statistics.csv"),
-    ("Fig 5  proteome size vs SAM-MTases", "fig5/proteome_vs_sam_domain_highlight.png", "fig5", "fits and fold-faster-scaling ratios (unstable: see fig5/fig5_fits.csv)"),
+    ("Fig 5  proteome size vs SAM-MTases", "fig5/fig5_scaling_loglog.png", "fig5", "power-law fits: exponents, level differences, clade-bootstrap CIs (fig5/fig5_scaling_numbers.csv)"),
     ("Fig 6  global UMAP", "umap/sam_mtase_umap_prott5_static_datamap.png", "umap", "also the interactive umap/sam_mtase_umap_prott5_interactive.html"),
     ("Fig 7  cluster grids (composite)", "umap/fig7/Fig7_clusters_combined.png", "annotate", "A metazoan-protein, B vertebrate-DNA, C plant dark, D actinomycete dark clusters; Fig 8's clusters outlined"),
     ("Fig 8  Horizyn reaction profiles", "fig8/Fig8_reaction_profiles.png", "annotate", "clusters chosen by rule; check the panel titles and RHEA numbers"),
@@ -42,14 +42,14 @@ ITEMS = [
     ("Table S2  plant dark clusters", "dark_annotation/tables/table_s2.png", "annotate", "same"),
     ("Table S3  InterPro domain enrichment", "motif_analysis/domain_enrichment_table.png", "domain_table", ""),
     ("Numbers  lineage comparisons", "fig5/lineage_statistics.txt", "fig5", "the lineage statistics quoted in the Results"),
-    ("Numbers  Fig 5 fits", "fig5/fig5_fits.csv", "fig5", ""),
+    ("Numbers  Fig 5 fits", "fig5/fig5_scaling_numbers.csv", "fig5", ""),
     ("Numbers  Fig 4 statistics", "fig4/fig4_statistics.csv", "fig4", ""),
 ]
 # the files for the article draft: full-size copies under these names in <release>/article_figures/ (the same files as listed in the index)
 EXPORT = {"benchmark/Fig2.png": "Fig2.png", "benchmark/Fig2_caption.txt": "Fig2_caption.txt", "benchmark/metrics_table.png": "Table1.png",
           "benchmark/train_val_loss_by_embedding.png": "FigS1.png", "sam_vs_up/up_train_val_loss.png": "FigS2.png",
           "benchmark/train_val_loss_by_label.png": "unnumbered_train_val_loss_by_label.png", "tree/fig3_tree.png": "Fig3.png", "tree/fig3_tree.svg": "Fig3.svg", "tree/fig3_tree.pdf": "Fig3.pdf",
-          "fig4/Fig4_trends_combined.png": "Fig4.png", "fig5/proteome_vs_sam_domain_highlight.png": "Fig5.png", "umap/sam_mtase_umap_prott5_static_datamap.png": "Fig6.png",
+          "fig4/Fig4_trends_combined.png": "Fig4.png", "fig5/fig5_scaling_loglog.png": "Fig5.png", "umap/sam_mtase_umap_prott5_static_datamap.png": "Fig6.png",
           "umap/fig7/Fig7_clusters_combined.png": "Fig7.png", "fig8/Fig8_reaction_profiles.png": "Fig8.png", "fig9_10/Fig9_Known.png": "Fig9.png", "fig9_10/Fig10_Distal.png": "Fig10.png",
           "motif_analysis/no_motif_umap.png": "Fig11.png", "motif_analysis/motif_table.png": "Table2.png", "dark_annotation/tables/table_s1.png": "TableS1.png",
           "dark_annotation/tables/table_s2.png": "TableS2.png", "motif_analysis/domain_enrichment_table.png": "TableS3.png"}

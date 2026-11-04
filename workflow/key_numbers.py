@@ -101,7 +101,7 @@ def preds(rel):
     return out
 
 
-@section("Phylogenetic trends  (fig4/fig4_statistics.csv, fig5/fig5_fits.csv, fig5/lineage_statistics.txt)")
+@section("Phylogenetic trends  (fig4/fig4_statistics.csv, fig5/fig5_scaling_numbers.csv, fig5/lineage_statistics.txt)")
 def trends(rel):
     s = pd.read_csv(rel / "fig4" / "fig4_statistics.csv")
     out = []
@@ -110,9 +110,18 @@ def trends(rel):
             out.append(f"Fig 4{r.panel} {r.measure}: {r.group_a} (n={int(r.n_a)}); {r.test} p {fmt_p(r.p)}")
         else:
             out.append(f"Fig 4{r.panel} {r.measure}: {r.group_a} (n={int(r.n_a)}, median {r.median_a:.4g}) vs {r.group_b} (n={int(r.n_b)}, median {r.median_b:.4g}); {r.test} p {fmt_p(r.p)}")
-    f = pd.read_csv(rel / "fig5" / "fig5_fits.csv")
-    for r in f[f.ratio_highlighted_to_rest.notna()].itertuples():
-        out.append(f"Fig 5{r.panel} {r.measure}: {r.group} slope {r.slope_per_100_proteins:.2f} per 100 proteins, {r.ratio_highlighted_to_rest:.2f}-fold the rest (95% CI {r.ratio_ci_low:.2f}-{r.ratio_ci_high:.2f}; the interval is wide when the other group's slope is small)")
+    nf = rel / "fig5" / "fig5_scaling_numbers.csv"
+    if nf.exists():      # Fig 5 as power-law fits n = lambda * g^alpha (figures/Fig5_proteome_scaling/scaling_loglog.py)
+        n = pd.read_csv(nf)
+        P = n[n.analysis == "primary"]
+        for pl, g in P.groupby("panel", sort=True):
+            q = lambda grp, qty: g[(g.group == grp) & (g.quantity == qty)].iloc[0]
+            lin, rest = [x for x in g.group.unique() if x not in ("lineage - rest", "lineage / rest")][:2]
+            a1, a2, d, f = q(lin, "alpha"), q(rest, "alpha"), q("lineage - rest", "delta_alpha"), q("lineage / rest", "fold_at_median_lineage_size")
+            lg = n[(n.panel == pl) & (n.analysis == "legacy_ols_slope_ratio")].estimate.iloc[0]
+            out.append(f"Fig 5{pl} {g.measure.iloc[0]}: alpha {lin} {a1.estimate:.2f} [{a1.ci_lo:.2f}, {a1.ci_hi:.2f}], {rest} {a2.estimate:.2f} [{a2.ci_lo:.2f}, {a2.ci_hi:.2f}]; "
+                       f"delta alpha {d.estimate:+.2f} [{d.ci_lo:+.2f}, {d.ci_hi:+.2f}]; level at equal size x{f.estimate:.2f} [{f.ci_lo:.2f}, {f.ci_hi:.2f}] ({f.note.split(';')[0]}); "
+                       f"(old OLS slope ratio {lg:.2f}: not a rate, do not quote)")
     lt = rel / "fig5" / "lineage_statistics.txt"
     if lt.exists():
         out += lt.read_text().strip().splitlines()
