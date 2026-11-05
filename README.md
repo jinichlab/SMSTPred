@@ -4,7 +4,7 @@ Analysis code and results for the manuscript. The project builds a classifier th
 predicts the **substrate type** of a SAM-dependent methyltransferase (MTase) —
 **DNA / RNA / Protein / Metabolite (small-molecule)** — directly from a protein's sequence via
 a **structure-aware protein language model (ProstT5)**, validates it against
-homology and classical-ML baselines, deploys it across the tree of life, and interprets
+homology baselines, deploys it across the tree of life, and interprets
 *what* the model reads to make each call.
 
 ## The pipeline (stages)
@@ -13,7 +13,7 @@ homology and classical-ML baselines, deploys it across the tree of life, and int
 |---|---|---|
 | 0 | [`0_uniprot_pull/`](0_uniprot_pull) | **Data refresh** (optional, needs network): pulls the current Swiss-Prot SAM-methyltransferase set (InterPro IPR029063), the broad enzyme set (UP) and the 1,259 reference proteomes through the UniProt REST API, pins the UniProt release, and reports what changed against the archived data. The stages below run on the archived Zenodo data; Stage 0 produces the inputs for a re-run on newer UniProt. |
 | 1 | [`1_clustering/`](1_clustering) | Homology-aware **cluster-disjoint** partitioning of the training sets so cross-validation never leaks homologues: the archived paper used greedy cosine clustering; the refresh uses **MMseqs2 at 30 % identity** and draws 16 splits of random clusters (65 % train / 15 % validation / 20 % test). |
-| 2 | [`2_training/`](2_training) | The **classifier bake-off** (embedding MLPs trained with BCE and early stopping vs MMseqs2 / Foldseek / profile-HMM baselines, fixed 0.5 threshold; the archived paper's loss/epoch tuning and classical-ML arm are still there), the **SAM-vs-UP** training-set comparison, and the final **deployment model**. |
+| 2 | [`2_training/`](2_training) | The **classifier bake-off** (embedding MLPs trained with BCE and early stopping vs MMseqs2 / Foldseek / profile-HMM baselines, fixed 0.5 threshold; the archived paper's loss/epoch tuning is still there), the **SAM-vs-UP** training-set comparison, and the final **deployment model**. |
 | 3 | [`3_predictions/`](3_predictions) | Scores new proteins with the deployment model (per-label score, call, ensemble disagreement, applicability-domain flag). |
 | 4 | [`4_phylo_trends/`](4_phylo_trends) | Phylogenetic / taxonomic trends in the predicted substrate usage across the tree of life. |
 | 5 | [`5_umap/`](5_umap) | Global ProstT5 UMAP of all tree-of-life MTases + substrate-coloured maps and cluster-enrichment figures. |
@@ -37,7 +37,7 @@ organism metadata) are in [`data/`](data).
 ```bash
 conda activate smstpred                 # make env; Foldseek: make tools; the embedders: make embeddings-env
 make refresh-dry-run                    # prints the SLURM job chain and its dependencies, submits nothing
-make refresh                            # pull -> bin -> cluster (+ SAM and UP splits) -> structures -> embeddings -> bake-off, classical ML, SAM-vs-UP (16-task arrays) -> reports
+make refresh                            # pull -> bin -> cluster (+ SAM and UP splits) -> structures -> embeddings -> bake-off, SAM-vs-UP (16-task arrays) -> reports
 ```
 
 Each stage is its own job and starts only if the jobs before it finished without error. The settings that shape the results (seed, split fractions, epochs, early-stopping patience, threshold) are in

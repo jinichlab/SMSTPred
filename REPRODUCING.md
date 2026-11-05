@@ -99,7 +99,7 @@ These need a download, an external install, or days of compute. Their inputs res
 | Result | Why not in `verify` | Entry point |
 |---|---|---|
 | New UniProt pull, substrate typing, UP clustering, structures, embeddings | network, GPU, hours | `make refresh` (`workflow/run_refresh.sh`), stages `pull` ... `embed_*` |
-| MLP bake-off (16 splits), classical ML, MTase-vs-UP training | GPU array / hours; the per-split results are archived and their statistics are verified | `2_training/run_bakeoff.sh`, `run_classical.sh`, `run_sam_vs_up.sh` |
+| MLP bake-off (16 splits), MTase-vs-UP training | GPU array / hours; the per-split results are archived and their statistics are verified | `2_training/run_bakeoff.sh`, `run_sam_vs_up.sh` |
 | CLEAN and Horizyn runs | external installs (`workflow/setup_tools.sh`, `EXTERNAL_TOOLS.md`); the Horizyn scores are archived | `6_dark_cluster_annotation/run_clean_release.sh`, `run_horizyn_release.sh` |
 | InterPro domain enrichment (Table S3) and the motif corpus | need the per-proteome UniProt tables with sequences (3 GB, not archived) | `7_motif_analysis/run_domain_table.sh`, `run_streme.sh`, `run_fimo_*.sh` |
 | Figs 9 and 10 | ChimeraX | `figures/Fig9_10_structures/run_fig9_10.sh` |

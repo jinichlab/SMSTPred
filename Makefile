@@ -11,7 +11,7 @@ DATA_SRC ?=
 LINK ?=
 STEPS := $(PY) workflow/run_steps.py
 
-.PHONY: help annotation-test pull pull-smoke pull-compare bin bin-test cluster splits up-splits structures bakeoff-test bakeoff bakeoff-report classical deploy sam-vs-up sam-vs-up-report tree refresh refresh-dry-run embeddings-env embeddings-check env data check tools steps stage1 stage2 stage3 stage4 stage5 stage6 stage7 figures tables verify verify-gpu report all clean-verify
+.PHONY: help annotation-test pull pull-smoke pull-compare bin bin-test cluster splits up-splits structures bakeoff-test bakeoff bakeoff-report deploy sam-vs-up sam-vs-up-report tree refresh refresh-dry-run embeddings-env embeddings-check env data check tools steps stage1 stage2 stage3 stage4 stage5 stage6 stage7 figures tables verify verify-gpu report all clean-verify
 
 help:
 	@echo "env          create the conda environment ($(ENV_NAME)) from environment.yml"
@@ -25,10 +25,9 @@ help:
 	@echo "cluster      Stage 1: MMseqs2 30% clusters of the typed SAM sets + the 16 train/validation/test splits (after 'make bin'; the UP one: CLUSTER_WHAT=up)"
 	@echo "splits       Stage 1: only the 16 cluster-disjoint splits (20% of the clusters test, 15% validation) of the newest release (seconds)"
 	@echo "up-splits    Stage 1: the UP train/validation sets of the SAM-vs-UP comparison (UP clusters that contain a SAM test protein are removed; needs 'make cluster' with CLUSTER_WHAT=up)"
-	@echo "bakeoff-test Stage 2: offline tests of the bake-off, the splits, the SAM-vs-UP and classical-ML code and the MCC threshold search (seconds)"
+	@echo "bakeoff-test Stage 2: offline tests of the bake-off, the splits, the SAM-vs-UP code and the MCC threshold search (seconds)"
 	@echo "bakeoff      Stage 2: submit the classifier bake-off, one SLURM array task per split (needs the embeddings, structures and splits of the release)"
-	@echo "bakeoff-report  Stage 2: merge the 16 splits, statistics, Fig 2A, Table 1, paired tests, train/validation loss figures (and Fig S4 if 'make classical' has run)"
-	@echo "classical    Stage 2: the classical-ML arm (XGBoost, RF, LR, 4 SVMs on the ProtT5 embeddings), one SLURM array task per split"
+	@echo "bakeoff-report  Stage 2: merge the 16 splits, statistics, Fig 2A, Table 1, paired tests, train/validation loss figures"
 	@echo "deploy       Stage 2: the deployment model: a 6-member ProtT5 MLP ensemble from a 6-fold cluster partition of the deployment set, with honest out-of-fold predictions (SLURM, GPU, minutes)"
 	@echo "sam-vs-up    Stage 2: SAM-trained vs UP-trained ProtT5 MLP on the same held-out SAM clusters, one SLURM array task per split (after 'make bakeoff')"
 	@echo "sam-vs-up-report  Stage 2: the paired tests (Wilcoxon, Nadeau-Bengio) and figures of the SAM-vs-UP comparison"
@@ -101,9 +100,6 @@ bakeoff:   # a 16-task SLURM array (one split per task), about 10 minutes each; 
 
 bakeoff-report:   # under SLURM use `sbatch 2_training/run_bakeoff_report.sh` (same script)
 	bash 2_training/run_bakeoff_report.sh
-
-classical:   # a 16-task CPU array; the SVMs dominate the time
-	sbatch 2_training/run_classical.sh
 
 deploy:   # about 5 minutes on one GPU; writes <release>/deployment/ (DEPLOY_DIR=<release>/deployment for 3_predictions/predict.py)
 	sbatch 2_training/run_deploy_ensemble.sh

@@ -18,7 +18,7 @@
     "max_sequences_per_label": 500,
     "mafft_threads": 1
   },
-  "_control_note": "control = the deployed model: the reference of the Bonferroni-Dunn / Wilcoxon comparisons and of the classical-ML figure (ProtT5: the best embedding on the 2026_03 release, and it needs only sequence)",
+  "_control_note": "control = the deployed model: the reference of the Bonferroni-Dunn / Wilcoxon comparisons (ProtT5: the best embedding on the 2026_03 release, and it needs only sequence)",
   "deployment": {
     "embedding": "ProtT5",
     "n_members": 6,

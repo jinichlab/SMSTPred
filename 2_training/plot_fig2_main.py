@@ -6,8 +6,7 @@
    B  MTase-trained vs UP-trained ProstT5 MLP on held-out MTase proteins, MCC with Nadeau-Bengio
       corrected-paired-test significance (from plot_sam_vs_up_prostt5).
 
-Everything else in the benchmark family is supplementary (MLP-vs-classical-ML zoom,
-the MCC-vs-epoch and train/validation-loss grids, the MTase-vs-UP AUPRC panel, UP loss tuning).
+Everything else in the benchmark family is supplementary (the MCC-vs-epoch and train/validation-loss grids, the MTase-vs-UP AUPRC panel, UP loss tuning).
 
 Pure CSV -> PNG (no GPU). Reuses the panel draw functions from the two sibling
 scripts so styling/statistics stay identical to their standalone versions.

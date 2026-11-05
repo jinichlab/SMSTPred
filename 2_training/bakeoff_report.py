@@ -30,7 +30,6 @@ LABELS = ["Metabolite", "Protein", "RNA", "DNA"]
 METRICS = ["auprc", "auroc", "mcc", "f1", "accuracy", "mcc_valtuned"]
 EMBS = ["ProstT5", "SaProt", "ProtT5", "ESM-IF", "ProtT5+ESM-IF", "ProstT5+ESM-IF"]
 SEARCH = ["MMseqs2_1NN", "Foldseek_1NN", "Profile_HMM"]
-CLASSICAL = ["XGBoost", "Random Forest", "Logistic Regression", "SVM_Linear", "SVM_RBF", "SVM_Polynomial", "SVM_Sigmoidal"]
 
 
 def holm(p):
@@ -78,32 +77,6 @@ def paired_tests(det, out, n_boot=5000):
             rows.append(r)
     t = pd.DataFrame(rows)
     t.to_csv(out / "paired_tests_vs_baselines.csv", index=False)
-    return t
-
-
-def paired_vs_classical(det, out, control, n_boot=5000):
-    """The control MLP minus every classical classifier on the same features, paired over the splits (Holm over the classifiers)."""
-    w = det.pivot(index="iteration", columns="classifier", values="mcc")
-    cl = [c for c in CLASSICAL if c in w.columns]
-    if not cl or control not in w.columns:
-        return None
-    rng, rows = np.random.default_rng(0), []
-    c = det[det.classifier == control]
-    rho = float(c.n_test.mean() / c.n_train.mean())                    # Nadeau-Bengio: the training sets of the repeated splits overlap
-    ranks = w[[control, *cl]].rank(axis=1, ascending=False).mean()     # average rank among these methods (1 = best), for the Bonferroni-Dunn view
-    k, n = len(cl) + 1, len(w)
-    cd = 2.690 * np.sqrt(k * (k + 1) / (6 * n)) if k == 8 else np.nan   # Bonferroni-Dunn critical difference (Demsar 2006, q = 2.690 for k = 8); only tabulated here for the seven classifiers
-    for b in cl:
-        d = (w[control] - w[b]).values
-        boots = [rng.choice(d, len(d)).mean() for _ in range(n_boot)]
-        sd = d.std(ddof=1)
-        p_nb = 2 * stats.t.sf(abs(d.mean() / np.sqrt((1 / n + rho) * sd ** 2)), n - 1) if sd > 0 else 1.0
-        rows.append({"control": control, "classifier": b, "control_mcc": w[control].mean(), "classifier_mcc": w[b].mean(), "mean_diff": d.mean(), "ci95_lo": np.percentile(boots, 2.5),
-                     "ci95_hi": np.percentile(boots, 97.5), "splits_control_wins": f"{int((d > 0).sum())}/{len(d)}", "p_wilcoxon": wilcoxon(d).pvalue if (d != 0).any() else 1.0,
-                     "p_nadeau_bengio": p_nb, "rank_diff_vs_control": ranks[control] - ranks[b], "bonferroni_dunn_cd": cd})
-    t = pd.DataFrame(rows)
-    t["p_holm"] = holm(t.p_wilcoxon.values)
-    t.to_csv(out / "paired_tests_mlp_vs_classical.csv", index=False)
     return t
 
 
@@ -167,15 +140,6 @@ def main():
     print("\nMLP minus search baseline, paired over the splits (Holm over each MLP's three comparisons; the p-values are optimistic: the splits overlap):")
     fmt = p.assign(diff=p.mean_diff.map("{:+.3f}".format), ci=[f"[{lo:+.3f}, {hi:+.3f}]" for lo, hi in zip(p.ci95_lo, p.ci95_hi)], p=p.p_wilcoxon.map("{:.4f}".format), holm=p.p_holm_3.map("{:.4f}".format))
     print(fmt[["MLP", "baseline", "mlp_mcc", "baseline_mcc", "diff", "ci", "splits_mlp_wins", "p", "holm"]].round(3).to_string(index=False))
-    ctrl = bakeoff.CFG.get("control", "MLP_ProstT5")
-    pc = paired_vs_classical(det, out, ctrl)
-    if pc is not None:
-        print(f"\n{ctrl} minus each classical classifier on the same embeddings, paired over the splits. THREE views of the same question, they do not agree for the good SVMs:\n"
-              f"  Wilcoxon (+ Holm over the classifiers): pairwise, splits treated as independent -> optimistic;  Nadeau-Bengio: corrects for the overlap of the training sets (rho = n_test/n_train);\n"
-              f"  rank diff vs the Bonferroni-Dunn critical difference ({pc.bonferroni_dunn_cd.iloc[0]:.2f}): the rank test of Fig S4 (a classifier differs from the control only if |rank diff| > CD).")
-        print(pc.assign(diff=pc.mean_diff.map("{:+.3f}".format), ci=[f"[{lo:+.3f}, {hi:+.3f}]" for lo, hi in zip(pc.ci95_lo, pc.ci95_hi)], wilcoxon=pc.p_wilcoxon.map("{:.4f}".format),
-                        holm=pc.p_holm.map("{:.4f}".format), nadeau_bengio=pc.p_nadeau_bengio.map("{:.3f}".format), rank_diff=pc.rank_diff_vs_control.map("{:+.2f}".format))
-              [["classifier", "control_mcc", "classifier_mcc", "diff", "ci", "splits_control_wins", "wilcoxon", "holm", "nadeau_bengio", "rank_diff"]].round(3).to_string(index=False))
     tr = loss_curves(out)
     print("\nkept epoch (early stopping, patience %s), median [min-max] over the splits:" % bakeoff.PATIENCE)
     for e in [e for e in EMBS if e in set(tr.embedding)]:

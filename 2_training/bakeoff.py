@@ -110,7 +110,14 @@ def load_data(rel, only=None):
 
 
 def foldseek_bin():
-    for c in (os.environ.get("FOLDSEEK_BIN"), str(REPO / "tools" / "foldseek" / "bin" / "foldseek"), shutil.which("foldseek")):
+    """$FOLDSEEK_BIN, else the path workflow/cfgget.py finds (refresh_config.local.json, refresh_config.json, <repo>/tools), else the PATH."""
+    try:
+        sys.path.insert(0, str(REPO / "workflow"))
+        import cfgget
+        cfg = cfgget.get("foldseek_bin")
+    except Exception:
+        cfg = None
+    for c in (os.environ.get("FOLDSEEK_BIN"), cfg, str(REPO / "tools" / "foldseek" / "bin" / "foldseek"), shutil.which("foldseek")):
         if c and (os.path.exists(c) or shutil.which(c)):
             return c
     return None

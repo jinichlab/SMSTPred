@@ -2,7 +2,7 @@
 # Refresh the whole analysis for the newest UniProt release as ONE SLURM job chain, with no input in between:
 #
 #   pull -> bin -> cluster (+ the 16 SAM train / validation / test splits) and cluster_up -> up_splits -> structures -> embeddings
-#        -> bakeoff (16-task GPU array), classical (16-task CPU array) and deploy (the deployment ensemble) -> report ;  sam_vs_up (16-task GPU array) -> sam_vs_up_report
+#        -> bakeoff (16-task GPU array) and deploy (the deployment ensemble) -> report ;  sam_vs_up (16-task GPU array) -> sam_vs_up_report
 #   then the analyses of the release, on the deployed ensemble's calls:
 #        proteome embeddings -> predict -> tree (Fig 3), fig4, fig5, umap -> clusters (Fig 7) -> dark_inputs -> clean + horizyn -> annotate (Tables S1/S2, Fig 8, Fig 7 again)
 #        predict -> domain_table (Table S3) -> dedup -> streme (4 classes side by side) -> fimo (motif specificity matrix) -> motif_structures (representing structure of every motif)
@@ -26,9 +26,8 @@
 #   colabfold        embeddings/predict_structures.sh   (ColabFold for the proteins without an AlphaFold DB model; skipped in seconds when there are none; ingests into the structure store)  structures
 #   embeddings       embeddings/run_embeddings.sh x3 (GPU): sam (ProtT5, ProstT5), structures (SaProt, ESM-IF), up-benchmark (ProtT5 of the UP set)    bin / structures / bin
 #   bakeoff          2_training/run_bakeoff.sh          (GPU array, 16 splits)               cluster, embeddings (sam, structures)
-#   classical        2_training/run_classical.sh        (CPU array, 16 splits)               cluster, embeddings (sam)
 #   deploy           2_training/run_deploy_ensemble.sh  (6-member ProtT5 ensemble)             cluster, embeddings (sam)
-#   report           2_training/run_bakeoff_report.sh   (Fig 2A, Table 1, Fig S4, tests)     bakeoff, classical
+#   report           2_training/run_bakeoff_report.sh   (Fig 2A, Table 1, tests)             bakeoff
 #   sam_vs_up        2_training/run_sam_vs_up.sh        (GPU array, 16 splits)               bakeoff, up_splits, embeddings (up-benchmark)
 #   sam_vs_up_report 2_training/run_sam_vs_up_report.sh (paired tests of MTase-trained vs UP-trained)   sam_vs_up
 #   publish_classifier workflow/publish_classifier.py (the newest ensemble -> ready_classifier/model/ + LATEST.json: the ready classifier always uses the newest trained model; the chain never pushes)   deploy
@@ -65,7 +64,7 @@
 set -e
 cd "$(dirname "$0")/.."
 
-STAGES=(pull bin cluster cluster_up up_splits structures colabfold embeddings bakeoff classical deploy report sam_vs_up sam_vs_up_report fig2 publish_classifier
+STAGES=(pull bin cluster cluster_up up_splits structures colabfold embeddings bakeoff deploy report sam_vs_up sam_vs_up_report fig2 publish_classifier
         ref_tables embed_proteomes predict tree fig4 fig5 umap clusters dark_inputs clean horizyn annotate domain_table dedup streme fimo motif_status motif_structures fig9_10 figure_index)
 FROM=pull; TO=figure_index; DRY=0
 while [ $# -gt 0 ]; do
@@ -115,9 +114,8 @@ if wanted embeddings; then
     EMBED_WHAT=up-benchmark submit embed_up         "bin"        embeddings/run_embeddings.sh
 fi
 wanted bakeoff    && submit bakeoff    "cluster embed_sam embed_structures"   2_training/run_bakeoff.sh
-wanted classical  && submit classical  "cluster embed_sam"                    2_training/run_classical.sh
 wanted deploy     && submit deploy     "cluster embed_sam"                    2_training/run_deploy_ensemble.sh
-wanted report     && submit report     "bakeoff classical"                    2_training/run_bakeoff_report.sh
+wanted report     && submit report     "bakeoff"                    2_training/run_bakeoff_report.sh
 wanted sam_vs_up  && submit sam_vs_up  "bakeoff up_splits embed_up"           2_training/run_sam_vs_up.sh
 wanted sam_vs_up_report && submit sam_vs_up_report "sam_vs_up"                2_training/run_sam_vs_up_report.sh
 wanted publish_classifier && submit publish_classifier "deploy" --cpus-per-task=1 --mem=2G $(log workflow/publish_classifier_output.log) --wrap "python workflow/publish_classifier.py"

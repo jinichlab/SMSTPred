@@ -24,7 +24,7 @@ OUT = BASE / "stats"
 OUT.mkdir(exist_ok=True)
 CONTROL = os.environ.get("BAKEOFF_CONTROL", "MLP_ProtT5")      # the deployed model (refresh_config.json "control"; bakeoff_report.py passes it)
 FIG2A = ["MLP_ProstT5", "MLP_SaProt", "MLP_ProtT5", "MLP_ESM-IF", "MLP_ProtT5+ESM-IF", "MLP_ProstT5+ESM-IF",
-         "MMseqs2_1NN", "Foldseek_1NN", "Profile_HMM"]      # the nine methods of Fig 2A (the classical-ML comparison is not in the paper: its Friedman block was dropped)
+         "MMseqs2_1NN", "Foldseek_1NN", "Profile_HMM"]      # the nine methods of Fig 2A
 GIANT_TRAIN = 2000          # iterations that put the ~5,700-protein cluster in the test fold leave fewer training proteins than this
 ALPHA = 0.05
 

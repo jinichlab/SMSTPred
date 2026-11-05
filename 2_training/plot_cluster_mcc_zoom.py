@@ -8,12 +8,6 @@ Two method families, drawn on the full training set:
   Foldseek structure-homology). Asks: which INPUT REPRESENTATION wins?
     sam_classifier_cluster_mcc_zoom.png
 
-  MLP vs classical ML (Fig S4) -- the deployed MLP_ProstT5 vs XGBoost /
-  Random Forest / Logistic Regression / four SVMs, ALL trained on identical
-  ProstT5 features. A controlled "same representation, different classifier head"
-  contrast. Asks: given ProstT5, does the CLASSIFIER choice matter?
-    sam_classifier_classical_ml_comparison.png
-
 Per figure: cluster-disjoint MCC for each classifier sorted high->low, +/-1 SD
 error bars, each bar labelled with its mean. Y-axis zoomed to amplify the top.
 
@@ -47,16 +41,12 @@ ALPHA = 0.05
 YMIN, YMAX = 0.50, 1.10
 NITERS = int(d[d.split_mode == "cluster"].iteration.nunique())
 
-# Method sets. CONTROL (MLP_ProstT5) is in both -- it anchors the classical-ML
-# figure and is the Bonferroni-Dunn control everywhere.
+# Method sets. CONTROL (the deployed MLP) is the Bonferroni-Dunn control everywhere.
 EMBED_MLPS = {"MLP_ProstT5", "MLP_SaProt", "MLP_ProtT5", "MLP_ESM-IF",
               "MLP_ProtT5+ESM-IF", "MLP_ProstT5+ESM-IF"}
 SEARCH_TOOLS = {"MMseqs2_1NN", "Profile_HMM", "Foldseek_1NN"}  # seq / profile / structure homology
-CLASSICAL_ML = {"XGBoost", "Random Forest", "Logistic Regression",
-                "SVM_Linear", "SVM_RBF", "SVM_Polynomial", "SVM_Sigmoidal"}
 
 REPRO_TOOLS = EMBED_MLPS | SEARCH_TOOLS                 # Fig 2A method set
-CLASSICAL_SET = CLASSICAL_ML | {CONTROL}               # supplementary method set
 
 
 def holm(p):
@@ -98,7 +88,7 @@ def color(clf, style=STYLE):
         return style["embed"]         # embedding MLPs
     if clf in SEARCH_TOOLS:
         return style["search"]        # homology / structure-search baselines
-    return style["other"]             # classical ML
+    return style["other"]
 
 
 def draw_panel(ax, ds, methods, bracket_label=f"not significantly different from {CONTROL}", style=STYLE):
@@ -161,9 +151,6 @@ def legend_handles(style=STYLE):
 LEGEND = [mpatches.Patch(color="#4578aa", label="Embedding MLP"),
           mpatches.Patch(color="#ed8c44", label="Homology / structure-search baseline")]
 
-LEGEND_CLASSICAL = [mpatches.Patch(color="#4578aa", label="Embedding MLP (deployed)"),
-                    mpatches.Patch(color="#969696", label=f"Classical ML (on {CONTROL[len('MLP_'):]})")]
-
 
 def _saprot_prostt5_note(ds):
     """The caption sentence (written to a text file, not onto the figure): the deployed model (sequence only) vs SaProt (needs structure)."""
@@ -197,14 +184,7 @@ if __name__ == "__main__":
     make_fig("full", REPRO_TOOLS, "sam_classifier_cluster_mcc_zoom.png",
              LEGEND, f"not significantly different from {CONTROL}", saprot_note=True)
 
-    # --- Fig S4: MLP vs classical ML, all on ProstT5 (only if the classical classifiers are in this bake-off) ---
     sets = [("representations+tools", REPRO_TOOLS)]
-    if os.environ.get("BAKEOFF_CLASSICAL") == "1" and (CLASSICAL_ML - {CONTROL}) <= set(d["classifier"]):      # the classical-ML comparison is not in the paper: only on request
-        make_fig("full", CLASSICAL_SET, "sam_classifier_classical_ml_comparison.png",
-                 LEGEND_CLASSICAL, f"not significantly different from {CONTROL}", saprot_note=False)
-        sets.append(("classical-ML", CLASSICAL_SET))
-    else:
-        print("  (classical-ML comparison not drawn: set BAKEOFF_CLASSICAL=1 to draw it)")
 
     for name, methods in sets:
         st = posthoc("cluster", "full", methods)
