@@ -27,7 +27,7 @@ set -e
 here="$(dirname "$0")"
 [ "$(basename "$0")" = slurm_script ] && here="$(dirname "$(scontrol show job "$SLURM_JOB_ID" | sed -n 's/^ *Command=\([^ ]*\).*/\1/p' | head -n 1)")"
 cd "$here" || exit 1
-[ -z "${FOLDSEEK_BIN:-}" ] && FOLDSEEK_BIN="$(python3 -c "import json;print(json.load(open('$here/../refresh_config.json')).get('tools',{}).get('foldseek_bin',''))" 2> /dev/null)" && [ -n "$FOLDSEEK_BIN" ] && export FOLDSEEK_BIN      # refresh_config.json "tools"
+[ -z "${FOLDSEEK_BIN:-}" ] && FOLDSEEK_BIN="$(python3 "$here/../workflow/cfgget.py" foldseek_bin 2> /dev/null)" && [ -n "$FOLDSEEK_BIN" ] && export FOLDSEEK_BIN      # refresh_config.local.json / refresh_config.json / tools/
 command -v conda > /dev/null && eval "$(conda shell.bash hook)"
 use() { command -v conda > /dev/null && conda activate "$1" || { echo "conda environment $1 not found: run 'make embeddings-env' first" >&2; exit 1; }; }
 

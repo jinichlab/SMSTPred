@@ -13,7 +13,6 @@ fi
 REL="$(python "$REPO/workflow/release_dir.py")" || { echo "no release folder found (set RELEASE_DIR or UNIPROT_PULL_DIR)" >&2; exit 1; }
 export REPO REL; export RELEASE_DIR="$REL"
 echo "[stage] release $REL"
-cfg() {   # cfg clean_app_dir -> $CLEAN_APP_DIR, else annotation.clean_app_dir (or tools.<key>) of refresh_config.json
-    local up; up="$(echo "$1" | tr a-z A-Z)"
-    if [ -n "${!up:-}" ]; then echo "${!up}"; else python -c "import json,sys;c=json.load(open(sys.argv[1]));print(c.get('annotation',{}).get(sys.argv[2]) or c.get('tools',{}).get(sys.argv[2]) or '')" "$REPO/refresh_config.json" "$1"; fi
+cfg() {   # cfg clean_app_dir -> $CLEAN_APP_DIR, else refresh_config.local.json, refresh_config.json, or <repo>/tools (workflow/cfgget.py)
+    python "$REPO/workflow/cfgget.py" "$1"
 }

@@ -40,8 +40,7 @@ n=$(grep -c '>' "$fasta" || true)
 if [ "$n" -eq 0 ]; then echo "nothing to predict"; exit 0; fi
 echo "predicting $n structures from $fasta"
 
-cfgv() { python -c "import json,sys;print(json.load(open(sys.argv[1])).get('tools',{}).get(sys.argv[2],''))" "$here/../refresh_config.json" "$1" 2> /dev/null; }
-colabfold="${COLABFOLD_BATCH:-$(cfgv colabfold_batch)}"; colabfold="${colabfold:-colabfold_batch}"      # the path is also in refresh_config.json ("tools")
+colabfold="$(python "$here/../workflow/cfgget.py" colabfold_batch 2> /dev/null)"; colabfold="${colabfold:-colabfold_batch}"      # $COLABFOLD_BATCH, refresh_config.local.json, refresh_config.json, <repo>/tools/localcolabfold
 command -v "$colabfold" > /dev/null || [ -x "$colabfold" ] || { echo "colabfold_batch not found: set COLABFOLD_BATCH to its path (localcolabfold)" >&2; exit 1; }
 "$colabfold" --model-type alphafold2_ptm --num-models 5 --num-recycle 3 --rank plddt --msa-mode mmseqs2_uniref_env "$fasta" "$store/colabfold_output"
 python -u fetch_structures.py --ingest-predictions "$store/colabfold_output"

@@ -53,3 +53,5 @@ data/*
 !data/README.md
 .verify_work_release/
 verify_cpu_*.log
+refresh_config.local.json
+tools/

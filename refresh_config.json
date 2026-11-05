@@ -25,16 +25,16 @@
     "ad_percentile": 1
   },
   "annotation": {
-    "clean_app_dir": "/home/nroethler/Code/abhiram/CLEAN/app",
+    "clean_app_dir": "",
     "clean_env": "clean",
-    "horizyn_dir": "/home/nroethler/Code/horizyn/horizyn_local",
+    "horizyn_dir": "",
     "horizyn_env": "horizyn"
   },
-  "_annotation_note": "Stage 6 needs two external checkouts that are not part of environment.yml: CLEAN (its app/ folder) and Horizyn (the folder with checkpoints/, configs/, horizyn/). Paths here are this machine's; an environment variable CLEAN_APP_DIR / HORIZYN_DIR overrides them.",
+  "_annotation_note": "Stage 6 needs CLEAN and Horizyn (see EXTERNAL_TOOLS.md). Leave the paths empty: bash workflow/setup_tools.sh --install all installs them under tools/ and records them in refresh_config.local.json (not committed); an environment variable CLEAN_APP_DIR / HORIZYN_DIR overrides",
   "tools": {
-    "colabfold_batch": "/home/nroethler/Code/alphafold2/localcolabfold/colabfold-conda/bin/colabfold_batch",
-    "chimerax": "/home/nroethler/bin/chimerax",
-    "foldseek_bin": "/home/nroethler/Code/tools/foldseek/bin/foldseek"
+    "colabfold_batch": "",
+    "chimerax": "",
+    "foldseek_bin": ""
   },
   "_tools_note": "Paths of tools that environment.yml does not install (see EXTERNAL_TOOLS.md and workflow/setup_tools.sh). An environment variable (COLABFOLD_BATCH, CHIMERAX, FOLDSEEK_BIN) overrides them. Empty foldseek_bin: <repo>/tools/foldseek/bin (make tools) or the PATH."
 }
