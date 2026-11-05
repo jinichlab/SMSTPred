@@ -48,7 +48,13 @@ import sys, pandas as pd, numpy as np
 from pathlib import Path
 ref, s = Path(sys.argv[1]) / "dark_annotation", Path(sys.argv[2]) / "dark_annotation"
 name = (s / "dark_name.txt").read_text().strip()
-rd = lambda p: pd.read_csv(p, header=None, names=["acc", "call"]).set_index("acc").call.str.split("/").str[0]
+def rd(p):      # one line per protein: accession, then one or more EC calls with their distance (EC:x.y.z.w/0.1234)
+    out = {}
+    for line in open(p):
+        f = line.strip().split(",")
+        if len(f) >= 2:
+            out[f[0]] = f[1].split("/")[0]
+    return pd.Series(out)
 a, b = rd(ref / "clean" / f"{name}_maxsep.csv"), rd(s / "clean" / f"{name}_maxsep.csv")
 common = b.index.intersection(a.index)
 print(f"CLEAN: {int((a[common] == b[common]).sum())} of {len(common)} proteins get the same top EC call as the archived run")

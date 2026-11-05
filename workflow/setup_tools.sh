@@ -39,8 +39,20 @@ install_clean() {
     [ -d "$dir/.git" ] || git clone https://github.com/tttianhao/CLEAN.git "$dir" || exit 1
     local ce; ce="$(get clean_env)"
     have_env "$ce" || { conda env create -n "$ce" -f 6_dark_cluster_annotation/clean/environment_clean.yml && conda run -n "$ce" pip install --no-deps -r 6_dark_cluster_annotation/clean/requirements_clean.txt; } || { conda env remove -y -n "$ce" > /dev/null 2>&1; exit 1; }
-    # the pretrained weights ship with the repository; ESM-1b (about 2.5 GB) is fetched by CLEAN itself on its first run
     [ -f "$dir/app/CLEAN_infer_fasta.py" ] || { echo "CLEAN checkout has no app/CLEAN_infer_fasta.py: the repository layout changed" >&2; exit 1; }
+    # CLEAN's own install steps (its README, section 1.2/1.3): build the CLEAN package into the environment, vendor fair-esm (the pipeline puts app/esm on PYTHONPATH:
+    # the environment's esm 3.x has another API), make the embedding folder, and fetch the pretrained weights from the link in the README (Google Drive, via gdown)
+    (cd "$dir/app" && conda run -n "$ce" python build.py install) || exit 1
+    [ -d "$dir/app/esm/.git" ] || { git clone https://github.com/facebookresearch/esm.git "$dir/app/esm" && git -C "$dir/app/esm" checkout -q 2b369911bb5b4b0dda914521b9475cad1656b2ac; } || exit 1
+    mkdir -p "$dir/app/data/esm_data"
+    if [ ! -s "$dir/app/data/pretrained/100.pt" ]; then
+        mkdir -p "$dir/app/data/pretrained" "$dir/dl"
+        conda run -n "$ce" gdown --fuzzy "https://drive.google.com/file/d/1kwYd4VtzYuMvJMWXy6Vks91DSUAOcKpZ/view" -O "$dir/dl/pretrained.zip" || { echo "could not fetch CLEAN's pretrained weights from Google Drive (quota?): download the file named in CLEAN's README by hand into $dir/dl/pretrained.zip and rerun" >&2; exit 1; }
+        (cd "$dir/dl" && unzip -oq pretrained.zip) || exit 1
+        f="$(find "$dir/dl" -name 100.pt | head -n 1)"; [ -n "$f" ] || { echo "100.pt not found in the CLEAN weights archive" >&2; exit 1; }
+        cp "$(dirname "$f")"/*.pt "$(dirname "$f")"/*.pth "$(dirname "$f")"/*.pkl "$dir/app/data/pretrained/" 2> /dev/null
+    fi
+    [ -s "$dir/app/data/pretrained/100.pt" ] && [ -s "$dir/app/data/pretrained/70.pt" ] || { echo "CLEAN pretrained weights missing in $dir/app/data/pretrained" >&2; exit 1; }
     record clean_app_dir "$dir/app" annotation; record clean_env "$ce" annotation
     echo "CLEAN installed: $dir/app (conda environment '$ce')"
 }
