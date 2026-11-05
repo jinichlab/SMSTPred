@@ -103,6 +103,11 @@ install_chimerax() {
     if [ ! -e "$dir/extralib/libOSMesa.so.8" ]; then
         conda create -y -p "$dir/libs" -c conda-forge libglu libglvnd "mesalib=24.2.7" > /dev/null || exit 1
         mkdir -p "$dir/extralib" && cp -a "$dir"/libs/lib/libGLU.so* "$dir"/libs/lib/libOpenGL.so* "$dir"/libs/lib/libOSMesa.so* "$dir/extralib/" || { echo "could not collect libGLU / libOpenGL / OSMesa from conda-forge" >&2; exit 1; }
+        for pass in 1 2 3 4 5 6 7 8; do      # OSMesa needs LLVM and what LLVM needs, and so on: copy whatever is still missing from the same conda folder until nothing is
+            missing="$(for f in "$dir"/extralib/*.so*; do LD_LIBRARY_PATH="$dir/extralib" ldd "$f" 2> /dev/null | awk '/not found/ {print $1}'; done | sort -u)"
+            [ -z "$missing" ] && break
+            for need in $missing; do cp -a "$dir"/libs/lib/"$need"* "$dir/extralib/" 2> /dev/null; done
+        done
     fi
     cat > "$dir/chimerax" << LAUNCHER
 #!/usr/bin/env bash
