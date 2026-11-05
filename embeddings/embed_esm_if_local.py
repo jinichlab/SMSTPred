@@ -23,6 +23,8 @@ Example (the 26 ColabFold structures of the SAM set, or any folder of <Entry>.pd
 import argparse
 import glob
 import os
+import sys
+import time
 from pathlib import Path
 
 import h5py
@@ -86,7 +88,14 @@ def main():
             try:
                 coords, _ = esm.inverse_folding.util.load_coords(pdb, args.chain)
                 device = next(model.parameters()).device
-                rep = encode_structure(model, alphabet, coords, device)
+                for tries in range(4):          # another job on the same GPU can leave too little memory for a moment: wait and try again
+                    try:
+                        rep = encode_structure(model, alphabet, coords, device)
+                        break
+                    except RuntimeError as oom:
+                        if "out of memory" not in str(oom) or tries == 3:
+                            raise
+                        torch.cuda.empty_cache(); time.sleep(30 * (tries + 1))
                 emb = rep.mean(dim=0).detach().cpu().numpy().astype(np.float32)
                 inc.replace_slot(h5, entry)
                 h5.create_dataset(entry, data=emb, compression='gzip').attrs[inc.ATTR] = wanted[entry]
@@ -98,6 +107,8 @@ def main():
 
     inc.apply_stamps(args.out, pl["stamp"])
     print(f"\nembedded {n_ok}, failed {n_fail}, kept {len(pl['keep'])}", flush=True)
+    if n_fail:
+        sys.exit(1)          # a protein without a vector would silently leave the benchmark
     with h5py.File(args.out, 'r') as f:
         print(f"{args.out}: {len(f.keys())} embeddings total", flush=True)
 

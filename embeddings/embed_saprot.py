@@ -21,6 +21,7 @@ import argparse
 import os
 import shutil
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -115,6 +116,8 @@ def main():
         ks = list(f.keys())
         dim = f[ks[0]].shape[0] if ks else 0
         print(f"{args.out}: {len(ks)} embeddings, dim={dim}", flush=True)
+    if n_fail:
+        sys.exit(1)          # a protein without a vector would silently leave the benchmark
 
 
 if __name__ == "__main__":

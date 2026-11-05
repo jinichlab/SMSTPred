@@ -106,7 +106,7 @@ wanted bin        && submit bin        "pull"                0_uniprot_pull/run_
 wanted cluster    && CLUSTER_WHAT=sam submit cluster "bin"   1_clustering/run_mmseqs_clusters.sh
 wanted cluster_up && CLUSTER_WHAT=up  submit cluster_up "bin" --cpus-per-task=32 --mem=100G 1_clustering/run_mmseqs_clusters.sh
 wanted up_splits  && submit up_splits  "cluster cluster_up"  --cpus-per-task=2 --mem=16G --job-name=up_splits --output=up_splits_output.log --chdir=1_clustering --wrap "python -u up_splits.py"
-wanted structures && submit structures "bin"                 --cpus-per-task=4 --mem=16G --job-name=fetch_structures --output=fetch_structures_output.log --chdir=embeddings --wrap "python -u fetch_structures.py $REFS"
+wanted structures && submit structures "bin"                 --cpus-per-task=4 --mem=16G --job-name=fetch_structures --output=fetch_structures_output.log --chdir=embeddings --wrap "for i in 1 2 3 4 5 6; do python -u fetch_structures.py $REFS && exit 0; echo \"retrying the structure fetch (\$i)\"; sleep 180; done; exit 1"
 wanted colabfold  && submit colabfold  "structures"          $(log embeddings/predict_structures_output.log) embeddings/predict_structures.sh      # ColabFold for the proteins AlphaFold DB cannot supply (exits at once when none)
 if wanted embeddings; then
     EMBED_WHAT=sam          submit embed_sam        "bin"        embeddings/run_embeddings.sh
