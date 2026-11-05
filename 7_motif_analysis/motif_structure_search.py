@@ -54,15 +54,22 @@ QUERY = """query($ids:[String!]!){ entries(entry_ids:$ids){ rcsb_id exptl{method
 
 
 def get(url, **kw):
-    for attempt in range(5):
+    """GET with retries; a rate limit (429) or server error waits as long as the server asks (Retry-After) or an increasing time, up to about 10 minutes in total."""
+    for attempt in range(8):
         try:
             r = requests.get(url, timeout=120, **kw)
+            if r.status_code == 429 or r.status_code >= 500:
+                wait = int(r.headers.get("Retry-After", 0) or 0) or 30 * (attempt + 1)
+                if attempt == 7:
+                    r.raise_for_status()
+                time.sleep(min(wait, 120))
+                continue
             r.raise_for_status()
             return r
-        except Exception:
-            if attempt == 4:
+        except requests.exceptions.RequestException:
+            if attempt == 7:
                 raise
-            time.sleep(3 * (attempt + 1))
+            time.sleep(10 * (attempt + 1))
 
 
 def uniprot_pdb_map():

@@ -77,7 +77,7 @@ def run_iteration(it, smoke, force):
     sp_cfg = b.CFG["splits"]
     sp_file = rel / "clusters" / f"splits_tvt_sam_benchmark_id30_t{round(sp_cfg['test_frac'] * 100)}_v{round(sp_cfg['val_frac'] * 100)}.json"
     sp = json.loads(sp_file.read_text())["iterations"][it - 1]
-    df, mats = b.load_data(rel)
+    df, mats = b.load_data(rel, only=("prott5",))      # the classical heads use ProtT5 only: they need not wait for the structure embeddings
     pos = {e: i for i, e in enumerate(df["Entry"].values)}
     y = df[LABELS].values.astype(np.float32)
     tr, te = (np.array([pos[e] for e in sp[part] if e in pos]) for part in ("train", "test"))

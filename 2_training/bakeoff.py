@@ -95,13 +95,13 @@ def load_source(path, layout):
     return out
 
 
-def load_data(rel):
-    """(table with Entry, Sequence and the four labels, {embedding source: matrix aligned to the table}) for the in_benchmark proteins that have a vector in every embedding file."""
+def load_data(rel, only=None):
+    """(table with Entry, Sequence and the four labels, {embedding source: matrix aligned to the table}) for the in_benchmark proteins that have a vector in every embedding file (only: just these sources, e.g. ("prott5",))."""
     lab = pd.read_csv(rel / "labels_SAM.csv", usecols=["Entry", "in_benchmark", *LABELS], low_memory=False)
     lab = lab[lab.in_benchmark == True].drop_duplicates("Entry")                              # noqa: E712
     seq = pd.read_csv(rel / "sam_mtases.tsv.gz", sep="\t", usecols=["Entry", "Sequence"], low_memory=False).drop_duplicates("Entry").set_index("Entry")["Sequence"]
     df = lab.assign(Sequence=lab.Entry.map(seq)).reset_index(drop=True)
-    maps = {s: load_source(rel / "embeddings" / f, lay) for s, (f, lay) in SOURCES.items()}
+    maps = {s: load_source(rel / "embeddings" / f, lay) for s, (f, lay) in SOURCES.items() if only is None or s in only}
     n0 = len(df)
     df = df[df.Entry.apply(lambda e: all(e in m for m in maps.values())) & df.Sequence.notna()].reset_index(drop=True)
     if len(df) < n0:

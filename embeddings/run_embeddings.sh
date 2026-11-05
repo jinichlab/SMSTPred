@@ -19,7 +19,7 @@
 #   UNIPROT_PULL_DIR [<repo>/data/uniprot_pull]  the pull; the working embedding files go to <release>/embeddings/
 #   ARCHIVED_EMBEDDINGS [$SMSTPRED_DATA or <repo>/data]  the archived embeddings_*.h5 (Zenodo). A working file is first copied from there (cp -n: never over an existing one),
 #       then extended; the archived file is only read.
-#   ARCHIVED_SEQUENCES [$ARCHIVED_EMBEDDINGS/labels_SAM_full.csv ; UP: $UP_OLD_FASTA, /home/nroethler/Code/files/UP_swiss.fasta]  what the archived vectors were made from (the ledger)
+#   ARCHIVED_SEQUENCES [$ARCHIVED_EMBEDDINGS/labels_SAM_full.csv ; UP: $UP_OLD_FASTA, none by default]  what the archived vectors were made from (the ledger)
 #   ARCHIVED_STRUCTURES  folder of the archived <Entry>.pdb (the ledger of the structure embedders)
 #   EMBED_ENV [smstpred_embed] (ProtT5, ProstT5, SaProt), ESMIF_ENV [smstpred_esmif] (ESM-IF): the conda environments of `make embeddings-env`
 set -e
@@ -45,21 +45,23 @@ start_file() { [ -f "$work/$1" ] || { [ -f "$arch/$1" ] && cp -n "$arch/$1" "$wo
 sequences() {  # $1 = sam | up
     use "${EMBED_ENV:-smstpred_embed}"
     python -u make_embedding_inputs.py
-    if [ "$1" = sam ]; then ledger="${ARCHIVED_SEQUENCES:-$arch/labels_SAM_full.csv}"; else ledger="${ARCHIVED_SEQUENCES:-${UP_OLD_FASTA:-/home/nroethler/Code/files/UP_swiss.fasta}}"; fi
+    if [ "$1" = sam ]; then ledger="${ARCHIVED_SEQUENCES:-$arch/labels_SAM_full.csv}"; else ledger="${ARCHIVED_SEQUENCES:-${UP_OLD_FASTA:-}}"; fi
+    lq=(); [ -n "$ledger" ] && [ -e "$ledger" ] && lq=(--ledger "$ledger")      # no archived vectors / ledger: everything is embedded
     S="$(echo "$1" | tr a-z A-Z)"
     fasta="$inputs/$1_deployment.fasta"
     start_file "embeddings_${S}_ProtT5.h5"
-    python -u embed_prott5.py  --fasta "$fasta" --out "$work/embeddings_${S}_ProtT5.h5"  --ledger "$ledger"
+    python -u embed_prott5.py  --fasta "$fasta" --out "$work/embeddings_${S}_ProtT5.h5"  "${lq[@]}"
     start_file "embeddings_${S}_ProstT5.h5"
-    python -u embed_prostt5.py --fasta "$fasta" --out "$work/embeddings_${S}_ProstT5.h5" --no-per-residue --ledger "$ledger"
+    python -u embed_prostt5.py --fasta "$fasta" --out "$work/embeddings_${S}_ProstT5.h5" --no-per-residue "${lq[@]}"
 }
 
 up_benchmark() {   # ProtT5 of the UP benchmark proteins into embeddings_UP_ProtT5.h5 (started from the archived file; only new / changed proteins are embedded)
     use "${EMBED_ENV:-smstpred_embed}"
     python -u make_embedding_inputs.py --flag in_benchmark
-    ledger="${ARCHIVED_SEQUENCES:-${UP_OLD_FASTA:-/home/nroethler/Code/files/UP_swiss.fasta}}"
+    ledger="${ARCHIVED_SEQUENCES:-${UP_OLD_FASTA:-}}"
+    lq=(); [ -n "$ledger" ] && [ -e "$ledger" ] && lq=(--ledger "$ledger")
     start_file embeddings_UP_ProtT5.h5
-    python -u embed_prott5.py --fasta "$inputs/up_benchmark.fasta" --out "$work/embeddings_UP_ProtT5.h5" --ledger "$ledger"
+    python -u embed_prott5.py --fasta "$inputs/up_benchmark.fasta" --out "$work/embeddings_UP_ProtT5.h5" "${lq[@]}"
 }
 
 proteomes() {   # ProtT5 (the training pipeline) of the IPR029063 proteins of the reference proteomes, then split per proteome for 3_predictions/predict.py
@@ -73,13 +75,13 @@ structures() {
     store="$rel/structures"
     [ -d "$store" ] || { echo "$store not found: run fetch_structures.py first" >&2; exit 1; }
     ledger="${ARCHIVED_STRUCTURES:-$arch/sam_structures}"
-    [ -d "$ledger" ] || { echo "ARCHIVED_STRUCTURES ($ledger) not found: extract sam_structures.tar.gz there or set it" >&2; exit 1; }
+    lg=(); if [ -d "$ledger" ]; then lg=(--ledger "$ledger"); else echo "no archived structures at $ledger: every structure is embedded (set ARCHIVED_STRUCTURES to reuse archived vectors)"; fi
     use "${EMBED_ENV:-smstpred_embed}"
     start_file embeddings_SAM_SaProt.h5
-    python -u embed_saprot.py --struct-dir "$store" --out "$work/embeddings_SAM_SaProt.h5" --ledger "$ledger"
+    python -u embed_saprot.py --struct-dir "$store" --out "$work/embeddings_SAM_SaProt.h5" "${lg[@]}"
     use "${ESMIF_ENV:-smstpred_esmif}"
     start_file embeddings_SAM_ESM-IF.h5
-    python -u embed_esm_if_local.py --struct-dir "$store" --pattern '*.pdb' --out "$work/embeddings_SAM_ESM-IF.h5" --ledger "$ledger"
+    python -u embed_esm_if_local.py --struct-dir "$store" --pattern '*.pdb' --out "$work/embeddings_SAM_ESM-IF.h5" "${lg[@]}"
 }
 
 case "$what" in
