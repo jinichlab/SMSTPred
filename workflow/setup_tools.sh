@@ -98,15 +98,20 @@ install_chimerax() {
         *) echo "unrecognised ChimeraX package: $(file -b "$pkg")" >&2; exit 1 ;;
     esac
     [ -x "$bin" ] || { echo "no ChimeraX executable found in the package" >&2; exit 1; }
-    # headless rendering needs libGLU.so.1 and libOpenGL.so.0; take them from conda-forge into a private folder instead of asking for root
-    [ -d "$dir/libs" ] || conda create -y -p "$dir/libs" -c conda-forge libglu libglvnd > /dev/null || exit 1
-    cat > "$dir/chimerax" << EOF
+    # headless rendering on a node without a display needs libGLU.so.1, libOpenGL.so.0 and OSMesa (software OpenGL). They come from conda-forge into a private folder; only these
+    # libraries are exposed to ChimeraX (the rest of conda's libraries would clash with its own). mesalib is pinned to 24.2: from 25 on conda-forge builds no OSMesa.
+    if [ ! -e "$dir/extralib/libOSMesa.so.8" ]; then
+        conda create -y -p "$dir/libs" -c conda-forge libglu libglvnd "mesalib=24.2.7" > /dev/null || exit 1
+        mkdir -p "$dir/extralib" && cp -a "$dir"/libs/lib/libGLU.so* "$dir"/libs/lib/libOpenGL.so* "$dir"/libs/lib/libOSMesa.so* "$dir/extralib/" || { echo "could not collect libGLU / libOpenGL / OSMesa from conda-forge" >&2; exit 1; }
+    fi
+    cat > "$dir/chimerax" << LAUNCHER
 #!/usr/bin/env bash
-export LD_LIBRARY_PATH="$dir/libs/lib\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="$dir/extralib\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}"
 exec "$bin" "\$@"
-EOF
+LAUNCHER
     chmod +x "$dir/chimerax"; cd "$REPO" || exit 1
-    "$dir/chimerax" --offscreen --nogui --exit --cmd "version" || { echo "ChimeraX does not start headless" >&2; exit 1; }
+    "$dir/chimerax" --offscreen --nogui --exit --cmd "shape sphere radius 5 ; save $dir/test.png width 200 height 200" > "$dir/test.log" 2>&1 && [ -s "$dir/test.png" ] || { echo "ChimeraX cannot render an image headless (see $dir/test.log)" >&2; exit 1; }
+    rm -f "$dir/test.png"
     record chimerax "$dir/chimerax"
     echo "ChimeraX installed: $dir/chimerax"
 }

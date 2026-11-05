@@ -254,7 +254,7 @@ def main():
             shutil.copyfile(f, cache / f.name)
             new += 1
     print(f"structure cache {cache}: {new} new structures added, {sum(1 for _ in cache.glob('*.pdb'))} in all")
-    if unreachable:       # an incomplete set must not pass as done: the next stages (and the benchmark) would silently lose these proteins; the chain runs this script again
+    if len(unreachable):       # an incomplete set must not pass as done: the next stages (and the benchmark) would silently lose these proteins; the chain runs this script again
         print(f"INCOMPLETE: {len(unreachable)} proteins could not be checked or downloaded; exiting with an error so the stage is repeated", flush=True)
         sys.exit(1)
 
