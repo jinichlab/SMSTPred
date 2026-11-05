@@ -73,16 +73,25 @@ def get(url, **kw):
 
 
 def uniprot_pdb_map():
-    """({UniProt accession: [PDB ids]}, {accession: reviewed / protein name / organism}) for every IPR029063 entry that has a PDB cross-reference (one streamed query)."""
-    r = get("https://rest.uniprot.org/uniprotkb/stream", params={"query": "(xref:interpro-IPR029063) AND (database:pdb)",
-                                                                  "fields": "accession,reviewed,protein_name,organism_name,xref_pdb", "format": "tsv"})
-    out, names = {}, {}
-    for line in r.text.splitlines()[1:]:
-        acc, reviewed, name, org, pdbs = (line.split("\t") + [""] * 5)[:5]
-        ids = [x for x in pdbs.split(";") if x]
-        if ids:
-            out[acc] = ids
-            names[acc] = {"reviewed": reviewed == "reviewed", "protein_name": name, "organism": org}
+    """({UniProt accession: [PDB ids]}, {accession: reviewed / protein name / organism}) for every IPR029063 entry that has a PDB cross-reference.
+    Read in pages of 500 by following the cursor link (a single streamed request of this size times out on busy days)."""
+    url = "https://rest.uniprot.org/uniprotkb/search"
+    params = {"query": "(xref:interpro-IPR029063) AND (database:pdb)", "fields": "accession,reviewed,protein_name,organism_name,xref_pdb", "format": "tsv", "size": 500}
+    out, names, page = {}, {}, 0
+    while url:
+        r = get(url, params=params)
+        params = None                       # the next link carries the query and the cursor
+        lines = r.text.splitlines()
+        for line in lines[1:]:
+            acc, reviewed, name, org, pdbs = (line.split("\t") + [""] * 5)[:5]
+            ids = [x for x in pdbs.split(";") if x]
+            if ids:
+                out[acc] = ids
+                names[acc] = {"reviewed": reviewed == "reviewed", "protein_name": name, "organism": org}
+        page += 1
+        if page % 20 == 0:
+            print(f"[uniprot] {page} pages, {len(out)} entries with PDB", flush=True)
+        url = (r.links.get("next") or {}).get("url")
     return out, names
 
 
