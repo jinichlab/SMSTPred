@@ -14,7 +14,7 @@ Layout (inside out): the taxonomy (Newick; unit branch lengths, so this is a TAX
 join every leaf to the rim) | five rings, one leaf per angular slice: % Protein / DNA / RNA / Metabolite calls among the organism's
 predicted SAM-MTases and % of the proteome that is SAM-MTase (colour scale from 0 to the largest value) | bars: number of SAM-MTases
 (IPR029063) in the proteome | clade strips (Plants, Metazoa > Vertebrates, Actinomycetota; named on the figure, not in the legend). Leaves run clockwise from the top in the
-order of the Newick file. Writes <name>.png (200 dpi), <name>.svg and <name>.pdf.
+order of the Newick file after one rotation (rotate_for_reading: Metazoa turned next to the plants; --no-rotate keeps the file order). Writes <name>.png (200 dpi), <name>.svg and <name>.pdf.
 """
 import argparse
 import math
@@ -68,6 +68,26 @@ def parse_newick(text):
             cur.name = m.group(1)
             i = m.end()
     return root
+
+
+def rotate_for_reading(root, groups):
+    """Turn clades around their parent node (a rotation: the tree and its branching are unchanged, only which child is drawn first) so that the clade named in `groups`
+    as the first group sits next to the one named second: at every node below the point where the two groups meet (Eukaryota), children that hold no leaf of either group come first, then those holding the first group (Metazoa),
+    then those holding the second (Plants). This puts Metazoa beside the plants at the right-hand side of the circle instead of at the top. `groups` = (set of leaf names, set of leaf names)."""
+    first, second = groups
+
+    def holds(n, g):
+        return any(l.name in g for l in leaves_of(n, []))
+
+    def rank(n):
+        return 2 if holds(n, second) else 1 if holds(n, first) else 0
+
+    stack = [root]
+    while stack:
+        n = stack.pop()
+        if len(n.children) > 1 and not any(holds(c, first) and holds(c, second) for c in n.children):      # only below the node where Metazoa and Plants meet (the root and Eukaryota keep their place)
+            n.children.sort(key=rank)          # stable: siblings of the same rank keep their order
+        stack.extend(n.children)
 
 
 def leaves_of(n, out):
@@ -239,8 +259,15 @@ def swatch(fig, x, y, w, h, colour, gradient=True):
         s.set_visible(False)
 
 
-def build(src, out, name, gamma, bar_h=0.36):
+def build(src, out, name, gamma, bar_h=0.36, rotate=True):
     root = parse_newick((src / "reference_tree.nwk").read_text())
+    if rotate:
+        old = leaves_of(root, [])
+        pos = {l.name: i for i, l in enumerate(old)}
+        rg = {k: v for k, v in read_ranges(src / "itol_clade_highlights.txt").items() if k in ("Metazoa", "Plants")}
+        if len(rg) == 2:
+            span = lambda k: {l.name for l in old[min(pos[rg[k][0]], pos[rg[k][1]]): max(pos[rg[k][0]], pos[rg[k][1]]) + 1]}
+            rotate_for_reading(root, (span("Metazoa"), span("Plants")))
     leaves = layout(root, gamma)
     # geometry in units of the tree radius, worked out first so that the figure height can follow the drawing
     ring_w, ring0, strip_w = 0.075, 1.03, 0.04
@@ -317,9 +344,10 @@ def main():
     ap.add_argument("--out", default=None)
     ap.add_argument("--name", default="fig3_tree")
     ap.add_argument("--gamma", type=float, default=0.45)
+    ap.add_argument("--no-rotate", action="store_true", help="draw the clades in the Newick order (Metazoa at the top) instead of turning Metazoa next to the plants")
     ap.add_argument("--bar-height", type=float, default=0.36, help="height of the longest SAM-count bar, in units of the tree radius")
     a = ap.parse_args()
-    build(Path(a.src), Path(a.out or a.src), a.name, a.gamma, a.bar_height)
+    build(Path(a.src), Path(a.out or a.src), a.name, a.gamma, a.bar_height, rotate=not a.no_rotate)
 
 
 if __name__ == "__main__":
