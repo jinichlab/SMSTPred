@@ -33,7 +33,7 @@ if [ -z "${CONDA_DEFAULT_ENV:-}" ] || [ "$CONDA_DEFAULT_ENV" = base ]; then
 fi
 
 pull="${UNIPROT_PULL_DIR:-$here/../data/uniprot_pull}"
-store="${STRUCT_DIR:-$(ls -d "$pull"/release_* | grep -v '/_' | sort | tail -n 1)/structures}"
+store="${STRUCT_DIR:-$(ls -d "$pull"/release_* | grep -v '/_[^/]*$' | sort | tail -n 1)/structures}"
 fasta="$store/to_predict.fasta"
 [ -f "$fasta" ] || { echo "$fasta not found: run fetch_structures.py first" >&2; exit 1; }
 n=$(grep -c '>' "$fasta" || true)

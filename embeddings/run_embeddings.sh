@@ -32,7 +32,7 @@ command -v conda > /dev/null && eval "$(conda shell.bash hook)"
 use() { command -v conda > /dev/null && conda activate "$1" || { echo "conda environment $1 not found: run 'make embeddings-env' first" >&2; exit 1; }; }
 
 pull="${UNIPROT_PULL_DIR:-$here/../data/uniprot_pull}"
-rel="$(ls -d "$pull"/release_* | grep -v '/_' | sort | tail -n 1)"
+rel="$(ls -d "$pull"/release_* | grep -v '/_[^/]*$' | sort | tail -n 1)"
 arch="${ARCHIVED_EMBEDDINGS:-${SMSTPRED_DATA:-$here/../data}}"
 work="$rel/embeddings"; mkdir -p "$work"
 inputs="$rel/embedding_inputs"
