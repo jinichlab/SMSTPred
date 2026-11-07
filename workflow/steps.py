@@ -37,6 +37,7 @@ STEPS = [
     S("s4_tree", "4", "bash 4_phylo_trends/run_tree.sh", "Fig 3: taxonomy tree and per-organism annotation", timeout=1800),
     S("s4_fig4", "4", "bash figures/Fig4_trends/run_fig4.sh", "Fig 4 and its Mann-Whitney / Kruskal-Wallis statistics", timeout=1800),
     S("s4_fig5", "4", "bash figures/Fig5_proteome_scaling/run_fig5.sh", "Fig 5 power-law fits, level differences, clade-bootstrap CIs, lineage statistics", timeout=7200),
+    S("s5_umap", "5", "bash 5_umap/run_umap.sh", "The map: the archived UMAP coordinates and clusters are reused (frozen), scores and calls refreshed from the predictions; the static map is redrawn", timeout=3600),
     S("s5_clusters", "5", "bash 5_umap/run_clusters.sh", "Dark / metazoan-protein / vertebrate-DNA cluster selection and Fig 7", timeout=3600),
     # ---------------------------------------------------------------- Stage 6: dark-cluster tables and Fig 8 from the archived CLEAN and Horizyn results
     S("s6_tables", "6", "bash 6_dark_cluster_annotation/run_tables.sh", "Horizyn family table, CLEAN summary, Tables S1 and S2, Fig 7 with the Fig 8 clusters", timeout=3600),

@@ -37,7 +37,7 @@
 #   predict          3_predictions/run_predict_release.sh (+ combine_predictions.py)         deploy, embed_proteomes
 #   tree             4_phylo_trends/run_tree.sh         (Fig 3, no iTOL)                     predict
 #   fig4, fig5       figures/Fig4_trends/run_fig4.sh, figures/Fig5_proteome_scaling/run_fig5.sh   predict
-#   umap             5_umap/run_umap.sh                 (global UMAP + HDBSCAN)              predict, embed_proteomes
+#   umap             5_umap/run_umap.sh                 (global UMAP + HDBSCAN; an existing map of the same proteins is REUSED: UMAP is not reproducible, UMAP_RECOMPUTE=1 forces a new one)   predict, embed_proteomes
 #   clusters         5_umap/run_clusters.sh             (dark / metazoan-protein / vertebrate-DNA clusters, Fig 7)   umap
 #   dark_inputs      6_dark_cluster_annotation/run_dark_inputs.sh   (dark proteins -> FASTA + members)   clusters
 #   clean, horizyn   6_dark_cluster_annotation/run_clean_release.sh, run_horizyn_release.sh  (GPU)       dark_inputs

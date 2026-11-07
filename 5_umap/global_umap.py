@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """Global UMAP of every tree-of-life SAM-MTase of a refresh release, from its ProtT5 embedding, coloured by the ensemble's substrate call.
 
-  python global_umap.py [--release <folder>] [--embedding ProtT5]      (default release: $RELEASE_DIR, else the newest release_* of $UNIPROT_PULL_DIR)
+  python global_umap.py [--release <folder>] [--embedding ProtT5] [--frozen-map <coords csv>] [--recompute]      (default release: $RELEASE_DIR, else the newest release_* of $UNIPROT_PULL_DIR)
+
+THE MAP IS FROZEN BY DEFAULT. UMAP + HDBSCAN are not reproducible from run to run (a rerun on the same inputs, seed and environment moves the points by tens of units and gives 933-947
+clusters), and everything after them (dark clusters, the Fig 8 clusters, motif counts) depends on the exact map. So when <release>/umap/sam_mtase_umap_<emb>_coords.csv (or --frozen-map) exists
+and covers exactly the proteins of this release, its UMAP_1 / UMAP_2 / cluster columns are reused as they are (only the scores and calls are refreshed from the current predictions) and no UMAP
+is run. A release whose proteins differ from the map's, or no map at all, gets a new UMAP (a new release gets a new map); --recompute (or UMAP_RECOMPUTE=1) forces a new one.
 
 The release counterpart of global_reumap_prostt5.py, with the SAME settings (UMAP: 15 neighbours, min_dist 0.1, cosine, seed 42; HDBSCAN on the 2-D coordinates:
 min_cluster_size 50, min_samples 10). Reads <release>/embeddings/embeddings_proteomes_<embedding>.h5 (mean-pooled 1,024-d vector per Entry, keyed by Entry) and
@@ -71,6 +76,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--release")
     ap.add_argument("--embedding", default="ProtT5")
+    ap.add_argument("--frozen-map", help="coordinates and clusters to reuse (default: <release>/umap/sam_mtase_umap_<embedding>_coords.csv when it exists)")
+    ap.add_argument("--recompute", action="store_true", help="compute a new UMAP and HDBSCAN clustering even when a map exists (also UMAP_RECOMPUTE=1)")
     a = ap.parse_args()
     sys.path.insert(0, str(REPO / "1_clustering"))
     from mmseqs_clusters import newest_release
@@ -84,11 +91,26 @@ def main():
     df["Substrate"] = substrate_of(calls)
     print("substrate:", df.Substrate.value_counts().to_dict(), flush=True)
 
+    frozen = None
+    fpath = Path(a.frozen_map) if a.frozen_map else out / f"sam_mtase_umap_{emb}_coords.csv"
+    if not (a.recompute or os.environ.get("UMAP_RECOMPUTE") == "1") and fpath.exists():
+        fm = pd.read_csv(fpath, usecols=["Entry", "UMAP_1", "UMAP_2", "cluster"]).drop_duplicates("Entry").set_index("Entry")
+        if set(fm.index) == set(df.Entry):
+            frozen = fm.loc[df.Entry]
+            print(f"FROZEN MAP: coordinates and clusters of {len(fm):,} proteins reused from {fpath} (no UMAP run; --recompute makes a new map)", flush=True)
+        else:
+            print(f"the map in {fpath} covers {len(fm):,} proteins, this release has {len(df):,} (only {len(set(fm.index) & set(df.Entry)):,} in common): computing a new map", flush=True)
     t0 = time.time()
-    coords = umap.UMAP(n_components=2, n_neighbors=N_NEIGHBORS, min_dist=MIN_DIST, metric=METRIC, random_state=RANDOM_SEED, verbose=True).fit_transform(X)
-    print(f"UMAP {time.time() - t0:.0f} s", flush=True)
-    df["UMAP_1"], df["UMAP_2"] = coords[:, 0], coords[:, 1]
-    df["cluster"] = HDBSCAN(min_cluster_size=HDBSCAN_MIN_CLUSTER_SIZE, min_samples=HDBSCAN_MIN_SAMPLES).fit_predict(coords)
+    if frozen is not None:
+        coords = frozen[["UMAP_1", "UMAP_2"]].to_numpy(dtype=np.float32)
+        df["UMAP_1"], df["UMAP_2"], df["cluster"] = coords[:, 0], coords[:, 1], frozen["cluster"].to_numpy()
+        map_note = f"map: frozen, reused from {fpath.name} (not recomputed)"
+    else:
+        coords = umap.UMAP(n_components=2, n_neighbors=N_NEIGHBORS, min_dist=MIN_DIST, metric=METRIC, random_state=RANDOM_SEED, verbose=True).fit_transform(X)
+        print(f"UMAP {time.time() - t0:.0f} s", flush=True)
+        df["UMAP_1"], df["UMAP_2"] = coords[:, 0], coords[:, 1]
+        df["cluster"] = HDBSCAN(min_cluster_size=HDBSCAN_MIN_CLUSTER_SIZE, min_samples=HDBSCAN_MIN_SAMPLES).fit_predict(coords)
+        map_note = "map: computed in this run (UMAP and HDBSCAN are not reproducible from run to run: keep this map, or freeze it with the release)"
     nclu = df.cluster.nunique() - (1 if (df.cluster == -1).any() else 0)
     keep = ["Entry", "Organism", "proteome", "Substrate", *[f"score_{l}" for l in LABELS], *[f"call_{l}" for l in LABELS], "disagreement", "in_domain", "Length",
             "UMAP_1", "UMAP_2", "cluster"]
@@ -97,6 +119,7 @@ def main():
     pur, per = neighbor_purity(coords, df.Substrate.to_numpy())
     lines = [f"{a.embedding} UMAP of {len(df):,} proteins from {df.proteome.nunique()} proteomes ({rel.name})",
              f"UMAP: n_neighbors {N_NEIGHBORS}, min_dist {MIN_DIST}, metric {METRIC}, seed {RANDOM_SEED}; HDBSCAN min_cluster_size {HDBSCAN_MIN_CLUSTER_SIZE}, min_samples {HDBSCAN_MIN_SAMPLES}",
+             map_note,
              f"substrate: {df.Substrate.value_counts().to_dict()}",
              f"HDBSCAN: {nclu} clusters, {int((df.cluster == -1).sum()):,} unclustered",
              f"neighbour purity (single-call proteins; share of the 15 nearest neighbours in the 2-D map with the same call): {pur:.3f}; " + ", ".join(f"{l} {v:.3f}" for l, v in per.items())]

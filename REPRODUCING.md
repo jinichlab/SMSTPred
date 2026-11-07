@@ -103,6 +103,6 @@ These need a download, an external install, or days of compute. Their inputs res
 | CLEAN and Horizyn runs | external installs (`workflow/setup_tools.sh`, `EXTERNAL_TOOLS.md`); the Horizyn scores are archived | `6_dark_cluster_annotation/run_clean_release.sh`, `run_horizyn_release.sh` |
 | InterPro domain enrichment (Table S3) and the motif corpus | need the per-proteome UniProt tables with sequences (3 GB, not archived) | `7_motif_analysis/run_domain_table.sh`, `run_streme.sh`, `run_fimo_*.sh` |
 | Figs 9 and 10 | ChimeraX | `figures/Fig9_10_structures/run_fig9_10.sh` |
-| UMAP | long | `5_umap/run_umap.sh` |
+| A new UMAP map | not reproducible run to run (same inputs, seed and environment give different points and 933-947 clusters), so `make verify` reuses the archived map (frozen); a new map: `UMAP_RECOMPUTE=1 bash 5_umap/run_umap.sh` | `5_umap/run_umap.sh` |
 
 Run order for the stages that build on one another (the registry lists them in this order): clustering, benchmark reports, Fig 2, ensemble predictions, tree and Figs 4-5, cluster selection, dark-cluster tables and Fig 8, motifs, key numbers.
