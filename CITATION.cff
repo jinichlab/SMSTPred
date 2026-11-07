@@ -15,17 +15,19 @@ repository-code: "https://github.com/jinichlab/SMSTPred"
 license: MIT
 abstract: >-
   Multi-label classifier (DNA, RNA, Protein, Metabolite) of the substrate type of SAM-dependent methyltransferases from
-  structure-aware protein language-model embeddings (ProstT5), with the benchmark, tree-of-life predictions for
-  about 112,000 enzymes in 1,259 organisms, and the CLEAN / Horizyn and motif analyses of the manuscript.
+  protein language-model embeddings (ProtT5; a six-member ensemble), with the cluster-disjoint benchmark, the ready-to-run
+  classifier, predictions for 115,850 enzymes in 1,249 reference proteomes (UniProt release 2026_03), and the CLEAN / Horizyn
+  and motif analyses of the manuscript, as one automated pipeline that can be rerun for each UniProt release.
 keywords:
   - S-adenosylmethionine
   - methyltransferase
   - substrate specificity
   - protein language model
   - enzyme function prediction
+  - tree of life
 references:
   - type: dataset
-    title: "SMSTPred data: protein language-model embeddings, substrate-type labels and tree-of-life resources for SAM-methyltransferase substrate prediction"
+    title: "SMSTPred data (UniProt release 2026_03): protein language-model embeddings, substrate-type labels, the deployed ensemble, tree-of-life predictions and analysis results for SAM-methyltransferase substrate prediction"
     authors:
       - family-names: Roethler
         given-names: Nathaniel
@@ -33,4 +35,5 @@ references:
         given-names: Adrian
     doi: 10.5281/zenodo.23655998
     year: 2026
+# Add a `version` and the DOI of the archived software release (a tagged GitHub release linked to Zenodo) here once it exists.
 # When the manuscript is published, add a preferred-citation block (type: article) with its journal and DOI.
