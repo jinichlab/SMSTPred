@@ -5,7 +5,7 @@ A cluster is shown when CLEAN and Horizyn agree on its chemistry at the level of
   * Horizyn's dominant reaction family for the cluster (final_family_table.py) contains a reaction that carries CLEAN's EC (Rhea's rhea2ec.tsv).
 Clusters are listed by number; at most `max_panels` (six) are drawn, the largest first when there are more.
 On release 2026_03 this picks c317, c353, c512 and c729. The rule is deliberately generous at the family level (a family can mix several ECs):
-the figure then shows what Horizyn actually voted for, which is the evidence the reader weighs.
+the figure then shows the reaction Horizyn actually ranks first for most members, which is the evidence the reader weighs.
 """
 import pandas as pd
 

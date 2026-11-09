@@ -5,8 +5,8 @@ Each panel is one dark cluster (c551, c667, c110, c714). Grey histogram: the clu
 the 36,552 Rhea reaction entries (mean over the cluster's members of the member-vs-reaction score; log y). Orange rug: the
 SAM-methylation reactions (both directional entries of the 677 reactions flagged as SAM methylation = 1,714 entries).
 Solid vertical line: the highest-scoring reaction. The substrate -> product reaction drawn in the panel is the reaction the
-largest share of members voted for as their single best match (c714: the furocoumarin reaction CLEAN names, which is its
-second most-voted reaction and third by score; the highest-scoring reaction, solid line, is a different reaction, so both are marked).
+largest share of members as their single best-scoring reaction (c714: the furocoumarin reaction CLEAN names, which is its
+second most common best-scoring reaction and third by score; the highest-scoring reaction, solid line, is a different reaction, so both are marked).
 Rhea numbers a reaction as master n with directional entries n+1 (left->right) and n+2 (right->left); Horizyn scores the two
 directions almost identically, so reactions are collapsed over direction and labelled by their master ID (as in the text).
 
@@ -139,16 +139,16 @@ for ax in axes.ravel()[len(PANELS):]:
 SHOWN = []
 for ax, (c, letter, title, master) in zip(axes.ravel(), PANELS):
     idx = np.where(clus == c)[0]; mu = S[idx].mean(0); top = int(mu.argmax())
-    votes = pd.Series(rxn[top1[idx]]).value_counts()
+    top_counts = pd.Series(rxn[top1[idx]]).value_counts()
     ax.hist(mu, bins=140, color="#c8c8c8", edgecolor="none"); ax.set_yscale("log")
     ymin = ax.get_ylim()[0]; ymax = 10 ** 5.3                 # headroom above the histogram for the drawing
     ax.set_ylim(ymin, ymax); ax.set_yticks([1, 10, 100, 1000]); ax.set_yticklabels(["10⁰", "10¹", "10²", "10³"])
     ax.vlines(mu[sam_rxn], ymin, ymin * 2.2, color=RUG, lw=0.5, alpha=0.7)
     ax.axvline(mu[top], color=COL[c], lw=2.6)
-    # drawn reaction: the most-voted one (c714: the furocoumarin reaction, a lower vote rank)
-    g_show = votes.index[0] if c != 714 or args.release else rxn[np.where(rid == master + 1)[0][0]]
+    # drawn reaction: the most common best-scoring reaction (c714: the furocoumarin reaction, a lower rank by member count)
+    g_show = top_counts.index[0] if c != 714 or args.release else rxn[np.where(rid == master + 1)[0][0]]
     sub, prod, entry = forward_pair(g_show)
-    if master is None:                                        # release mode: the drawn reaction is whatever the members voted for
+    if master is None:                                        # release mode: the drawn reaction is the best-scoring reaction shared by most members
         master = MASTER[entry]
         title = TITLES.get(master) or reaction_title(EQ.get(master, "")) or f"{CLEAN_NAME.get(c, '')} (RHEA:{master})"
     assert (MASTER[entry] if args.release else entry - 1) == master, (c, entry, master)   # the drawn entry belongs to the master reaction quoted in the text (archived figure: its left->right entry is master + 1)
@@ -162,8 +162,8 @@ for ax, (c, letter, title, master) in zip(axes.ravel(), PANELS):
     ymid = 10 ** (np.log10(ymin) + 0.85 * (np.log10(ymax) - np.log10(ymin)))
     ax.annotate("", xy=(mu[e_], ymid), xycoords="data", xytext=(0.87, 0.85), textcoords="axes fraction",
                 arrowprops=dict(arrowstyle="-|>", color=COL[c], lw=1.8, shrinkA=0, shrinkB=0))
-    share = votes[g_show] / len(idx) * 100; z_e = (mu[e_] - mu.mean()) / mu.std()
-    lines = [f"RHEA:{master} · voted by {share:.0f}% of members", f"score {mu[e_]:.2f}  (z = {z_e:.1f})"]
+    share = top_counts[g_show] / len(idx) * 100; z_e = (mu[e_] - mu.mean()) / mu.std()
+    lines = [f"RHEA:{master} · best match of {share:.0f}% of members", f"score {mu[e_]:.2f}  (z = {z_e:.1f})"]
     if not same:
         lines += ["solid line: top-scoring reaction"]
     ax.text(0.86, 0.655, "\n".join(lines), transform=ax.transAxes, ha="right", va="top", fontsize=12.5,
@@ -181,5 +181,5 @@ fig.savefig(out, dpi=300, facecolor="white"); plt.close(fig)
 print("wrote", out)
 for c, m in SHOWN:
     v = pd.Series(rxn[top1[np.where(clus == c)[0]]]).value_counts()
-    print(f"  c{c}: master RHEA:{m}; distinct top hits {len(v)}; top-voted share {v.iloc[0] / v.sum():.0%}")
+    print(f"  c{c}: master RHEA:{m}; distinct top hits {len(v)}; top best-scoring-reaction share {v.iloc[0] / v.sum():.0%}")
 print(f"  SAM-methylation: {int(is_sam.sum())} flagged entries -> {len(np.unique(rxn[is_sam]))} reactions, {int(sam_rxn.sum())} directional entries")
