@@ -2,6 +2,8 @@ cff-version: 1.2.0
 message: "If you use this code or the data, please cite the manuscript (once published) and the Zenodo data record."
 title: "SMSTPred: substrate-type prediction for SAM-dependent methyltransferases across the tree of life"
 type: software
+version: "1.0.0"
+date-released: "2026-11-09"
 authors:
   - family-names: Roethler
     given-names: Nathaniel
@@ -35,5 +37,5 @@ references:
         given-names: Adrian
     doi: 10.5281/zenodo.23655998
     year: 2026
-# Add a `version` and the DOI of the archived software release (a tagged GitHub release linked to Zenodo) here once it exists.
+# Add the DOI of the archived software release here once it exists (a GitHub release of tag v1.0.0 with the Zenodo-GitHub integration enabled).
 # When the manuscript is published, add a preferred-citation block (type: article) with its journal and DOI.
