@@ -163,12 +163,12 @@ for ax, (c, letter, title, master) in zip(axes.ravel(), PANELS):
     ax.annotate("", xy=(mu[e_], ymid), xycoords="data", xytext=(0.87, 0.85), textcoords="axes fraction",
                 arrowprops=dict(arrowstyle="-|>", color=COL[c], lw=1.8, shrinkA=0, shrinkB=0))
     share = top_counts[g_show] / len(idx) * 100; z_e = (mu[e_] - mu.mean()) / mu.std()
-    lines = [f"RHEA:{master} · best match of {share:.0f}% of members", f"score {mu[e_]:.2f}  (z = {z_e:.1f})"]
+    lines = [f"assigned reaction: {title}", f"RHEA:{master} · best match of {share:.0f}% of members", f"score {mu[e_]:.2f}  (z = {z_e:.1f})"]
     if not same:
         lines += ["solid line: top-scoring reaction"]
-    ax.text(0.86, 0.655, "\n".join(lines), transform=ax.transAxes, ha="right", va="top", fontsize=12.5,
+    ax.text(0.86, 0.69, "\n".join(lines), transform=ax.transAxes, ha="right", va="top", fontsize=11.5,
             color=COL[c], fontweight="bold", linespacing=1.25)
-    ax.set_title(f"c{c} · {title}  (n = {len(idx)})", loc="left", fontweight="bold", fontsize=14, pad=10)
+    ax.set_title(f"Protein dark cluster c{c} (n = {len(idx)})", loc="left", fontweight="bold", fontsize=14, pad=10)
     ax.text(-0.115, 1.075, letter, transform=ax.transAxes, fontsize=26, fontweight="bold", va="bottom")
     ax.set_xlabel("cluster-mean Horizyn score", fontsize=13); ax.set_ylabel("no. of reactions (log)", fontsize=13)
     ax.tick_params(labelsize=12)
