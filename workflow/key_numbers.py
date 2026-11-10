@@ -122,6 +122,15 @@ def trends(rel):
             out.append(f"Fig 5{pl} {g.measure.iloc[0]}: alpha {lin} {a1.estimate:.2f} [{a1.ci_lo:.2f}, {a1.ci_hi:.2f}], {rest} {a2.estimate:.2f} [{a2.ci_lo:.2f}, {a2.ci_hi:.2f}]; "
                        f"delta alpha {d.estimate:+.2f} [{d.ci_lo:+.2f}, {d.ci_hi:+.2f}]; level at equal size x{f.estimate:.2f} [{f.ci_lo:.2f}, {f.ci_hi:.2f}] ({f.note.split(';')[0]}); "
                        f"(old OLS slope ratio {lg:.2f}: not a rate, do not quote)")
+    cf = rel / "fig5" / "fig5_by_clade.csv"
+    if cf.exists():      # Fig 5, eukaryotes clade by clade (figures/Fig5_proteome_scaling/scaling_by_clade.py)
+        for r in pd.read_csv(cf).itertuples():
+            out.append(f"Fig 5 by clade {r.measure}: {r.clade} (n={r.n}): alpha {r.alpha:.2f} [{r.alpha_lo:.2f}, {r.alpha_hi:.2f}], {r.usable_bins} bins, reduced chi2 {r.reduced_chi2:.1f}; "
+                       f"fitted count at 20,000 proteins {r.height_at_20k:.0f} [{r.height_lo:.0f}, {r.height_hi:.0f}]")
+    mf = rel / "fig5" / "fig5_clade_model_comparison.csv"
+    if mf.exists():
+        for r in pd.read_csv(mf).itertuples():
+            out.append(f"Fig 5 clade model comparison {r.measure}: {r.model} R2 {r.R2:.2f}, AIC {r.AIC:.0f}")
     lt = rel / "fig5" / "lineage_statistics.txt"
     if lt.exists():
         out += lt.read_text().strip().splitlines()
