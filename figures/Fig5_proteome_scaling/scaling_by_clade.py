@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fig 5: SAM-methyltransferase counts against proteome size in eukaryotes, one fit per clade (plants, fungi, metazoa, other eukaryotes).
+"""Fig 5: SAM-methyltransferase counts against proteome size, one fit per clade: bacteria (A, B: Actinomycetota, other bacteria) and eukaryotes (C, D: plants, fungi, metazoa, other eukaryotes).
 
   python scaling_by_clade.py --dir <release>/fig5        (after build_proteome_vs_sam_table.py; run_fig5.sh calls it)
 
@@ -8,7 +8,7 @@ Why by clade: the single "other eukaryotes" group of scaling_loglog.py panels C 
 separately with the same binning and weighted non-linear least squares as scaling_loglog.py (0.15-decade size bins, at least MIN_BIN proteomes per bin, n = lambda g^alpha),
 with 95% intervals from clade-level bootstrap resampling (lineage prefix of depth 8).
 
-Outputs (in --dir): fig5_by_clade.png/.pdf, fig5_by_clade.csv (per clade and measure: n, alpha with interval, usable bins, reduced chi-square, fitted height at 20,000 proteins with
+Outputs (in --dir): fig5_by_clade.png/.pdf, fig5_by_clade.csv (per clade and measure: n, alpha with interval, usable bins, reduced chi-square, fitted height at a reference size (6,000 proteins in bacteria, 20,000 in eukaryotes) with
 interval) and fig5_clade_model_comparison.csv (log-log least squares on the proteomes: one line, clade offsets with a common slope, clade-specific lines; R2, RMSE, AIC, BIC).
 """
 import argparse
@@ -25,25 +25,36 @@ import matplotlib.pyplot as plt
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import scaling_loglog as sl     # noqa: E402
 
-REF_SIZE = 2e4                  # proteins; the size at which the fitted heights are compared
+REF_SIZE = {"Bacteria": 6e3, "Eukaryota": 2e4}      # proteins; the size at which the fitted heights are compared (inside every clade's data range)
 N_BOOT = 1000
-CLADES = ["Metazoa", "Fungi", "Other eukaryotes", "Plants"]
-COL = {"Plants": "#618d43", "Fungi": "#8c5a2b", "Metazoa": "#3a6fb0", "Other eukaryotes": "#9b6bb5"}
+CLADES = ["Metazoa", "Fungi", "Other eukaryotes", "Plants", "Other bacteria", "Actinomycetota"]
+COL = {"Plants": "#618d43", "Fungi": "#8c5a2b", "Metazoa": "#3a6fb0", "Other eukaryotes": "#9b6bb5", "Other bacteria": "#707070", "Actinomycetota": "#ed8c44"}
+PANELS = [("A", "Bacteria", "n_sam", ["Other bacteria", "Actinomycetota"]), ("B", "Bacteria", "n_Metabolite", ["Other bacteria", "Actinomycetota"]),
+          ("C", "Eukaryota", "n_sam", ["Metazoa", "Fungi", "Other eukaryotes", "Plants"]), ("D", "Eukaryota", "n_Metabolite", ["Metazoa", "Fungi", "Other eukaryotes", "Plants"])]
+YLAB = {"n_sam": "Total SAM MTases", "n_Metabolite": "Metabolite-substrate SAM MTases"}
 MEASURES = [("n_sam", "Total SAM MTases"), ("n_Metabolite", "Metabolite-substrate SAM MTases")]
 
 
 def clade_of(lineage):
+    if "Actinomycetota" in lineage:
+        return "Actinomycetota"
     for key, name in (("Viridiplantae", "Plants"), ("Metazoa", "Metazoa"), ("Fungi", "Fungi")):
         if key in lineage:
             return name
     return "Other eukaryotes"
 
 
-def compare_models(d, col):
+def clade_for(domain, lineage):
+    if domain == "Bacteria":
+        return "Actinomycetota" if "Actinomycetota" in lineage else "Other bacteria"
+    return clade_of(lineage)
+
+
+def compare_models(d, col, clades):
     """Log-log least squares on the proteomes: one line, clade offsets with a common slope, clade-specific lines."""
     x, y, cl = np.log10(d.proteome_size.values.astype(float)), np.log10(d[col].values.astype(float)), d.clade.values
     n = len(d)
-    levels = [c for c in CLADES if c in set(cl)]
+    levels = [c for c in clades if c in set(cl)]
     D = np.column_stack([(cl == c).astype(float) for c in levels[1:]])
     designs = {"one line": np.c_[np.ones(n), x], "clade offsets, common slope": np.c_[np.ones(n), x, D], "clade-specific lines": np.c_[np.ones(n), x, D, D * x[:, None]]}
     rows = []
@@ -62,43 +73,47 @@ def main():
     out = Path(a.dir)
     sl.IO = out
     t = sl.build_table()
-    e = t[t.domain == "Eukaryota"].copy()
-    e["clade"] = e.lineage.map(clade_of)
+    t = t[t.domain.isin(["Bacteria", "Eukaryota"])].copy()
+    t["clade"] = [clade_for(d, l) for d, l in zip(t.domain, t.lineage)]
     ed = sl.edges()
     rng = np.random.default_rng(sl.SEED)
     rows, comp = [], []
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5.8))
-    for ax, (col, ylab), letter in zip(axes, MEASURES, "AB"):
-        d_all = e[e[col] > 0]
-        comp += compare_models(d_all, col)
-        for c in CLADES:
+    fig, axes = plt.subplots(2, 2, figsize=(14, 11))
+    for ax, (letter, dm, col, clades) in zip(axes.flat, PANELS):
+        d_all = t[(t.domain == dm) & (t[col] > 0)]
+        comp += [dict(panel=letter, **r) for r in compare_models(d_all, col, clades)]
+        for c in clades:
             d = d_all[d_all.clade == c]
             g, y = d.proteome_size.values.astype(float), d[col].values.astype(float)
             ax.scatter(g, y, s=14, color=COL[c], alpha=0.35, edgecolor="none")
             n, mg, my, se, u = sl.bins(g, y, ed, sl.MIN_BIN)
             ax.errorbar(mg[u], my[u], yerr=se[u], fmt="s", ms=6, mfc="white", mec=COL[c], color=COL[c], lw=1.2)
             al, la, chi, nb = sl.wnls(g, y, ed)
-            height = float(np.exp(la) * (REF_SIZE / sl.G0) ** al) if np.isfinite(al) else np.nan
-            groups = sl.groups_of(d[f"clade{sl.CLUSTER_DEPTH['Eukaryota']}"].values)
+            height = float(np.exp(la) * (REF_SIZE[dm] / sl.G0) ** al) if np.isfinite(al) else np.nan
+            groups = sl.groups_of(d[f"clade{sl.CLUSTER_DEPTH[dm]}"].values)
             bs = []
             for _ in range(N_BOOT):
                 ix = sl.resample(groups, rng)
                 r = sl.wnls(g[ix], y[ix], ed)
                 if np.isfinite(r[0]):
-                    bs.append((r[0], np.exp(r[1]) * (REF_SIZE / sl.G0) ** r[0]))
+                    bs.append((r[0], np.exp(r[1]) * (REF_SIZE[dm] / sl.G0) ** r[0]))
             bs = np.array(bs) if len(bs) > 100 else np.full((2, 2), np.nan)
             alo, ahi = np.nanpercentile(bs[:, 0], [2.5, 97.5]); hlo, hhi = np.nanpercentile(bs[:, 1], [2.5, 97.5])
             if np.isfinite(al):
                 xs = np.geomspace(mg[u].min(), mg[u].max(), 50)
-                ax.plot(xs, np.exp(la) * (xs / sl.G0) ** al, color=COL[c], lw=2.2, label=f"{c} (n={len(d)}): α = {al:.2f} [{alo:.2f}, {ahi:.2f}]")
+                ax.plot(xs, np.exp(la) * (xs / sl.G0) ** al, color=COL[c], lw=2.2, label=f"{c} (n={len(d)}): \u03b1 = {al:.2f} [{alo:.2f}, {ahi:.2f}]")
             else:
                 ax.plot([], [], color=COL[c], lw=2.2, label=f"{c} (n={len(d)}): not estimable")
-            rows.append(dict(measure=col, clade=c, n=len(d), alpha=al, alpha_lo=alo, alpha_hi=ahi, usable_bins=nb, reduced_chi2=chi, height_at_20k=height, height_lo=hlo, height_hi=hhi))
+            rows.append(dict(panel=letter, measure=col, clade=c, n=len(d), alpha=al, alpha_lo=alo, alpha_hi=ahi, usable_bins=nb, reduced_chi2=chi,
+                             reference_size=REF_SIZE[dm], height_at_reference=height, height_lo=hlo, height_hi=hhi))
         ax.set_xscale("log"); ax.set_yscale("log")
-        ax.set_xlabel("Proteome size (number of proteins)", fontsize=11); ax.set_ylabel(ylab, fontsize=11)
-        ax.grid(True, which="major", ls=":", alpha=0.35); ax.axvline(REF_SIZE, color="k", lw=0.6, ls=":")
+        ax.set_xlim(*((1.2e3, 2.0e4) if dm == "Bacteria" else (2.0e3, 1.5e5)))
+        ax.set_ylabel(YLAB[col], fontsize=11)
+        ax.grid(True, which="major", ls=":", alpha=0.35); ax.axvline(REF_SIZE[dm], color="k", lw=0.6, ls=":")
         ax.legend(loc="upper left", fontsize=9, frameon=True)
         ax.text(0.0, 1.02, letter, transform=ax.transAxes, fontsize=20, fontweight="bold", ha="left", va="bottom")
+    for ax in axes[1, :]:
+        ax.set_xlabel("Proteome size (number of proteins)", fontsize=11)
     fig.tight_layout()
     fig.savefig(out / "fig5_by_clade.png", dpi=200, bbox_inches="tight")
     fig.savefig(out / "fig5_by_clade.pdf", bbox_inches="tight")

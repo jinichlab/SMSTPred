@@ -30,7 +30,7 @@ ITEMS = [
     ("(not numbered)  per-label loss, benchmark MLPs", "benchmark/train_val_loss_by_label.png", "report", "per-label version of Fig S1; not cited in the draft"),
     ("Fig 3  tree of life", "tree/fig3_tree.png", "tree", "rings, bars, legend; also .svg / .pdf"),
     ("Fig 4  trends (composite)", "fig4/Fig4_trends_combined.png", "fig4", "A: Protein share by cellularity (the difference vanished on the ProtT5 calls); B-D: violins; statistics in fig4/fig4_statistics.csv"),
-    ("Fig 5  proteome size vs SAM-MTases, eukaryotes by clade", "fig5/fig5_by_clade.png", "fig5", "one power-law fit per clade (plants, fungi, metazoa, other eukaryotes), clade-bootstrap intervals (fig5/fig5_by_clade.csv, fig5/fig5_clade_model_comparison.csv)"),
+    ("Fig 5  proteome size vs SAM-MTases, by clade", "fig5/fig5_by_clade.png", "fig5", "one power-law fit per clade (A, B Actinomycetota and other bacteria; C, D plants, fungi, metazoa, other eukaryotes), clade-bootstrap intervals (fig5/fig5_by_clade.csv, fig5/fig5_clade_model_comparison.csv)"),
     ("(not numbered)  Fig 5 previous version, plants vs other eukaryotes and Actinomycetota vs other bacteria", "fig5/fig5_scaling_loglog.png", "fig5", "the lineage-vs-rest fits (fig5/fig5_scaling_numbers.csv); the eukaryote rest group mixes clades at different levels"),
     ("Fig 6  global UMAP", "umap/sam_mtase_umap_prott5_static_datamap.png", "umap", "also the interactive umap/sam_mtase_umap_prott5_interactive.html"),
     ("Fig 7  cluster grids (composite)", "umap/fig7/Fig7_clusters_combined.png", "annotate", "A metazoan-protein, B vertebrate-DNA, C plant dark, D actinomycete dark clusters; Fig 8's clusters outlined"),
