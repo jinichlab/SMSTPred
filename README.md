@@ -51,9 +51,7 @@ Zenodo data (`make verify` reproduces them); the stages after the bake-off (3-7)
   MLP reaches **MCC 0.926**, tied with the ProtT5+ESM-IF (0.928), SaProt (0.927), ProstT5+ESM-IF (0.920) and
   ProtT5 (0.919) MLPs; sequence homology (MMseqs2 1-NN 0.882) and structural homology (Foldseek 1-NN
   0.873) are not significantly separated either, while the ESM-IF-only MLP (0.859) and the profile-HMM (0.582,
-  the floor) are significantly worse. On the same ProstT5 features a linear SVM (0.925) matches the MLP, so the
-  representation, not the classifier head, drives performance. ProstT5 is deployed because it needs only
-  sequence as input (Stage 2).
+  the floor) are significantly worse. ProstT5 is deployed because it needs only sequence as input (Stage 2).
 - **The deployment model** is a 6-seed ProstT5 MLP (1024→512→256→4) with per-label
   MCC-optimal thresholds calibrated on **cluster-disjoint out-of-fold** predictions and an
   applicability-domain flag (Stage 2 → 3).

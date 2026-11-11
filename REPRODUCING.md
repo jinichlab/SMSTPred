@@ -3,7 +3,6 @@
 One entry point: the `Makefile`. The archived Zenodo record holds the inputs and the results of one UniProt release (2026_03). `make data` rebuilds that release's folder from it,
 `make verify` re-runs every stage that works on a CPU from those files in a scratch copy and compares what each stage writes with the archived file, and `make verify-gpu` re-trains the
 deployed ensemble and compares outcomes with stated tolerances. The steps are registered in [`workflow/steps.py`](workflow/steps.py); the tables in [section 3](#3-pass--fail-tables) are the output.
-(The registry of the 2024-era paper, with the iTOL tree, 0.6 clustering and ProstT5 deployment, is kept as `workflow/legacy_steps_paper_2024.py` and is not run.)
 
 ## 1. Quick start
 
@@ -57,7 +56,7 @@ Last verification: 2026-11-04T13:17:14 (Python 3.12.15, numpy 2.1.3, pandas 2.2.
 | `t_training` | Cluster-disjoint splits, bake-off, MTase-vs-UP and ensemble code, MCC threshold search | built (no reference) | ran; wrote no files | 60 s |
 | `t_annotation` | Cluster selection, dark-protein inputs, CLEAN summary, Horizyn family table, Fig 8 rule, motif structure search and pick | built (no reference) | ran; wrote no files | 5 s |
 | `s1_cluster` | 502 clusters of the benchmark set, 16 splits, cluster columns of the label table | built (no reference) | 2 new-file | 14 s |
-| `s2_bakeoff_report` | Fig 2A statistics, Table 1, Table S4, the train / validation loss figures | PASS | 20 identical | 16 s |
+| `s2_bakeoff_report` | Fig 2A statistics, Table 1, the paired tests against the deployed model, the train / validation loss figures | PASS | 20 identical | 16 s |
 | `s2_sam_vs_up_report` | Fig 2B: MTase-trained vs UP-trained, Wilcoxon-Holm and Nadeau-Bengio | PASS | 8 identical | 5 s |
 | `s2_fig2` | Fig 2 composite (A + B) | PASS | 2 identical | 5 s |
 | `s3_predict` | Scores, calls, ensemble disagreement and applicability-domain flag for every proteome protein | PASS | 1 identical, 1249 new-file | 28 s |

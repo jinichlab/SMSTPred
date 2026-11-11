@@ -17,9 +17,7 @@ training-set (SAM-vs-UP) comparison, and the final production model.
 | `bakeoff_report.py`, `run_bakeoff_report.sh` | Merges the 16 splits; runs `classifier_mcc_stats.py`, `plot_cluster_mcc_zoom.py` (Fig 2A), `build_metrics_table.py` (Table 1) on that folder; the paired tests against the search baselines; the train / validation loss figures and the epochs early stopping kept. |
 | `sam_vs_up.py`, `sam_vs_up_report.py`, `run_sam_vs_up.sh`, `run_sam_vs_up_report.sh`, `test_sam_vs_up.py` | **SAM-trained vs UP-trained ProtT5 MLP** on the same held-out SAM test clusters (Fig 2B of the refresh): 16 splits, the UP model trained on the UP clusters that remain after those containing a test protein are removed, early-stopped on 15 % of the UP clusters; paired tests incl. Nadeau-Bengio. See "SAM vs UP" below. |
 | `archive_epoch_loss_selection/` | Retired tools that chose the epoch and the loss from a sweep (no longer used; why: its README). |
-| `sam_classifier_comparison.py` | The **archived paper's classifier bake-off**: 16 methods — MLPs over ProtT5 / ProstT5 / ESM-IF / SaProt / concatenations, homology baselines (**MMseqs2 1-NN**, **Foldseek 1-NN**, **Profile-HMM**), and classical ML (XGBoost, RF, SVMs, LogReg) — trained on the full SAM set and scored on a **shared held-out test set** (cluster + random splits, 16 iterations). Per-class MCC-optimal thresholds for every method. MLP epochs and per-label losses are set in `MLP_VARIANTS`. Environment options: `BAKEOFF_ONLY=mlp` (retrain only the MLPs; the splits stay identical), `BAKEOFF_MLP_VARIANTS=a,b`, `BAKEOFF_OUT`, and `BAKEOFF_DATASETS=full,balanced` (adds a class-balanced training arm; off by default, not in the manuscript). |
 | `classifier_mcc_stats.py` | Friedman omnibus, Nemenyi / critical-difference diagram, Bonferroni-Dunn vs MLP_ProstT5 and Wilcoxon tests over the bake-off's cluster-disjoint MCCs → `stats/`. |
-| `merge_bakeoff_rows.py` | Swaps re-trained MLP rows into the bake-off CSVs (how the committed results were assembled; see `sam_classifier_comparison_output/PROVENANCE.md`). |
 | `plot_cluster_mcc_zoom.py` | Zoomed cluster-disjoint MCC bar charts from the bake-off summary, bars coloured by method family: **Fig 2A** (the six embedding MLPs vs the three search-tool baselines), each with Friedman + Bonferroni-Dunn. |
 | `build_metrics_table.py` | **Table 1**: every metric (MCC / AUPRC / AUROC / F1 / accuracy) for the nine representation and search-tool methods, rendered from the bake-off summary CSV. |
 | `sam_vs_up_prostt5_comparison.py` | The **archived paper's** SAM-trained vs UP-trained ProstT5 MLP, both scored on the *same* held-out SAM test set (16 repeated cluster-disjoint 90/10 splits), per-label MCC-optimal thresholds. The SAM model is the deployed configuration (300 epochs); the UP model is trained for 400 epochs with the per-label losses that are best at that epoch in the UP sweep. Answers whether broad (UP) training helps the SAM-MTase task. `sam_vs_up_prostt5_stats.py` (Nadeau-Bengio corrected paired test) and `plot_sam_vs_up_prostt5.py` make Fig 2B; `plot_fig2_main.py` composes Fig 2. |
@@ -42,7 +40,7 @@ DNA 0.11), `model_config.json` (incl. applicability-domain cosine cutoff ≈ 0.9
   one exception is MLP_ProstT5, which keeps the deployed loss map (Metabolite: sqrt-weighted BCE) so that the
   benchmark scores the model that ships; the rule alone would pick weighted BCE there, a 0.001-MCC tie. The
   UP-trained ProstT5 in Fig 2B uses 400 epochs and the per-label best losses at epoch 400 in the UP sweep (Fig S5).
-  All of this is in `MLP_VARIANTS` (`sam_classifier_comparison.py`) and `UP_CFG`
+  All of this is in the bake-off settings and `UP_CFG`
   (`sam_vs_up_prostt5_comparison.py`).
 - **Train vs validation loss (Figs S3, S6).** Validation loss is lowest early (mean-curve minima at epochs
   35–357 on the full set, 104–411 for UP) and rises while training loss keeps falling, but MCC stays on its
@@ -62,11 +60,7 @@ Cluster-disjoint CV, 16 iterations, full SAM training set; means over the iterat
   separated from them either; the ESM-IF-only MLP (0.859) and the profile-HMM (0.582, the floor) are
   significantly worse. ProstT5 is deployed because it needs only sequence as input (SaProt − ProstT5:
   Δ = +0.001 MCC, SaProt better in 8 of 16 iterations, Wilcoxon p = 0.90; Holm-adjusted p = 1.00 across the
-  fifteen comparisons of Table S4, written by `benchmark_supplement_stats.py`).
-- **The representation, not the classifier head, drives performance.** On the same ProstT5 features the linear
-  (0.925), RBF (0.921) and polynomial (0.916) SVMs are tied with the MLP (0.926); logistic regression,
-  XGBoost and random forest are significantly worse, and the sigmoid-kernel SVM (0.876) is borderline (its
-  rank gap sits just under the critical difference; Friedman χ²(7) = 65.5, p = 1.2e-11).
+  eight comparisons of `paired_tests_vs_control.csv`, written by `benchmark_supplement_stats.py`).
 - **Per-label loss** matters mainly for the rare DNA class; abundant classes are
   loss-insensitive (the MCC-curve grids show all losses converging).
 - **SAM-vs-UP**: focused SAM training is not worse than broad UP training on held-out SAM (overall MCC
@@ -139,7 +133,7 @@ A **6-member ProtT5 MLP ensemble**; each member is the bake-off's MLP (BCE, 2,00
 the mean probability at a fixed 0.5 per label; the spread across members is the disagreement signal. Why this and not the archived "6 seeds on all the data, 300 epochs": on the 16 held-out SAM test sets (nested: members
 trained on the 80 % non-test clusters) six seeds on the same data gave 0.9409 against 0.9405 for one model (nothing), six members with different cluster splits 0.9558 (+0.015, better in 15 of 16 test sets, all four labels;
 Nadeau-Bengio p 0.07-0.09), and a partition was as accurate as six independent random 15 % validation draws (0.9558 both) while validating every protein once (random draws leave 38 % never validated); the gain
-saturates at about four members. SVM-RBF on the same features still scored 0.964 (the ensemble 0.956; not a significant difference, and the ensemble saw 80 % of the clusters, the SVM 65 %).
+saturates at about four members.
 
 Outputs in `<release>/deployment/` are the files `3_predictions/predict.py` reads, so it is a drop-in (`DEPLOY_DIR=<release>/deployment`): `ensemble_member_{0..5}.pt`, `model_config.json`, `thresholds.json` (0.5),
 `ad_reference.h5` (the training vectors) with the **applicability-domain cutoff** (1st percentile of the training proteins' nearest-neighbour cosine similarity: 0.813 in ProtT5 space), plus `oof_predictions.csv`,

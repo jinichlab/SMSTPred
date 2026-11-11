@@ -4,8 +4,8 @@
 Reads the bake-off results (sam_classifier_comparison_detailed.csv) and the per-iteration split sizes (iteration_splits.csv, parsed
 from the bake-off log) and writes, into <bake-off output>/stats/:
 
-  table_S4_wilcoxon_holm.csv   each other method versus the deployed model (MLP_ProtT5 on release 2026_03; $BAKEOFF_CONTROL): mean MCC, mean paired difference, iterations won,
-                               Wilcoxon signed-rank p, Holm-adjusted p over the fifteen comparisons          (manuscript Table S4)
+  paired_tests_vs_control.csv  each other method of Fig 2A versus the deployed model (MLP_ProtT5 on release 2026_03; $BAKEOFF_CONTROL): mean MCC, mean paired difference, iterations won,
+                               Wilcoxon signed-rank p, Holm-adjusted p over the eight comparisons
   friedman_fig2A.txt           Friedman test and Bonferroni-Dunn comparisons for the nine methods of Fig 2A
   eleven_iterations.txt        Fig 2A methods re-analysed on the eleven iterations that do not put the giant cluster in the test fold
   per_iteration_summary.csv    train / test size and MCC of the deployed model for each of the sixteen cluster-disjoint iterations
@@ -66,8 +66,8 @@ def friedman_block(df, methods, label, control=CONTROL):
     return "\n".join(lines) + "\n", chi, p
 
 
-# ---- Table S4: every other method versus the deployed model (Wilcoxon signed-rank, Holm over the 15 comparisons)
-others = [c for c in mcc.columns if c != CONTROL]
+# ---- every other method of Fig 2A versus the deployed model (Wilcoxon signed-rank, Holm over the eight comparisons)
+others = [c for c in FIG2A if c != CONTROL and c in mcc.columns]
 rows = []
 for m in others:
     diff = mcc[m] - mcc[CONTROL]
@@ -78,9 +78,9 @@ t4["holm_p"] = holm(t4.wilcoxon_p)
 t4["significant_holm_0.05"] = t4.holm_p < ALPHA
 t4 = t4.sort_values("mean_mcc", ascending=False)
 t4.insert(1, "n_iterations", len(mcc))
-t4.to_csv(OUT / "table_S4_wilcoxon_holm.csv", index=False, float_format="%.6g")
+t4.to_csv(OUT / "paired_tests_vs_control.csv", index=False, float_format="%.6g")
 
-# ---- Fig 2A and Fig S4
+# ---- Fig 2A
 txt, chi, p = friedman_block(mcc, FIG2A, "Fig 2A")
 (OUT / "friedman_fig2A.txt").write_text(txt)
 

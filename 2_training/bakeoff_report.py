@@ -43,11 +43,11 @@ def holm(p):
 
 def merge(out):
     d = out / "iterations"
-    files = sorted(d.glob("iter*_detailed.csv"))
+    files = [f for f in sorted(d.glob("iter*_detailed.csv")) if "_classical_" not in f.name]      # the classical-ML files of the earlier bake-off are not part of the paper
     if not files:
         sys.exit(f"no iteration files in {d}: run run_bakeoff.sh first")
     det = pd.concat([pd.read_csv(f) for f in files], ignore_index=True).sort_values(["iteration", "classifier"])
-    pl = pd.concat([pd.read_csv(f) for f in sorted(d.glob("iter*_per_label.csv"))], ignore_index=True)
+    pl = pd.concat([pd.read_csv(f) for f in sorted(d.glob("iter*_per_label.csv")) if "_classical_" not in f.name], ignore_index=True)
     counts = det.groupby("classifier").iteration.nunique()
     print(f"{det.iteration.nunique()} iterations; methods: {dict(counts)}")
     if det.iteration.nunique() < 16 or counts.nunique() > 1:
@@ -133,7 +133,7 @@ def main():
     print("\nper-label MCC, mean over the splits:")
     print(pl.pivot_table(index="classifier", columns="label", values="mcc")[LABELS].round(3).loc[t.sort_values(("mcc", "mean"), ascending=False).index].to_string())
     env = {**os.environ, "BAKEOFF_OUT": str(out), "BAKEOFF_CONTROL": bakeoff.CFG.get("control", "MLP_ProstT5")}
-    for script in ("classifier_mcc_stats.py", "plot_cluster_mcc_zoom.py", "build_metrics_table.py", "benchmark_supplement_stats.py"):      # the last: Table S4, the Friedman test of Fig 2A, the per-iteration numbers
+    for script in ("classifier_mcc_stats.py", "plot_cluster_mcc_zoom.py", "build_metrics_table.py", "benchmark_supplement_stats.py"):      # the last: the paired tests against the deployed model, the Friedman test of Fig 2A, the per-iteration numbers
         print(f"\n--- {script}")
         subprocess.run([sys.executable, script], cwd=HERE, env=env, check=True)
     p = paired_tests(det, out)

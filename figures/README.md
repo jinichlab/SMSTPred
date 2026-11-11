@@ -27,7 +27,7 @@ PyMOL structure panels (Figs 9 and 10) keep the original, more saturated shades 
 
 | Figure / table | Script |
 |---|---|
-| Fig 2, Fig S4, Table S4 | `2_training/plot_fig2_main.py`, `plot_cluster_mcc_zoom.py`, `classifier_mcc_stats.py`, `sam_vs_up_prostt5_stats.py`, `plot_sam_vs_up_prostt5.py`, `benchmark_supplement_stats.py` |
+| Fig 2, paired tests against the deployed model | `2_training/plot_fig2_main.py`, `plot_cluster_mcc_zoom.py`, `classifier_mcc_stats.py`, `sam_vs_up_prostt5_stats.py`, `plot_sam_vs_up_prostt5.py`, `benchmark_supplement_stats.py` |
 | Table 1 | `2_training/build_metrics_table.py` |
 | Figs S2, S5 | `2_training/plot_mcc_curves_grid.py` (data: `mlp_embedding_comparison.py`, `mlp_embedding_comparison_saprot.py`, `mlp_loss_comparison_prostt5.py`) |
 | Figs S3, S6 | `2_training/plot_train_val_loss_curves.py` (data: `train_val_loss_curves.py`; raw curves on Zenodo) |

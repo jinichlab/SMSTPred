@@ -72,7 +72,7 @@
    "id": "s2_bakeoff_report",
    "stage": "2",
    "tier": "A",
-   "paper": "Fig 2A statistics, Table 1, Table S4, the train / validation loss figures",
+   "paper": "Fig 2A statistics, Table 1, the paired tests against the deployed model, the train / validation loss figures",
    "cmd": "bash 2_training/run_bakeoff_report.sh",
    "status": "PASS",
    "detail": "",

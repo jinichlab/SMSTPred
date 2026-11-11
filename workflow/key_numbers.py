@@ -67,12 +67,12 @@ def bench(rel):
         m = re.search(r"chi-?square\((\d+)\)\s*=\s*([\d.]+),\s*p\s*=\s*([\d.e+-]+)", f.read_text()) or re.search(r"chi2\((\d+)\)=([\d.]+).*?p=([\d.e+-]+)", f.read_text())
         if m:
             out.append(f"Friedman test, Fig 2A methods: chi-square({m.group(1)}) = {m.group(2)}, p = {m.group(3)}")
-    t = rel / "benchmark" / "stats" / "table_S4_wilcoxon_holm.csv"
+    t = rel / "benchmark" / "stats" / "paired_tests_vs_control.csv"
     if t.exists():
         t4 = pd.read_csv(t)
         sig = t4[t4["holm_p"] < 0.05]
         better, worse = sig[sig.mean_diff_vs_control > 0], sig[sig.mean_diff_vs_control < 0]
-        out.append(f"Table S4 (each method vs {ctrl}, Wilcoxon, Holm over {len(t4)} comparisons): significantly worse: " + (", ".join(worse.method) or "none")
+        out.append(f"Paired tests (each method of Fig 2A vs {ctrl}, Wilcoxon, Holm over {len(t4)} comparisons): significantly worse: " + (", ".join(worse.method) or "none")
                    + "; significantly BETTER: " + (", ".join(f"{r.method} (MCC {r.mean_mcc:.3f}, wins {r.iterations_better}/{r.n_iterations}, Holm p {fmt_p(r.holm_p)})" for r in better.itertuples()) or "none"))
     return out
 

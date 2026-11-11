@@ -2,8 +2,7 @@
 
 `make data` assembles the archived Zenodo record into a release folder (workflow/fetch_data.py: data/uniprot_pull/release_<tag>/). `make verify` copies that folder
 to a scratch folder, runs each stage's own driver script on the copy (RELEASE_DIR points at it) and compares every file the stage wrote with the archived file of the
-same name (compare.py). Steps whose results are not in the record are reported as BUILT (they ran and produced output, there is nothing to compare). The old registry of the
-2024-era paper (iTOL tree, 0.6 embedding clustering, ProstT5 deployment) is kept as workflow/legacy_steps_paper_2024.py and is not run.
+same name (compare.py). Steps whose results are not in the record are reported as BUILT (they ran and produced output, there is nothing to compare).
 
 tier A   CPU, from the archived record and this repository only
 tier B   GPU: re-train and compare outcomes with stated tolerances (workflow/gpu_checks.py, field `check`)
@@ -28,7 +27,7 @@ STEPS = [
     # ---------------------------------------------------------------- Stage 1: MMseqs2 30% clustering and the 16 cluster-disjoint splits, re-derived from the archived labels
     S("s1_cluster", "1", "CLUSTER_WHAT=sam bash 1_clustering/run_mmseqs_clusters.sh", "502 clusters of the benchmark set, 16 splits, cluster columns of the label table", timeout=3600),
     # ---------------------------------------------------------------- Stage 2: benchmark statistics and figures from the archived per-split results
-    S("s2_bakeoff_report", "2", "bash 2_training/run_bakeoff_report.sh", "Fig 2A statistics, Table 1, Table S4, the train / validation loss figures", timeout=1800),
+    S("s2_bakeoff_report", "2", "bash 2_training/run_bakeoff_report.sh", "Fig 2A statistics, Table 1, the paired tests against the deployed model, the train / validation loss figures", timeout=1800),
     S("s2_sam_vs_up_report", "2", "bash 2_training/run_sam_vs_up_report.sh", "Fig 2B: MTase-trained vs UP-trained, Wilcoxon-Holm and Nadeau-Bengio", timeout=1800),
     S("s2_fig2", "2", "bash 2_training/run_fig2.sh", "Fig 2 composite (A + B)", timeout=900),
     # ---------------------------------------------------------------- Stage 3: the deployed ensemble applied to every reference proteome (CPU inference)

@@ -1,6 +1,0 @@
-cluster-disjoint iterations: 16
-test-set size: 39 to 6188, median 264.5 (mean 1996); random splits: constant [np.int64(741)]
-iterations with the giant cluster in the test fold: 3, 4, 6, 12, 13 (5 of 16); training proteins left: 1217 to 1726
-MLP_ProstT5 MCC in those iterations: 0.89 to 1.00; the other 11: 0.83 to 1.00
-MLP_ProstT5 mean MCC: all 16 = 0.926; the 11 ordinary iterations = 0.910
-Friedman on the ordinary iterations (Fig 2A methods): chi-square(8) = 43.5, p = 7.1e-07
