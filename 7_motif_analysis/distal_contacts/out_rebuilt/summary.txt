@@ -1,0 +1,5 @@
+DNA-4: 113 structures; buried by partners median 120.7 A2 (max 486.7); contact classes: protein:self-entity 36, ligand:SAM-like 29, buffer 13, nucleic-acid:DNA 3, ion:MG 1
+Metabolite-7: 67 structures; buried by partners median 183.7 A2 (max 671.9); contact classes: protein:self-entity 38, buffer 12, ligand:SAM-like 3, ion:K 1, protein:Q08924 1
+Protein-6: 27 structures; buried by partners median 120.4 A2 (max 460.8); contact classes: ligand:SAM-like 9, protein:self-entity 7, ligand:G5J 2, buffer 2, protein:P0A7I0 1, ligand:GTP 1, nucleic-acid:RNA 1
+RNA-5: 126 structures; buried by partners median 14.15 A2 (max 405.0); contact classes: protein:self-entity 16, nucleic-acid:RNA 13, ligand:SAM-like 9, buffer 5, ligand:A1CZ2 3, ligand:MGT 3, protein:Q08924 2, ligand:OMG 2, ligand:OMU 2, ion:ZN 2
+RNA-7: 114 structures; buried by partners median 53.85 A2 (max 628.0); contact classes: ligand:SAM-like 15, nucleic-acid:RNA 12, protein:self-entity 11, nucleic-acid:DNA 9, ligand:MGT 4, buffer 3, ligand:UNX 3, ligand:B3P 2, protein:P0CX43 1, ligand:TER 1, ligand:37H 1, ligand:T9A 1, ligand:SPD 1, ligand:144 1

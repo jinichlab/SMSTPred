@@ -1,0 +1,617 @@
+motif,pdb,accession,carrier_in_class,status,chain,motif_range,n_res,sasa_complex,sasa_alone,buried_by_partners,contacts,contact_classes
+DNA-4,8BA5,Q9Y6K1,True,motif_not_resolved,,,,,,,,
+DNA-4,5CIY,P05102,True,ok,A,272-289,18.0,50.2,451.0,400.8,"{""buffer"": [""A:SO4""], ""ligand:SAM-like"": [""A:SAH""]}",buffer;ligand:SAM-like
+DNA-4,2C7P,P05102,True,ok,A,272-289,18.0,107.1,450.8,343.7,"{""buffer"": [""A:SO4""], ""ligand:SAM-like"": [""A:SAH""]}",buffer;ligand:SAM-like
+DNA-4,5NRR,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,6X9J,P26358,True,ok,A,1546-1563,18.0,20.1,124.0,103.9,{},
+DNA-4,4QBS,Q9Y6K1,True,motif_not_resolved,,,,,,,,
+DNA-4,1KHC,O88509,True,motif_not_resolved,,,,,,,,
+DNA-4,3FLG,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,2C7Q,P05102,True,ok,A,272-289,18.0,121.9,446.2,324.4,"{""ligand:SAM-like"": [""A:SAH""], ""buffer"": [""A:SO4""]}",buffer;ligand:SAM-like
+DNA-4,2C7O,P05102,True,ok,A,272-289,18.0,87.3,452.6,365.2,"{""ligand:SAM-like"": [""A:SAH""], ""buffer"": [""A:SO4""]}",buffer;ligand:SAM-like
+DNA-4,2C7R,P05102,True,ok,A,272-289,18.0,142.7,463.1,320.4,"{""buffer"": [""A:SO4""], ""ligand:SAM-like"": [""A:SAH""]}",buffer;ligand:SAM-like
+DNA-4,6L1F,P26358,True,motif_not_resolved,,,,,,,,
+DNA-4,5LOD,P05102,True,ok,A,272-289,18.0,266.3,417.7,151.4,"{""protein:self-entity"": [""B:LYS300""], ""buffer"": [""A:SO4""]}",buffer;protein:self-entity
+DNA-4,4QBR,Q9Y6K1,True,motif_not_resolved,,,,,,,,
+DNA-4,3EEO,P05102,True,ok,A,272-289,18.0,340.9,447.8,107.0,"{""ligand:SAM-like"": [""A:SAM""]}",ligand:SAM-like
+DNA-4,2HR1,P05102,True,ok,A,272-289,18.0,236.2,436.2,200.0,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,7SFC,P26358,True,ok,A,1546-1563,18.0,27.6,128.6,101.0,{},
+DNA-4,5WVO,P26358,True,motif_not_resolved,,,,,,,,
+DNA-4,2UYC,P05102,True,ok,A,272-289,18.0,139.9,445.9,305.9,"{""buffer"": [""A:GOL"", ""A:SO4""], ""ligand:SAM-like"": [""A:SAH""]}",buffer;ligand:SAM-like
+DNA-4,5YDR,P26358,True,motif_not_resolved,,,,,,,,
+DNA-4,5NV2,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,3QKJ,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,6MHT,P05102,True,ok,A,272-289,18.0,285.9,493.2,207.3,"{""ligand:SAM-like"": [""D:SAM""]}",ligand:SAM-like
+DNA-4,7SFF,P26358,True,ok,A,1546-1563,18.0,56.1,141.7,85.6,{},
+DNA-4,5NRV,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,7SFD,P26358,True,ok,A,1546-1563,18.0,67.4,145.3,77.9,{},
+DNA-4,5GUT,P13864,True,ok,A,1548-1565,18.0,22.3,142.9,120.7,"{""buffer"": [""A:SO4""]}",buffer
+DNA-4,2UZ4,P05102,True,ok,A,272-289,18.0,189.4,444.9,255.5,"{""ligand:SAM-like"": [""A:SAH""], ""buffer"": [""A:SO4""]}",buffer;ligand:SAM-like
+DNA-4,7O45,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,7L4C,Q9M548,True,ok,A,446-463,18.0,340.4,625.0,284.6,{},
+DNA-4,6X9I,P26358,True,ok,A,1546-1563,18.0,70.7,149.7,78.9,{},
+DNA-4,1SKM,P05102,True,ok,A,272-289,18.0,256.3,459.2,202.9,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,7XIB,P26358,True,ok,A,1546-1563,18.0,109.9,194.0,84.1,{},
+DNA-4,5CIU,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,7L4N,Q9M548,True,ok,A,446-463,18.0,335.1,603.5,268.4,{},
+DNA-4,1FJX,P05102,True,ok,A,272-289,18.0,222.0,439.6,217.6,"{""buffer"": [""A:SO4""], ""ligand:SAM-like"": [""A:SAH""]}",buffer;ligand:SAM-like
+DNA-4,6R3E,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,3A1B,Q9Y6K1,True,motif_not_resolved,,,,,,,,
+DNA-4,5NR3,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,5NRS,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,6K3A,P26358,True,motif_not_resolved,,,,,,,,
+DNA-4,3A1A,Q9Y6K1,True,motif_not_resolved,,,,,,,,
+DNA-4,3LLR,Q9Y6K1,True,motif_not_resolved,,,,,,,,
+DNA-4,3EPZ,P26358,True,motif_not_resolved,,,,,,,,
+DNA-4,3SVM,Q9Y6K1,True,motif_not_resolved,,,,,,,,
+DNA-4,9V4P,P34881,True,ok,A,1474-1491,18.0,178.4,178.4,0.0,{},
+DNA-4,7UBU,Q9AXT8,True,ok,A,819-836,18.0,15.0,26.6,11.6,{},
+DNA-4,9MHT,P05102,True,ok,A,272-289,18.0,231.0,502.3,271.3,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,5NV0,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,6W8B,Q9Y6K1,True,ok,A,857-874,18.0,178.0,525.3,347.3,"{""protein:self-entity"": [""D:ARG676"", ""D:ASN879"", ""D:ASP876"", ""D:HIS873"", ""D:SER878"", ""D:THR671""], ""nucleic-acid:DNA"": [""E:DG438""]}",nucleic-acid:DNA;protein:self-entity
+DNA-4,5NVO,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,4QBQ,Q9Y6K1,True,motif_not_resolved,,,,,,,,
+DNA-4,7SFG,P26358,True,ok,A,1546-1563,18.0,57.3,129.7,72.4,{},
+DNA-4,6W8J,Q9Y6K1,True,ok,A,857-874,18.0,256.0,558.2,302.2,"{""protein:self-entity"": [""D:ARG676"", ""D:ASN879"", ""D:ASP876"", ""D:HIS873"", ""D:SER878"", ""D:THR671""]}",protein:self-entity
+DNA-4,8TE1,Q9Y6K1,True,ok,A,857-874,18.0,228.1,604.8,376.8,"{""protein:self-entity"": [""B:ASN879"", ""B:ASP876"", ""B:HIS873"", ""B:LYS676"", ""B:SER878"", ""B:THR671""]}",protein:self-entity
+DNA-4,3SWR,P26358,True,ok,A,1546-1563,18.0,65.2,128.8,63.6,{},
+DNA-4,6W89,Q9Y6K1,True,ok,A,857-874,18.0,241.1,526.7,285.6,"{""protein:self-entity"": [""D:ARG676"", ""D:ASN879"", ""D:ASP876"", ""D:HIS873"", ""D:SER878"", ""D:THR671""]}",protein:self-entity
+DNA-4,1M0E,P05102,True,ok,A,272-289,18.0,190.3,437.8,247.5,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,3PT9,P13864,True,ok,A,1548-1565,18.0,56.1,135.6,79.5,{},
+DNA-4,1HMY,P05102,True,ok,A,272-289,18.0,446.9,446.9,0.0,{},
+DNA-4,3UBT,P20589,True,ok,A,273-290,18.0,198.9,357.9,158.9,{},
+DNA-4,7XI9,P26358,True,ok,A,1546-1563,18.0,72.8,163.3,90.5,{},
+DNA-4,10MH,P05102,True,ok,A,272-289,18.0,284.8,481.5,196.7,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,7L4F,Q9M548,True,ok,A,446-463,18.0,690.8,699.2,8.3,{},
+DNA-4,7SFE,P26358,True,ok,A,1546-1563,18.0,44.1,135.6,91.5,{},
+DNA-4,7L4H,Q9M548,True,ok,A,446-463,18.0,471.7,630.3,158.7,"{""buffer"": [""A:GOL"", ""A:IOD""]}",buffer
+DNA-4,5NV7,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,6W8D,Q9Y6K1,True,ok,A,857-874,18.0,199.3,527.2,328.0,"{""protein:self-entity"": [""D:ARG676"", ""D:ASN879"", ""D:ASP876"", ""D:HIS873"", ""D:SER878"", ""D:THR671""]}",protein:self-entity
+DNA-4,4DA4,P13864,True,ok,A,1548-1565,18.0,36.4,144.2,107.9,{},
+DNA-4,1MHT,P05102,True,ok,A,272-289,18.0,438.4,441.7,3.3,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,4ZCF,P12364,True,ok,B,139-156,18.0,956.5,1060.0,103.5,"{""protein:self-entity"": [""A:GLU48"", ""A:GLU54"", ""A:LYS53"", ""A:SER47""]}",protein:self-entity
+DNA-4,7L4K,Q9M548,True,ok,A,446-463,18.0,553.2,658.8,105.6,{},
+DNA-4,2HMY,P05102,True,ok,B,272-289,18.0,357.8,461.2,103.4,"{""ligand:SAM-like"": [""B:SAM""]}",ligand:SAM-like
+DNA-4,4WXX,P26358,True,ok,A,1546-1563,18.0,75.8,124.0,48.3,{},
+DNA-4,2UYH,P05102,True,ok,A,272-289,18.0,337.7,434.5,96.8,"{""ligand:SAM-like"": [""A:SAH""], ""buffer"": [""A:SO4""]}",buffer;ligand:SAM-like
+DNA-4,7LMK,Q24K09,True,motif_not_resolved,,,,,,,,
+DNA-4,2I9K,P05102,True,ok,A,272-289,18.0,441.4,442.5,1.1,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,8TE4,Q9Y6K1,True,ok,A,857-874,18.0,281.1,580.8,299.7,"{""protein:self-entity"": [""B:ALA879"", ""B:ARG676"", ""B:ASP876"", ""B:HIS873"", ""B:SER878"", ""B:THR671""]}",protein:self-entity
+DNA-4,6X9K,P26358,True,ok,A,1546-1563,18.0,58.2,135.4,77.2,{},
+DNA-4,5YX2,Q9Y6K1,True,ok,A,857-874,18.0,181.2,543.4,362.2,"{""protein:self-entity"": [""D:ARG676"", ""D:ASN879"", ""D:ASP876"", ""D:HIS873"", ""D:SER878"", ""D:THR671""], ""nucleic-acid:DNA"": [""E:DG438""], ""buffer"": [""A:GOL""]}",buffer;nucleic-acid:DNA;protein:self-entity
+DNA-4,1SVU,P05102,True,ok,A,272-289,18.0,356.9,427.8,70.8,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,3MHT,P05102,True,ok,A,272-289,18.0,328.3,433.9,105.6,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,4MHT,P05102,True,ok,A,272-289,18.0,326.3,443.3,117.0,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,5MHT,P05102,True,ok,A,272-289,18.0,333.5,491.3,157.8,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,4FT4,Q9AXT8,True,ok,A,819-836,18.0,27.1,29.3,2.2,{},
+DNA-4,9MVY,Q9AXT8,True,ok,A,819-836,18.0,22.7,42.7,20.0,{},
+DNA-4,4H0N,A0A2H1VE33,True,ok,A,282-299,18.0,553.2,560.4,7.2,{},
+DNA-4,2Z6U,P05102,True,ok,A,272-289,18.0,367.0,436.1,69.0,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,9M5U,P34881,True,ok,A,1474-1491,18.0,150.6,150.6,0.0,{},
+DNA-4,8ZLK,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,2ZCJ,P05102,True,ok,A,272-289,18.0,371.8,438.6,66.8,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,3AV4,P13864,True,ok,A,1548-1565,18.0,159.7,161.9,2.2,{},
+DNA-4,8MHT,P05102,True,ok,A,272-289,18.0,309.2,515.4,206.2,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,9V36,P26358,True,ok,A,1546-1563,18.0,171.1,171.1,0.0,{},
+DNA-4,2Z6Q,P05102,True,ok,A,272-289,18.0,423.7,453.2,29.5,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,7LMM,Q24K09,True,motif_not_resolved,,,,,,,,
+DNA-4,1DCT,P20589,True,ok,A,273-290,18.0,346.8,346.8,0.0,{},
+DNA-4,7L4M,Q9M548,True,ok,A,446-463,18.0,673.2,673.2,0.0,{},
+DNA-4,9V5P,P26358,True,ok,A,1546-1563,18.0,133.0,133.0,0.0,{},
+DNA-4,4Z96,P26358,True,motif_not_resolved,,,,,,,,
+DNA-4,6KDB,Q9UBC3,True,ok,A,798-815,18.0,85.7,552.5,466.8,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:LYS617"", ""D:SER819"", ""D:VAL616""]}",protein:self-entity
+DNA-4,7MHT,P05102,True,ok,A,272-289,18.0,298.3,484.7,186.4,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,6KDT,Q9UBC3,True,ok,A,798-815,18.0,276.1,628.0,351.9,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:SER819"", ""D:VAL616"", ""D:VAL818""]}",protein:self-entity
+DNA-4,2Z6A,P05102,True,ok,A,272-289,18.0,373.5,442.6,69.1,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+DNA-4,8UW1,Q9Y6K1,True,motif_not_resolved,,,,,,,,
+DNA-4,2QRV,Q9Y6K1,True,ok,A,853-870,18.0,434.5,643.8,209.3,"{""protein:self-entity"": [""D:ARG672"", ""D:ASN875"", ""D:ASP872"", ""D:HIS869"", ""D:SER874"", ""D:THR667""]}",protein:self-entity
+DNA-4,4U7T,Q9Y6K1,True,ok,A,857-874,18.0,462.9,664.2,201.3,"{""protein:self-entity"": [""C:ARG676"", ""C:ASN879"", ""C:ASP876"", ""C:HIS873"", ""C:SER878"", ""C:THR671""]}",protein:self-entity
+DNA-4,9PED,P34881,True,ok,A,1474-1491,18.0,200.9,200.9,0.0,{},
+DNA-4,6KDA,Q9UBC3,True,ok,A,798-815,18.0,60.9,547.6,486.7,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:LYS617"", ""D:SER819"", ""D:VAL616""]}",protein:self-entity
+DNA-4,8T1U,Q9M548,True,ok,A,446-463,18.0,454.0,641.7,187.7,{},
+DNA-4,4YOC,P26358,True,ok,A,1546-1563,18.0,167.6,167.6,0.0,{},
+DNA-4,9V4O,P34881,True,ok,A,1474-1491,18.0,163.5,163.5,0.0,{},
+DNA-4,6KDP,Q9UBC3,True,ok,A,798-815,18.0,310.5,569.9,259.3,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:SER819"", ""D:VAL616"", ""D:VAL818""]}",protein:self-entity
+DNA-4,6PA7,Q9Y6K1,True,ok,K,857-874,18.0,452.7,644.6,191.9,"{""protein:self-entity"": [""P:ARG676"", ""P:ASN879"", ""P:ASP876"", ""P:HIS873"", ""P:SER878"", ""P:THR671""]}",protein:self-entity
+DNA-4,6U8W,Q9UBC3,True,ok,A,798-815,18.0,338.0,569.7,231.7,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:LYS617"", ""D:SER819"", ""D:VAL616""]}",protein:self-entity
+DNA-4,6U8X,Q9UBC3,True,ok,A,798-815,18.0,309.0,563.6,254.5,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:LYS617"", ""D:SER819"", ""D:VAL616""]}",protein:self-entity
+DNA-4,6BRR,Q9Y6K1,True,ok,A,857-874,18.0,318.4,533.2,214.8,"{""protein:self-entity"": [""D:ARG676"", ""D:ASN879"", ""D:ASP876"", ""D:HIS873"", ""D:SER878"", ""D:THR671""], ""nucleic-acid:DNA"": [""E:DG438""]}",nucleic-acid:DNA;protein:self-entity
+DNA-4,4Z97,P26358,True,motif_not_resolved,,,,,,,,
+DNA-4,6U91,Q9UBC3,True,ok,A,798-815,18.0,242.4,535.2,292.7,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:LYS617"", ""D:SER819"", ""D:VAL616""], ""ion:MG"": [""A:MG""]}",ion:MG;protein:self-entity
+DNA-4,3PT6,P13864,True,ok,A,1548-1565,18.0,146.5,158.7,12.2,{},
+DNA-4,6W8W,P13864,True,ok,A,1548-1565,18.0,140.3,143.6,3.2,{},
+DNA-4,6U8V,Q9UBC3,True,ok,A,798-815,18.0,326.0,539.9,213.9,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:LYS617"", ""D:SER819"", ""D:VAL616""]}",protein:self-entity
+DNA-4,6U90,Q9UBC3,True,ok,A,798-815,18.0,319.4,531.3,211.9,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:LYS617"", ""D:SER819"", ""D:VAL616""]}",protein:self-entity
+DNA-4,6PZV,Q24K09,True,motif_not_resolved,,,,,,,,
+DNA-4,8XEE,Q9UBC3,True,ok,A,798-815,18.0,368.5,568.3,199.8,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:LYS617"", ""D:SER819"", ""D:VAL616""]}",protein:self-entity
+DNA-4,8EIH,Q9UBC3,True,ok,A,798-815,18.0,464.4,664.1,199.7,"{""protein:self-entity"": [""B:ASN820"", ""B:ASP817"", ""B:HIS814"", ""B:SER819"", ""B:VAL616"", ""B:VAL818""]}",protein:self-entity
+DNA-4,6U8P,Q9UBC3,True,ok,A,798-815,18.0,240.5,525.0,284.5,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:LYS617"", ""D:SER819"", ""D:VAL616""]}",protein:self-entity
+DNA-4,5GUV,P13864,True,ok,A,1548-1565,18.0,110.7,111.9,1.2,{},
+DNA-4,7X9D,Q9UBC3,True,ok,A,798-815,18.0,361.8,568.1,206.3,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:SER819"", ""D:VAL818""]}",protein:self-entity
+DNA-4,3AV6,P13864,True,ok,A,1548-1565,18.0,131.7,131.7,0.0,{},
+DNA-4,6F57,Q9Y6K1,True,ok,A,857-874,18.0,328.4,508.9,180.5,"{""protein:self-entity"": [""D:ARG676"", ""D:ASN879"", ""D:ASP876"", ""D:HIS873"", ""D:SER878"", ""D:THR671""]}",protein:self-entity
+DNA-4,9MPP,Q9Y6K1,True,ok,K,857-874,18.0,426.4,670.3,243.9,"{""protein:self-entity"": [""M:ARG676"", ""M:ASN879"", ""M:ASP876"", ""M:HIS873"", ""M:SER878"", ""M:THR671""]}",protein:self-entity
+DNA-4,8QZM,Q9Y6K1,True,motif_not_resolved,,,,,,,,
+DNA-4,6W8V,P13864,True,ok,A,1548-1565,18.0,149.4,149.4,0.0,{},
+DNA-4,8EII,Q9UBC3,True,ok,A,798-815,18.0,431.4,636.4,205.0,"{""protein:self-entity"": [""B:ASN820"", ""B:ASP817"", ""B:HIS814"", ""B:SER819"", ""B:VAL616"", ""B:VAL818""]}",protein:self-entity
+DNA-4,9PEB,P34881,True,ok,A,1474-1491,18.0,188.7,188.7,0.0,{},
+DNA-4,9E2Q,Q9Y6K1,True,ok,K,857-874,18.0,590.6,769.0,178.4,"{""protein:self-entity"": [""W:ASN879"", ""W:ASP876"", ""W:HIS873"", ""W:SER878""]}",protein:self-entity
+DNA-4,8TCI,P0DOY1,True,ok,A,685-702,18.0,417.0,626.0,209.0,"{""protein:self-entity"": [""D:ASN707"", ""D:ASP704"", ""D:HIS701"", ""D:LYS504"", ""D:SER706"", ""D:VAL503""]}",protein:self-entity
+DNA-4,8EIK,Q9UBC3,True,ok,A,798-815,18.0,477.5,674.6,197.1,"{""protein:self-entity"": [""B:ASN820"", ""B:ASP817"", ""B:HIS814"", ""B:LYS617"", ""B:SER819"", ""B:VAL616""]}",protein:self-entity
+DNA-4,4FT2,Q9AXT8,True,ok,A,819-836,18.0,67.0,67.0,0.0,{},
+DNA-4,4FSX,Q9AXT8,True,ok,A,819-836,18.0,80.0,103.5,23.5,"{""protein:self-entity"": [""A:MSE698""]}",protein:self-entity
+DNA-4,8TE3,Q9Y6K1,True,ok,A,857-874,18.0,441.4,640.1,198.7,"{""protein:self-entity"": [""B:ASN879"", ""B:ASP876"", ""B:HIS873"", ""B:LYS676"", ""B:SER878"", ""B:THR671""]}",protein:self-entity
+DNA-4,9E0R,Q9UBC3,True,motif_not_resolved,,,,,,,,
+DNA-4,9M5X,P34881,True,ok,A,1474-1491,18.0,126.9,126.9,0.0,{},
+DNA-4,8U5H,Q9Y6K1,True,motif_not_resolved,,,,,,,,
+DNA-4,8XQC,P26358,True,ok,A,1546-1563,18.0,157.8,157.8,0.0,{},
+DNA-4,3AV5,P13864,True,ok,A,1548-1565,18.0,112.6,112.6,0.0,{},
+DNA-4,5WY1,P13864,True,ok,A,1548-1565,18.0,141.2,141.2,0.0,{},
+DNA-4,7V0E,Q9UBC3,True,ok,A,798-815,18.0,340.8,601.6,260.8,"{""protein:self-entity"": [""E:ASN820"", ""E:ASP817"", ""E:HIS814"", ""E:LYS617"", ""E:SER819"", ""E:VAL616""]}",protein:self-entity
+DNA-4,6KDL,Q9UBC3,True,ok,A,798-815,18.0,153.2,535.0,381.9,"{""protein:self-entity"": [""D:ASN820"", ""D:ASP817"", ""D:HIS814"", ""D:LYS617"", ""D:SER819"", ""D:VAL616""]}",protein:self-entity
+Metabolite-7,6H40,K5B7F3,True,ok,A,147-157,11.0,130.0,388.2,258.2,"{""ligand:SAM-like"": [""A:SAH""], ""buffer"": [""A:CL""]}",buffer;ligand:SAM-like
+Metabolite-7,6I6M,I3V6A7,True,ok,A,353-363,11.0,68.9,438.4,369.5,"{""protein:self-entity"": [""B:ARG97"", ""B:HIS127""]}",protein:self-entity
+Metabolite-7,6I6L,I3V6A7,True,ok,A,353-363,11.0,116.7,407.0,290.4,"{""protein:self-entity"": [""B:ARG97""]}",protein:self-entity
+Metabolite-7,6G7D,K5B7F3,True,ok,A,147-157,11.0,124.8,413.4,288.6,"{""buffer"": [""A:CL""], ""ligand:SAM-like"": [""A:SAH""]}",buffer;ligand:SAM-like
+Metabolite-7,1FP2,O24529,True,ok,A,315-325,11.0,307.4,515.7,208.3,{},
+Metabolite-7,6C5B,A0A172J1V3,True,ok,A,303-313,11.0,105.7,450.0,344.4,"{""protein:self-entity"": [""B:ARG64""]}",protein:self-entity
+Metabolite-7,6I6K,I3V6A7,True,ok,A,353-363,11.0,86.2,408.4,322.1,"{""protein:self-entity"": [""B:ARG97""]}",protein:self-entity
+Metabolite-7,6I6N,I3V6A7,True,ok,A,353-363,11.0,55.1,416.2,361.0,"{""protein:self-entity"": [""B:ARG97"", ""B:HIS127""]}",protein:self-entity
+Metabolite-7,7L9U,Q6MX39,True,ok,A,76-86,11.0,63.8,440.7,376.8,{},
+Metabolite-7,5ICE,Q5C9L7,True,ok,A,312-322,11.0,275.4,512.8,237.4,{},
+Metabolite-7,6CIG,O24529,True,ok,A,315-325,11.0,185.2,574.2,389.0,"{""protein:self-entity"": [""A:MSE289"", ""A:MSE307"", ""A:MSE311""], ""buffer"": [""A:SO4""]}",buffer;protein:self-entity
+Metabolite-7,7VB8,A0A1B6PFV1,True,ok,A,339-349,11.0,135.3,492.6,357.3,"{""protein:self-entity"": [""B:ARG85"", ""B:ARG88"", ""B:CYS114"", ""B:CYS115"", ""B:THR111"", ""B:THR112""], ""buffer"": [""A:EDO""]}",buffer;protein:self-entity
+Metabolite-7,5ICF,Q5C9L7,True,ok,A,312-322,11.0,258.7,529.5,270.8,"{""buffer"": [""A:EDO""]}",buffer
+Metabolite-7,7MCJ,Q6MX39,True,ok,A,76-86,11.0,201.2,425.2,224.0,{},
+Metabolite-7,2IP2,Q9HWH2,True,ok,A,296-306,11.0,263.7,622.3,358.5,"{""protein:self-entity"": [""B:ARG60"", ""B:GLU56""]}",protein:self-entity
+Metabolite-7,1FP1,P93324,True,ok,D,334-344,11.0,247.1,503.2,256.1,{},
+Metabolite-7,5F8C,O53532,True,ok,A,56-66,11.0,563.0,810.8,247.8,{},
+Metabolite-7,5ICC,Q5C9L7,True,ok,A,312-322,11.0,261.2,515.7,254.5,"{""buffer"": [""A:EDO""]}",buffer
+Metabolite-7,5F8F,O53532,True,ok,A,56-66,11.0,153.6,825.5,671.9,"{""protein:self-entity"": [""B:ARG125"", ""B:CYS123"", ""B:GLU126"", ""B:GLY127"", ""B:GLY128"", ""B:GLY129""]}",protein:self-entity
+Metabolite-7,3GWZ,Q9X5T6,True,ok,A,310-320,11.0,215.7,417.0,201.3,"{""protein:self-entity"": [""B:ARG70""]}",protein:self-entity
+Metabolite-7,7LXI,Q6MX39,True,ok,A,76-86,11.0,136.4,436.8,300.4,{},
+Metabolite-7,8XTE,A0A0B5L781,True,ok,A,359-369,11.0,71.3,454.1,382.8,"{""protein:self-entity"": [""B:ARG101""]}",protein:self-entity
+Metabolite-7,8XTG,A0A0B5L781,True,ok,A,359-369,11.0,146.6,481.5,334.9,"{""protein:self-entity"": [""B:ARG101""]}",protein:self-entity
+Metabolite-7,1FPQ,P93324,True,ok,A,334-344,11.0,280.3,495.6,215.3,"{""protein:self-entity"": [""A:MSE329"", ""A:MSE368""]}",protein:self-entity
+Metabolite-7,2P5X,O95671,True,motif_not_resolved,,,,,,,,
+Metabolite-7,8T1A,Q6MX39,True,ok,A,76-86,11.0,379.5,439.9,60.4,{},
+Metabolite-7,4PGG,C5YH12,True,ok,A,325-335,11.0,116.7,668.8,552.0,"{""protein:self-entity"": [""B:ARG101"", ""B:ARG77"", ""B:ARG80"", ""B:ASP73"", ""B:ASP94"", ""B:ASP96""]}",protein:self-entity
+Metabolite-7,9WIU,A0A1B6PFV1,True,ok,A,339-349,11.0,310.9,480.2,169.3,"{""protein:self-entity"": [""C:ARG85"", ""C:ARG88"", ""D:VAL104""]}",protein:self-entity
+Metabolite-7,6G80,K5B7F3,True,ok,A,147-157,11.0,342.3,382.6,40.3,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+Metabolite-7,3I53,Q84HC8,True,ok,A,295-305,11.0,199.3,383.0,183.7,"{""protein:self-entity"": [""B:ARG57""]}",protein:self-entity
+Metabolite-7,9J56,Q54527,True,ok,A,313-323,11.0,267.3,417.7,150.4,"{""protein:self-entity"": [""B:ARG68""]}",protein:self-entity
+Metabolite-7,1QZZ,Q54527,True,ok,A,313-323,11.0,452.6,564.0,111.4,{},
+Metabolite-7,7WAR,A0A1B6PFV1,True,ok,A,339-349,11.0,149.3,463.0,313.7,"{""buffer"": [""A:GOL"", ""A:PEG""], ""protein:self-entity"": [""B:ARG85"", ""B:ARG88"", ""B:CYS114"", ""B:THR111"", ""B:THR112""]}",buffer;protein:self-entity
+Metabolite-7,8XTF,A0A0B5L781,True,ok,A,359-369,11.0,310.1,474.1,163.9,{},
+Metabolite-7,7PGJ,Q54527,True,motif_not_resolved,,,,,,,,
+Metabolite-7,4AZS,J7I4B7,True,motif_not_resolved,,,,,,,,
+Metabolite-7,5XOH,A0A166U5H3,True,ok,A,322-332,11.0,367.4,448.6,81.3,{},
+Metabolite-7,1KYZ,P28002,True,ok,A,326-336,11.0,365.6,456.3,90.6,"{""protein:self-entity"": [""E:ARG79""]}",protein:self-entity
+Metabolite-7,7PHF,Q54527,True,motif_not_resolved,,,,,,,,
+Metabolite-7,6XI4,O95671,True,motif_not_resolved,,,,,,,,
+Metabolite-7,4D7K,K4RFM2,True,ok,A,307-317,11.0,513.3,682.4,169.1,"{""protein:self-entity"": [""B:ARG65"", ""B:SER61"", ""D:GLU81"", ""D:GLU85"", ""D:PRO46"", ""D:VAL79""]}",protein:self-entity
+Metabolite-7,3GXO,Q9X5T6,True,ok,A,310-320,11.0,328.2,421.7,93.5,"{""protein:self-entity"": [""B:ARG70""]}",protein:self-entity
+Metabolite-7,1XDS,Q54527,True,ok,A,313-323,11.0,343.9,500.1,156.2,"{""protein:self-entity"": [""A:MSE308"", ""A:MSE312"", ""B:ARG68"", ""B:GLN64""]}",protein:self-entity
+Metabolite-7,7PHE,Q54527,True,motif_not_resolved,,,,,,,,
+Metabolite-7,4AZT,J7I4B7,True,motif_not_resolved,,,,,,,,
+Metabolite-7,1ZG3,Q29U70,True,ok,A,327-337,11.0,448.1,579.6,131.5,{},
+Metabolite-7,1ZGA,Q29U70,True,ok,A,327-337,11.0,387.8,567.1,179.3,{},
+Metabolite-7,9VS6,Q84KK6,True,ok,A,329-339,11.0,586.4,665.2,78.7,"{""protein:self-entity"": [""B:ARG73"", ""B:ARG76"", ""B:TYR72""]}",protein:self-entity
+Metabolite-7,7OY1,Q54527,True,motif_not_resolved,,,,,,,,
+Metabolite-7,1KYW,P28002,True,ok,A,326-336,11.0,411.2,505.8,94.6,"{""protein:self-entity"": [""F:ARG79""]}",protein:self-entity
+Metabolite-7,4A6D,P46597,True,ok,A,308-318,11.0,267.5,391.9,124.4,"{""buffer"": [""A:SO4""]}",buffer
+Metabolite-7,7WAS,A0A1B6PFV1,True,ok,A,339-349,11.0,195.5,470.1,274.6,"{""protein:self-entity"": [""B:ARG85"", ""B:ARG88"", ""B:CYS114"", ""B:THR111"", ""B:THR112"", ""B:THR113""]}",protein:self-entity
+Metabolite-7,4AZW,J7I4B7,True,motif_not_resolved,,,,,,,,
+Metabolite-7,1ZGJ,Q29U70,True,ok,A,327-337,11.0,511.1,547.0,35.8,{},
+Metabolite-7,1ZHF,Q29U70,True,ok,A,327-337,11.0,454.2,533.7,79.5,{},
+Metabolite-7,1R00,Q54527,True,ok,A,313-323,11.0,576.7,591.9,15.2,{},
+Metabolite-7,6IWT,A0A4P8DY91,True,ok,A,327-337,11.0,492.9,523.7,30.8,"{""protein:self-entity"": [""B:ARG80""], ""buffer"": [""A:PEG""]}",buffer;protein:self-entity
+Metabolite-7,7WAQ,A0A1B6PFV1,True,ok,A,339-349,11.0,321.5,445.8,124.3,"{""protein:self-entity"": [""C:ARG85"", ""C:ARG88"", ""C:CYS114"", ""C:THR112""]}",protein:self-entity
+Metabolite-7,3I5U,Q84HC8,True,ok,A,295-305,11.0,217.6,373.6,156.0,"{""protein:self-entity"": [""B:ARG57""]}",protein:self-entity
+Metabolite-7,5ICG,Q5C9L7,True,ok,A,312-322,11.0,495.7,551.8,56.0,{},
+Metabolite-7,6XI5,O95671,True,motif_not_resolved,,,,,,,,
+Metabolite-7,3I58,Q84HC8,True,ok,A,295-305,11.0,221.0,368.9,147.9,"{""protein:self-entity"": [""B:ARG57""]}",protein:self-entity
+Metabolite-7,4A6E,P46597,True,ok,A,308-318,11.0,277.5,386.2,108.6,"{""buffer"": [""A:SO4""]}",buffer
+Metabolite-7,1XDU,Q54527,True,ok,A,313-323,11.0,567.4,604.6,37.3,"{""protein:self-entity"": [""A:MSE308"", ""A:MSE312""]}",protein:self-entity
+Metabolite-7,7PGA,Q54527,True,motif_not_resolved,,,,,,,,
+Metabolite-7,4PGH,C5YH12,True,ok,A,325-335,11.0,296.0,652.7,356.7,"{""protein:self-entity"": [""B:ARG101"", ""B:ARG77"", ""B:ARG80"", ""B:ASP94"", ""B:GLY97"", ""B:LYS98""]}",protein:self-entity
+Metabolite-7,7WH9,Q0CCY5,True,ok,A,443-453,11.0,203.9,366.7,162.8,{},
+Metabolite-7,9WIV,A0A1B6PFV1,True,ok,A,339-349,11.0,382.7,447.4,64.7,"{""protein:self-entity"": [""B:ARG85""]}",protein:self-entity
+Metabolite-7,5F8E,O53532,True,ok,A,56-66,11.0,276.8,838.9,562.1,"{""protein:self-entity"": [""B:ARG125"", ""B:CYS123"", ""B:GLU126"", ""B:GLY127"", ""B:GLY128"", ""B:GLY129""]}",protein:self-entity
+Metabolite-7,3I64,Q84HC8,True,ok,A,295-305,11.0,279.5,377.6,98.0,"{""protein:self-entity"": [""B:ARG57""], ""buffer"": [""A:GOL""]}",buffer;protein:self-entity
+Metabolite-7,6I5Z,I3V6A7,True,ok,A,353-363,11.0,331.7,363.9,32.2,"{""protein:self-entity"": [""D:ARG97"", ""D:TYR94""]}",protein:self-entity
+Metabolite-7,4AX8,J7I4B7,True,ok,A,333-343,11.0,164.7,209.5,44.9,"{""buffer"": [""A:SO4""]}",buffer
+Metabolite-7,6I5Q,I3V6A7,True,ok,A,353-363,11.0,372.5,392.3,19.7,"{""protein:self-entity"": [""B:ARG97""]}",protein:self-entity
+Metabolite-7,4AZV,J7I4B7,True,motif_not_resolved,,,,,,,,
+Metabolite-7,5IL2,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7RX7,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5K7W,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5K7M,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,1SQG,P36929,False,ok,A,71-81,11.0,136.6,459.9,323.3,{},
+Metabolite-7,5K7U,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5NRR,Q9UBC3,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5IL1,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,9RS1,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,9Q8G,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5TEY,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7O09,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7RX6,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,1WXX,Q5SIT4,False,ok,A,177-187,11.0,219.1,410.9,191.8,"{""protein:self-entity"": [""C:ARG271"", ""C:ASP268""], ""ion:K"": [""A:K""]}",ion:K;protein:self-entity
+Metabolite-7,3FLG,Q9UBC3,False,motif_not_resolved,,,,,,,,
+Metabolite-7,1KHC,O88509,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7NHI,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,9G4W,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,9IH5,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7RX8,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5L6D,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7OEL,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5IL0,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,6Y4G,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7O0L,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7OEK,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5L6E,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7NHV,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,9RRY,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,9G4S,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,9Q89,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,9Q8A,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,6TTP,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,6TTX,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7O08,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7OED,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7OQP,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,9G4U,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,9RS0,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7OEH,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5NV2,Q9UBC3,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7OEF,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,3QKJ,Q9UBC3,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5NRV,Q9UBC3,False,motif_not_resolved,,,,,,,,
+Metabolite-7,1SQF,P36929,False,ok,A,71-81,11.0,376.5,488.3,111.8,{},
+Metabolite-7,7NHH,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7O2F,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7O45,Q9UBC3,False,ok,A,533-543,11.0,233.5,590.3,356.8,"{""protein:self-entity"": [""B:GLN547"", ""C:CYS495"", ""C:CYS496"", ""C:GLY473"", ""C:SER494"", ""C:THR493""]}",protein:self-entity
+Metabolite-7,9RS3,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,29VJ,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,6TTV,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7NHJ,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,6TTW,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7NI8,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7NI9,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7OEM,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5EQJ,P46959,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5ERG,P46959,False,motif_not_resolved,,,,,,,,
+Metabolite-7,9R8Z,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,8BN8,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5CIU,Q9UBC3,False,motif_not_resolved,,,,,,,,
+Metabolite-7,6R3E,Q9UBC3,False,motif_not_resolved,,,,,,,,
+Metabolite-7,6TTT,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7NIA,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7NID,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7O0R,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7OEJ,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,8PW8,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5NR3,Q9UBC3,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5NRS,Q9UBC3,False,motif_not_resolved,,,,,,,,
+Metabolite-7,6TU1,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,6JPL,P38238,False,ok,B,245-255,11.0,630.9,904.3,273.4,"{""protein:Q08924"": [""A:ALA933"", ""A:ALA935"", ""A:ARG67"", ""A:ARG977"", ""A:ASN908"", ""A:ASP906""]}",protein:Q08924
+Metabolite-7,29VD,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7O0M,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Metabolite-7,5NV0,Q9UBC3,False,motif_not_resolved,,,,,,,,
+Metabolite-7,7O27,Q9HCE5,False,motif_not_resolved,,,,,,,,
+Protein-6,2B3T,P0ACC1,True,ok,A,88-96,9.0,41.7,343.5,301.8,"{""ligand:SAM-like"": [""A:SAH""], ""protein:P0A7I0"": [""B:ARG228"", ""B:ASN238"", ""B:GLN235"", ""B:GLN263"", ""B:GLY233"", ""B:GLY234""]}",ligand:SAM-like;protein:P0A7I0
+Protein-6,1T43,P0ACC1,True,ok,A,88-96,9.0,316.5,360.5,44.0,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+Protein-6,1X2P,P55345,True,ok,A,32-40,9.0,663.0,663.0,0.0,{},
+Protein-6,6I6M,I3V6A7,False,ok,A,139-147,9.0,144.0,604.8,460.8,"{""protein:self-entity"": [""B:CYS34"", ""B:GLU38"", ""B:LEU42"", ""B:TYR35""]}",protein:self-entity
+Protein-6,6I6L,I3V6A7,False,ok,A,139-147,9.0,235.4,604.8,369.4,"{""protein:self-entity"": [""B:CYS34"", ""B:GLU38"", ""B:LEU42"", ""B:TYR35""]}",protein:self-entity
+Protein-6,6I6K,I3V6A7,False,ok,A,139-147,9.0,242.4,590.1,347.7,"{""protein:self-entity"": [""B:CYS34"", ""B:GLU38"", ""B:LEU42"", ""B:TYR35""]}",protein:self-entity
+Protein-6,6I6N,I3V6A7,False,ok,A,139-147,9.0,163.4,592.7,429.3,"{""protein:self-entity"": [""B:CYS34"", ""B:GLU38"", ""B:LEU42"", ""B:TYR35""]}",protein:self-entity
+Protein-6,1O9G,Q9F5K5,False,ok,A,154-162,9.0,260.9,604.4,343.5,{},
+Protein-6,2ZWA,Q08282,False,ok,A,630-638,9.0,308.0,406.5,98.5,{},
+Protein-6,8GMY,Q9W138,False,ok,D,148-156,9.0,386.4,543.9,157.5,{},
+Protein-6,8GMZ,Q9W138,False,ok,D,148-156,9.0,444.8,492.4,47.6,{},
+Protein-6,6DCB,Q7L2J0,False,ok,A,614-622,9.0,97.3,282.6,185.3,"{""ligand:SAM-like"": [""A:SAH""], ""ligand:GTP"": [""B:GTP1""]}",ligand:GTP;ligand:SAM-like
+Protein-6,7VKQ,Q9W138,False,ok,A,148-156,9.0,442.9,602.7,159.8,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+Protein-6,6DCC,Q7L2J0,False,ok,A,614-622,9.0,196.2,279.7,83.5,"{""ligand:SAM-like"": [""A:SAH""], ""ligand:G5J"": [""B:G5J1""]}",ligand:G5J;ligand:SAM-like
+Protein-6,7VKR,Q9W138,False,ok,A,148-156,9.0,361.0,596.1,235.1,"{""ligand:SAM-like"": [""A:SAM""]}",ligand:SAM-like
+Protein-6,7YRJ,Q9W138,False,ok,A,148-156,9.0,395.7,502.4,106.8,"{""ligand:SAM-like"": [""A:SFG""]}",ligand:SAM-like
+Protein-6,1O9H,Q9F5K5,False,ok,A,154-162,9.0,589.7,603.9,14.2,{},
+Protein-6,2ZW9,Q08282,False,ok,A,630-638,9.0,405.6,405.6,0.0,{},
+Protein-6,5UNA,Q7L2J0,False,ok,A,614-622,9.0,334.2,334.2,0.0,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+Protein-6,7YRI,Q9W138,False,ok,A,148-156,9.0,463.5,583.9,120.4,"{""ligand:SAM-like"": [""A:SAM""]}",ligand:SAM-like
+Protein-6,2ZZK,Q08282,False,ok,A,630-638,9.0,389.9,422.2,32.3,"{""buffer"": [""A:PG4""]}",buffer
+Protein-6,6L8U,Q7Z5W3,False,ok,A,114-122,9.0,715.9,715.9,0.0,{},
+Protein-6,7WTU,O43709,False,motif_not_resolved,,,,,,,,
+Protein-6,6I5Z,I3V6A7,False,ok,A,139-147,9.0,320.6,607.9,287.3,"{""protein:self-entity"": [""C:LEU226"", ""C:LEU251"", ""C:LYS248"", ""C:PRO250"", ""C:TYR249"", ""D:CYS34""]}",protein:self-entity
+Protein-6,6I5Q,I3V6A7,False,ok,A,139-147,9.0,320.7,588.9,268.2,"{""protein:self-entity"": [""B:CYS34"", ""B:GLU38"", ""B:LEU42"", ""B:TYR35"", ""C:LEU251"", ""C:LYS248""]}",protein:self-entity
+Protein-6,7WTT,O43709,False,motif_not_resolved,,,,,,,,
+Protein-6,7WTS,O43709,False,motif_not_resolved,,,,,,,,
+Protein-6,7WTW,O43709,False,motif_not_resolved,,,,,,,,
+Protein-6,7WTV,O43709,False,motif_not_resolved,,,,,,,,
+Protein-6,7VKK,Q9W138,False,ok,A,148-156,9.0,248.6,603.7,355.1,"{""protein:self-entity"": [""B:ALA70"", ""B:ARG71"", ""B:ARG73"", ""B:CYS134"", ""B:GLN69"", ""B:ILE228""], ""buffer"": [""B:SO4""]}",buffer;protein:self-entity
+Protein-6,7SLQ,Q7L2J0,False,ok,A,614-622,9.0,339.7,391.6,51.9,"{""ligand:G5J"": [""R:G5J1""], ""nucleic-acid:RNA"": [""R:A290""]}",ligand:G5J;nucleic-acid:RNA
+Protein-6,7SLP,Q7L2J0,False,ok,A,614-622,9.0,403.7,403.7,0.0,{},
+Protein-6,6G4W,O43709,False,motif_not_resolved,,,,,,,,
+RNA-5,3AJD,Q60343,True,ok,A,265-273,9.0,48.6,174.2,125.7,{},
+RNA-5,3M6W,Q5SII2,True,ok,A,291-299,9.0,15.4,161.9,146.5,{},
+RNA-5,3M6U,Q5SII2,True,ok,A,291-299,9.0,31.4,159.6,128.2,"{""buffer"": [""A:SO4""]}",buffer
+RNA-5,8H1A,Q2FXG9,True,ok,A,177-185,9.0,29.6,147.9,118.3,"{""protein:self-entity"": [""B:LEU171"", ""B:LEU3"", ""B:LYS2"", ""B:MET1""]}",protein:self-entity
+RNA-5,1EJ0,P0C0R7,True,ok,A,159-167,9.0,84.0,147.7,63.7,"{""ligand:SAM-like"": [""A:SAM""]}",ligand:SAM-like
+RNA-5,8H26,Q2FXG9,True,ok,A,177-185,9.0,31.9,145.4,113.5,"{""protein:self-entity"": [""C:GLU44"", ""C:PRO43"", ""E:LEU171"", ""E:LEU3"", ""E:LYS2"", ""E:MET1""]}",protein:self-entity
+RNA-5,8H1B,Q2FXG9,True,ok,A,177-185,9.0,1.2,140.7,139.5,"{""nucleic-acid:RNA"": [""C:U34"", ""C:U35""], ""protein:self-entity"": [""B:LEU171"", ""B:LEU3"", ""B:LYS2"", ""B:MET1""]}",nucleic-acid:RNA;protein:self-entity
+RNA-5,7R7O,P25582,True,ok,A,154-162,9.0,92.5,176.4,83.9,"{""ligand:SAM-like"": [""A:SAM""]}",ligand:SAM-like
+RNA-5,2B9E,Q96P11,True,ok,A,416-424,9.0,42.7,179.2,136.5,{},
+RNA-5,1SQG,P36929,True,ok,A,420-428,9.0,99.3,129.2,29.9,{},
+RNA-5,3BGY,Q5UQX1,True,ok,A,95-103,9.0,478.6,719.6,241.1,"{""protein:self-entity"": [""B:ASN1059"", ""B:GLU1055""]}",protein:self-entity
+RNA-5,3M6X,Q5SII2,True,ok,A,291-299,9.0,48.5,152.1,103.6,{},
+RNA-5,1EIZ,P0C0R7,True,ok,A,159-167,9.0,84.8,153.3,68.5,"{""ligand:SAM-like"": [""A:SAM""]}",ligand:SAM-like
+RNA-5,3M6V,Q5SII2,True,ok,A,291-299,9.0,34.8,146.8,112.0,{},
+RNA-5,4N49,Q8N1G2,True,ok,A,399-407,9.0,0.0,70.0,70.0,"{""ligand:SAM-like"": [""A:SAM""]}",ligand:SAM-like
+RNA-5,7NZJ,O34522,True,ok,A,50-58,9.0,124.5,229.8,105.4,{},
+RNA-5,4FZV,Q96CB9,True,ok,A,374-382,9.0,47.3,173.1,125.9,"{""protein:self-entity"": [""A:MSE375"", ""A:MSE380""], ""buffer"": [""A:FMT""]}",buffer;protein:self-entity
+RNA-5,2QY2,Q5UQX1,True,ok,A,95-103,9.0,369.2,674.5,305.3,{},
+RNA-5,8H27,Q2FXG9,True,ok,A,177-185,9.0,59.6,133.5,73.9,"{""protein:self-entity"": [""C:LEU171"", ""C:LEU3"", ""C:LYS2"", ""C:MET1""]}",protein:self-entity
+RNA-5,1SQF,P36929,True,ok,A,420-428,9.0,71.5,89.5,18.0,{},
+RNA-5,2FCA,O34522,True,ok,A,50-58,9.0,157.5,309.6,152.1,{},
+RNA-5,2PJD,P39406,True,ok,A,141-149,9.0,308.9,430.8,121.9,{},
+RNA-5,5ZVE,O57712,True,ok,A,377-385,9.0,98.6,104.5,5.9,{},
+RNA-5,7OF0,Q96CB9,True,ok,C,374-382,9.0,142.5,142.5,0.0,{},
+RNA-5,3A4T,Q60343,True,ok,A,265-273,9.0,130.4,176.9,46.5,{},
+RNA-5,6JPL,P38238,True,ok,B,159-167,9.0,78.1,192.9,114.8,"{""ligand:SAM-like"": [""B:SAM""], ""protein:Q08924"": [""A:ASN908"", ""A:ASP906"", ""A:ASP907"", ""A:SER936"", ""A:SER937"", ""A:THR938""]}",ligand:SAM-like;protein:Q08924
+RNA-5,4N4A,Q8N1G2,True,ok,A,399-407,9.0,10.3,60.5,50.1,{},
+RNA-5,8CSS,Q9H7H0,True,ok,7,289-297,9.0,133.0,133.0,0.0,{},
+RNA-5,8FKV,P46087,True,ok,SY,578-586,9.0,113.6,113.6,0.0,{},
+RNA-5,5ZVG,O57712,True,ok,A,377-385,9.0,96.8,102.7,5.9,{},
+RNA-5,5ZVH,O57712,True,ok,A,377-385,9.0,103.7,108.3,4.6,{},
+RNA-5,7NYB,O34522,True,ok,A,50-58,9.0,264.7,286.0,21.4,{},
+RNA-5,8FKW,P46087,True,ok,SY,578-586,9.0,89.3,89.3,0.0,{},
+RNA-5,7OF7,Q96CB9,True,ok,C,374-382,9.0,144.3,144.3,0.0,{},
+RNA-5,8V83,P40991,True,ok,q,540-548,9.0,113.6,113.6,0.0,{},
+RNA-5,8CSQ,Q9H7H0,True,ok,7,289-297,9.0,116.8,116.8,0.0,{},
+RNA-5,8CSR,Q9H7H0,True,ok,7,289-297,9.0,124.3,124.3,0.0,{},
+RNA-5,9Z2N,Q08J23,True,ok,A,421-429,9.0,45.4,47.8,2.4,"{""ligand:A1CZ2"": [""B:A1CZ248""]}",ligand:A1CZ2
+RNA-5,8FKX,P46087,True,ok,SY,578-586,9.0,95.6,95.6,0.0,{},
+RNA-5,5ZVD,O57712,True,ok,A,377-385,9.0,102.4,107.1,4.7,{},
+RNA-5,7O9M,Q96CB9,True,ok,A1,374-382,9.0,130.3,130.3,0.0,{},
+RNA-5,9Z2O,Q08J23,True,ok,A,421-429,9.0,45.3,50.1,4.8,"{""ligand:A1CZ2"": [""B:A1CZ248""]}",ligand:A1CZ2
+RNA-5,8Y2O,Q9UET6,True,ok,B,151-159,9.0,127.0,159.9,33.0,"{""nucleic-acid:RNA"": [""C:C32""]}",nucleic-acid:RNA
+RNA-5,8CSP,Q9H7H0,True,ok,7,289-297,9.0,134.0,134.0,0.0,{},
+RNA-5,8V87,P40991,True,ok,q,540-548,9.0,100.6,100.6,0.0,{},
+RNA-5,8FKY,P46087,True,ok,SY,578-586,9.0,127.4,127.4,0.0,{},
+RNA-5,6JP6,P38238,True,ok,B,159-167,9.0,98.1,194.8,96.7,"{""protein:Q08924"": [""A:ASN908"", ""A:ASP906"", ""A:ASP907"", ""A:SER936"", ""A:SER937"", ""A:THR938""]}",protein:Q08924
+RNA-5,8V84,P40991,True,ok,q,540-548,9.0,134.1,134.1,0.0,{},
+RNA-5,7OF3,Q96CB9,True,ok,C,374-382,9.0,150.7,150.7,0.0,{},
+RNA-5,4N48,Q8N1G2,True,ok,A,399-407,9.0,16.5,75.0,58.4,"{""nucleic-acid:RNA"": [""D:G1""], ""ligand:MGT"": [""D:MGT101""]}",ligand:MGT;nucleic-acid:RNA
+RNA-5,7U0H,P25582,True,motif_not_resolved,,,,,,,,
+RNA-5,8FKQ,Q8IY81,True,motif_not_resolved,,,,,,,,
+RNA-5,8ESQ,O42832,True,ok,w,153-161,9.0,55.9,118.3,62.3,"{""nucleic-acid:RNA"": [""1:C2417"", ""1:U2416""]}",nucleic-acid:RNA
+RNA-5,8FKT,P46087,True,ok,SY,578-586,9.0,122.0,122.0,0.0,{},
+RNA-5,5WWQ,Q8TEA1,True,ok,A,457-465,9.0,70.3,70.3,0.0,{},
+RNA-5,8FKU,P46087,True,ok,SY,578-586,9.0,108.4,108.4,0.0,{},
+RNA-5,8CST,Q9H7H0,True,ok,7,289-297,9.0,153.3,153.3,0.0,{},
+RNA-5,8FKP,Q8IY81,True,motif_not_resolved,,,,,,,,
+RNA-5,9HCF,Q9CZ57,True,ok,x,371-379,9.0,104.1,104.1,0.0,{},
+RNA-5,9HCH,Q9CZ57,True,ok,x,371-379,9.0,102.0,102.0,0.0,{},
+RNA-5,9Z2Q,Q08J23,True,ok,A,421-429,9.0,52.3,55.9,3.6,{},
+RNA-5,8FKS,Q8IY81,True,motif_not_resolved,,,,,,,,
+RNA-5,8FKR,Q8IY81,True,motif_not_resolved,,,,,,,,
+RNA-5,9IMB,Q8TEA1,True,ok,A,457-465,9.0,54.5,58.1,3.6,"{""nucleic-acid:RNA"": [""C:C12""]}",nucleic-acid:RNA
+RNA-5,7ODR,Q96CB9,True,ok,x,374-382,9.0,104.4,104.4,0.0,{},
+RNA-5,4FP9,Q96CB9,True,ok,A,374-382,9.0,101.9,142.5,40.6,"{""protein:self-entity"": [""F:ASP227""]}",protein:self-entity
+RNA-5,7OF5,Q96CB9,True,ok,C,374-382,9.0,160.7,160.7,0.0,{},
+RNA-5,2FRX,P76273,True,ok,A,302-310,9.0,109.3,109.3,0.0,{},
+RNA-5,2QZE,Q5UQX1,True,ok,A,95-103,9.0,694.5,707.4,12.9,{},
+RNA-5,9HCG,Q9CZ57,True,ok,x,371-379,9.0,101.6,101.6,0.0,{},
+RNA-5,9Z2P,Q08J23,True,ok,A,421-429,9.0,45.9,45.9,0.0,{},
+RNA-5,9Z3D,Q08J23,True,ok,A,421-429,9.0,43.2,48.1,4.8,"{""ligand:A1CZ2"": [""B:A1CZ234""]}",ligand:A1CZ2
+RNA-5,7R6Q,P25582,True,motif_not_resolved,,,,,,,,
+RNA-5,9Z2U,Q08J23,True,ok,A,421-429,9.0,40.5,44.2,3.6,{},
+RNA-5,8QSJ,Q96CB9,True,ok,x,374-382,9.0,103.2,103.2,0.0,{},
+RNA-5,8CSU,Q9H7H0,True,ok,7,289-297,9.0,124.6,124.6,0.0,{},
+RNA-5,8PK0,Q96CB9,True,ok,x,374-382,9.0,98.9,98.9,0.0,{},
+RNA-5,7NAC,P25582,True,ok,w,154-162,9.0,37.8,156.8,119.0,"{""ligand:OMG"": [""1:OMG2922""], ""ligand:OMU"": [""1:OMU2921""], ""nucleic-acid:RNA"": [""1:A2126"", ""1:C2329"", ""1:U2328""]}",ligand:OMG;ligand:OMU;nucleic-acid:RNA
+RNA-5,7R7A,P40991,True,ok,q,540-548,9.0,102.0,102.0,0.0,{},
+RNA-5,7NAD,P25582,True,motif_not_resolved,,,,,,,,
+RNA-5,7R72,P25582,True,motif_not_resolved,,,,,,,,
+RNA-5,5WWR,Q8TEA1,True,ok,A,457-465,9.0,73.1,88.4,15.4,"{""nucleic-acid:RNA"": [""C:C72""]}",nucleic-acid:RNA
+RNA-5,9Z2W,Q08J23,True,ok,A,421-429,9.0,56.0,57.2,1.2,{},
+RNA-5,7O9K,Q96CB9,True,ok,A1,374-382,9.0,118.6,118.6,0.0,{},
+RNA-5,7ODS,Q96CB9,True,ok,x,374-382,9.0,103.5,103.5,0.0,{},
+RNA-5,7ODT,Q96CB9,True,ok,x,374-382,9.0,118.0,118.0,0.0,{},
+RNA-5,7OIC,Q96CB9,True,ok,x,374-382,9.0,94.3,94.3,0.0,{},
+RNA-5,7NZI,O34522,True,ok,A,50-58,9.0,267.3,288.9,21.6,"{""buffer"": [""A:GOL""]}",buffer
+RNA-5,8ETC,O42832,True,ok,w,153-161,9.0,80.2,161.5,81.3,"{""nucleic-acid:RNA"": [""1:C2417"", ""1:U2416""]}",nucleic-acid:RNA
+RNA-5,7NAF,P25582,True,ok,w,154-162,9.0,36.8,152.6,115.8,"{""ligand:OMG"": [""1:OMG2922""], ""ligand:OMU"": [""1:OMU2921""], ""nucleic-acid:RNA"": [""1:A2126"", ""1:C2329"", ""1:U2328""]}",ligand:OMG;ligand:OMU;nucleic-acid:RNA
+RNA-5,7R6K,P40991,True,motif_not_resolved,,,,,,,,
+RNA-5,5WWT,Q8TEA1,True,ok,A,457-465,9.0,73.0,83.8,10.8,"{""nucleic-acid:RNA"": [""C:C72""]}",nucleic-acid:RNA
+RNA-5,8ESR,O42832,True,motif_not_resolved,,,,,,,,
+RNA-5,8ETJ,O42832,True,motif_not_resolved,,,,,,,,
+RNA-5,5WWS,Q8TEA1,True,ok,A,457-465,9.0,71.8,83.6,11.8,"{""nucleic-acid:RNA"": [""C:C72""]}",nucleic-acid:RNA
+RNA-5,22AX,Q08J23,True,ok,A,421-429,9.0,81.1,96.8,15.7,{},
+RNA-5,6ELZ,P40991,True,ok,q,540-548,9.0,148.0,148.0,0.0,{},
+RNA-5,8IR1,Q8IY81,True,motif_not_resolved,,,,,,,,
+RNA-5,7PD3,Q96CB9,True,ok,x,374-382,9.0,147.8,147.8,0.0,"{""ligand:SAM-like"": [""x:SAM""]}",ligand:SAM-like
+RNA-5,9E9C,Q9CZ57,True,ok,x,371-379,9.0,111.6,111.6,0.0,{},
+RNA-5,9Z2T,Q08J23,True,ok,A,421-429,9.0,50.2,56.2,6.0,{},
+RNA-5,9Z2R,Q08J23,True,ok,A,421-429,9.0,50.0,56.1,6.0,{},
+RNA-5,7R7C,P40991,True,ok,q,540-548,9.0,102.8,102.8,0.0,{},
+RNA-5,6YLX,P25582,True,ok,w,154-162,9.0,88.2,195.0,106.8,"{""nucleic-acid:RNA"": [""1:A2125"", ""1:A2126"", ""1:C2329"", ""1:U2328""]}",nucleic-acid:RNA
+RNA-5,7OHV,P25582,True,motif_not_resolved,,,,,,,,
+RNA-5,9H52,Q9H7H0,True,ok,7,289-297,9.0,121.7,121.7,0.0,{},
+RNA-5,8P4E,Q8N1G2,True,ok,O,399-407,9.0,61.4,71.1,9.7,"{""ligand:MGT"": [""P:MGT101""]}",ligand:MGT
+RNA-5,8P4F,Q8N1G2,True,ok,O,399-407,9.0,41.0,72.0,31.0,"{""nucleic-acid:RNA"": [""P:G22""], ""ligand:SAM-like"": [""O:SAM""], ""ligand:MGT"": [""P:MGT101""]}",ligand:MGT;ligand:SAM-like;nucleic-acid:RNA
+RNA-5,8W8F,Q8N1G2,True,ok,b,399-407,9.0,74.5,74.5,0.0,{},
+RNA-5,6EM5,P40991,True,ok,q,540-548,9.0,346.5,346.5,0.0,{},
+RNA-5,7OHR,P40991,True,ok,q,540-548,9.0,147.6,147.6,0.0,{},
+RNA-5,5UFN,Q2T5S0,False,ok,A,147-155,9.0,29.6,332.0,302.4,"{""ligand:SAM-like"": [""A:SAH""], ""buffer"": [""A:SO4""]}",buffer;ligand:SAM-like
+RNA-5,5WP5,Q944H0,False,ok,A,179-187,9.0,22.7,427.7,405.0,"{""protein:self-entity"": [""B:GLN245"", ""B:GLU323"", ""B:ILE326"", ""B:LEU241"", ""B:LEU322"", ""B:PHE320""]}",protein:self-entity
+RNA-5,7PHD,Q06528,False,motif_not_resolved,,,,,,,,
+RNA-5,8Z8P,A0A077EWA5,False,ok,A,60-68,9.0,235.5,409.0,173.5,{},
+RNA-5,8Z8O,A0A077EWA5,False,ok,A,60-68,9.0,260.2,411.4,151.2,{},
+RNA-5,8XE3,A0A077EWA5,False,ok,A,60-68,9.0,25.2,395.1,369.9,"{""protein:self-entity"": [""B:ARG236"", ""B:CYS235"", ""B:GLU222"", ""B:ILE223"", ""B:ILE234"", ""B:LEU66""]}",protein:self-entity
+RNA-5,5UFM,Q2T5S0,False,ok,A,147-155,9.0,60.6,330.5,269.9,"{""ligand:SAM-like"": [""A:SAH""], ""buffer"": [""A:SO4""]}",buffer;ligand:SAM-like
+RNA-5,8Z8R,A0A077EWA5,False,ok,A,60-68,9.0,263.0,416.6,153.7,{},
+RNA-5,5EEH,Q06528,False,ok,A,191-199,9.0,20.4,154.0,133.6,"{""protein:self-entity"": [""B:ASP98"", ""B:HIS99"", ""B:PRO100""]}",protein:self-entity
+RNA-5,5JR3,Q06528,False,ok,A,191-199,9.0,19.3,127.7,108.4,"{""protein:self-entity"": [""B:ASP98"", ""B:HIS99"", ""B:PRO100""]}",protein:self-entity
+RNA-5,4WXH,Q06528,False,ok,A,190-198,9.0,111.6,134.2,22.6,{},
+RNA-5,8FJM,Q581Z0,False,ok,A,114-122,9.0,70.1,167.9,97.8,"{""ion:ZN"": [""A:ZN""]}",ion:ZN
+RNA-5,8Z8S,A0A077EWA5,False,ok,A,60-68,9.0,38.9,403.6,364.7,"{""protein:self-entity"": [""B:ARG236"", ""B:CYS235"", ""B:GLU222"", ""B:ILE223"", ""B:ILE234"", ""B:LEU66""]}",protein:self-entity
+RNA-5,8XE4,A0A077EWA5,False,ok,A,60-68,9.0,296.5,410.3,113.8,{},
+RNA-5,8XE5,A0A077EWA5,False,ok,A,60-68,9.0,27.4,393.8,366.4,"{""protein:self-entity"": [""B:ARG236"", ""B:GLU222"", ""B:ILE223"", ""B:ILE234"", ""B:LEU66"", ""B:LEU69""]}",protein:self-entity
+RNA-5,8FJN,Q581Z0,False,ok,A,114-122,9.0,86.0,157.6,71.6,"{""ion:ZN"": [""A:ZN""]}",ion:ZN
+RNA-5,7PGJ,Q06528,False,motif_not_resolved,,,,,,,,
+RNA-5,8Z8T,A0A077EWA5,False,ok,A,60-68,9.0,63.1,418.2,355.2,"{""protein:self-entity"": [""B:ARG236"", ""B:CYS235"", ""B:GLU222"", ""B:ILE223"", ""B:ILE234"", ""B:LEU66""]}",protein:self-entity
+RNA-5,8ZFW,A0A077EWA5,False,ok,A,60-68,9.0,61.8,414.6,352.8,"{""protein:self-entity"": [""B:ARG236"", ""B:CYS235"", ""B:GLU222"", ""B:ILE223"", ""B:ILE234"", ""B:LEU66""]}",protein:self-entity
+RNA-5,7PHF,Q06528,False,motif_not_resolved,,,,,,,,
+RNA-5,5EEG,Q06528,False,ok,A,191-199,9.0,93.1,131.2,38.1,{},
+RNA-5,7PHE,Q06528,False,motif_not_resolved,,,,,,,,
+RNA-5,1TW3,Q06528,False,ok,A,190-198,9.0,98.9,120.2,21.4,{},
+RNA-5,1ZG3,Q29U70,False,ok,A,82-90,9.0,543.7,576.8,33.0,{},
+RNA-5,1ZGA,Q29U70,False,ok,A,82-90,9.0,574.4,620.8,46.4,{},
+RNA-5,7OY1,Q06528,False,motif_not_resolved,,,,,,,,
+RNA-5,8UKE,A0A077EWA5,False,ok,A,60-68,9.0,81.1,424.5,343.4,"{""protein:self-entity"": [""B:ARG236"", ""B:GLU222"", ""B:ILE223"", ""B:ILE234"", ""B:LEU66"", ""B:LEU69""]}",protein:self-entity
+RNA-5,7OWB,Q06528,False,ok,A,191-199,9.0,128.2,129.4,1.2,{},
+RNA-5,1TW2,Q06528,False,ok,A,190-198,9.0,112.2,132.5,20.3,{},
+RNA-5,1ZGJ,Q29U70,False,ok,A,82-90,9.0,565.0,572.2,7.2,{},
+RNA-5,1ZHF,Q29U70,False,ok,A,82-90,9.0,557.1,603.6,46.5,{},
+RNA-5,3B5I,Q9FLN8,False,ok,A,220-228,9.0,32.5,35.9,3.4,{},
+RNA-5,7PGA,Q06528,False,motif_not_resolved,,,,,,,,
+RNA-5,9VSK,C7AE94,False,ok,A,56-64,9.0,452.7,457.3,4.6,{},
+RNA-7,8H0T,O34614,True,ok,A,17-29,13.0,164.2,337.5,173.3,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+RNA-7,3AJD,Q60343,True,ok,A,215-227,13.0,194.0,636.2,442.3,{},
+RNA-7,3M6W,Q5SII2,True,ok,A,233-245,13.0,26.4,202.2,175.8,{},
+RNA-7,3M6U,Q5SII2,True,ok,A,233-245,13.0,56.7,282.2,225.5,{},
+RNA-7,3G89,Q9LCY2,True,motif_not_resolved,,,,,,,,
+RNA-7,2B9E,Q96P11,True,ok,A,362-374,13.0,79.3,379.6,300.3,{},
+RNA-7,1SQG,P36929,True,ok,A,378-390,13.0,170.6,377.4,206.8,{},
+RNA-7,3M6X,Q5SII2,True,ok,A,233-245,13.0,19.7,201.1,181.4,"{""protein:self-entity"": [""A:MSE204""]}",protein:self-entity
+RNA-7,3M6V,Q5SII2,True,ok,A,233-245,13.0,25.9,192.5,166.6,{},
+RNA-7,3G88,Q9LCY2,True,motif_not_resolved,,,,,,,,
+RNA-7,4N49,Q8N1G2,True,ok,A,367-379,13.0,207.9,825.4,617.4,"{""ligand:MGT"": [""A:MGT602""]}",ligand:MGT
+RNA-7,1UWV,P55135,True,ok,A,267-279,13.0,262.5,460.8,198.3,"{""protein:self-entity"": [""A:MSE274"", ""A:MSE416"", ""A:MSE426""]}",protein:self-entity
+RNA-7,4FZV,Q96CB9,True,ok,A,313-325,13.0,225.0,454.0,229.0,"{""buffer"": [""A:FMT""], ""protein:self-entity"": [""A:MSE380""]}",buffer;protein:self-entity
+RNA-7,1SQF,P36929,True,ok,A,378-390,13.0,298.2,378.0,79.8,{},
+RNA-7,3G8A,Q9LCY2,True,motif_not_resolved,,,,,,,,
+RNA-7,3G8B,Q9LCY2,True,ok,A,55-67,13.0,386.7,554.4,167.7,{},
+RNA-7,2BH2,P55135,True,ok,A,267-279,13.0,169.3,343.0,173.7,{},
+RNA-7,5ZVE,O57712,True,ok,A,330-342,13.0,283.1,348.5,65.4,{},
+RNA-7,7OF0,Q96CB9,True,ok,C,313-325,13.0,474.3,474.3,0.0,{},
+RNA-7,3A4T,Q60343,True,ok,A,215-227,13.0,392.6,443.4,50.8,{},
+RNA-7,3PVC,Q8ZD36,True,ok,A,538-550,13.0,437.7,522.2,84.5,{},
+RNA-7,4N4A,Q8N1G2,True,ok,A,367-379,13.0,558.4,766.2,207.8,{},
+RNA-7,1JSX,P0A6U5,True,motif_not_resolved,,,,,,,,
+RNA-7,3BT7,P23003,True,ok,A,192-204,13.0,195.5,217.9,22.5,{},
+RNA-7,8FKV,P46087,True,ok,SY,520-532,13.0,134.4,226.5,92.2,"{""nucleic-acid:RNA"": [""L3:G4355"", ""L3:G4356"", ""L3:U4353"", ""L3:U4354""]}",nucleic-acid:RNA
+RNA-7,5ZVG,O57712,True,ok,A,330-342,13.0,287.6,352.4,64.8,{},
+RNA-7,5ZVH,O57712,True,ok,A,330-342,13.0,330.0,349.1,19.0,{},
+RNA-7,8FKW,P46087,True,ok,SY,520-532,13.0,126.2,217.0,90.8,"{""nucleic-acid:RNA"": [""L3:G4355"", ""L3:G4356"", ""L3:U4353"", ""L3:U4354""]}",nucleic-acid:RNA
+RNA-7,7OF7,Q96CB9,True,ok,C,313-325,13.0,483.3,483.3,0.0,{},
+RNA-7,8V83,P40991,True,ok,q,481-493,13.0,218.6,234.3,15.7,{},
+RNA-7,9Z2N,Q08J23,True,ok,A,324-336,13.0,41.1,41.1,0.0,{},
+RNA-7,8FKX,P46087,True,ok,SY,520-532,13.0,120.6,209.2,88.6,"{""nucleic-acid:RNA"": [""L3:G4355"", ""L3:G4356"", ""L3:U4353"", ""L3:U4354""]}",nucleic-acid:RNA
+RNA-7,5ZVD,O57712,True,ok,A,330-342,13.0,264.9,346.9,82.1,{},
+RNA-7,7O9M,Q96CB9,True,ok,A1,313-325,13.0,464.0,464.0,0.0,{},
+RNA-7,9Z2O,Q08J23,True,ok,A,324-336,13.0,38.4,38.4,0.0,{},
+RNA-7,8V87,P40991,True,ok,q,481-493,13.0,217.5,217.5,0.0,{},
+RNA-7,8FKY,P46087,True,ok,SY,520-532,13.0,127.3,214.8,87.5,"{""nucleic-acid:RNA"": [""L3:G4355"", ""L3:G4356"", ""L3:U4353"", ""L3:U4354""]}",nucleic-acid:RNA
+RNA-7,3SGL,Q8ZD36,True,ok,A,538-550,13.0,457.1,511.4,54.2,{},
+RNA-7,8V84,P40991,True,ok,q,481-493,13.0,244.2,244.2,0.0,{},
+RNA-7,7OF3,Q96CB9,True,ok,C,313-325,13.0,451.3,451.3,0.0,{},
+RNA-7,4N48,Q8N1G2,True,ok,A,367-379,13.0,468.8,713.2,244.4,"{""nucleic-acid:RNA"": [""D:G1""], ""ligand:SAM-like"": [""A:SAM""], ""ligand:MGT"": [""D:MGT101""]}",ligand:MGT;ligand:SAM-like;nucleic-acid:RNA
+RNA-7,8FKT,P46087,True,ok,SY,520-532,13.0,137.8,218.5,80.8,"{""nucleic-acid:RNA"": [""L3:G4355"", ""L3:G4356"", ""L3:U4353"", ""L3:U4354""]}",nucleic-acid:RNA
+RNA-7,5WWQ,Q8TEA1,True,ok,A,376-388,13.0,239.4,239.4,0.0,{},
+RNA-7,8FKU,P46087,True,ok,SY,520-532,13.0,135.9,223.3,87.3,"{""nucleic-acid:RNA"": [""L3:G4355"", ""L3:U4353"", ""L3:U4354""]}",nucleic-acid:RNA
+RNA-7,9HCF,Q9CZ57,True,ok,x,310-322,13.0,441.0,441.0,0.0,{},
+RNA-7,9HCH,Q9CZ57,True,ok,x,310-322,13.0,445.7,445.7,0.0,{},
+RNA-7,9Z2Q,Q08J23,True,ok,A,324-336,13.0,46.0,46.0,0.0,{},
+RNA-7,9IMB,Q8TEA1,True,ok,A,376-388,13.0,228.7,241.1,12.4,{},
+RNA-7,7ODR,Q96CB9,True,ok,x,313-325,13.0,480.4,480.4,0.0,{},
+RNA-7,8H0S,O34614,True,ok,A,17-29,13.0,273.6,325.5,51.9,"{""protein:self-entity"": [""D:ILE2""], ""ligand:SAM-like"": [""A:SAM""]}",ligand:SAM-like;protein:self-entity
+RNA-7,4FP9,Q96CB9,True,ok,A,313-325,13.0,535.6,535.6,0.0,{},
+RNA-7,7OF5,Q96CB9,True,ok,C,313-325,13.0,458.1,458.1,0.0,{},
+RNA-7,2FRX,P76273,True,ok,A,250-262,13.0,391.6,442.4,50.7,"{""protein:self-entity"": [""A:MSE16"", ""B:TYR322""]}",protein:self-entity
+RNA-7,9HCG,Q9CZ57,True,ok,x,310-322,13.0,476.1,476.1,0.0,{},
+RNA-7,9Z2P,Q08J23,True,ok,A,324-336,13.0,38.8,38.8,0.0,{},
+RNA-7,9Z3D,Q08J23,True,ok,A,324-336,13.0,35.2,35.2,0.0,{},
+RNA-7,9Z2U,Q08J23,True,ok,A,324-336,13.0,44.1,44.1,0.0,{},
+RNA-7,8QSJ,Q96CB9,True,ok,x,313-325,13.0,486.6,486.6,0.0,{},
+RNA-7,8PK0,Q96CB9,True,ok,x,313-325,13.0,473.5,473.5,0.0,{},
+RNA-7,7NAC,P40991,True,ok,q,481-493,13.0,198.9,198.9,0.0,{},
+RNA-7,7R7A,P40991,True,ok,q,481-493,13.0,225.8,225.8,0.0,{},
+RNA-7,5WWR,Q8TEA1,True,ok,A,376-388,13.0,241.7,251.7,10.1,"{""nucleic-acid:RNA"": [""C:A2""]}",nucleic-acid:RNA
+RNA-7,9Z2W,Q08J23,True,ok,A,324-336,13.0,35.0,35.0,0.0,{},
+RNA-7,7O9K,Q96CB9,True,ok,A1,313-325,13.0,566.4,566.4,0.0,{},
+RNA-7,7ODS,Q96CB9,True,ok,x,313-325,13.0,469.5,469.5,0.0,{},
+RNA-7,7ODT,Q96CB9,True,ok,x,313-325,13.0,481.6,481.6,0.0,{},
+RNA-7,7OIC,Q96CB9,True,ok,x,313-325,13.0,548.1,548.1,0.0,{},
+RNA-7,3HTX,Q9C5Q8,True,ok,A,475-487,13.0,475.0,588.1,113.1,"{""nucleic-acid:RNA"": [""B:U9"", ""C:C5"", ""C:U6""]}",nucleic-acid:RNA
+RNA-7,7NAF,P40991,True,motif_not_resolved,,,,,,,,
+RNA-7,7R6K,P40991,True,motif_not_resolved,,,,,,,,
+RNA-7,5WWT,Q8TEA1,True,ok,A,376-388,13.0,235.7,243.5,7.8,"{""nucleic-acid:RNA"": [""C:A2""]}",nucleic-acid:RNA
+RNA-7,5WWS,Q8TEA1,True,ok,A,376-388,13.0,239.2,247.0,7.8,"{""nucleic-acid:RNA"": [""C:A2""]}",nucleic-acid:RNA
+RNA-7,22AX,Q08J23,True,ok,A,324-336,13.0,67.8,67.8,0.0,{},
+RNA-7,6ELZ,P40991,True,ok,q,481-493,13.0,326.9,326.9,0.0,{},
+RNA-7,9O5D,Q1RMZ1,True,motif_not_resolved,,,,,,,,
+RNA-7,7PD3,Q96CB9,True,ok,x,313-325,13.0,581.5,593.5,12.1,{},
+RNA-7,9E9C,Q9CZ57,True,ok,x,310-322,13.0,439.8,439.8,0.0,{},
+RNA-7,9Z2T,Q08J23,True,ok,A,324-336,13.0,44.5,44.5,0.0,{},
+RNA-7,9Z2R,Q08J23,True,ok,A,324-336,13.0,51.3,51.3,0.0,{},
+RNA-7,7R7C,P40991,True,ok,q,481-493,13.0,219.2,223.9,4.7,"{""protein:P0CX43"": [""a:ARG45""]}",protein:P0CX43
+RNA-7,8P4E,Q8N1G2,True,ok,O,367-379,13.0,718.3,825.5,107.2,"{""ligand:MGT"": [""P:MGT101""]}",ligand:MGT
+RNA-7,8P4F,Q8N1G2,True,ok,O,367-379,13.0,661.4,817.9,156.4,"{""nucleic-acid:RNA"": [""P:G22""], ""ligand:MGT"": [""P:MGT101""]}",ligand:MGT;nucleic-acid:RNA
+RNA-7,8W8F,Q8N1G2,True,ok,b,367-379,13.0,728.4,728.4,0.0,{},
+RNA-7,6EM5,P40991,True,ok,q,481-493,13.0,722.4,722.4,0.0,{},
+RNA-7,7OHR,P40991,True,ok,q,481-493,13.0,323.7,323.7,0.0,{},
+RNA-7,2IH2,P14385,False,ok,A,169-181,13.0,4.4,324.1,319.7,"{""nucleic-acid:DNA"": [""B:DC4"", ""B:DG5"", ""B:DT3""], ""buffer"": [""C:GOL""]}",buffer;nucleic-acid:DNA
+RNA-7,6BQ6,G7K2D1,False,ok,A,28-40,13.0,483.9,1072.7,588.8,"{""ligand:TER"": [""A:TER402""], ""protein:self-entity"": [""B:ALA252"", ""B:ALA41"", ""B:ARG37"", ""B:ASN35"", ""B:CYS39"", ""B:LEU36""]}",ligand:TER;protein:self-entity
+RNA-7,6BQ2,G7K2D1,False,ok,A,28-40,13.0,547.9,1104.6,556.8,"{""protein:self-entity"": [""B:ALA252"", ""B:ALA41"", ""B:ARG37"", ""B:ASN35"", ""B:CYS39"", ""B:LEU36""]}",protein:self-entity
+RNA-7,2IBT,P14385,False,ok,A,169-181,13.0,45.9,325.9,280.1,"{""nucleic-acid:DNA"": [""B:DC4"", ""B:DG5"", ""B:DT3""]}",nucleic-acid:DNA
+RNA-7,1EG2,P14751,False,motif_not_resolved,,,,,,,,
+RNA-7,6BQ5,G7K2D1,False,ok,A,28-40,13.0,503.3,1131.3,628.0,"{""ligand:B3P"": [""A:B3P401""], ""protein:self-entity"": [""B:ALA252"", ""B:ALA41"", ""B:ARG37"", ""B:ASN35"", ""B:CYS39"", ""B:ILE32""]}",ligand:B3P;protein:self-entity
+RNA-7,2IH5,P14385,False,ok,A,169-181,13.0,27.8,326.3,298.6,"{""nucleic-acid:DNA"": [""B:DC4"", ""B:DG5"", ""B:DT3""]}",nucleic-acid:DNA
+RNA-7,4QQK,Q96LA8,False,ok,A,145-157,13.0,243.4,347.7,104.3,"{""ligand:UNX"": [""A:UNX408"", ""A:UNX423""], ""ligand:37H"": [""A:37H401""]}",ligand:37H;ligand:UNX
+RNA-7,6BQ4,G7K2D1,False,ok,A,28-40,13.0,595.2,1103.1,507.9,"{""ligand:B3P"": [""A:B3P402""], ""protein:self-entity"": [""B:ALA252"", ""B:ALA41"", ""B:ARG37"", ""B:ASN35"", ""B:CYS39"", ""B:ILE32""]}",ligand:B3P;protein:self-entity
+RNA-7,2JG3,P14385,False,ok,A,169-181,13.0,53.8,343.0,289.2,"{""nucleic-acid:DNA"": [""B:DC4"", ""B:DG5"", ""B:DT3""], ""buffer"": [""B:GOL""]}",buffer;nucleic-acid:DNA
+RNA-7,2NP7,P14385,False,ok,A,169-181,13.0,44.9,331.2,286.3,"{""nucleic-acid:DNA"": [""B:DC4"", ""B:DG5"", ""B:DT3""]}",nucleic-acid:DNA
+RNA-7,6W6D,Q96LA8,False,ok,A,145-157,13.0,261.9,368.5,106.6,"{""ligand:SAM-like"": [""A:SAH""], ""ligand:T9A"": [""A:T9A402""]}",ligand:SAM-like;ligand:T9A
+RNA-7,6BQ3,G7K2D1,False,ok,A,28-40,13.0,574.4,1068.8,494.4,"{""protein:self-entity"": [""B:ALA41"", ""B:ARG37"", ""B:ASN35"", ""B:CYS39"", ""B:LEU36"", ""B:LYS24""]}",protein:self-entity
+RNA-7,1NW6,P14751,False,motif_not_resolved,,,,,,,,
+RNA-7,6BQ7,G7K2D1,False,ok,A,28-40,13.0,596.0,1091.0,495.0,"{""ligand:SPD"": [""A:SPD401""], ""protein:self-entity"": [""B:ALA252"", ""B:ALA41"", ""B:ARG37"", ""B:ASN35"", ""B:CYS39"", ""B:LEU36""]}",ligand:SPD;protein:self-entity
+RNA-7,4HC4,Q96LA8,False,ok,A,145-157,13.0,223.6,343.0,119.4,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+RNA-7,5WCF,Q96LA8,False,ok,A,145-157,13.0,264.7,368.1,103.4,"{""ligand:144"": [""A:144403""], ""ligand:SAM-like"": [""A:SAH""], ""ligand:A0S"": [""A:A0S402""]}",ligand:144;ligand:A0S;ligand:SAM-like
+RNA-7,6P7I,Q96LA8,False,ok,A,145-157,13.0,216.9,323.3,106.4,"{""ligand:O3P"": [""A:O3P402""], ""ligand:SAM-like"": [""A:SAH""]}",ligand:O3P;ligand:SAM-like
+RNA-7,1G38,P14385,False,ok,A,169-181,13.0,112.5,329.4,216.9,"{""nucleic-acid:DNA"": [""B:DC604"", ""B:DG605"", ""B:DT603""]}",nucleic-acid:DNA
+RNA-7,5HZM,Q96LA8,False,ok,A,145-157,13.0,232.4,335.1,102.6,"{""ligand:SAM-like"": [""A:SAH""], ""ligand:UNX"": [""A:UNX402""]}",ligand:SAM-like;ligand:UNX
+RNA-7,7NR4,Q96LA8,False,ok,A,145-157,13.0,280.2,333.7,53.5,"{""ligand:UO2"": [""A:UO2402""], ""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like;ligand:UO2
+RNA-7,1NW5,P14751,False,motif_not_resolved,,,,,,,,
+RNA-7,4Y30,Q96LA8,False,ok,A,145-157,13.0,222.2,342.5,120.3,"{""ligand:49L"": [""A:49L402""], ""ligand:SAM-like"": [""A:SAH""]}",ligand:49L;ligand:SAM-like
+RNA-7,1NW7,P14751,False,motif_not_resolved,,,,,,,,
+RNA-7,2IH4,P14385,False,ok,A,169-181,13.0,90.6,345.9,255.3,"{""nucleic-acid:DNA"": [""B:DC4"", ""B:DG5"", ""B:DT3""]}",nucleic-acid:DNA
+RNA-7,2NP6,P14385,False,ok,A,169-181,13.0,95.6,330.5,235.0,"{""nucleic-acid:DNA"": [""B:DC4"", ""B:DG5"", ""B:DT3""]}",nucleic-acid:DNA
+RNA-7,5EGS,Q96LA8,False,ok,A,145-157,13.0,232.0,335.0,103.0,"{""ligand:5NR"": [""A:5NR402""], ""ligand:SAM-like"": [""A:SAH""]}",ligand:5NR;ligand:SAM-like
+RNA-7,4AZS,J7I4B7,False,motif_not_resolved,,,,,,,,
+RNA-7,5X62,P53934,False,ok,A,8-20,13.0,610.8,620.4,9.7,{},
+RNA-7,9EWZ,P0DUF9,False,ok,C,455-467,13.0,635.9,635.9,0.0,{},
+RNA-7,1NW8,P14751,False,motif_not_resolved,,,,,,,,
+RNA-7,3SWC,O88508,False,motif_not_resolved,,,,,,,,
+RNA-7,4AZT,J7I4B7,False,motif_not_resolved,,,,,,,,
+RNA-7,4Y2H,Q96LA8,False,ok,A,145-157,13.0,243.0,330.9,87.9,"{""ligand:49K"": [""A:49K402""], ""ligand:SAM-like"": [""A:SAH""]}",ligand:49K;ligand:SAM-like
+RNA-7,7UBU,Q9AXT8,False,motif_not_resolved,,,,,,,,
+RNA-7,2IBS,P14385,False,ok,A,169-181,13.0,87.9,351.2,263.3,"{""nucleic-acid:DNA"": [""B:DC4"", ""B:DG5"", ""B:DT3""]}",nucleic-acid:DNA
+RNA-7,6WAD,Q96LA8,False,ok,A,145-157,13.0,310.7,377.6,66.9,"{""ligand:SAM-like"": [""A:SAH""], ""ligand:TQ7"": [""A:TQ7502""]}",ligand:SAM-like;ligand:TQ7
+RNA-7,4AZW,J7I4B7,False,motif_not_resolved,,,,,,,,
+RNA-7,4QPP,Q96LA8,False,ok,A,145-157,13.0,231.3,354.0,122.7,"{""ligand:SAM-like"": [""A:SAH""]}",ligand:SAM-like
+RNA-7,5E8R,Q96LA8,False,ok,A,145-157,13.0,290.5,352.7,62.2,"{""ligand:UNX"": [""A:UNX1004""], ""ligand:5L6"": [""A:5L61002""], ""ligand:SAM-like"": [""A:SAH""]}",ligand:5L6;ligand:SAM-like;ligand:UNX
+RNA-7,1AQI,P14385,False,ok,A,169-181,13.0,307.1,345.7,38.6,{},
+RNA-7,1AQJ,P14385,False,ok,A,169-181,13.0,326.5,370.8,44.4,{},
+RNA-7,2ADM,P14385,False,ok,A,169-181,13.0,308.5,341.6,33.2,{},
+RNA-7,4FT4,Q9AXT8,False,motif_not_resolved,,,,,,,,
+RNA-7,9MVY,Q9AXT8,False,motif_not_resolved,,,,,,,,
+RNA-7,9EX7,P0DUF9,False,ok,A,455-467,13.0,682.8,682.8,0.0,{},
+RNA-7,4AX8,J7I4B7,False,motif_not_resolved,,,,,,,,
+RNA-7,3SW9,O88508,False,motif_not_resolved,,,,,,,,
+RNA-7,8ZEK,P0DUF9,False,ok,A,455-467,13.0,603.3,603.3,0.0,{},
+RNA-7,4FT2,Q9AXT8,False,motif_not_resolved,,,,,,,,
+RNA-7,4FSX,Q9AXT8,False,motif_not_resolved,,,,,,,,
+RNA-7,4AZV,J7I4B7,False,motif_not_resolved,,,,,,,,
+RNA-7,9EXH,P0DUF9,False,ok,A,455-467,13.0,685.5,685.5,0.0,{},

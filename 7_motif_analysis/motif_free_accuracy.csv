@@ -1,0 +1,10 @@
+cls,has_motif,n,accuracy
+all,False,1241,0.9855
+all,True,6334,0.9812
+Metabolite,False,27,0.9259
+Metabolite,True,1392,0.9921
+Protein,False,8,0.375
+Protein,True,1006,0.9076
+RNA,False,1206,0.9909
+RNA,True,3810,0.9963
+DNA,True,126,0.9921

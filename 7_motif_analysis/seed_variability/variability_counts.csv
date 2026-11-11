@@ -1,0 +1,8 @@
+variant,seed,n_motifs,n_ge2fold,DNA,RNA,Protein,Metabolite
+arch_seed0,0,32,24,8,6,6,4
+arch_seed1,1,32,24,8,6,6,4
+arch_seed2,2,32,25,7,7,7,4
+arch_seed3,3,32,25,8,7,5,5
+rebuilt_seed0,0,32,22,7,6,6,3
+rebuilt_seed1,1,32,23,7,7,6,3
+rebuilt_seed2,2,32,24,8,6,6,4
