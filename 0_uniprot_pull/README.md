@@ -7,7 +7,7 @@ UniProt data through the UniProt REST API so the analysis can be re-run on a new
 |---|---|---|
 | `sam` | `(reviewed:true) AND (xref:interpro-IPR029063)` | Swiss-Prot proteins of the SAM-dependent methyltransferase superfamily (Class I): the SAM training set before labelling |
 | `up` | `(reviewed:true) AND (cc_catalytic_activity:*)` | Swiss-Prot enzymes with a catalytic-activity annotation: the broad UP comparison set before labelling |
-| `proteomes` | `(proteome:UPxxxxxxxxx)` for every Proteome Id of [`data/selected_1259_organisms.csv`](../data/selected_1259_organisms.csv) | the 1,259 reference proteomes of the tree-of-life analysis (all their UniProtKB proteins) |
+| `proteomes` | `(proteome:UPxxxxxxxxx)` for every Proteome Id of [`data/selected_1259_organisms.csv`](../data/selected_1259_organisms.csv) | the 1,259 reference proteomes of the tree-of-life analysis (all their UniProtKB proteins; in release 2026_03 ten of them are empty, leaving the 1,249 that are analysed) |
 
 The queries reproduce how the archived sets are defined; the archived tables were checked for it: the 7,405 SAM proteins all carry
 IPR029063 and are reviewed; the 201,339 UP proteins are all reviewed, all have catalytic-activity text (92 % also a Rhea ID) and none is
