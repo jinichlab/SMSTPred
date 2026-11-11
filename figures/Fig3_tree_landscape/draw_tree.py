@@ -27,14 +27,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.collections import LineCollection, PolyCollection
 from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 
 REPO = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
 
 # rings inside out: (file, legend label, colour); colours come from the files themselves, these are the legend names
-RINGS = [("itol_pct_protein", "% Protein-binding SAMs"), ("itol_pct_dna", "% DNA-binding SAMs"), ("itol_pct_rna", "% RNA-binding SAMs"),
-         ("itol_pct_metabolite", "% Metabolite-binding SAMs"), ("itol_pct_sams", "% SAMs in proteome")]
+RINGS = [("itol_pct_protein", "% Protein"), ("itol_pct_dna", "% DNA"), ("itol_pct_rna", "% RNA"),
+         ("itol_pct_metabolite", "% Metabolite"), ("itol_pct_sams", "% of proteome")]
+GAP_STEM = "itol_pct_sams"      # the last ring (share of the proteome) is a different quantity: an empty ring separates it from the four substrate rings
 BAR_FILE, BAR_LABEL = "itol_n_sams", "# SAM-MTases per proteome"
 # clade strips: label -> (colour, track); a track is a concentric strip, Vertebrates sits outside Metazoa. Colours of the paper's legend.
 CLADES = {"Plants": ("#a68d00", 0), "Metazoa": ("#0e6b74", 0), "Vertebrates": ("#7a1f4d", 1), "Actinomycetota": ("#4a2f7a", 0)}
@@ -177,11 +179,13 @@ def draw_tree(ax, root):
     ax.add_collection(LineCollection(segs, colors="black", linewidths=0.5, zorder=3))
 
 
-def draw_rings(ax, leaves, src, r0, width):
+def draw_rings(ax, leaves, src, r0, width, gap=0.0):
     """The five gradient rings; returns the outer radius and the legend data [(label, colour, vmax)]."""
     da = 2 * math.pi / len(leaves)
     r, legend = r0, []
     for stem, label in RINGS:
+        if stem == GAP_STEM:
+            r += gap
         head, data = read_dataset(src / f"{stem}.txt")
         vmax = max(data.values())
         cmap = LinearSegmentedColormap.from_list(stem, [WHITE, head["COLOR_MAX"]])
@@ -241,7 +245,7 @@ def clade_strips(ax, leaves, src, r0, strip_w):
         flip = math.cos(mid) < 0
         rot = math.degrees(mid) + (180 if flip else 0)
         ax.plot(*zip(pol(top - 0.01 if track else r0 + strip_w, mid), pol(rl - 0.005, mid)), color=colour, lw=1.0, zorder=5)
-        ax.text(x, y, label, color=colour, fontsize=15, fontweight="bold", ha="right" if flip else "left", va="center", rotation=rot,
+        ax.text(x, y, label, color=colour, fontsize=16, fontweight="bold", ha="right" if flip else "left", va="center", rotation=rot,
                 rotation_mode="anchor", zorder=6)
     return top
 
@@ -271,26 +275,29 @@ def build(src, out, name, gamma, bar_h=0.36, rotate=True):
     leaves = layout(root, gamma)
     # geometry in units of the tree radius, worked out first so that the figure height can follow the drawing
     ring_w, ring0, strip_w = 0.075, 1.03, 0.04
-    r_ring = ring0 + ring_w * len(RINGS)
+    gap = 0.6 * ring_w
+    r_ring = ring0 + ring_w * len(RINGS) + gap
     top = r_ring + bar_h + 0.02 + (strip_w + 0.012) + strip_w          # outer edge of the outer clade strip
-    lim = top + 0.33                                                   # half width: room for the clade names at the sides
-    y_top, y_bot = lim + 0.22, -(r_ring + bar_h + 0.06)                # names stand above the 12 o'clock end; nothing hangs below the bars
-    FIG_W, TREE_FRAC = 22.0, 0.62
-    tree_h = FIG_W * TREE_FRAC * (y_top - y_bot) / (2 * lim)
+    # the clade names stand to the right of the tree, so the box is wider there; it is symmetric in y, so the tree's centre is the figure's centre
+    x_lo, x_hi = -(top + 0.04), top + 0.40
+    y_top = r_ring + bar_h + 0.07                                      # the bars and rings set the height; the clade strips and names are at the right
+    y_bot = -y_top
+    FIG_W, TREE_FRAC = 25.0, 0.72
+    tree_h = FIG_W * TREE_FRAC * (y_top - y_bot) / (x_hi - x_lo)
     fig_h = tree_h / 0.96
     fig = plt.figure(figsize=(FIG_W, fig_h), facecolor="white")
     ax = fig.add_axes([0.0, 0.02, TREE_FRAC, 0.96])
     draw_tree(ax, root)
-    r, legend = draw_rings(ax, leaves, src, ring0, ring_w)
+    r, legend = draw_rings(ax, leaves, src, ring0, ring_w, gap)
     bar_colour, bar_max = draw_bars(ax, leaves, src, r, bar_h)
     clade_strips(ax, leaves, src, r + bar_h + 0.02, strip_w)
-    ax.set_xlim(-lim, lim); ax.set_ylim(y_bot, y_top)
+    ax.set_xlim(x_lo, x_hi); ax.set_ylim(y_bot, y_top)
     ax.set_aspect("equal"); ax.axis("off")
 
     # legend, in inches from the top of the figure; the spacing is stretched towards the height of the tree (capped) and the block is centred
-    LX, SW = TREE_FRAC + 0.02, 0.06
-    SLBL = LX + SW + 0.014
-    FS_HEAD, FS_LABEL, FS_TICK = 28, 21, 18
+    LX, SW = TREE_FRAC + 0.03, 1.32 / FIG_W
+    SLBL = LX + SW + 0.35 / FIG_W
+    FS_HEAD, FS_LABEL, FS_TICK = 30, 23, 19
     SW_H, TOP0 = 0.36, 0.35
     Y = lambda inch: 1 - inch / fig_h
 
@@ -315,12 +322,26 @@ def build(src, out, name, gamma, bar_h=0.36, rotate=True):
                     fig.text(SLBL, Y(cur + SW_H + 0.02), note, color="#555555", fontsize=FS_TICK, va="top")
             cur += SW_H + (0.46 if gradient else 0.16 + (0.30 if note else 0)) + pad
 
-        heading("Rings (inner to outer)")
-        for label, colour, vmax in legend:
+        heading("Substrate composition")                 # the four substrate rings: % of the proteome's SAM-MTases with that call
+        for label, colour, vmax in legend[:-1]:
             row(label, colour, True, vmax)
         cur += 0.10
-        heading("Outer bars")
-        row(BAR_LABEL, bar_colour, False, note=f"longest bar = {bar_max:.0f}")
+        heading("SAM-MTase abundance")                    # separated from the composition rings on the tree by an empty ring
+        label, colour, vmax = legend[-1]
+        row(label, colour, True, vmax)
+        c0 = cur
+        row(BAR_LABEL, bar_colour, False, note=" ")       # the blank note reserves the line the scale bar is drawn on
+        if draw:                                          # a scale bar of a round count, in the same length unit as the bars
+            ax.apply_aspect()                             # the axes box is shrunk by the equal aspect, so read the scale off the transform
+            (x0, _), (x1, _) = ax.transData.transform([(0, 0), (1, 0)])
+            in_per_unit = (x1 - x0) / fig.dpi
+            nice = max(m * 10 ** k for k in range(0, 5) for m in (1, 2, 5) if m * 10 ** k <= 0.85 * bar_max)
+            L = bar_h * nice / bar_max * in_per_unit / FIG_W
+            yy = Y(c0 + SW_H + 0.24)
+            fig.add_artist(Line2D([LX, LX + L], [yy, yy], color="#222222", lw=1.6, transform=fig.transFigure))
+            for xe in (LX, LX + L):
+                fig.add_artist(Line2D([xe, xe], [yy - 0.05 / fig_h, yy + 0.05 / fig_h], color="#222222", lw=1.6, transform=fig.transFigure))
+            fig.text(LX + L + 0.01, yy, f"{nice:,}", color="#222222", fontsize=FS_TICK, va="center")
         return cur
 
     n_slots = 2 + len(legend) + 1
@@ -332,7 +353,7 @@ def build(src, out, name, gamma, bar_h=0.36, rotate=True):
 
     out.mkdir(parents=True, exist_ok=True)
     for ext, kw in (("png", {"dpi": 200}), ("svg", {}), ("pdf", {})):
-        fig.savefig(out / f"{name}.{ext}", facecolor="white", **kw)
+        fig.savefig(out / f"{name}.{ext}", facecolor="white", bbox_inches="tight", pad_inches=0.3, **kw)
     plt.close(fig)
     print(f"{n} leaves; ring maxima " + ", ".join(f"{l.split()[0]}{l.split()[1] if l.startswith('% S') else ''} {v:.3f}" for l, _, v in legend) + f"; bar max {bar_max:.0f}")
     print(f"wrote {out}/{name}.png, .svg, .pdf")
