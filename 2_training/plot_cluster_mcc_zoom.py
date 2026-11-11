@@ -100,9 +100,10 @@ def draw_panel(ax, ds, methods, bracket_label=f"not significantly different from
     ax.bar(x, sub.mcc_mean, yerr=sub.mcc_std, capsize=3,
            color=[color(c, style) for c in sub.classifier], edgecolor="black",
            linewidth=0.6, error_kw=dict(ecolor="#444444", lw=1))
-    for i, (mm, sdd) in enumerate(zip(sub.mcc_mean, sub.mcc_std)):
-        ax.text(i, min(mm + sdd + 0.006, 0.998), f"{mm:.3f}",
-                ha="center", va="bottom", fontsize=style["fs_value"], fontweight="bold",
+    for i, (mm, sdd, clf) in enumerate(zip(sub.mcc_mean, sub.mcc_std, sub.classifier)):
+        worse = clf in st["worse"]           # significantly worse than the control: the value is red and carries the star
+        ax.text(i, min(mm + sdd + 0.006, 0.998), f"{mm:.3f}*" if worse else f"{mm:.3f}",
+                ha="center", va="bottom", fontsize=style["fs_value"], fontweight="bold", color="crimson" if worse else "black",
                 bbox=dict(boxstyle="square,pad=0.12", fc="white", ec="none", alpha=0.9) if style["value_bbox"] else None)
     # top-tier band + bracket: leading run NOT significantly worse than control
     last = 0
@@ -118,9 +119,9 @@ def draw_panel(ax, ds, methods, bracket_label=f"not significantly different from
     ax.text(last / 2.0, yb + 0.008, bracket_label,
             ha="center", va="bottom", fontsize=style["fs_bracket"], fontweight="bold",
             color=style["accent"], clip_on=False)
-    # x tick labels: control bold-blue; significantly worse = red + trailing *
+    # x tick labels: control bold-blue; significantly worse = red (the star is on the value above the bar)
     ax.set_xticks(list(x))
-    ticklabels = [f"{c} *" if c in st["worse"] else c for c in sub.classifier]
+    ticklabels = list(sub.classifier)
     ax.set_xticklabels(ticklabels, rotation=45, ha="right", fontsize=style["fs_tick"])
     for lab, clf in zip(ax.get_xticklabels(), sub.classifier):
         if clf == CONTROL:
