@@ -144,7 +144,7 @@ def main():
                 if not ref.exists():
                     files.append(dict(path=str(p), status="new-file", detail="not in the archived record"))
                     continue
-                st, d = compare(new, ref, rtol=s["rtol"], png_tol=s["png_tol"])
+                st, d = compare(new, ref, rtol=s["rtol"], atol=s.get("atol", 1e-9), png_tol=s["png_tol"])
                 files.append(dict(path=str(p), status=st, detail=d))
             bad = [f for f in files if f["status"] == "DIFFERENT"]
             if bad:

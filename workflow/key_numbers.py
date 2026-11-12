@@ -139,7 +139,7 @@ def trends(rel):
 
 @section("Map and clusters  (umap/umap_report.txt, umap/cluster_selection_report.txt)")
 def umap(rel):
-    out = [l for l in (rel / "umap" / "umap_report.txt").read_text().splitlines() if l.strip()][:5]
+    out = [l for l in (rel / "umap" / "umap_report.txt").read_text().splitlines() if l.strip()][:6]
     out += [l for l in (rel / "umap" / "cluster_selection_report.txt").read_text().splitlines()[:6] if l.strip()]
     return out
 

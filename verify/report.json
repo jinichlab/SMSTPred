@@ -1,9 +1,9 @@
 {
- "generated": "2026-11-04T13:17:14",
+ "generated": "2026-11-11T18:20:06",
  "release": "release_2026_03",
  "versions": {
   "python": "3.12.15",
-  "platform": "Linux-6.8.0-64-generic-x86_64-with-glibc2.35",
+  "platform": "Linux-6.8.0-101-generic-x86_64-with-glibc2.35",
   "numpy": "2.1.3",
   "pandas": "2.2.3",
   "scipy": "1.15.2",
@@ -32,7 +32,7 @@
    "cmd": "cd 1_clustering && python test_tvt_splits.py && python test_up_splits.py && cd ../2_training && python test_bakeoff.py && python test_sam_vs_up.py && python test_deploy_ensemble.py && python test_threshold_search.py",
    "status": "BUILT",
    "detail": "ran; wrote no files",
-   "seconds": 60.2,
+   "seconds": 61.2,
    "files": []
   },
   {
@@ -43,7 +43,7 @@
    "cmd": "make annotation-test",
    "status": "BUILT",
    "detail": "ran; wrote no files",
-   "seconds": 4.8,
+   "seconds": 5.4,
    "files": []
   },
   {
@@ -54,7 +54,7 @@
    "cmd": "CLUSTER_WHAT=sam bash 1_clustering/run_mmseqs_clusters.sh",
    "status": "BUILT",
    "detail": "output written; no archived counterpart to compare",
-   "seconds": 14.1,
+   "seconds": 18.6,
    "files": [
     {
      "path": "clusters/splits_tvt_sam_benchmark_id30_t20_v15.json",
@@ -76,7 +76,7 @@
    "cmd": "bash 2_training/run_bakeoff_report.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 15.5,
+   "seconds": 14.7,
    "files": [
     {
      "path": "benchmark/kept_epochs.csv",
@@ -89,19 +89,14 @@
      "detail": ""
     },
     {
-     "path": "benchmark/paired_tests_mlp_vs_classical.csv",
-     "status": "identical",
-     "detail": ""
-    },
-    {
      "path": "benchmark/paired_tests_vs_baselines.csv",
      "status": "identical",
      "detail": ""
     },
     {
      "path": "benchmark/sam_classifier_cluster_mcc_zoom.png",
-     "status": "identical",
-     "detail": ""
+     "status": "image-match",
+     "detail": "mean abs pixel diff 4.73/255 (rendering noise tolerated up to 12)"
     },
     {
      "path": "benchmark/sam_classifier_cluster_mcc_zoom_caption.txt",
@@ -154,17 +149,17 @@
      "detail": ""
     },
     {
+     "path": "benchmark/stats/paired_tests_vs_control.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
      "path": "benchmark/stats/per_iteration_summary.csv",
      "status": "identical",
      "detail": ""
     },
     {
      "path": "benchmark/stats/stats_report.txt",
-     "status": "identical",
-     "detail": ""
-    },
-    {
-     "path": "benchmark/stats/table_S4_wilcoxon_holm.csv",
      "status": "identical",
      "detail": ""
     },
@@ -188,7 +183,7 @@
    "cmd": "bash 2_training/run_sam_vs_up_report.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 5.2,
+   "seconds": 4.4,
    "files": [
     {
      "path": "sam_vs_up/kept_epochs.csv",
@@ -240,7 +235,7 @@
    "cmd": "bash 2_training/run_fig2.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 5.3,
+   "seconds": 5.5,
    "files": [
     {
      "path": "benchmark/Fig2.png",
@@ -262,7 +257,7 @@
    "cmd": "bash 3_predictions/run_predict_release.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 28.0,
+   "seconds": 28.1,
    "files": [
     {
      "path": "predictions/Abrus_precatorius_(Indian_licorice)_(Glycine_abrus)_embeddings_predictions.csv",
@@ -6511,8 +6506,8 @@
     },
     {
      "path": "predictions_all_proteomes.csv.gz",
-     "status": "identical",
-     "detail": "same text, different compression"
+     "status": "numeric-match",
+     "detail": "max relative diff nan"
     }
    ]
   },
@@ -6524,12 +6519,12 @@
    "cmd": "bash 4_phylo_trends/run_tree.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 8.3,
+   "seconds": 10.3,
    "files": [
     {
      "path": "predictions_all_proteomes.csv.gz",
-     "status": "identical",
-     "detail": "same text, different compression"
+     "status": "numeric-match",
+     "detail": "max relative diff nan"
     },
     {
      "path": "tree/fig3_tree.pdf",
@@ -6601,7 +6596,7 @@
    "cmd": "bash figures/Fig4_trends/run_fig4.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 4.0,
+   "seconds": 4.2,
    "files": [
     {
      "path": "fig4/A_protein_3group_violin.png",
@@ -6648,8 +6643,28 @@
    "cmd": "bash figures/Fig5_proteome_scaling/run_fig5.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 19.0,
+   "seconds": 34.8,
    "files": [
+    {
+     "path": "fig5/fig5_by_clade.csv",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "fig5/fig5_by_clade.pdf",
+     "status": "skipped",
+     "detail": ".pdf files are not compared"
+    },
+    {
+     "path": "fig5/fig5_by_clade.png",
+     "status": "image-match",
+     "detail": "mean abs pixel diff 0.00/255 (rendering noise tolerated up to 12)"
+    },
+    {
+     "path": "fig5/fig5_clade_model_comparison.csv",
+     "status": "identical",
+     "detail": ""
+    },
     {
      "path": "fig5/fig5_fits.csv",
      "status": "identical",
@@ -6703,6 +6718,38 @@
    ]
   },
   {
+   "id": "s5_umap",
+   "stage": "5",
+   "tier": "A",
+   "paper": "The map: the archived UMAP coordinates and clusters are reused (frozen), scores and calls refreshed from the predictions; the static map is redrawn",
+   "cmd": "bash 5_umap/run_umap.sh",
+   "status": "PASS",
+   "detail": "",
+   "seconds": 42.2,
+   "files": [
+    {
+     "path": "umap/sam_mtase_umap_prott5_coords.csv",
+     "status": "numeric-match",
+     "detail": "max relative diff nan"
+    },
+    {
+     "path": "umap/sam_mtase_umap_prott5_interactive.html",
+     "status": "skipped",
+     "detail": ".html files are not compared"
+    },
+    {
+     "path": "umap/sam_mtase_umap_prott5_static_datamap.png",
+     "status": "identical",
+     "detail": ""
+    },
+    {
+     "path": "umap/umap_report.txt",
+     "status": "identical",
+     "detail": ""
+    }
+   ]
+  },
+  {
    "id": "s5_clusters",
    "stage": "5",
    "tier": "A",
@@ -6710,7 +6757,7 @@
    "cmd": "bash 5_umap/run_clusters.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 5.7,
+   "seconds": 5.4,
    "files": [
     {
      "path": "umap/cluster_crosswalk_vs_prostt5.csv",
@@ -6777,7 +6824,7 @@
    "cmd": "bash 6_dark_cluster_annotation/run_tables.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 17.1,
+   "seconds": 15.5,
    "files": [
     {
      "path": "dark_annotation/clean/clean_summary.csv",
@@ -6874,7 +6921,7 @@
    "cmd": "bash figures/Fig8_reaction_profiles/run_fig8.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 8.6,
+   "seconds": 6.5,
    "files": [
     {
      "path": "fig8/Fig8_reaction_profiles.png",
@@ -6896,7 +6943,7 @@
    "cmd": "bash 7_motif_analysis/run_no_motif_umap.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 2.0,
+   "seconds": 1.8,
    "files": [
     {
      "path": "motif_analysis/no_motif_umap.png",
@@ -6918,7 +6965,7 @@
    "cmd": "bash 7_motif_analysis/run_motif_structure_pick.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 68.3,
+   "seconds": 63.8,
    "files": [
     {
      "path": "motif_analysis/motif_table.csv",
@@ -8240,7 +8287,7 @@
    "cmd": "python workflow/figure_index.py && python workflow/key_numbers.py",
    "status": "PASS",
    "detail": "",
-   "seconds": 3.6,
+   "seconds": 3.3,
    "files": [
     {
      "path": "FIGURES.html",
@@ -8353,6 +8400,11 @@
      "detail": "not in the archived record"
     },
     {
+     "path": "article_figures/unnumbered_fig5_lineage_vs_rest.png",
+     "status": "new-file",
+     "detail": "not in the archived record"
+    },
+    {
      "path": "article_figures/unnumbered_train_val_loss_by_label.png",
      "status": "new-file",
      "detail": "not in the archived record"
@@ -8372,7 +8424,7 @@
    "cmd": "CLUSTER_WHAT=sam bash 1_clustering/run_mmseqs_clusters.sh && bash 2_training/run_deploy_ensemble.sh",
    "status": "PASS",
    "detail": "",
-   "seconds": 53.5,
+   "seconds": 93.1,
    "files": [
     {
      "path": "same proteins, clusters and folds",
@@ -8392,22 +8444,22 @@
     {
      "path": "overall out-of-fold MCC within 0.01",
      "status": "numeric-match",
-     "detail": "0.9551 vs 0.9551"
+     "detail": "0.9549 vs 0.9551"
     },
     {
      "path": "per-label out-of-fold MCC within 0.02",
      "status": "numeric-match",
-     "detail": "Metabolite 0.962 vs 0.962, Protein 0.913 vs 0.913, RNA 0.969 vs 0.969, DNA 0.976 vs 0.976"
+     "detail": "Metabolite 0.962 vs 0.962, Protein 0.913 vs 0.913, RNA 0.968 vs 0.969, DNA 0.976 vs 0.976"
     },
     {
      "path": "out-of-fold scores within 0.1 (max over proteins)",
      "status": "numeric-match",
-     "detail": "max difference 0.0000"
+     "detail": "max difference 0.0094"
     },
     {
      "path": "mean out-of-fold score difference within 0.01",
      "status": "numeric-match",
-     "detail": "mean difference 0.0000"
+     "detail": "mean difference 0.0001"
     },
     {
      "path": "applicability-domain cutoff within 0.01",

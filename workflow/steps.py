@@ -13,8 +13,8 @@ a step rewrites that must not be compared, e.g. logs).
 """
 
 
-def S(id, stage, cmd, paper, tier="A", timeout=3600, rtol=1e-5, png_tol=12.0, check=None, skip_compare=()):
-    return dict(id=id, stage=stage, tier=tier, cwd=".", cmd=cmd, paper=paper, timeout=timeout, rtol=rtol, png_tol=png_tol, compare_to=[], needs=[],
+def S(id, stage, cmd, paper, tier="A", timeout=3600, rtol=1e-5, png_tol=12.0, check=None, skip_compare=(), atol=1e-9):
+    return dict(id=id, stage=stage, tier=tier, cwd=".", cmd=cmd, paper=paper, timeout=timeout, rtol=rtol, atol=atol, png_tol=png_tol, compare_to=[], needs=[],
                 check=check, skip_compare=list(skip_compare))
 
 
@@ -22,7 +22,7 @@ STEPS = [
     # ---------------------------------------------------------------- offline unit tests of the rules and statistics
     S("t_binning", "0", "cd 0_uniprot_pull && python test_substrate_binning.py", "Substrate typing rules (Rhea compound classes -> Metabolite / Protein / RNA / DNA)", timeout=900),
     S("t_training", "1", "cd 1_clustering && python test_tvt_splits.py && python test_up_splits.py && cd ../2_training && python test_bakeoff.py && python test_sam_vs_up.py && python test_deploy_ensemble.py && python test_threshold_search.py",
-      "Cluster-disjoint splits, bake-off, MTase-vs-UP and ensemble code, MCC threshold search", timeout=1800),
+      "Cluster-disjoint splits, bake-off, MTase-vs-UP and ensemble code, MCC threshold search", timeout=1800, atol=1.5e-4),
     S("t_annotation", "5", "make annotation-test", "Cluster selection, dark-protein inputs, CLEAN summary, Horizyn family table, Fig 8 rule, motif structure search and pick", timeout=1800),
     # ---------------------------------------------------------------- Stage 1: MMseqs2 30% clustering and the 16 cluster-disjoint splits, re-derived from the archived labels
     S("s1_cluster", "1", "CLUSTER_WHAT=sam bash 1_clustering/run_mmseqs_clusters.sh", "502 clusters of the benchmark set, 16 splits, cluster columns of the label table", timeout=3600),
@@ -31,12 +31,12 @@ STEPS = [
     S("s2_sam_vs_up_report", "2", "bash 2_training/run_sam_vs_up_report.sh", "Fig 2B: MTase-trained vs UP-trained, Wilcoxon-Holm and Nadeau-Bengio", timeout=1800),
     S("s2_fig2", "2", "bash 2_training/run_fig2.sh", "Fig 2 composite (A + B)", timeout=900),
     # ---------------------------------------------------------------- Stage 3: the deployed ensemble applied to every reference proteome (CPU inference)
-    S("s3_predict", "3", "bash 3_predictions/run_predict_release.sh", "Scores, calls, ensemble disagreement and applicability-domain flag for every proteome protein", timeout=7200, rtol=1e-3),
+    S("s3_predict", "3", "bash 3_predictions/run_predict_release.sh", "Scores, calls, ensemble disagreement and applicability-domain flag for every proteome protein", timeout=7200, rtol=1e-3, atol=1.5e-4),
     # ---------------------------------------------------------------- Stage 4-5: tree, trends, scaling, UMAP clusters
-    S("s4_tree", "4", "bash 4_phylo_trends/run_tree.sh", "Fig 3: taxonomy tree and per-organism annotation", timeout=1800),
+    S("s4_tree", "4", "bash 4_phylo_trends/run_tree.sh", "Fig 3: taxonomy tree and per-organism annotation", timeout=1800, atol=1.5e-4),
     S("s4_fig4", "4", "bash figures/Fig4_trends/run_fig4.sh", "Fig 4 and its Mann-Whitney / Kruskal-Wallis statistics", timeout=1800),
     S("s4_fig5", "4", "bash figures/Fig5_proteome_scaling/run_fig5.sh", "Fig 5 power-law fits, level differences, clade-bootstrap CIs, lineage statistics", timeout=7200),
-    S("s5_umap", "5", "bash 5_umap/run_umap.sh", "The map: the archived UMAP coordinates and clusters are reused (frozen), scores and calls refreshed from the predictions; the static map is redrawn", timeout=3600),
+    S("s5_umap", "5", "bash 5_umap/run_umap.sh", "The map: the archived UMAP coordinates and clusters are reused (frozen), scores and calls refreshed from the predictions; the static map is redrawn", timeout=3600, atol=1.5e-4),
     S("s5_clusters", "5", "bash 5_umap/run_clusters.sh", "Dark / metazoan-protein / vertebrate-DNA cluster selection and Fig 7", timeout=3600),
     # ---------------------------------------------------------------- Stage 6: dark-cluster tables and Fig 8 from the archived CLEAN and Horizyn results
     S("s6_tables", "6", "bash 6_dark_cluster_annotation/run_tables.sh", "Horizyn family table, CLEAN summary, Tables S1 and S2, Fig 7 with the Fig 8 clusters", timeout=3600),

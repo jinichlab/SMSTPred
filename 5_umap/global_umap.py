@@ -17,6 +17,7 @@ min_cluster_size 50, min_samples 10). Reads <release>/embeddings/embeddings_prot
   sam_mtase_umap_<emb>_interactive.html     the datamapplot map (hover, search, click-to-UniProt, legend toggles)
   umap_report.txt                           counts, clusters, and how well the 2-D map keeps the substrate classes together (neighbour purity)
 """
+import json
 import argparse
 import os
 import sys
@@ -60,6 +61,14 @@ def load(rel, embedding):
     ok = np.isfinite(X).all(axis=1)
     print(f"{len(pred):,} predictions, {len(have):,} with an embedding, {int((~ok).sum())} non-finite dropped", flush=True)
     return pred[ok].reset_index(drop=True), X[ok]
+
+
+def release_label(rel):
+    """release_<UniProt release> from the release folder's pull_manifest.json (the folder itself may be a scratch copy with another name)."""
+    try:
+        return "release_" + json.loads((rel / "pull_manifest.json").read_text())["uniprot_release"]
+    except Exception:
+        return rel.name
 
 
 def neighbor_purity(coords, substrate, k=15):
@@ -117,7 +126,7 @@ def main():
     df[keep].to_csv(out / f"sam_mtase_umap_{emb}_coords.csv", index=False)
 
     pur, per = neighbor_purity(coords, df.Substrate.to_numpy())
-    lines = [f"{a.embedding} UMAP of {len(df):,} proteins from {df.proteome.nunique()} proteomes ({rel.name})",
+    lines = [f"{a.embedding} UMAP of {len(df):,} proteins from {df.proteome.nunique()} proteomes ({release_label(rel)})",
              f"UMAP: n_neighbors {N_NEIGHBORS}, min_dist {MIN_DIST}, metric {METRIC}, seed {RANDOM_SEED}; HDBSCAN min_cluster_size {HDBSCAN_MIN_CLUSTER_SIZE}, min_samples {HDBSCAN_MIN_SAMPLES}",
              map_note,
              f"substrate: {df.Substrate.value_counts().to_dict()}",
