@@ -92,7 +92,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--pull-dir")
     ap.add_argument("--release")
-    ap.add_argument("--old-up-fasta", default=os.environ.get("UP_OLD_FASTA", "/home/nroethler/Code/files/UP_swiss.fasta"))
+    ap.add_argument("--old-up-fasta", default=os.environ.get("UP_OLD_FASTA", ""), help="previous UniProt Swiss-Prot FASTA (or set UP_OLD_FASTA); optional")
     ap.add_argument("--diagnose-removed", type=int, default=0)
     args = ap.parse_args()
     pull_dir = Path(args.pull_dir or os.environ.get("UNIPROT_PULL_DIR") or REPO / "data" / "uniprot_pull")
@@ -120,7 +120,7 @@ def main():
 
     # ---------------------------------------------------------------- UP set
     say("\n== UP set (Swiss-Prot enzymes with catalytic activity)")
-    up = pd.read_csv(out / "up_enzymes.tsv.gz", sep="\t", usecols=["Entry", "Length"] + (["Sequence"] if Path(args.old_up_fasta).exists() else []),
+    up = pd.read_csv(out / "up_enzymes.tsv.gz", sep="\t", usecols=["Entry", "Length"] + (["Sequence"] if args.old_up_fasta and Path(args.old_up_fasta).exists() else []),
                      dtype=str)
     up["Length"] = up["Length"].astype(int)
     old_up = set(pd.read_csv(DATA / "labels_UP.csv", usecols=["Entry"]).Entry)

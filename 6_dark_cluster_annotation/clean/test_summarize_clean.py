@@ -7,7 +7,8 @@ import pandas as pd
 import summarize_clean_clusters as sc
 
 HERE = Path(__file__).resolve().parent
-PVALUE = Path("/home/nroethler/Code/abhiram/CLEAN/app/results/inputs/dark33_pvalue.csv")      # CLEAN's raw p-value output of the archived run (Zenodo / the CLEAN checkout)
+import os
+PVALUE = Path(os.environ.get("CLEAN_PVALUE", HERE / "dark33_pvalue.csv"))      # set CLEAN_PVALUE; CLEAN's raw p-value output of the archived run (Zenodo / the CLEAN checkout)
 
 
 def test_tier():

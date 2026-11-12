@@ -12,6 +12,7 @@ eval "$(conda shell.bash hook)"; conda activate smstpred_fresh || exit 1
 classes=(Metabolite Protein RNA DNA)
 v=$((SLURM_ARRAY_TASK_ID / 4)); cls=${classes[$((SLURM_ARRAY_TASK_ID % 4))]}
 read -r name src seed < <(sed -n "$((v + 1))p" variants.txt)
+src=$(eval echo "$src"); [ -d "$src" ] || { echo "set ARCHIVED_MOTIF_DIR and REBUILT_MOTIF_DIR (variants.txt) to the two motif_analysis folders"; exit 1; }
 mkdir -p "runs/$name"; cd "runs/$name" || exit 1
 for f in corpus.csv "reps_${cls}.clean.fasta" "ctrl_${cls}.fasta"; do ln -sf "$src/$f" "$f"; done
 echo "=== $name $cls seed $seed: $(grep -c '>' reps_${cls}.clean.fasta) pos vs $(grep -c '>' ctrl_${cls}.fasta) ctrl ==="

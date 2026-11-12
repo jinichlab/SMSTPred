@@ -7,7 +7,8 @@ import pandas as pd
 import final_family_table as ft
 
 HERE = Path(__file__).resolve().parent
-TOPK = Path("/home/nroethler/Code/horizyn/horizyn_local/horizyn_full_topk.csv")      # the archived top-50 file (Zenodo: horizyn_dark_top50.csv; data/ after `make data`)
+import os
+TOPK = Path(os.environ.get("HORIZYN_TOPK", HERE / "horizyn_full_topk.csv"))      # set HORIZYN_TOPK; the archived top-50 file (Zenodo: horizyn_dark_top50.csv; data/ after `make data`)
 
 
 def test_synthetic():

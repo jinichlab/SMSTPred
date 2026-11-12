@@ -1,7 +1,7 @@
-arch_seed0 /home/nroethler/Code/journal_article/uniprot_refresh/release_2026_03/motif_analysis 0
-arch_seed1 /home/nroethler/Code/journal_article/uniprot_refresh/release_2026_03/motif_analysis 1
-arch_seed2 /home/nroethler/Code/journal_article/uniprot_refresh/release_2026_03/motif_analysis 2
-arch_seed3 /home/nroethler/Code/journal_article/uniprot_refresh/release_2026_03/motif_analysis 3
-rebuilt_seed0 /home/nroethler/Code/journal_article/_refresh_test/pull/release_2026_03/motif_analysis 0
-rebuilt_seed1 /home/nroethler/Code/journal_article/_refresh_test/pull/release_2026_03/motif_analysis 1
-rebuilt_seed2 /home/nroethler/Code/journal_article/_refresh_test/pull/release_2026_03/motif_analysis 2
+arch_seed0 $ARCHIVED_MOTIF_DIR 0
+arch_seed1 $ARCHIVED_MOTIF_DIR 1
+arch_seed2 $ARCHIVED_MOTIF_DIR 2
+arch_seed3 $ARCHIVED_MOTIF_DIR 3
+rebuilt_seed0 $REBUILT_MOTIF_DIR 0
+rebuilt_seed1 $REBUILT_MOTIF_DIR 1
+rebuilt_seed2 $REBUILT_MOTIF_DIR 2
