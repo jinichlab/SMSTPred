@@ -3,7 +3,7 @@ message: "If you use this code or the data, please cite the manuscript (once pub
 title: "SMSTPred: substrate-type prediction for SAM-dependent methyltransferases across the tree of life"
 type: software
 version: "1.0.0"
-date-released: "2026-11-11"
+date-released: "2026-11-12"
 authors:
   - family-names: Roethler
     given-names: Nathaniel
@@ -13,6 +13,22 @@ authors:
     given-names: Adrian
     orcid: "https://orcid.org/0000-0001-8616-9250"
     affiliation: "Department of Chemistry and Biochemistry and Skaggs School of Pharmacy and Pharmaceutical Sciences, University of California San Diego"
+  - family-names: Rappoport
+    given-names: Dmitrij
+    orcid: "https://orcid.org/0000-0002-5024-7998"
+    affiliation: "Dayhoff Labs, Inc., Cambridge, MA, USA; Department of Chemistry, University of California, Irvine"
+  - family-names: Almada Monter
+    given-names: Ricardo
+    orcid: "https://orcid.org/0009-0007-7201-3125"
+    affiliation: "Department of Chemistry and Biochemistry, University of California San Diego"
+  - family-names: Siordia
+    given-names: Adriana
+    orcid: "https://orcid.org/0009-0007-2713-3224"
+    affiliation: "Department of Chemistry and Biochemistry, University of California San Diego"
+  - family-names: Espinoza Herrera
+    given-names: Javier
+    orcid: "https://orcid.org/0009-0004-8644-5867"
+    affiliation: "Department of Chemistry and Biochemistry, University of California San Diego"
 repository-code: "https://github.com/jinichlab/SMSTPred"
 license: MIT
 abstract: >-
@@ -35,6 +51,14 @@ references:
         given-names: Nathaniel
       - family-names: Jinich
         given-names: Adrian
+      - family-names: Rappoport
+        given-names: Dmitrij
+      - family-names: Almada Monter
+        given-names: Ricardo
+      - family-names: Siordia
+        given-names: Adriana
+      - family-names: Espinoza Herrera
+        given-names: Javier
     doi: 10.5281/zenodo.23655998
     year: 2026
 # Add the DOI of the archived software release here once it exists (a GitHub release of tag v1.0.0 with the Zenodo-GitHub integration enabled).

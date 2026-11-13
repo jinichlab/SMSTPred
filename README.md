@@ -99,7 +99,7 @@ make verify-gpu                                        # optional, on a GPU: re-
 not covered (external installs, multi-hour sweeps). The `run_*.sh` GPU drivers run under SLURM or as plain `bash`, in the environment above.
 
 Large inputs (per-protein embedding `*.h5` files, the raw iTOL tree export) are archived on
-**Zenodo** (doi:10.5281/zenodo.23655998; reserved, resolves once the record is published) rather than in git; per-residue embeddings, the raw
+**Zenodo** (https://doi.org/10.5281/zenodo.23655998) rather than in git; per-residue embeddings, the raw
 corpus/UniProt FASTAs and mmseqs temp dirs are regenerable and not shipped. Small data tables
 are in [`data/`](data). Models, result tables, figures, and the Stage-6 structures are
 included. Scripts resolve their inputs relative to the repository (data directory: `data/`, or

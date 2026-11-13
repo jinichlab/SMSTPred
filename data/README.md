@@ -1,7 +1,7 @@
 # Data
 
 Small tables the analysis needs, kept in git. The large inputs (precomputed embeddings, the raw tree
-export) are archived on **Zenodo** (doi:10.5281/zenodo.23655998; reserved, resolves once the record is published); see the record's README for layouts,
+export) are archived on **Zenodo** (https://doi.org/10.5281/zenodo.23655998); see the record's README for layouts,
 checksums and provenance.
 
 ## In this folder
