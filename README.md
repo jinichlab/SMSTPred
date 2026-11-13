@@ -111,7 +111,8 @@ included. Scripts resolve their inputs relative to the repository (data director
 - **Data, result tables, figures and trained model weights** in this repository and in the Zenodo record:
   CC BY 4.0. The label tables and structures derive from UniProtKB (with Rhea and ChEBI annotation) and the
   AlphaFold Protein Structure Database, all CC BY 4.0, so please credit these sources as well when reusing them.
-- **Citation:** see [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repository"); the data record is
-  doi:10.5281/zenodo.23655998.
+- **Citation:** see [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repository"). The code is archived on Zenodo
+  (v1.0.1, [doi:10.5281/zenodo.24186207](https://doi.org/10.5281/zenodo.24186207)) and the data record is
+  [doi:10.5281/zenodo.23655998](https://doi.org/10.5281/zenodo.23655998).
 - **Funding:** the authors thank the HHMI Hanna Gray Fellowship (GT16787) and the UC San Diego NIH FIRST Grant
   (NCI 1UA54CA272220) for funding.
